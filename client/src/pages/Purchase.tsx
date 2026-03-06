@@ -101,7 +101,9 @@ function generateOrderNumber(): string {
 
 export default function Purchase() {
   const [location] = useLocation();
-  const searchParams = new URLSearchParams(location.split("?")[1]);
+  
+  // Utiliser directement window.location.search pour obtenir les paramètres
+  const searchParams = new URLSearchParams(window.location.search);
   const productId = searchParams.get("product") || "ai-engine";
 
   const product = products.find((p) => p.id === productId) || products[0];
