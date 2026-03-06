@@ -20,7 +20,7 @@ const navLinks = [
 ];
 
 const purchaseProducts = [
-  { name: "FUSION AI", href: "/purchase?product=ai-engine" },
+  { name: "AI Aimbot (FUSION AI)", href: "/purchase?product=ai-engine" },
   { name: "Windows Optimization", href: "/purchase?product=windows-opt" },
   { name: "Jitter Script", href: "/purchase?product=jitter-script" },
 ];

@@ -73,7 +73,7 @@ const stats = [
 
 const pricingPlans = [
   {
-    name: "windows-opt",
+    name: "Windows Optimization",
     price: "10",
     period: "",
     desc: "Optimisation simple de Windows",
@@ -87,7 +87,7 @@ const pricingPlans = [
     cta: "CHOISIR CE PLAN",
   },
   {
-    name: "ai-engine",
+    name: "AI Aimbot",
     price: "80",
     period: "1er mois + inst.",
     desc: "Installation complète + 1er mois inclus",
@@ -102,7 +102,7 @@ const pricingPlans = [
     cta: "Choisir ce plan",
   },
   {
-    name: "jitter-script",
+    name: "Jitter Script",
     price: "2,50",
     period: "à partir de",
     desc: "Script anti-recul jitter aim — manette uniquement",
@@ -561,7 +561,7 @@ export default function Home() {
                   ))}
                 </ul>
 
-                <Link href={`/purchase?product=${encodeURIComponent(plan.name)}`}>
+                <Link href={`/purchase?product=${plan.name === 'AI Aimbot' ? 'ai-engine' : plan.name === 'Windows Optimization' ? 'windows-opt' : 'jitter-script'}`}>
                   <Button
                     className={`w-full font-display font-semibold tracking-wider ${
                       plan.popular
