@@ -265,7 +265,7 @@ export default function Products() {
         ]}
         compatibility={[
           { label: "OS", value: "Windows 10 / 11" },
-          { label: "RAM minimum", value: "8 Go" },
+          { label: "GPU / CPU", value: "Tous modèles" },
           { label: "Gain minimum", value: "40-60 FPS" },
           { label: "Plateforme", value: "PC uniquement" },
         ]}
@@ -296,7 +296,7 @@ export default function Products() {
         ]}
         compatibility={[
           { label: "OS", value: "Windows 10 / 11" },
-          { label: "Manettes", value: "Xbox / PS / Générique" },
+          { label: "GPU / CPU", value: "Tous modèles" },
           { label: "Type", value: "Abonnement" },
           { label: "Plateforme", value: "PC — manette uniquement" },
         ]}

@@ -157,9 +157,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                GPU supportés
+                GPU supportés (AI Aimbot uniquement)
               </h2>
-              <p className="text-sm text-muted-foreground">NVIDIA recommandé</p>
+              <p className="text-sm text-muted-foreground">NVIDIA RTX requis pour l'IA. Les autres outils fonctionnent sur tous les GPU.</p>
             </div>
           </motion.div>
 
@@ -234,9 +234,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                CPU recommandés
+                CPU recommandés (AI Aimbot uniquement)
               </h2>
-              <p className="text-sm text-muted-foreground">Intel & AMD</p>
+              <p className="text-sm text-muted-foreground">Recommandations pour le traitement IA. Les autres outils fonctionnent sur tous les CPU.</p>
             </div>
           </motion.div>
 
