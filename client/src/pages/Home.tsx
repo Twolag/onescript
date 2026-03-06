@@ -89,12 +89,12 @@ const pricingPlans = [
   {
     name: "FUSION AI",
     price: "80",
-    period: "+ 30 €/mois",
-    desc: "Licence + installation + abonnement",
+    period: "1er mois + inst.",
+    desc: "Installation complète + 1er mois inclus",
     features: [
       "Traitement visuel IA en temps réel",
       "100% logiciel — aucun périphérique",
-      "S'échelonne avec votre matériel",
+      "Renouvellement : 30 € / mois",
       "Mises à jour incluses",
       "Support prioritaire",
     ],
@@ -248,6 +248,56 @@ export default function Home() {
                 </p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ TRIAL SECTION ═══════════════ */}
+      <section className="relative py-20 border-y border-violet-tech/20 bg-violet-tech/5">
+        <div className="container">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+            <motion.div
+              variants={fadeUp}
+              custom={0}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="max-w-2xl"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-violet-tech/20 border border-violet-tech/30 text-[10px] font-bold text-violet-accent tracking-widest uppercase mb-4">
+                <Zap className="w-3 h-3" />
+                Offre Limitée
+              </div>
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
+                Testez l'AI Aimbot <span className="text-violet-tech neon-text">gratuitement</span>
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Vous hésitez encore ? Réservez un essai gratuit de 24h pour découvrir la puissance de FUSION AI. 
+                Compatible Steam, Apex Legends et Call of Duty.
+              </p>
+            </motion.div>
+            
+            <motion.div
+              variants={fadeUp}
+              custom={1}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="flex-shrink-0"
+            >
+              <Link href="/support">
+                <Button
+                  size="lg"
+                  className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-3 px-8 py-7 text-lg"
+                >
+                  <Gamepad2 className="w-6 h-6" />
+                  RÉSERVER MON ESSAI
+                </Button>
+              </Link>
+              <p className="text-center text-xs text-muted-foreground mt-4">
+                Réponse sous 24h via Discord
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>

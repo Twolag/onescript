@@ -170,16 +170,30 @@ function ProductSection({
               ))}
             </div>
 
-            <Link href="/purchase">
-              <Button
-                size="lg"
-                className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
-              >
-                <Zap className="w-4 h-4" />
-                ACHETER MAINTENANT
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/purchase">
+                <Button
+                  size="lg"
+                  className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
+                >
+                  <Zap className="w-4 h-4" />
+                  ACHETER MAINTENANT
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+              {title === "FUSION AI" && (
+                <Link href="/support">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
+                  >
+                    <Gamepad2 className="w-4 h-4" />
+                    RÉSERVER UN ESSAI
+                  </Button>
+                </Link>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -241,8 +255,8 @@ export default function Products() {
           { label: "OS", value: "Windows 10 / 11" },
         ]}
         pricing={[
-          { label: "Licence + installation", price: "80 €" },
-          { label: "Abonnement", price: "30 €", note: "/ mois" },
+          { label: "Licence + installation", price: "80 €", note: "1er mois inclus" },
+          { label: "Renouvellement", price: "30 €", note: "/ mois" },
         ]}
         index={0}
       />
