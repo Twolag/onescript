@@ -180,14 +180,14 @@ export default function Purchase() {
         throw new Error("Erreur lors de la création de la session de paiement");
       }
 
-      const { sessionId } = await response.json();
+      const { url } = await response.json();
 
-      // Rediriger vers Stripe Checkout
-      const result = await (stripe as any).redirectToCheckout({ sessionId });
-
-      if (result?.error) {
-        throw new Error(result.error.message);
+      if (!url) {
+        throw new Error("Pas d'URL de paiement reçue");
       }
+
+      // Rediriger vers la page de paiement Stripe
+      window.location.href = url;
     } catch (error) {
       console.error("Erreur:", error);
       const message = error instanceof Error ? error.message : "Erreur inconnue";

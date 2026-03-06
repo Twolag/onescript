@@ -72,13 +72,15 @@ export default async function handler(
         customerName: customerName,
         customerEmail: customerEmail,
       },
+      billing_address_collection: "auto",
     });
 
     console.log("Session created successfully:", session.id);
+    console.log("Redirect URL:", session.url);
 
     return res.status(200).json({
       sessionId: session.id,
-      clientSecret: session.client_secret,
+      url: session.url,
     });
   } catch (error: any) {
     console.error("Stripe error:", error);
