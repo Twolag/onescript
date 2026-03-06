@@ -182,7 +182,7 @@ function ProductSection({
                 </Button>
               </Link>
               {title === "FUSION AI" && (
-                <Link href="/support">
+                <Link href="/trial">
                   <Button
                     size="lg"
                     variant="outline"

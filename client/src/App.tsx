@@ -9,6 +9,7 @@ import Products from "./pages/Products";
 import Compatibility from "./pages/Compatibility";
 import Support from "./pages/Support";
 import Purchase from "./pages/Purchase";
+import Trial from "./pages/Trial";
 import Layout from "./components/Layout";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
         <Route path="/compatibility" component={Compatibility} />
         <Route path="/support" component={Support} />
         <Route path="/purchase" component={Purchase} />
+        <Route path="/trial" component={Trial} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

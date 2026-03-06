@@ -285,7 +285,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="flex-shrink-0"
             >
-              <Link href="/support">
+              <Link href="/trial">
                 <Button
                   size="lg"
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-3 px-8 py-7 text-lg"
