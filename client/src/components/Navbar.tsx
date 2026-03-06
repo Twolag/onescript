@@ -1,4 +1,4 @@
-/**
+/*
  * Navbar — Neon Circuit Design
  * Style: Cyberpunk industriel, fond sombre translucide, accents violet néon
  * Navigation fixe en haut avec effet glass et bordure violet pulsante
@@ -6,7 +6,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Menu, X } from "lucide-react";
+import { Zap, Menu, X, ChevronDown } from "lucide-react";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/onescript-logo-full_647bb391.png";
 
@@ -19,9 +19,16 @@ const navLinks = [
   { href: "/support", label: "Support" },
 ];
 
+const purchaseProducts = [
+  { name: "FUSION AI", href: "/purchase?product=ai-engine" },
+  { name: "Windows Optimization", href: "/purchase?product=windows-opt" },
+  { name: "Jitter Script", href: "/purchase?product=jitter-script" },
+];
+
 export default function Navbar() {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
@@ -74,13 +81,40 @@ export default function Navbar() {
 
         {/* CTA + Mobile toggle */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/purchase"
-            className="hidden sm:inline-flex items-center gap-2 px-5 py-2 text-sm font-display font-semibold tracking-wider text-primary-foreground bg-violet-tech rounded-md hover:bg-violet-secondary transition-colors duration-200 neon-glow"
-          >
-            <Zap className="w-3.5 h-3.5" />
-            ACHETER
-          </Link>
+          {/* Desktop dropdown */}
+          <div className="hidden sm:relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="inline-flex items-center gap-2 px-5 py-2 text-sm font-display font-semibold tracking-wider text-primary-foreground bg-violet-tech rounded-md hover:bg-violet-secondary transition-colors duration-200 neon-glow"
+            >
+              <Zap className="w-3.5 h-3.5" />
+              ACHETER
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full right-0 mt-2 w-56 bg-dark-elevated border border-violet-tech/30 rounded-lg shadow-lg overflow-hidden z-50"
+                >
+                  {purchaseProducts.map((product) => (
+                    <Link
+                      key={product.href}
+                      href={product.href}
+                      onClick={() => setDropdownOpen(false)}
+                      className="block px-4 py-3 text-sm font-body text-foreground hover:bg-violet-tech/10 hover:text-violet-tech transition-colors border-b border-border/30 last:border-b-0"
+                    >
+                      {product.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -120,13 +154,19 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <Link
-                href="/purchase"
-                onClick={() => setMobileOpen(false)}
-                className="block px-4 py-3 text-sm font-display font-semibold tracking-wider text-violet-tech"
-              >
+              <div className="px-4 py-3 text-sm font-display font-semibold tracking-wider text-violet-tech">
                 ACHETER
-              </Link>
+              </div>
+              {purchaseProducts.map((product) => (
+                <Link
+                  key={product.href}
+                  href={product.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-8 py-2 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-dark-elevated transition-colors"
+                >
+                  {product.name}
+                </Link>
+              ))}
             </div>
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/40 to-transparent" />
           </motion.div>
