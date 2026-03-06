@@ -82,7 +82,7 @@ export default function Navbar() {
         {/* CTA + Mobile toggle */}
         <div className="flex items-center gap-3">
           {/* Desktop dropdown */}
-          <div className="hidden sm:relative">
+          <div className="hidden sm:relative sm:inline-flex">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="inline-flex items-center gap-2 px-5 py-2 text-sm font-display font-semibold tracking-wider text-primary-foreground bg-violet-tech rounded-md hover:bg-violet-secondary transition-colors duration-200 neon-glow"
