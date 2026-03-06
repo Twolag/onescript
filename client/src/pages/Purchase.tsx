@@ -1,11 +1,10 @@
-/**
+/*
  * Purchase — Neon Circuit Design
- * Sélection produit, récapitulatif, formulaire de paiement avec Stripe
+ * Sélection produit, récapitulatif, formulaire de paiement avec PayPal
  */
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { loadStripe, Stripe } from "@stripe/stripe-js";
 import emailjs from "@emailjs/browser";
 import {
   Zap,
@@ -14,7 +13,6 @@ import {
   Gamepad2,
   Check,
   Shield,
-  CreditCard,
   Lock,
   AlertCircle,
   Mail,
@@ -25,8 +23,8 @@ import { toast } from "sonner";
 // Initialize EmailJS
 emailjs.init("9IFBv8D5o7NBxRjbq");
 
-// Stripe public key
-const STRIPE_PUBLIC_KEY = "pk_test_51T83TKFrlYRU1NT9p1uI3nnJlJiaIdvDwdYuHrjhkKLHa1LgcpjQghNDNIYG2oPqy6x5EjQXsox6msXsX86FL5WA00DepDnP2x";
+// PayPal configuration
+const PAYPAL_EMAIL = "OneLagTT@paypal.me";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -45,7 +43,7 @@ interface Product {
   id: string;
   name: string;
   icon: React.ElementType;
-  options: { label: string; price: number; note?: string; description?: string; stripeId: string }[];
+  options: { label: string; price: number; note?: string; description?: string }[];
   isAIAimbot?: boolean;
 }
 
@@ -60,14 +58,12 @@ const products: Product[] = [
         label: "Licence + Installation", 
         price: 80,
         description: "Premier mois + installation de l'AI Aimbot inclus",
-        stripeId: "ai-engine-install"
       },
       { 
         label: "Abonnement mensuel", 
         price: 30, 
         note: "/ mois",
         description: "Renouvellement mensuel uniquement",
-        stripeId: "ai-engine-renewal"
       },
     ],
   },
@@ -76,8 +72,8 @@ const products: Product[] = [
     name: "Windows Optimization",
     icon: Monitor,
     options: [
-      { label: "Optimisation simple", price: 10, stripeId: "windows-opt-simple" },
-      { label: "Optimisation + réinstall. Windows", price: 20, stripeId: "windows-opt-full" },
+      { label: "Optimisation simple", price: 10 },
+      { label: "Optimisation + réinstall. Windows", price: 20 },
     ],
   },
   {
@@ -85,13 +81,13 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "Essai 24h", price: 2.5, stripeId: "jitter-24h" },
-      { label: "1 semaine", price: 5, stripeId: "jitter-1week" },
-      { label: "1 mois", price: 15, stripeId: "jitter-1month" },
-      { label: "3 mois", price: 20, stripeId: "jitter-3months" },
-      { label: "6 mois", price: 25, stripeId: "jitter-6months" },
-      { label: "1 an", price: 30, stripeId: "jitter-1year" },
-      { label: "À vie", price: 40, stripeId: "jitter-lifetime" },
+      { label: "Essai 24h", price: 2.5 },
+      { label: "1 semaine", price: 5 },
+      { label: "1 mois", price: 15 },
+      { label: "3 mois", price: 20 },
+      { label: "6 mois", price: 25 },
+      { label: "1 an", price: 30 },
+      { label: "À vie", price: 40 },
     ],
   },
 ];
@@ -100,54 +96,30 @@ const products: Product[] = [
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();
-  return `OS-${timestamp}${random}`.substring(0, 15);
+  return `ORD-${timestamp}-${random}`;
 }
 
 export default function Purchase() {
   const [location] = useLocation();
-  
-  // Déterminer le produit sélectionné depuis l'URL
-  const getInitialProduct = () => {
-    const params = new URLSearchParams(window.location.search);
-    const productParam = params.get("product");
-    if (productParam) {
-      const product = products.find((p) => p.name === productParam);
-      if (product) return product.id;
-    }
-    return "ai-engine";
-  };
-  
-  const [selectedProduct, setSelectedProduct] = useState<string>(getInitialProduct());
-  const [selectedOption, setSelectedOption] = useState<string>(() => {
-    const product = products.find((p) => p.id === getInitialProduct());
-    if (product && product.options.length > 0) {
-      return product.options[0].label;
-    }
-    return "Licence + Installation";
-  });
-  const [isLoading, setIsLoading] = useState(false);
+  const searchParams = new URLSearchParams(location.split("?")[1]);
+  const productId = searchParams.get("product") || "ai-engine";
+
+  const product = products.find((p) => p.id === productId) || products[0];
+
+  const [selectedItems, setSelectedItems] = useState<typeof product.options>([]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Réinitialiser l'option quand le produit change
-  useEffect(() => {
-    const product = products.find((p) => p.id === selectedProduct);
-    if (product && product.options.length > 0) {
-      setSelectedOption(product.options[0].label);
-    }
-  }, [selectedProduct]);
+  const total = selectedItems.reduce((sum, item) => sum + item.price, 0);
 
-  const product = products.find((p) => p.id === selectedProduct)!;
-
-  const selectOption = (label: string) => {
-    setSelectedOption(label);
+  const selectOption = (option: typeof product.options[0]) => {
+    // Remplacer l'option existante par la nouvelle (une seule sélection)
+    setSelectedItems([option]);
   };
-
-  const selectedItems = product.options.filter((o) => o.label === selectedOption);
-  const total = selectedItems.reduce((sum, o) => sum + o.price, 0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -162,59 +134,39 @@ export default function Purchase() {
       return;
     }
 
-      if (selectedItems.length !== 1) {
-        toast.error("Veuillez sélectionner une seule option");
-        return;
-      }
+    if (selectedItems.length !== 1) {
+      toast.error("Veuillez sélectionner une seule option");
+      return;
+    }
 
     setIsLoading(true);
 
     try {
-      // Charger Stripe
-      const stripe = await loadStripe(STRIPE_PUBLIC_KEY);
-      if (!stripe) {
-        throw new Error("Impossible de charger Stripe");
-      }
+      const selectedItem = selectedItems[0];
+      const orderNumber = generateOrderNumber();
 
-      // Préparer les articles pour Stripe
-      const items = selectedItems.map((item) => ({
-        name: `${product.name} - ${item.label}`,
-        description: item.description || "",
-        price: Math.round(item.price * 100), // Convertir en cents
-      }));
-
-      // Créer la session de paiement
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items,
-          customerEmail: formData.email,
-          customerName: `${formData.firstName} ${formData.lastName}`,
-        }),
+      // Envoyer un email de confirmation
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: formData.email,
+        customer_name: `${formData.firstName} ${formData.lastName}`,
+        order_number: orderNumber,
+        product_name: `${product.name} - ${selectedItem.label}`,
+        product_price: `${selectedItem.price}€`,
+        message: `Votre commande a été créée. Vous allez être redirigé vers PayPal pour finaliser le paiement.`,
       });
 
-      if (!response.ok) {
-        throw new Error("Erreur lors de la création de la session de paiement");
-      }
+      // Construire l'URL PayPal avec les paramètres
+      const paypalUrl = new URL(`https://www.paypal.me/${PAYPAL_EMAIL}/${selectedItem.price}`);
+      paypalUrl.searchParams.append("note", `${product.name} - ${selectedItem.label} (Commande: ${orderNumber})`);
 
-      const { url } = await response.json();
-
-      if (!url) {
-        throw new Error("Pas d'URL de paiement reçue");
-      }
-
-      // Rediriger vers la page de paiement Stripe
-      window.location.href = url;
+      // Rediriger vers PayPal
+      window.location.href = paypalUrl.toString();
     } catch (error) {
       console.error("Erreur:", error);
       const message = error instanceof Error ? error.message : "Erreur inconnue";
       toast.error("Erreur lors du paiement", {
         description: message,
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -232,176 +184,98 @@ export default function Purchase() {
             animate="visible"
             className="max-w-2xl"
           >
-            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Achat
-            </span>
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              Passez à la{" "}
-              <span className="text-violet-tech neon-text">vitesse supérieure</span>
+            <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight mb-4">
+              Finaliser votre <span className="text-violet-tech">achat</span>
             </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Sélectionnez votre produit, choisissez vos options et procédez au
-              paiement sécurisé. Vous recevrez votre numéro de commande par email.
+            <p className="text-lg text-muted-foreground">
+              Sélectionnez votre produit et complétez le formulaire pour accéder à votre achat.
             </p>
           </motion.div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
       </section>
 
-      {/* Purchase flow */}
-      <section className="py-16 lg:py-24">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left: Product selection */}
+      {/* Main Content */}
+      <section className="relative py-12 lg:py-16">
+        <div className="absolute inset-0 bg-dark-surface/20" />
+        <div className="relative container">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Left: Products and Form */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Step 1: Choose product */}
-              <motion.div
-                variants={fadeUp}
-                custom={0}
-                initial="hidden"
-                animate="visible"
-              >
-                <h3 className="font-display font-bold text-lg tracking-wide mb-4 flex items-center gap-2">
-                  <span className="w-7 h-7 flex items-center justify-center rounded-md bg-violet-tech text-xs font-bold text-white">
-                    1
-                  </span>
-                  Choisissez votre produit
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {products.map((p) => (
-                    <button
-                      key={p.id}
-                      onClick={() => {
-                        setSelectedProduct(p.id);
-                        setSelectedOption(p.options[0].label);
-                      }}
-                      className={`glass-card rounded-lg p-5 text-left transition-all duration-200 ${
-                        selectedProduct === p.id
-                          ? "border-violet-tech/60 ring-1 ring-violet-tech/20 bg-violet-tech/5"
-                          : "hover:border-violet-tech/20"
-                      }`}
-                    >
-                      <p.icon
-                        className={`w-5 h-5 mb-3 ${
-                          selectedProduct === p.id
-                            ? "text-violet-tech"
-                            : "text-muted-foreground"
-                        }`}
-                      />
-                      <h4 className="font-display font-semibold text-sm tracking-wide">
-                        {p.name}
-                      </h4>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        À partir de {p.options[0].price} €
-                      </p>
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Step 2: Choose options */}
+              {/* Product Selection */}
               <motion.div
                 variants={fadeUp}
                 custom={1}
                 initial="hidden"
                 animate="visible"
+                className="glass-card rounded-lg p-6"
               >
-                <h3 className="font-display font-bold text-lg tracking-wide mb-4 flex items-center gap-2">
-                  <span className="w-7 h-7 flex items-center justify-center rounded-md bg-violet-tech text-xs font-bold text-white">
-                    2
-                  </span>
-                  Sélectionnez vos options
-                </h3>
+                <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
+                  <product.icon className="w-6 h-6 text-violet-tech" />
+                  {product.name}
+                </h2>
+
                 <div className="space-y-3">
-                  {product.options.map((option) => (
-                    <button
-                      key={option.label}
-                      onClick={() => selectOption(option.label)}
-                      className={`w-full glass-card rounded-lg p-5 flex items-center justify-between transition-all duration-200 ${
-                        selectedOption === option.label
-                          ? "border-violet-tech/60 ring-1 ring-violet-tech/20 bg-violet-tech/5"
-                          : "hover:border-violet-tech/20"
+                  {product.options.map((option, idx) => (
+                    <motion.button
+                      key={idx}
+                      onClick={() => selectOption(option)}
+                      whileHover={{ scale: 1.02 }}
+                      className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                        selectedItems.includes(option)
+                          ? "border-violet-tech bg-violet-tech/10"
+                          : "border-border/50 hover:border-violet-tech/50 bg-dark-elevated/50"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
-                            selectedOption === option.label
-                              ? "bg-violet-tech border-violet-tech"
-                              : "border-border/50"
-                          }`}
-                        >
-                          {selectedOption === option.label && (
-                            <Check className="w-3 h-3 text-white" />
-                          )}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 flex-1">
+                          <div
+                            className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                              selectedItems.includes(option)
+                                ? "border-violet-tech bg-violet-tech"
+                                : "border-border/50"
+                            }`}
+                          >
+                            {selectedItems.includes(option) && (
+                              <Check className="w-3 h-3 text-primary-foreground" />
+                            )}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground">{option.label}</p>
+                            {option.description && (
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {option.description}
+                              </p>
+                            )}
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <span className="text-sm font-medium text-foreground block">
-                            {option.label}
-                          </span>
-                          {option.description && (
-                            <span className="text-xs text-muted-foreground">
-                              {option.description}
-                            </span>
+                        <div className="text-right">
+                          <p className="font-display font-bold text-violet-tech text-lg">
+                            {option.price}€
+                          </p>
+                          {option.note && (
+                            <p className="text-xs text-muted-foreground">{option.note}</p>
                           )}
                         </div>
                       </div>
-                      <span className="font-display font-bold text-foreground ml-4 flex-shrink-0">
-                        {option.price} €
-                        {option.note && (
-                          <span className="text-xs font-normal text-muted-foreground ml-1">
-                            {option.note}
-                          </span>
-                        )}
-                      </span>
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </motion.div>
 
-              {/* AI Aimbot Info */}
-              {product.isAIAimbot && (
-                <motion.div
-                  variants={fadeUp}
-                  custom={1.5}
-                  initial="hidden"
-                  animate="visible"
-                  className="glass-card rounded-lg p-5 border-l-2 border-violet-tech"
-                >
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 text-violet-tech flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-display font-semibold text-sm text-foreground mb-2">
-                        Compatibilité AI Aimbot
-                      </h4>
-                      <p className="text-xs text-muted-foreground mb-2">
-                        <strong>Disponible maintenant:</strong> Steam, Apex Legends, Call of Duty
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        <strong>En développement:</strong> Autres plateformes seront ajoutées prochainement
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Step 3: Payment form */}
+              {/* Form */}
               <motion.div
                 variants={fadeUp}
                 custom={2}
                 initial="hidden"
                 animate="visible"
+                className="glass-card rounded-lg p-6"
               >
-                <h3 className="font-display font-bold text-lg tracking-wide mb-4 flex items-center gap-2">
-                  <span className="w-7 h-7 flex items-center justify-center rounded-md bg-violet-tech text-xs font-bold text-white">
-                    3
-                  </span>
-                  Vos informations
-                </h3>
-                <form onSubmit={handleCheckout} className="glass-card rounded-lg p-6 lg:p-8">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <h2 className="text-2xl font-display font-bold mb-6">Vos informations</h2>
+
+                <form onSubmit={handleCheckout} className="space-y-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                      <label className="block text-sm font-semibold text-foreground mb-2">
                         Prénom
                       </label>
                       <input
@@ -415,7 +289,7 @@ export default function Purchase() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                      <label className="block text-sm font-semibold text-foreground mb-2">
                         Nom
                       </label>
                       <input
@@ -429,8 +303,9 @@ export default function Purchase() {
                       />
                     </div>
                   </div>
-                  <div className="mb-6">
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-2">
                       Email
                     </label>
                     <input
@@ -449,10 +324,10 @@ export default function Purchase() {
                       <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                       <div>
                         <h4 className="font-display font-semibold text-sm text-foreground mb-1">
-                          Paiement sécurisé via Stripe
+                          Paiement sécurisé via PayPal
                         </h4>
                         <p className="text-xs text-muted-foreground">
-                          Vous serez redirigé vers la page de paiement sécurisée de Stripe. Vos données bancaires ne sont jamais stockées sur notre serveur.
+                          Vous serez redirigé vers PayPal pour finaliser le paiement de manière sécurisée. Vos données bancaires ne sont jamais stockées sur notre serveur.
                         </p>
                       </div>
                     </div>
@@ -467,12 +342,12 @@ export default function Purchase() {
                     {isLoading ? (
                       <>
                         <span className="animate-spin">⏳</span>
-                        Redirection vers Stripe...
+                        Redirection vers PayPal...
                       </>
                     ) : (
                       <>
                         <Lock className="w-4 h-4" />
-                        PAYER {total} € VIA STRIPE
+                        PAYER {total} € VIA PAYPAL
                       </>
                     )}
                   </Button>
@@ -498,103 +373,62 @@ export default function Purchase() {
               className="lg:col-span-1"
             >
               <div className="sticky top-24 glass-card rounded-lg p-6">
-                <h3 className="font-display font-bold text-base tracking-wide mb-6 pb-4 border-b border-border/30">
-                  Récapitulatif
-                </h3>
+                <h3 className="text-xl font-display font-bold mb-6">Récapitulatif</h3>
 
-                <div className="space-y-4 mb-6">
-                  <div className="flex items-center gap-3">
-                    <product.icon className="w-5 h-5 text-violet-tech" />
-                    <span className="font-medium text-sm text-foreground">
-                      {product.name}
-                    </span>
-                  </div>
+                {selectedItems.length > 0 ? (
+                  <div className="space-y-4">
+                    {selectedItems.map((item, idx) => (
+                      <div key={idx} className="flex justify-between items-start pb-4 border-b border-border/30">
+                        <div>
+                          <p className="font-semibold text-foreground">{product.name}</p>
+                          <p className="text-sm text-muted-foreground">{item.label}</p>
+                        </div>
+                        <p className="font-display font-bold text-violet-tech">{item.price}€</p>
+                      </div>
+                    ))}
 
-                  {selectedItems.length > 0 && (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">{selectedItems[0].label}</span>
-                      <span className="font-medium text-foreground">
-                        {selectedItems[0].price} €
-                        {selectedItems[0].note && (
-                          <span className="text-xs text-muted-foreground">
-                            {selectedItems[0].note}
-                          </span>
-                        )}
-                      </span>
+                    <div className="pt-4 space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-muted-foreground">Sous-total</span>
+                        <span className="font-semibold">{total}€</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-muted-foreground">Frais</span>
+                        <span className="font-semibold">0€</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-4 border-t border-border/30">
+                        <span className="font-display font-bold">Total</span>
+                        <span className="font-display font-bold text-violet-tech text-lg">
+                          {total}€
+                        </span>
+                      </div>
                     </div>
-                  )}
-                </div>
 
-                <div className="border-t border-border/30 pt-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-display font-semibold text-sm tracking-wide">
-                      Total
-                    </span>
-                    <span className="font-display font-extrabold text-2xl text-violet-tech">
-                      {total} €
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-6 space-y-3">
-                  {[
-                    "Numéro de commande généré",
-                    "Email de confirmation envoyé",
-                    "Support Discord 24/7",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-center gap-2 text-xs text-muted-foreground"
-                    >
-                      <Check className="w-3.5 h-3.5 text-violet-tech flex-shrink-0" />
-                      {item}
+                    <div className="mt-6 p-4 bg-violet-tech/5 border border-violet-tech/20 rounded-lg">
+                      <p className="text-xs text-muted-foreground mb-2">
+                        💡 Après le paiement, vous recevrez un email de confirmation avec les instructions d'accès.
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Besoin d'aide ? Rejoignez notre{" "}
+                        <a
+                          href={DISCORD_LINK}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-violet-tech hover:underline"
+                        >
+                          serveur Discord
+                        </a>
+                      </p>
                     </div>
-                  ))}
-                </div>
-
-                {/* Instructions */}
-                <div className="mt-6 pt-4 border-t border-border/30">
-                  <p className="text-xs font-semibold text-foreground mb-2">
-                    Après votre paiement :
-                  </p>
-                  <ol className="text-xs text-muted-foreground space-y-1 list-decimal list-inside">
-                    <li>Recevez votre numéro de commande par email</li>
-                    <li>Rejoignez notre Discord</li>
-                    <li>Créez un ticket avec votre numéro</li>
-                    <li>Nous vous répondrons sous 24h</li>
-                  </ol>
-                </div>
-
-                {/* Discord Link */}
-                <div className="mt-4">
-                  <a
-                    href={DISCORD_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md bg-violet-tech/10 border border-violet-tech/30 text-violet-tech hover:bg-violet-tech/20 transition-colors text-xs font-medium"
-                  >
-                    <Mail className="w-3.5 h-3.5" />
-                    Rejoindre Discord
-                  </a>
-                </div>
-
-                {/* Payment methods */}
-                <div className="mt-4 pt-4 border-t border-border/30">
-                  <p className="text-xs text-muted-foreground mb-2">
-                    Moyens de paiement acceptés
-                  </p>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    <span className="px-2 py-1 rounded border border-border/30 bg-dark-elevated/50">
-                      Stripe
-                    </span>
-                    <span className="px-2 py-1 rounded border border-border/30 bg-dark-elevated/50">
-                      PayPal
-                    </span>
-                    <span className="px-2 py-1 rounded border border-border/30 bg-dark-elevated/50">
-                      CB
-                    </span>
                   </div>
-                </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <AlertCircle className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
+                    <p className="text-muted-foreground">
+                      Sélectionnez une option pour voir le récapitulatif
+                    </p>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
