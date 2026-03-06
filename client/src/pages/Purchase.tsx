@@ -510,22 +510,19 @@ export default function Purchase() {
                     </span>
                   </div>
 
-                  {selectedItems.map((o) => (
-                    <div
-                      key={o.label}
-                      className="flex items-center justify-between text-sm"
-                    >
-                      <span className="text-muted-foreground">{o.label}</span>
+                  {selectedItems.length > 0 && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{selectedItems[0].label}</span>
                       <span className="font-medium text-foreground">
-                        {o.price} €
-                        {o.note && (
+                        {selectedItems[0].price} €
+                        {selectedItems[0].note && (
                           <span className="text-xs text-muted-foreground">
-                            {o.note}
+                            {selectedItems[0].note}
                           </span>
                         )}
                       </span>
                     </div>
-                  ))}
+                  )}
                 </div>
 
                 <div className="border-t border-border/30 pt-4">
