@@ -164,7 +164,7 @@ export default function Purchase() {
       }));
 
       // Créer la session de paiement
-      const response = await fetch("/api/checkout/create-checkout-session", {
+      const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
