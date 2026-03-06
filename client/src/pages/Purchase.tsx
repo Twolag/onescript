@@ -156,15 +156,17 @@ export default function Purchase() {
       });
 
       // Construire l'URL PayPal avec les paramétres
-      // Format: https://www.paypal.me/OneLagTT/80?note=Description
-      const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}?note=${encodeURIComponent(`${product.name} - ${selectedItem.label} (Commande: ${orderNumber})`)}`;
+      // Format: https://www.paypal.me/OneLagTT/80
+      const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
 
-      // Rediriger vers PayPal
+      // Afficher le toast et rediriger
+      toast.success("Redirection vers PayPal...");
+      
+      // Rediriger vers PayPal avec un délai court
       setTimeout(() => {
         window.location.href = paypalLink;
-      }, 500);
+      }, 300);
       
-      toast.success("Redirection vers PayPal...");
       return;
     } catch (error) {
       console.error("Erreur:", error);
