@@ -114,6 +114,39 @@ const reviews: Review[] = [
     product: "Jitter Script",
     type: "text",
   },
+  {
+    id: "9",
+    author: "Joueur Apex Pro",
+    date: "Février 2026",
+    rating: 5,
+    title: "40 frags, 7000 dégâts - Résultats exceptionnels",
+    content: "Les performances avec FUSION AI sont incroyables. 40 frags et 7000 dégâts en une seule partie. C'est un game-changer pour les joueurs compétitifs.",
+    product: "FUSION AI",
+    type: "screenshot",
+    mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/kwEGlfEOKMBFgRMz.png",
+  },
+  {
+    id: "10",
+    author: "Vidéo de démonstration",
+    date: "Mars 2026",
+    rating: 5,
+    title: "Démonstration sans interaction manette",
+    content: "Vidéo complète montrant FUSION AI en action. Regardez bien - pas de mouvement de manette, juste la précision IA pure.",
+    product: "FUSION AI",
+    type: "video",
+    mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/NcnRsNUsFldqktuZ.mp4",
+  },
+  {
+    id: "11",
+    author: "Vidéo de démonstration",
+    date: "Mars 2026",
+    rating: 5,
+    title: "Gameplay complet avec FUSION AI",
+    content: "Vidéo d'une partie entière avec FUSION AI activé. Voyez la différence en direct et la stabilité du système.",
+    product: "FUSION AI",
+    type: "video",
+    mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/UqTqnNMsOONardRt.mov",
+  },
 ];
 
 export default function Reviews() {
@@ -263,14 +296,14 @@ export default function Reviews() {
       {/* Media Lightbox Modal */}
       {selectedMedia && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
           onClick={() => setSelectedMedia(null)}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="relative max-w-4xl w-full max-h-[90vh]"
+            className="relative w-full max-w-6xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -279,12 +312,20 @@ export default function Reviews() {
             >
               ✕ Fermer
             </button>
-            <video
-              src={selectedMedia}
-              controls
-              autoPlay
-              className="w-full h-full rounded-lg"
-            />
+            {selectedMedia.endsWith('.mp4') || selectedMedia.endsWith('.mov') ? (
+              <video
+                src={selectedMedia}
+                controls
+                autoPlay
+                className="w-full h-auto rounded-lg shadow-2xl"
+              />
+            ) : (
+              <img
+                src={selectedMedia}
+                alt="Media preview"
+                className="w-full h-auto rounded-lg shadow-2xl"
+              />
+            )}
           </motion.div>
         </div>
       )}
