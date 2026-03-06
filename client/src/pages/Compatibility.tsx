@@ -51,6 +51,15 @@ const osData = [
   { name: "macOS / Linux", status: "incompatible", note: "Non supporté" },
 ];
 
+const gamingPlatformsData = [
+  { name: "Steam", status: "recommended", note: "Disponible maintenant — support complet" },
+  { name: "Apex Legends", status: "recommended", note: "Disponible maintenant — support complet" },
+  { name: "Call of Duty", status: "recommended", note: "Disponible maintenant — support complet" },
+  { name: "Autres plateformes", status: "limited", note: "En cours de développement — bientôt disponibles" },
+];
+
+const aiAimbotNote = "La compatibilité des plateformes gaming est directement liée à l'AI Aimbot de FUSION AI. Les jeux listés ci-dessus sont actuellement supportés. D'autres seront ajoutés régulièrement.";
+
 function StatusIcon({ status }: { status: string }) {
   switch (status) {
     case "recommended":
@@ -247,6 +256,63 @@ export default function Compatibility() {
                   <StatusBadge status={cpu.status} />
                 </div>
                 <p className="text-xs text-muted-foreground">{cpu.tier}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gaming Platforms Section */}
+      <section className="py-16 lg:py-24 relative">
+        <div className="absolute inset-0 bg-dark-surface/20" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/15 to-transparent" />
+        <div className="relative container">
+          <motion.div
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <div className="w-10 h-10 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
+              <Gamepad2 className="w-5 h-5 text-violet-tech" />
+            </div>
+            <div>
+              <h2 className="font-display font-bold text-2xl tracking-tight">
+                Compatibilité des jeux (AI Aimbot)
+              </h2>
+              <p className="text-sm text-muted-foreground">Plateformes supportées par FUSION AI</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            custom={1}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="glass-card rounded-lg p-5 mb-6 border-l-2 border-violet-tech"
+          >
+            <p className="text-sm text-muted-foreground">{aiAimbotNote}</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {gamingPlatformsData.map((platform, i) => (
+              <motion.div
+                key={platform.name}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="glass-card rounded-lg p-5 hover:border-violet-tech/30 transition-colors duration-300"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-medium text-foreground">{platform.name}</h4>
+                  <StatusBadge status={platform.status} />
+                </div>
+                <p className="text-xs text-muted-foreground">{platform.note}</p>
               </motion.div>
             ))}
           </div>

@@ -1,6 +1,6 @@
 /**
  * Purchase — Neon Circuit Design
- * Sélection produit, récapitulatif, formulaire de paiement (démo)
+ * Sélection produit, récapitulatif, formulaire de paiement avec numéro de commande et email automatique
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -13,6 +13,8 @@ import {
   Shield,
   CreditCard,
   Lock,
+  AlertCircle,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -26,11 +28,14 @@ const fadeUp = {
   }),
 };
 
+const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
+
 interface Product {
   id: string;
   name: string;
   icon: React.ElementType;
-  options: { label: string; price: number; note?: string }[];
+  options: { label: string; price: number; note?: string; description?: string }[];
+  isAIAimbot?: boolean;
 }
 
 const products: Product[] = [
@@ -38,9 +43,19 @@ const products: Product[] = [
     id: "ai-engine",
     name: "FUSION AI",
     icon: Cpu,
+    isAIAimbot: true,
     options: [
-      { label: "Licence + Installation", price: 80 },
-      { label: "Abonnement mensuel", price: 30, note: "/ mois" },
+      { 
+        label: "Licence + Installation", 
+        price: 80,
+        description: "Premier mois + installation de l'AI Aimbot inclus"
+      },
+      { 
+        label: "Abonnement mensuel", 
+        price: 30, 
+        note: "/ mois",
+        description: "Renouvellement mensuel uniquement"
+      },
     ],
   },
   {
@@ -68,11 +83,27 @@ const products: Product[] = [
   },
 ];
 
+// Générer un numéro de commande unique
+function generateOrderNumber(): string {
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+  return `OS-${timestamp}${random}`.substring(0, 15);
+}
+
 export default function Purchase() {
   const [selectedProduct, setSelectedProduct] = useState<string>("ai-engine");
   const [selectedOptions, setSelectedOptions] = useState<Set<string>>(
     new Set(["Licence + Installation"])
   );
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    cardNumber: "",
+    expiration: "",
+    cvc: "",
+  });
 
   const product = products.find((p) => p.id === selectedProduct)!;
 
@@ -90,11 +121,101 @@ export default function Purchase() {
     .filter((o) => selectedOptions.has(o.label))
     .reduce((sum, o) => sum + o.price, 0);
 
-  const handlePurchase = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePurchase = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Commande enregistrée !", {
-      description: `${product.name} — ${total} €. Vous recevrez un email de confirmation.`,
-    });
+    
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.cardNumber) {
+      toast.error("Veuillez remplir tous les champs");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const orderNumber = generateOrderNumber();
+      const selectedOptionsList = product.options
+        .filter((o) => selectedOptions.has(o.label))
+        .map((o) => `${o.label} - ${o.price}€`)
+        .join("\n");
+
+      // Préparer le message pour Formspree
+      const emailMessage = `
+NOUVELLE COMMANDE - ${orderNumber}
+
+=== INFORMATIONS CLIENT ===
+Nom: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+
+=== DÉTAILS DE LA COMMANDE ===
+Produit: ${product.name}
+Options:
+${selectedOptionsList}
+
+Total: ${total}€
+
+=== INSTRUCTIONS ===
+Bienvenue chez OneScript!
+
+Pour procéder à l'installation et recevoir votre licence, veuillez:
+
+1. Rejoindre notre serveur Discord: ${DISCORD_LINK}
+2. Créer un ticket en indiquant votre numéro de commande: ${orderNumber}
+3. Nous répondrons dans un délai maximum de 24 heures
+
+${product.isAIAimbot ? `
+IMPORTANT - AI AIMBOT:
+- Compatibilité actuellement disponible: Steam, Apex Legends, Call of Duty
+- Autres plateformes en cours de développement
+- Votre installation sera configurée pour les jeux compatibles
+` : ""}
+
+Support: ${DISCORD_LINK}
+      `.trim();
+
+      // Envoyer via Formspree
+      const response = await fetch("https://formspree.io/f/mlgpenar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          subject: `Nouvelle commande: ${orderNumber}`,
+          message: emailMessage,
+          _captcha: false,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Commande confirmée!", {
+          description: `Numéro de commande: ${orderNumber}\nUn email de confirmation a été envoyé.`,
+        });
+
+        // Réinitialiser le formulaire
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          cardNumber: "",
+          expiration: "",
+          cvc: "",
+        });
+      } else {
+        throw new Error("Erreur lors de l'envoi");
+      }
+    } catch (error) {
+      toast.error("Erreur lors de la commande", {
+        description: "Veuillez réessayer ou contacter le support",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -119,7 +240,7 @@ export default function Purchase() {
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
               Sélectionnez votre produit, choisissez vos options et procédez au
-              paiement sécurisé.
+              paiement sécurisé. Vous recevrez votre numéro de commande par email.
             </p>
           </motion.div>
         </div>
@@ -213,11 +334,18 @@ export default function Purchase() {
                             <Check className="w-3 h-3 text-white" />
                           )}
                         </div>
-                        <span className="text-sm font-medium text-foreground">
-                          {option.label}
-                        </span>
+                        <div className="text-left">
+                          <span className="text-sm font-medium text-foreground block">
+                            {option.label}
+                          </span>
+                          {option.description && (
+                            <span className="text-xs text-muted-foreground">
+                              {option.description}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                      <span className="font-display font-bold text-foreground">
+                      <span className="font-display font-bold text-foreground ml-4 flex-shrink-0">
                         {option.price} €
                         {option.note && (
                           <span className="text-xs font-normal text-muted-foreground ml-1">
@@ -229,6 +357,32 @@ export default function Purchase() {
                   ))}
                 </div>
               </motion.div>
+
+              {/* AI Aimbot Info */}
+              {product.isAIAimbot && (
+                <motion.div
+                  variants={fadeUp}
+                  custom={1.5}
+                  initial="hidden"
+                  animate="visible"
+                  className="glass-card rounded-lg p-5 border-l-2 border-violet-tech"
+                >
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-violet-tech flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-display font-semibold text-sm text-foreground mb-2">
+                        Compatibilité AI Aimbot
+                      </h4>
+                      <p className="text-xs text-muted-foreground mb-2">
+                        <strong>Disponible maintenant:</strong> Steam, Apex Legends, Call of Duty
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        <strong>En développement:</strong> Autres plateformes seront ajoutées prochainement
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
 
               {/* Step 3: Payment form */}
               <motion.div
@@ -251,6 +405,9 @@ export default function Purchase() {
                       </label>
                       <input
                         type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
                         placeholder="Jean"
@@ -262,6 +419,9 @@ export default function Purchase() {
                       </label>
                       <input
                         type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
                         placeholder="Dupont"
@@ -274,6 +434,9 @@ export default function Purchase() {
                     </label>
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
                       placeholder="jean@email.com"
@@ -286,6 +449,9 @@ export default function Purchase() {
                     <div className="relative">
                       <input
                         type="text"
+                        name="cardNumber"
+                        value={formData.cardNumber}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none pr-10"
                         placeholder="4242 4242 4242 4242"
@@ -300,6 +466,9 @@ export default function Purchase() {
                       </label>
                       <input
                         type="text"
+                        name="expiration"
+                        value={formData.expiration}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
                         placeholder="MM / AA"
@@ -311,6 +480,9 @@ export default function Purchase() {
                       </label>
                       <input
                         type="text"
+                        name="cvc"
+                        value={formData.cvc}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
                         placeholder="123"
@@ -321,11 +493,20 @@ export default function Purchase() {
                   <Button
                     type="submit"
                     size="lg"
+                    disabled={total === 0 || isLoading}
                     className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
-                    disabled={total === 0}
                   >
-                    <Lock className="w-4 h-4" />
-                    PAYER {total} €
+                    {isLoading ? (
+                      <>
+                        <span className="animate-spin">⏳</span>
+                        Traitement...
+                      </>
+                    ) : (
+                      <>
+                        <Lock className="w-4 h-4" />
+                        PAYER {total} €
+                      </>
+                    )}
                   </Button>
 
                   <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
@@ -394,9 +575,9 @@ export default function Purchase() {
 
                 <div className="mt-6 space-y-3">
                   {[
-                    "Téléchargement immédiat",
-                    "Support technique inclus",
-                    "Remboursement sous 14 jours",
+                    "Numéro de commande généré",
+                    "Email de confirmation envoyé",
+                    "Support Discord 24/7",
                   ].map((item) => (
                     <div
                       key={item}
@@ -408,8 +589,24 @@ export default function Purchase() {
                   ))}
                 </div>
 
-                {/* Payment methods */}
+                {/* Discord Link */}
                 <div className="mt-6 pt-4 border-t border-border/30">
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Après votre commande, rejoignez notre Discord:
+                  </p>
+                  <a
+                    href={DISCORD_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md bg-violet-tech/10 border border-violet-tech/30 text-violet-tech hover:bg-violet-tech/20 transition-colors text-xs font-medium"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                    Rejoindre Discord
+                  </a>
+                </div>
+
+                {/* Payment methods */}
+                <div className="mt-4 pt-4 border-t border-border/30">
                   <p className="text-xs text-muted-foreground mb-2">
                     Moyens de paiement acceptés
                   </p>
