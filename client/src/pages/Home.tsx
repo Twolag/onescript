@@ -84,7 +84,7 @@ const pricingPlans = [
       "Réduction input lag",
     ],
     popular: false,
-    cta: "Commencer",
+    cta: "CHOISIR CE PLAN",
   },
   {
     name: "FUSION AI",
@@ -114,7 +114,7 @@ const pricingPlans = [
       "Manette uniquement",
     ],
     popular: false,
-    cta: "Essayer",
+    cta: "CHOISIR CE PLAN",
   },
 ];
 
@@ -561,7 +561,7 @@ export default function Home() {
                   ))}
                 </ul>
 
-                <Link href="/purchase">
+                <Link href={`/purchase?product=${encodeURIComponent(plan.name)}`}>
                   <Button
                     className={`w-full font-display font-semibold tracking-wider ${
                       plan.popular

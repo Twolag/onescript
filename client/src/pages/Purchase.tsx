@@ -3,7 +3,8 @@
  * Sélection produit, récapitulatif, formulaire de paiement avec Stripe
  */
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 import emailjs from "@emailjs/browser";
 import {
@@ -103,16 +104,41 @@ function generateOrderNumber(): string {
 }
 
 export default function Purchase() {
-  const [selectedProduct, setSelectedProduct] = useState<string>("ai-engine");
-  const [selectedOptions, setSelectedOptions] = useState<Set<string>>(
-    new Set(["Licence + Installation"])
-  );
+  const [location] = useLocation();
+  
+  // Déterminer le produit sélectionné depuis l'URL
+  const getInitialProduct = () => {
+    const params = new URLSearchParams(window.location.search);
+    const productParam = params.get("product");
+    if (productParam) {
+      const product = products.find((p) => p.name === productParam);
+      if (product) return product.id;
+    }
+    return "ai-engine";
+  };
+  
+  const [selectedProduct, setSelectedProduct] = useState<string>(getInitialProduct());
+  const [selectedOptions, setSelectedOptions] = useState<Set<string>>(() => {
+    const product = products.find((p) => p.id === getInitialProduct());
+    if (product && product.options.length > 0) {
+      return new Set([product.options[0].label]);
+    }
+    return new Set(["Licence + Installation"]);
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
   });
+
+  // Réinitialiser les options quand le produit change
+  useEffect(() => {
+    const product = products.find((p) => p.id === selectedProduct);
+    if (product && product.options.length > 0) {
+      setSelectedOptions(new Set([product.options[0].label]));
+    }
+  }, [selectedProduct]);
 
   const product = products.find((p) => p.id === selectedProduct)!;
 

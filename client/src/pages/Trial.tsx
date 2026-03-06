@@ -174,7 +174,7 @@ Demande soumise le: ${new Date().toLocaleString("fr-FR")}
             <Zap className="w-8 h-8 text-purple-500" />
           </div>
           <p className="text-gray-300 text-lg">
-            Testez l'AI Aimbot gratuitement pendant 7 jours
+            Testez l'AI Aimbot gratuitement pendant 24 heures
           </p>
           <p className="text-gray-400 text-sm mt-2">
             Remplissez le formulaire ci-dessous et nous vous contacterons sur
@@ -356,7 +356,7 @@ Demande soumise le: ${new Date().toLocaleString("fr-FR")}
           className="mt-12 grid md:grid-cols-3 gap-6"
         >
           <div className="bg-slate-900/50 border border-purple-500/20 rounded-lg p-6 text-center">
-            <div className="text-2xl font-bold text-purple-400 mb-2">7 jours</div>
+            <div className="text-2xl font-bold text-purple-400 mb-2">24 heures</div>
             <p className="text-gray-300 text-sm">Essai gratuit complet</p>
           </div>
           <div className="bg-slate-900/50 border border-purple-500/20 rounded-lg p-6 text-center">
