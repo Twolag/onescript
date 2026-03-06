@@ -106,7 +106,7 @@ export default function Purchase() {
 
   const product = products.find((p) => p.id === productId) || products[0];
 
-  const [selectedItems, setSelectedItems] = useState<typeof product.options>([]);
+  const [selectedItems, setSelectedItems] = useState<Array<{ label: string; price: number; note?: string; description?: string }>>([]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
