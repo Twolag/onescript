@@ -155,18 +155,17 @@ export default function Purchase() {
         message: `Votre commande a été créée. Vous allez être redirigé vers PayPal pour finaliser le paiement.`,
       });
 
-      // Construire l'URL PayPal avec les paramétres
-      // Format: https://www.paypal.me/OneLagTT/80
+      // Construire l'URL PayPal - Format simple et direct
       const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
 
-      // Afficher le toast et rediriger
+      // Afficher le toast
       toast.success("Redirection vers PayPal...");
       
-      // Rediriger vers PayPal avec un délai court
-      setTimeout(() => {
-        window.location.href = paypalLink;
-      }, 300);
+      // Ouvrir le lien PayPal dans un nouvel onglet
+      // Cette méthode est plus robuste et ne peut pas être bloquée
+      window.open(paypalLink, '_blank');
       
+      setIsLoading(false);
       return;
     } catch (error) {
       console.error("Erreur:", error);
