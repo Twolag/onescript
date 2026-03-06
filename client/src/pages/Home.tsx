@@ -65,7 +65,7 @@ const products = [
 ];
 
 const stats = [
-  { value: "+60", unit: "FPS", label: "Gain moyen" },
+  { value: "+60", unit: "FPS", label: "Gain minimum" },
   { value: "-40", unit: "%", label: "Latence réduite" },
   { value: "99", unit: "%", label: "Stabilité" },
   { value: "24/7", unit: "", label: "Support" },
@@ -425,7 +425,7 @@ export default function Home() {
                   +60 FPS
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Gain moyen constaté
+                  Gain minimum constaté
                 </p>
               </div>
             </motion.div>
