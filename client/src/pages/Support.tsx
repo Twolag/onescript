@@ -31,7 +31,7 @@ const fadeUp = {
 const faqItems = [
   {
     q: "Comment installer FUSION AI ?",
-    a: "Après l'achat, vous recevrez un lien de téléchargement et un guide d'installation détaillé. L'installation est assistée par notre équipe si nécessaire. Le processus prend environ 15-30 minutes selon votre configuration.",
+    a: "Une fois votre commande passée, vous recevrez un numéro de commande unique par email. Vous devrez ensuite rejoindre notre serveur Discord (https://discord.gg/cU2kNQxxHu) et ouvrir un ticket en indiquant ce numéro. Notre équipe organisera alors l'installation avec vous sous un délai maximum de 24 heures. Le processus d'installation prend environ 15-30 minutes.",
   },
   {
     q: "Quels GPU sont compatibles ?",
