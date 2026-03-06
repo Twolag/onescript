@@ -3,6 +3,7 @@
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
+import React from "react";
 import {
   Zap,
   ChevronDown,
@@ -11,6 +12,9 @@ import {
   Monitor,
   Download,
   Shield,
+  TrendingUp,
+  Clock,
+  ChevronRight,
 } from "lucide-react";
 
 const fadeUp = {
@@ -205,8 +209,13 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const Icon = section.icon;
 
+  // Ajouter un attribut data pour permettre le scroll vers la section
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+
   return (
     <motion.div
+      ref={sectionRef}
+      data-section={section.id}
       custom={index}
       variants={fadeUp}
       initial="hidden"
@@ -310,6 +319,43 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
 }
 
 export default function Documentation() {
+
+
+  const quickGuides = [
+    {
+      id: "getting-started",
+      title: "Guide de démarrage",
+      description: "Installation et première configuration de vos outils OneScript",
+      icon: Download,
+      section: "fusion-ai",
+      subsection: "Installation",
+    },
+    {
+      id: "advanced-opt",
+      title: "Optimisation avancée",
+      description: "Tutoriels pour tirer le maximum de votre configuration",
+      icon: TrendingUp,
+      section: "windows-opt",
+      subsection: "Fonctionnalités",
+    },
+    {
+      id: "troubleshooting",
+      title: "Résolution de problèmes",
+      description: "Solutions aux problèmes courants et FAQ technique",
+      icon: Shield,
+      section: "fusion-ai",
+      subsection: "Dépannage",
+    },
+    {
+      id: "changelog",
+      title: "Changelog & Mises à jour",
+      description: "Historique des versions et nouvelles fonctionnalités",
+      icon: Clock,
+      section: "changelog",
+      subsection: "Dernières versions",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pt-32 pb-20">
       {/* Fond animé */}
@@ -335,10 +381,94 @@ export default function Documentation() {
           </p>
         </motion.div>
 
+        {/* Guides de démarrage rapide */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <h2 className="text-2xl font-bold text-white mb-8 text-center">Guides de Démarrage Rapide</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {quickGuides.map((guide) => {
+              const GuideIcon = guide.icon;
+              return (
+                <motion.a
+                  key={guide.id}
+                  href={`#${guide.section}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // Scroll to section
+                    const element = document.querySelector(`[data-section="${guide.section}"]`);
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="group p-6 bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-lg hover:border-purple-500/50 transition cursor-pointer"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="flex items-start gap-4">
+                    <GuideIcon className="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" />
+                    <div>
+                      <h3 className="text-lg font-semibold text-white group-hover:text-purple-300 transition">
+                        {guide.title}
+                      </h3>
+                      <p className="text-sm text-gray-400 mt-1">{guide.description}</p>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-purple-400 flex-shrink-0 group-hover:translate-x-1 transition" />
+                  </div>
+                </motion.a>
+              );
+            })}
+          </div>
+        </motion.div>
+
         {/* Sections de documentation */}
+        <div id="fusion-ai" />
+        <div id="windows-opt" />
+        <div id="jitter-script" />
         {documentation.map((section, index) => (
           <DocumentationSection key={section.id} section={section} index={index} />
         ))}
+
+        {/* Section Changelog */}
+        <motion.div
+          custom={documentation.length}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-8"
+        >
+          <div className="bg-slate-900/50 border border-purple-500/20 rounded-lg overflow-hidden">
+            <div className="p-6 border-b border-purple-500/10">
+              <div className="flex items-center gap-3">
+                <Clock className="w-6 h-6 text-purple-400" />
+                <h2 className="text-2xl font-bold text-white">Changelog & Mises à jour</h2>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                <div className="pb-4 border-b border-purple-500/10">
+                  <h3 className="text-lg font-semibold text-white mb-2">Version 2.5.0 - Mars 2026</h3>
+                  <ul className="text-gray-300 text-sm space-y-1">
+                    <li>✅ Ajout de la compatibilité Call of Duty Warzone 2</li>
+                    <li>✅ Optimisation des performances GPU</li>
+                    <li>✅ Interface utilisateur améliorée</li>
+                  </ul>
+                </div>
+                <div className="pb-4 border-b border-purple-500/10">
+                  <h3 className="text-lg font-semibold text-white mb-2">Version 2.4.0 - Février 2026</h3>
+                  <ul className="text-gray-300 text-sm space-y-1">
+                    <li>✅ Support Apex Legends amélioré</li>
+                    <li>✅ Correction de bugs critiques</li>
+                    <li>✅ Nouvelles options de configuration</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Support */}
         <motion.div
