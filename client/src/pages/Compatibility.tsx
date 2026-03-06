@@ -363,57 +363,7 @@ export default function Compatibility() {
         </div>
       </section>
 
-      {/* Platforms */}
-      <section className="py-16 lg:py-24 relative">
-        <div className="absolute inset-0 bg-dark-surface/20" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/15 to-transparent" />
-        <div className="relative container">
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-10 h-10 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
-              <Gamepad2 className="w-5 h-5 text-violet-tech" />
-            </div>
-            <div>
-              <h2 className="font-display font-bold text-2xl tracking-tight">
-                Plateformes gaming
-              </h2>
-              <p className="text-sm text-muted-foreground">Jeux compatibles</p>
-            </div>
-          </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {[
-              "Steam",
-              "Epic Games",
-              "Valorant",
-              "Fortnite",
-              "Call of Duty",
-              "Apex Legends",
-              "CS2",
-              "League of Legends",
-            ].map((platform, i) => (
-              <motion.div
-                key={platform}
-                custom={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="glass-card rounded-lg p-4 text-center hover:border-violet-tech/30 transition-colors duration-300"
-              >
-                <Check className="w-4 h-4 text-violet-tech mx-auto mb-2" />
-                <p className="text-sm font-medium text-foreground">{platform}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

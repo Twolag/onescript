@@ -441,19 +441,28 @@ export default function Documentation() {
             <div className="p-6">
               <div className="space-y-4">
                 <div className="pb-4 border-b border-purple-500/10">
-                  <h3 className="text-lg font-semibold text-white mb-2">Version 2.5.0 - Mars 2026</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V7 - Bientôt disponible</h3>
                   <ul className="text-gray-300 text-sm space-y-1">
-                    <li>✅ Ajout de la compatibilité Call of Duty Warzone 2</li>
-                    <li>✅ Optimisation des performances GPU</li>
-                    <li>✅ Interface utilisateur améliorée</li>
+                    <li>🔜 Streamer mode - Hide script</li>
+                    <li>🔜 Custom trigger</li>
+                    <li>🔜 Nouvelles fonctionnalités avancées</li>
                   </ul>
                 </div>
                 <div className="pb-4 border-b border-purple-500/10">
-                  <h3 className="text-lg font-semibold text-white mb-2">Version 2.4.0 - Février 2026</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V6 - Version actuelle</h3>
                   <ul className="text-gray-300 text-sm space-y-1">
-                    <li>✅ Support Apex Legends amélioré</li>
-                    <li>✅ Correction de bugs critiques</li>
-                    <li>✅ Nouvelles options de configuration</li>
+                    <li>✅ Traitement visuel IA en temps réel</li>
+                    <li>✅ Support Steam, Apex Legends, Call of Duty</li>
+                    <li>✅ Optimisations GPU avancées</li>
+                  </ul>
+                </div>
+                <div className="pb-4 border-b border-purple-500/10">
+                  <h3 className="text-lg font-semibold text-white mb-2">Jitter Script V14 - Mars 2026</h3>
+                  <ul className="text-gray-300 text-sm space-y-1">
+                    <li>✅ Critical bug fixed - Window crash issue fully resolved</li>
+                    <li>✅ PlayStation Controller Support - Full gamepad support enabled</li>
+                    <li>✅ Interface redesigned - Better readability and smoother navigation</li>
+                    <li>✅ Performance Optimizations - Bind latency up to 9x faster</li>
                   </ul>
                 </div>
               </div>
