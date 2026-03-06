@@ -1,9 +1,10 @@
 /**
  * Purchase — Neon Circuit Design
- * Sélection produit, récapitulatif, formulaire de paiement avec numéro de commande et email automatique
+ * Sélection produit, récapitulatif, formulaire de paiement avec EmailJS pour envoi automatique
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Zap,
   Cpu,
@@ -19,6 +20,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
+// Initialize EmailJS
+emailjs.init("9IFBv8D5o7NBxRjbq");
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
@@ -29,6 +33,8 @@ const fadeUp = {
 };
 
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
+const EMAILJS_SERVICE_ID = "service_kiuxijv";
+const EMAILJS_TEMPLATE_ID = "template_37cc9eo";
 
 interface Product {
   id: string;
@@ -143,8 +149,28 @@ export default function Purchase() {
         .map((o) => `${o.label} - ${o.price}€`)
         .join("\n");
 
-      // Préparer le message pour Formspree
-      const emailMessage = `
+      // Préparer les données pour EmailJS
+      const emailParams = {
+        order_number: orderNumber,
+        user_name: `${formData.firstName} ${formData.lastName}`,
+        user_email: formData.email,
+        product_name: product.name,
+        options: selectedOptionsList,
+        total_price: `${total}€`,
+        discord_link: DISCORD_LINK,
+        to_email: formData.email,
+      };
+
+      // Envoyer l'email via EmailJS
+      const emailResponse = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        emailParams
+      );
+
+      if (emailResponse.status === 200) {
+        // Envoyer aussi à Formspree pour archivage
+        const formspreeMessage = `
 NOUVELLE COMMANDE - ${orderNumber}
 
 === INFORMATIONS CLIENT ===
@@ -158,41 +184,24 @@ ${selectedOptionsList}
 
 Total: ${total}€
 
-=== INSTRUCTIONS ===
-Bienvenue chez OneScript!
+=== STATUT ===
+Email de confirmation envoyé au client: OUI
+        `.trim();
 
-Pour procéder à l'installation et recevoir votre licence, veuillez:
+        await fetch("https://formspree.io/f/mlgpenar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: `${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            subject: `Nouvelle commande: ${orderNumber}`,
+            message: formspreeMessage,
+            _captcha: false,
+          }),
+        });
 
-1. Rejoindre notre serveur Discord: ${DISCORD_LINK}
-2. Créer un ticket en indiquant votre numéro de commande: ${orderNumber}
-3. Nous répondrons dans un délai maximum de 24 heures
-
-${product.isAIAimbot ? `
-IMPORTANT - AI AIMBOT:
-- Compatibilité actuellement disponible: Steam, Apex Legends, Call of Duty
-- Autres plateformes en cours de développement
-- Votre installation sera configurée pour les jeux compatibles
-` : ""}
-
-Support: ${DISCORD_LINK}
-      `.trim();
-
-      // Envoyer via Formspree
-      const response = await fetch("https://formspree.io/f/mlgpenar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          subject: `Nouvelle commande: ${orderNumber}`,
-          message: emailMessage,
-          _captcha: false,
-        }),
-      });
-
-      if (response.ok) {
         toast.success("Commande confirmée!", {
           description: `Numéro de commande: ${orderNumber}\nUn email de confirmation a été envoyé.`,
         });
@@ -207,9 +216,10 @@ Support: ${DISCORD_LINK}
           cvc: "",
         });
       } else {
-        throw new Error("Erreur lors de l'envoi");
+        throw new Error("Erreur lors de l'envoi de l'email");
       }
     } catch (error) {
+      console.error("Erreur:", error);
       toast.error("Erreur lors de la commande", {
         description: "Veuillez réessayer ou contacter le support",
       });
