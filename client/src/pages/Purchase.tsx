@@ -118,12 +118,12 @@ export default function Purchase() {
   };
   
   const [selectedProduct, setSelectedProduct] = useState<string>(getInitialProduct());
-  const [selectedOptions, setSelectedOptions] = useState<Set<string>>(() => {
+  const [selectedOption, setSelectedOption] = useState<string>(() => {
     const product = products.find((p) => p.id === getInitialProduct());
     if (product && product.options.length > 0) {
-      return new Set([product.options[0].label]);
+      return product.options[0].label;
     }
-    return new Set(["Licence + Installation"]);
+    return "Licence + Installation";
   });
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -132,27 +132,21 @@ export default function Purchase() {
     email: "",
   });
 
-  // Réinitialiser les options quand le produit change
+  // Réinitialiser l'option quand le produit change
   useEffect(() => {
     const product = products.find((p) => p.id === selectedProduct);
     if (product && product.options.length > 0) {
-      setSelectedOptions(new Set([product.options[0].label]));
+      setSelectedOption(product.options[0].label);
     }
   }, [selectedProduct]);
 
   const product = products.find((p) => p.id === selectedProduct)!;
 
-  const toggleOption = (label: string) => {
-    const next = new Set(selectedOptions);
-    if (next.has(label)) {
-      next.delete(label);
-    } else {
-      next.add(label);
-    }
-    setSelectedOptions(next);
+  const selectOption = (label: string) => {
+    setSelectedOption(label);
   };
 
-  const selectedItems = product.options.filter((o) => selectedOptions.has(o.label));
+  const selectedItems = product.options.filter((o) => o.label === selectedOption);
   const total = selectedItems.reduce((sum, o) => sum + o.price, 0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,10 +162,10 @@ export default function Purchase() {
       return;
     }
 
-    if (selectedItems.length === 0) {
-      toast.error("Veuillez sélectionner au moins une option");
-      return;
-    }
+      if (selectedItems.length !== 1) {
+        toast.error("Veuillez sélectionner une seule option");
+        return;
+      }
 
     setIsLoading(true);
 
@@ -279,7 +273,7 @@ export default function Purchase() {
                       key={p.id}
                       onClick={() => {
                         setSelectedProduct(p.id);
-                        setSelectedOptions(new Set([p.options[0].label]));
+                        setSelectedOption(p.options[0].label);
                       }}
                       className={`glass-card rounded-lg p-5 text-left transition-all duration-200 ${
                         selectedProduct === p.id
@@ -322,9 +316,9 @@ export default function Purchase() {
                   {product.options.map((option) => (
                     <button
                       key={option.label}
-                      onClick={() => toggleOption(option.label)}
+                      onClick={() => selectOption(option.label)}
                       className={`w-full glass-card rounded-lg p-5 flex items-center justify-between transition-all duration-200 ${
-                        selectedOptions.has(option.label)
+                        selectedOption === option.label
                           ? "border-violet-tech/60 ring-1 ring-violet-tech/20 bg-violet-tech/5"
                           : "hover:border-violet-tech/20"
                       }`}
@@ -332,12 +326,12 @@ export default function Purchase() {
                       <div className="flex items-center gap-3">
                         <div
                           className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
-                            selectedOptions.has(option.label)
+                            selectedOption === option.label
                               ? "bg-violet-tech border-violet-tech"
                               : "border-border/50"
                           }`}
                         >
-                          {selectedOptions.has(option.label) && (
+                          {selectedOption === option.label && (
                             <Check className="w-3 h-3 text-white" />
                           )}
                         </div>
