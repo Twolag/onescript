@@ -64,21 +64,25 @@ const docs = [
     title: "Guide de démarrage",
     desc: "Installation et première configuration de vos outils OneScript.",
     icon: BookOpen,
+    href: "/documentation#fusion-ai-installation",
   },
   {
     title: "Optimisation avancée",
     desc: "Tutoriels pour tirer le maximum de votre configuration.",
     icon: BookOpen,
+    href: "/documentation#windows-opt-features",
   },
   {
     title: "Résolution de problèmes",
     desc: "Solutions aux problèmes courants et FAQ technique.",
     icon: BookOpen,
+    href: "/documentation#fusion-ai-troubleshooting",
   },
   {
     title: "Changelog & mises à jour",
     desc: "Historique des versions et nouvelles fonctionnalités.",
     icon: BookOpen,
+    href: "/documentation#changelog",
   },
 ];
 
@@ -422,7 +426,7 @@ export default function Support() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 className="glass-card rounded-lg p-6 hover:border-violet-tech/30 transition-colors duration-300 cursor-pointer group"
-                onClick={() => toast.info("Documentation bientôt disponible")}
+                onClick={() => window.location.href = doc.href}
               >
                 <doc.icon className="w-5 h-5 text-violet-tech mb-3" />
                 <h4 className="font-display font-semibold text-sm tracking-wide mb-1 group-hover:text-violet-tech transition-colors">
