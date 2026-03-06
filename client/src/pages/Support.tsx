@@ -43,7 +43,7 @@ const faqItems = [
   },
   {
     q: "Quel gain de FPS puis-je espérer ?",
-    a: "Le gain moyen constaté est de 40 à 60 FPS, selon votre configuration matérielle. Les configurations High End (RTX 4070+) obtiennent généralement les meilleurs résultats.",
+    a: "Le gain minimum constaté est de 40 à 60 FPS, selon votre configuration matérielle. Les configurations High End (RTX 4070+) obtiennent généralement les meilleurs résultats.",
   },
   {
     q: "Windows Optimization est-il sûr pour mon PC ?",

@@ -252,7 +252,7 @@ export default function Products() {
         id="windows-opt"
         title="Windows Optimization"
         subtitle="Optimisation Système"
-        description="Optimisation avancée de Windows pour améliorer les performances gaming. Notre outil nettoie votre système, supprime les services inutiles et optimise la gestion de la RAM et du CPU pour un gain moyen de 40 à 60 FPS."
+        description="Optimisation avancée de Windows pour améliorer les performances gaming. Notre outil nettoie votre système, supprime les services inutiles et optimise la gestion de la RAM et du CPU pour un gain minimum de 40 à 60 FPS."
         image={WINDOWS_OPT}
         icon={Monitor}
         features={[
@@ -266,7 +266,7 @@ export default function Products() {
         compatibility={[
           { label: "OS", value: "Windows 10 / 11" },
           { label: "RAM minimum", value: "8 Go" },
-          { label: "Gain moyen", value: "40-60 FPS" },
+          { label: "Gain minimum", value: "40-60 FPS" },
           { label: "Plateforme", value: "PC uniquement" },
         ]}
         pricing={[

@@ -46,7 +46,7 @@ const products = [
   },
   {
     title: "Windows Optimization",
-    desc: "Nettoyage système, suppression des services inutiles, optimisation RAM/CPU. Gain moyen : 40-60 FPS.",
+    desc: "Nettoyage système, suppression des services inutiles, optimisation RAM/CPU. Gain minimum : 40-60 FPS.",
     icon: Monitor,
     image: WINDOWS_OPT,
     price: "10 €",
