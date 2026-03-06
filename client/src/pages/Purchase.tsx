@@ -145,16 +145,6 @@ export default function Purchase() {
       const selectedItem = selectedItems[0];
       const orderNumber = generateOrderNumber();
 
-      // Envoyer un email de confirmation
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email: formData.email,
-        customer_name: `${formData.firstName} ${formData.lastName}`,
-        order_number: orderNumber,
-        product_name: `${product.name} - ${selectedItem.label}`,
-        product_price: `${selectedItem.price}€`,
-        message: `Votre commande a été créée. Vous allez être redirigé vers PayPal pour finaliser le paiement.`,
-      });
-
       // Construire l'URL PayPal - Format simple et direct
       const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
 
@@ -164,6 +154,21 @@ export default function Purchase() {
       // Ouvrir le lien PayPal dans un nouvel onglet
       // Cette méthode est plus robuste et ne peut pas être bloquée
       window.open(paypalLink, '_blank');
+      
+      // Envoyer un email de confirmation (non-bloquant)
+      // Si l'email échoue, le paiement continue quand même
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_email: formData.email,
+          customer_name: `${formData.firstName} ${formData.lastName}`,
+          order_number: orderNumber,
+          product_name: `${product.name} - ${selectedItem.label}`,
+          product_price: `${selectedItem.price}€`,
+          message: `Votre commande a été créée. Vous allez être redirigé vers PayPal pour finaliser le paiement.`,
+        });
+      } catch (emailError) {
+        console.warn("Erreur lors de l'envoi de l'email (non-bloquant):", emailError);
+      }
       
       setIsLoading(false);
       return;
