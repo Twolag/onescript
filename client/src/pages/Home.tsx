@@ -380,8 +380,75 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════ PERFORMANCE SECTION ═══════════════ */}
-      <section className="relative py-24 lg:py-32">
+      {/* ═══════════════ INTERFACE GALLERY SECTION ═══════════════ */}
+      <section className="relative py-24 lg:py-32 border-t border-border/30">
+        <div className="container">
+          <motion.div
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="max-w-2xl mb-16"
+          >
+            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
+              Galerie
+            </span>
+            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
+              Découvrez l'interface <span className="text-violet-tech">FUSION AI</span>
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Des captures réelles de l'interface en action. Monitoring en temps réel, réglages avancés et résultats impressionnants.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <motion.div
+              custom={1}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              className="group relative rounded-lg overflow-hidden glass-card border border-border/30 hover:border-violet-tech/50 transition-all"
+            >
+              <div className="relative h-80 overflow-hidden">
+                <img
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/hIzWjvHxAxYbjVmT.png"
+                  alt="Dashboard FUSION AI"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="font-display font-bold text-base text-foreground mb-1">Dashboard</h3>
+                <p className="text-sm text-muted-foreground">Monitoring en temps réel - FPS: 262, Latence: 3.4ms</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              custom={2}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              className="group relative rounded-lg overflow-hidden glass-card border border-border/30 hover:border-violet-tech/50 transition-all"
+            >
+              <div className="relative h-80 overflow-hidden">
+                <img
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/zPMKxwVyhEEnRpVX.png"
+                  alt="AI & Visuals FUSION AI"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="font-display font-bold text-base text-foreground mb-1">AI & Visuals</h3>
+                <p className="text-sm text-muted-foreground">Réglages avancés du modèle IA et des visuels</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ PERFORMANCES SECTION ═══════════════ */}      <section className="relative py-24 lg:py-32">
         <div className="absolute inset-0 bg-dark-surface/30" />
         {/* Top line */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
