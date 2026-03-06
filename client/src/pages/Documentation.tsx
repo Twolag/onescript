@@ -77,16 +77,7 @@ const documentation: DocSection[] = [
           "Redémarrez votre PC après l'installation pour une meilleure performance",
         ],
       },
-      {
-        title: "Jeux Compatibles",
-        description: "FUSION AI fonctionne actuellement avec :",
-        requirements: [
-          "✅ Steam (tous les jeux supportés)",
-          "✅ Apex Legends",
-          "✅ Call of Duty (Warzone, Modern Warfare, etc.)",
-          "🔄 Autres plateformes en cours de développement",
-        ],
-      },
+
       {
         title: "Dépannage",
         description: "Si vous rencontrez des problèmes :",
