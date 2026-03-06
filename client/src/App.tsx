@@ -11,6 +11,7 @@ import Support from "./pages/Support";
 import Purchase from "./pages/Purchase";
 import Trial from "./pages/Trial";
 import Documentation from "./pages/Documentation";
+import Reviews from "./pages/Reviews";
 import LegalNotice from "./pages/LegalNotice";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
@@ -27,6 +28,7 @@ function Router() {
         <Route path="/purchase" component={Purchase} />
         <Route path="/trial" component={Trial} />
         <Route path="/documentation" component={Documentation} />
+        <Route path="/reviews" component={Reviews} />
         <Route path="/legal" component={LegalNotice} />
         <Route path="/terms" component={Terms} />
         <Route path="/privacy" component={Privacy} />

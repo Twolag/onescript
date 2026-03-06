@@ -73,7 +73,7 @@ const stats = [
 
 const pricingPlans = [
   {
-    name: "Windows Optimization",
+    name: "windows-opt",
     price: "10",
     period: "",
     desc: "Optimisation simple de Windows",
@@ -87,7 +87,7 @@ const pricingPlans = [
     cta: "CHOISIR CE PLAN",
   },
   {
-    name: "FUSION AI",
+    name: "ai-engine",
     price: "80",
     period: "1er mois + inst.",
     desc: "Installation complète + 1er mois inclus",
@@ -102,7 +102,7 @@ const pricingPlans = [
     cta: "Choisir ce plan",
   },
   {
-    name: "Jitter Script",
+    name: "jitter-script",
     price: "2,50",
     period: "à partir de",
     desc: "Script anti-recul jitter aim — manette uniquement",
@@ -192,7 +192,7 @@ export default function Home() {
               animate="visible"
               className="flex flex-wrap gap-4"
             >
-              <Link href="/purchase">
+              <Link href="/purchase?product=ai-engine">
                 <Button
                   size="lg"
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"

@@ -171,7 +171,7 @@ function ProductSection({
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Link href="/purchase">
+              <Link href={`/purchase?product=${encodeURIComponent(id)}`}>
                 <Button
                   size="lg"
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
