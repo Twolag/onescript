@@ -111,6 +111,7 @@ export default function Purchase() {
     firstName: "",
     lastName: "",
     email: "",
+    discordPseudo: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -129,7 +130,7 @@ export default function Purchase() {
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.firstName || !formData.lastName || !formData.email) {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo) {
       toast.error("Veuillez remplir tous les champs");
       return;
     }
@@ -161,6 +162,7 @@ export default function Purchase() {
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
           to_email: formData.email,
           customer_name: `${formData.firstName} ${formData.lastName}`,
+          discord_pseudo: formData.discordPseudo,
           order_number: orderNumber,
           product_name: `${product.name} - ${selectedItem.label}`,
           product_price: `${selectedItem.price}€`,
@@ -327,6 +329,21 @@ export default function Purchase() {
                       required
                       className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
                       placeholder="jean@email.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-2">
+                      Pseudo Discord
+                    </label>
+                    <input
+                      type="text"
+                      name="discordPseudo"
+                      value={formData.discordPseudo}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
+                      placeholder="VotreNom#1234"
                     />
                   </div>
 
