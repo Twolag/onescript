@@ -14,12 +14,13 @@ const footerLinks = {
   ressources: [
     { label: "Compatibilité", href: "/compatibility" },
     { label: "Support", href: "/support" },
-    { label: "FAQ", href: "/support" },
+    { label: "Documentation", href: "/documentation" },
   ],
   legal: [
-    { label: "Mentions légales", href: "#" },
-    { label: "Politique de confidentialité", href: "#" },
-    { label: "CGV", href: "#" },
+    { label: "Documentation", href: "/documentation" },
+    { label: "Mentions légales", href: "/legal" },
+    { label: "Politique de confidentialité", href: "/privacy" },
+    { label: "CGV", href: "/terms" },
   ],
 };
 
