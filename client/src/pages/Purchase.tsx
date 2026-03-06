@@ -1,9 +1,10 @@
 /**
  * Purchase — Neon Circuit Design
- * Sélection produit, récapitulatif, formulaire de paiement avec EmailJS pour envoi automatique
+ * Sélection produit, récapitulatif, formulaire de paiement avec Stripe
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
 import emailjs from "@emailjs/browser";
 import {
   Zap,
@@ -23,6 +24,9 @@ import { toast } from "sonner";
 // Initialize EmailJS
 emailjs.init("9IFBv8D5o7NBxRjbq");
 
+// Stripe public key
+const STRIPE_PUBLIC_KEY = "pk_test_51T83TKFrlYRU1NT9p1uI3nnJlJiaIdvDwdYuHrjhkKLHa1LgcpjQghNDNIYG2oPqy6x5EjQXsox6msXsX86FL5WA00DepDnP2x";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
@@ -40,7 +44,7 @@ interface Product {
   id: string;
   name: string;
   icon: React.ElementType;
-  options: { label: string; price: number; note?: string; description?: string }[];
+  options: { label: string; price: number; note?: string; description?: string; stripeId: string }[];
   isAIAimbot?: boolean;
 }
 
@@ -54,13 +58,15 @@ const products: Product[] = [
       { 
         label: "Licence + Installation", 
         price: 80,
-        description: "Premier mois + installation de l'AI Aimbot inclus"
+        description: "Premier mois + installation de l'AI Aimbot inclus",
+        stripeId: "ai-engine-install"
       },
       { 
         label: "Abonnement mensuel", 
         price: 30, 
         note: "/ mois",
-        description: "Renouvellement mensuel uniquement"
+        description: "Renouvellement mensuel uniquement",
+        stripeId: "ai-engine-renewal"
       },
     ],
   },
@@ -69,8 +75,8 @@ const products: Product[] = [
     name: "Windows Optimization",
     icon: Monitor,
     options: [
-      { label: "Optimisation simple", price: 10 },
-      { label: "Optimisation + réinstall. Windows", price: 20 },
+      { label: "Optimisation simple", price: 10, stripeId: "windows-opt-simple" },
+      { label: "Optimisation + réinstall. Windows", price: 20, stripeId: "windows-opt-full" },
     ],
   },
   {
@@ -78,13 +84,13 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "Essai 24h", price: 2.5 },
-      { label: "1 semaine", price: 5 },
-      { label: "1 mois", price: 15 },
-      { label: "3 mois", price: 20 },
-      { label: "6 mois", price: 25 },
-      { label: "1 an", price: 30 },
-      { label: "À vie", price: 40 },
+      { label: "Essai 24h", price: 2.5, stripeId: "jitter-24h" },
+      { label: "1 semaine", price: 5, stripeId: "jitter-1week" },
+      { label: "1 mois", price: 15, stripeId: "jitter-1month" },
+      { label: "3 mois", price: 20, stripeId: "jitter-3months" },
+      { label: "6 mois", price: 25, stripeId: "jitter-6months" },
+      { label: "1 an", price: 30, stripeId: "jitter-1year" },
+      { label: "À vie", price: 40, stripeId: "jitter-lifetime" },
     ],
   },
 ];
@@ -106,9 +112,6 @@ export default function Purchase() {
     firstName: "",
     lastName: "",
     email: "",
-    cardNumber: "",
-    expiration: "",
-    cvc: "",
   });
 
   const product = products.find((p) => p.id === selectedProduct)!;
@@ -123,105 +126,73 @@ export default function Purchase() {
     setSelectedOptions(next);
   };
 
-  const total = product.options
-    .filter((o) => selectedOptions.has(o.label))
-    .reduce((sum, o) => sum + o.price, 0);
+  const selectedItems = product.options.filter((o) => selectedOptions.has(o.label));
+  const total = selectedItems.reduce((sum, o) => sum + o.price, 0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePurchase = async (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.cardNumber) {
+    if (!formData.firstName || !formData.lastName || !formData.email) {
       toast.error("Veuillez remplir tous les champs");
+      return;
+    }
+
+    if (selectedItems.length === 0) {
+      toast.error("Veuillez sélectionner au moins une option");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const orderNumber = generateOrderNumber();
-      const selectedOptionsList = product.options
-        .filter((o) => selectedOptions.has(o.label))
-        .map((o) => `${o.label} - ${o.price}€`)
-        .join("\n");
+      // Charger Stripe
+      const stripe = await loadStripe(STRIPE_PUBLIC_KEY);
+      if (!stripe) {
+        throw new Error("Impossible de charger Stripe");
+      }
 
-      // Préparer les données pour EmailJS
-      const emailParams = {
-        order_number: orderNumber,
-        user_name: `${formData.firstName} ${formData.lastName}`,
-        user_email: formData.email,
-        product_name: product.name,
-        options: selectedOptionsList,
-        total_price: `${total}€`,
-        discord_link: DISCORD_LINK,
-        to_email: formData.email,
-      };
+      // Préparer les articles pour Stripe
+      const items = selectedItems.map((item) => ({
+        name: `${product.name} - ${item.label}`,
+        description: item.description || "",
+        price: Math.round(item.price * 100), // Convertir en cents
+      }));
 
-      // Envoyer l'email via EmailJS
-      const emailResponse = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        emailParams
-      );
+      // Créer la session de paiement
+      const response = await fetch("/api/checkout/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items,
+          customerEmail: formData.email,
+          customerName: `${formData.firstName} ${formData.lastName}`,
+        }),
+      });
 
-      if (emailResponse.status === 200) {
-        // Envoyer aussi à Formspree pour archivage
-        const formspreeMessage = `
-NOUVELLE COMMANDE - ${orderNumber}
+      if (!response.ok) {
+        throw new Error("Erreur lors de la création de la session de paiement");
+      }
 
-=== INFORMATIONS CLIENT ===
-Nom: ${formData.firstName} ${formData.lastName}
-Email: ${formData.email}
+      const { sessionId } = await response.json();
 
-=== DÉTAILS DE LA COMMANDE ===
-Produit: ${product.name}
-Options:
-${selectedOptionsList}
+      // Rediriger vers Stripe Checkout
+      const result = await (stripe as any).redirectToCheckout({ sessionId });
 
-Total: ${total}€
-
-=== STATUT ===
-Email de confirmation envoyé au client: OUI
-        `.trim();
-
-        await fetch("https://formspree.io/f/mlgpenar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: `${formData.firstName} ${formData.lastName}`,
-            email: formData.email,
-            subject: `Nouvelle commande: ${orderNumber}`,
-            message: formspreeMessage,
-            _captcha: false,
-          }),
-        });
-
-        toast.success("Commande confirmée!", {
-          description: `Numéro de commande: ${orderNumber}\nUn email de confirmation a été envoyé.`,
-        });
-
-        // Réinitialiser le formulaire
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          cardNumber: "",
-          expiration: "",
-          cvc: "",
-        });
-      } else {
-        throw new Error("Erreur lors de l'envoi de l'email");
+      if (result?.error) {
+        throw new Error(result.error.message);
       }
     } catch (error) {
       console.error("Erreur:", error);
-      toast.error("Erreur lors de la commande", {
-        description: "Veuillez réessayer ou contacter le support",
+      const message = error instanceof Error ? error.message : "Erreur inconnue";
+      toast.error("Erreur lors du paiement", {
+        description: message,
       });
     } finally {
       setIsLoading(false);
@@ -405,9 +376,9 @@ Email de confirmation envoyé au client: OUI
                   <span className="w-7 h-7 flex items-center justify-center rounded-md bg-violet-tech text-xs font-bold text-white">
                     3
                   </span>
-                  Informations de paiement
+                  Vos informations
                 </h3>
-                <form onSubmit={handlePurchase} className="glass-card rounded-lg p-6 lg:p-8">
+                <form onSubmit={handleCheckout} className="glass-card rounded-lg p-6 lg:p-8">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div>
                       <label className="block text-xs font-medium text-muted-foreground mb-1.5">
@@ -438,7 +409,7 @@ Email de confirmation envoyé au client: OUI
                       />
                     </div>
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="block text-xs font-medium text-muted-foreground mb-1.5">
                       Email
                     </label>
@@ -452,51 +423,18 @@ Email de confirmation envoyé au client: OUI
                       placeholder="jean@email.com"
                     />
                   </div>
-                  <div className="mb-4">
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
-                      Numéro de carte
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none pr-10"
-                        placeholder="4242 4242 4242 4242"
-                      />
-                      <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1.5">
-                        Expiration
-                      </label>
-                      <input
-                        type="text"
-                        name="expiration"
-                        value={formData.expiration}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
-                        placeholder="MM / AA"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1.5">
-                        CVC
-                      </label>
-                      <input
-                        type="text"
-                        name="cvc"
-                        value={formData.cvc}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
-                        placeholder="123"
-                      />
+
+                  <div className="glass-card rounded-lg p-4 mb-6 bg-blue-500/5 border border-blue-500/20">
+                    <div className="flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">
+                          Paiement sécurisé via Stripe
+                        </h4>
+                        <p className="text-xs text-muted-foreground">
+                          Vous serez redirigé vers la page de paiement sécurisée de Stripe. Vos données bancaires ne sont jamais stockées sur notre serveur.
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -509,12 +447,12 @@ Email de confirmation envoyé au client: OUI
                     {isLoading ? (
                       <>
                         <span className="animate-spin">⏳</span>
-                        Traitement...
+                        Redirection vers Stripe...
                       </>
                     ) : (
                       <>
                         <Lock className="w-4 h-4" />
-                        PAYER {total} €
+                        PAYER {total} € VIA STRIPE
                       </>
                     )}
                   </Button>
@@ -552,24 +490,22 @@ Email de confirmation envoyé au client: OUI
                     </span>
                   </div>
 
-                  {product.options
-                    .filter((o) => selectedOptions.has(o.label))
-                    .map((o) => (
-                      <div
-                        key={o.label}
-                        className="flex items-center justify-between text-sm"
-                      >
-                        <span className="text-muted-foreground">{o.label}</span>
-                        <span className="font-medium text-foreground">
-                          {o.price} €
-                          {o.note && (
-                            <span className="text-xs text-muted-foreground">
-                              {o.note}
-                            </span>
-                          )}
-                        </span>
-                      </div>
-                    ))}
+                  {selectedItems.map((o) => (
+                    <div
+                      key={o.label}
+                      className="flex items-center justify-between text-sm"
+                    >
+                      <span className="text-muted-foreground">{o.label}</span>
+                      <span className="font-medium text-foreground">
+                        {o.price} €
+                        {o.note && (
+                          <span className="text-xs text-muted-foreground">
+                            {o.note}
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="border-t border-border/30 pt-4">
@@ -599,11 +535,21 @@ Email de confirmation envoyé au client: OUI
                   ))}
                 </div>
 
-                {/* Discord Link */}
+                {/* Instructions */}
                 <div className="mt-6 pt-4 border-t border-border/30">
-                  <p className="text-xs text-muted-foreground mb-3">
-                    Après votre commande, rejoignez notre Discord:
+                  <p className="text-xs font-semibold text-foreground mb-2">
+                    Après votre paiement :
                   </p>
+                  <ol className="text-xs text-muted-foreground space-y-1 list-decimal list-inside">
+                    <li>Recevez votre numéro de commande par email</li>
+                    <li>Rejoignez notre Discord</li>
+                    <li>Créez un ticket avec votre numéro</li>
+                    <li>Nous vous répondrons sous 24h</li>
+                  </ol>
+                </div>
+
+                {/* Discord Link */}
+                <div className="mt-4">
                   <a
                     href={DISCORD_LINK}
                     target="_blank"
