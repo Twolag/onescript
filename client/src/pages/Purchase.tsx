@@ -155,12 +155,17 @@ export default function Purchase() {
         message: `Votre commande a été créée. Vous allez être redirigé vers PayPal pour finaliser le paiement.`,
       });
 
-      // Construire l'URL PayPal avec les paramètres
-      const paypalUrl = new URL(`https://www.paypal.me/${PAYPAL_EMAIL}/${selectedItem.price}`);
-      paypalUrl.searchParams.append("note", `${product.name} - ${selectedItem.label} (Commande: ${orderNumber})`);
+      // Construire l'URL PayPal avec les paramétres
+      // Format: https://www.paypal.me/OneLagTT/80?note=Description
+      const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}?note=${encodeURIComponent(`${product.name} - ${selectedItem.label} (Commande: ${orderNumber})`)}`;
 
       // Rediriger vers PayPal
-      window.location.href = paypalUrl.toString();
+      setTimeout(() => {
+        window.location.href = paypalLink;
+      }, 500);
+      
+      toast.success("Redirection vers PayPal...");
+      return;
     } catch (error) {
       console.error("Erreur:", error);
       const message = error instanceof Error ? error.message : "Erreur inconnue";

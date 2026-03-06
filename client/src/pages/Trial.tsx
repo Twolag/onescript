@@ -21,10 +21,15 @@ export default function Trial() {
   const [showError, setShowError] = useState(false);
 
   const gpuOptions = [
+    // Série 5000 (Blackwell)
     "NVIDIA RTX 5090",
     "NVIDIA RTX 5080",
     "NVIDIA RTX 5070 Ti",
     "NVIDIA RTX 5070",
+    "NVIDIA RTX 5060 Ti",
+    "NVIDIA RTX 5060",
+    "NVIDIA RTX 5050",
+    // Série 4000 (Ada Lovelace)
     "NVIDIA RTX 4090 SUPER",
     "NVIDIA RTX 4090",
     "NVIDIA RTX 4080 SUPER",
@@ -35,6 +40,8 @@ export default function Trial() {
     "NVIDIA RTX 4070",
     "NVIDIA RTX 4060 Ti",
     "NVIDIA RTX 4060",
+    "NVIDIA RTX 4050",
+    // Série 3000 (Ampere)
     "NVIDIA RTX 3090 Ti",
     "NVIDIA RTX 3090",
     "NVIDIA RTX 3080 Ti",
@@ -43,6 +50,8 @@ export default function Trial() {
     "NVIDIA RTX 3070",
     "NVIDIA RTX 3060 Ti",
     "NVIDIA RTX 3060",
+    "NVIDIA RTX 3050 Ti",
+    "NVIDIA RTX 3050",
     "Autre GPU NVIDIA",
   ];
 

@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/products", label: "Produits" },
   { href: "/compatibility", label: "Compatibilité" },
+  { href: "/documentation", label: "Documentation" },
   { href: "/support", label: "Support" },
 ];
 
