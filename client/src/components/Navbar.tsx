@@ -90,7 +90,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 px-5 py-2 text-sm font-display font-semibold tracking-wider text-primary-foreground bg-violet-tech rounded-md hover:bg-violet-secondary transition-colors duration-200 neon-glow"
             >
               <Zap className="w-3.5 h-3.5" />
-              {t('nav.buy')}
+              ACHETER
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
             </button>
             <AnimatePresence>
