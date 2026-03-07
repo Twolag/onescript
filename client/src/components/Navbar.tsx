@@ -31,7 +31,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -39,6 +39,21 @@ export default function Navbar() {
   };
 
   const currentLang = i18n.language.startsWith('en') ? 'EN' : 'FR';
+
+  const navLinksTranslated = [
+    { href: "/", label: t('nav.home') || 'Accueil' },
+    { href: "/products", label: t('nav.products') || 'Produits' },
+    { href: "/compatibility", label: t('nav.compatibility') },
+    { href: "/documentation", label: t('nav.documentation') },
+    { href: "/reviews", label: t('nav.reviews') },
+    { href: "/support", label: t('nav.support') },
+  ];
+
+  const purchaseProductsTranslated = [
+    { name: "AI Aimbot (FUSION AI)", href: "/purchase?product=ai-engine" },
+    { name: t('nav.windows_opt') || 'Windows Optimization', href: "/purchase?product=windows-opt" },
+    { name: t('nav.jitter_script') || 'Jitter Script', href: "/purchase?product=jitter-script" },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
@@ -63,7 +78,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => {
+          {navLinksTranslated.map((link) => {
             const isActive = location === link.href;
             return (
               <Link
@@ -98,7 +113,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 px-5 py-2 text-sm font-display font-semibold tracking-wider text-primary-foreground bg-violet-tech rounded-md hover:bg-violet-secondary transition-colors duration-200 neon-glow"
             >
               <Zap className="w-3.5 h-3.5" />
-              ACHETER
+              {t('nav.buy')}
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
             </button>
             <AnimatePresence>
@@ -110,7 +125,7 @@ export default function Navbar() {
                   transition={{ duration: 0.15 }}
                   className="absolute top-full right-0 mt-2 w-56 bg-dark-elevated border border-violet-tech/30 rounded-lg shadow-lg overflow-hidden z-50"
                 >
-                  {purchaseProducts.map((product) => (
+                  {purchaseProductsTranslated.map((product) => (
                     <Link
                       key={product.href}
                       href={product.href}
@@ -191,7 +206,7 @@ export default function Navbar() {
           >
             <div className="absolute inset-0 bg-dark-base/95 backdrop-blur-xl" />
             <div className="relative container py-4 space-y-1">
-              {navLinks.map((link) => {
+              {navLinksTranslated.map((link) => {
                 const isActive = location === link.href;
                 return (
                   <Link
@@ -209,9 +224,9 @@ export default function Navbar() {
                 );
               })}
               <div className="px-4 py-3 text-sm font-display font-semibold tracking-wider text-violet-tech">
-                ACHETER
+                {t('nav.buy')}
               </div>
-              {purchaseProducts.map((product) => (
+              {purchaseProductsTranslated.map((product) => (
                 <Link
                   key={product.href}
                   href={product.href}

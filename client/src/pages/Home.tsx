@@ -5,6 +5,7 @@
  */
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 import {
   Zap,
   Cpu,
@@ -120,6 +121,8 @@ const pricingPlans = [
 ];
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <div className="overflow-hidden">
       {/* ═══════════════ HERO SECTION ═══════════════ */}
@@ -167,10 +170,7 @@ export default function Home() {
               animate="visible"
               className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight mb-6"
             >
-              Unlock Your PC's{" "}
-              <span className="text-violet-tech neon-text">
-                True Performance
-              </span>
+              {t('hero.title')}
             </motion.h1>
 
             {/* Subtitle */}
@@ -181,7 +181,7 @@ export default function Home() {
               animate="visible"
               className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8"
             >
-              OneScript optimise votre PC pour le gaming. Jitter Script Apex Legends, AI Aimbot, Windows Optimization. Plus de FPS, moins de latence, une stabilité maximale. Compatible Windows 10 & 11.
+              {t('hero.subtitle')}
             </motion.p>
 
             {/* CTAs */}
@@ -198,7 +198,7 @@ export default function Home() {
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
                 >
                   <Zap className="w-4 h-4" />
-                  COMMENCER
+                  {t('hero.start')}
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -208,7 +208,7 @@ export default function Home() {
                   variant="outline"
                   className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
                 >
-                  VOIR LES PRODUITS
+                  {t('hero.products')}
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -219,7 +219,7 @@ export default function Home() {
                   className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  DISCORD
+                  {t('hero.discord')}
                 </Button>
               </a>
             </motion.div>
