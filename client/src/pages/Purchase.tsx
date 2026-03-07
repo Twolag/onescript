@@ -117,6 +117,7 @@ export default function Purchase() {
     discordPseudo: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [orderCreated, setOrderCreated] = useState<{ orderNumber: string; productName: string; price: number } | null>(null);
 
   const total = selectedItems.reduce((sum, item) => sum + item.price, 0);
 
@@ -152,6 +153,13 @@ export default function Purchase() {
       // Construire l'URL PayPal - Format simple et direct
       const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
 
+      // Stocker le numéro de commande pour l'afficher à l'écran
+      setOrderCreated({
+        orderNumber,
+        productName: `${product.name} - ${selectedItem.label}`,
+        price: selectedItem.price,
+      });
+      
       // Afficher le toast
       toast.success("Redirection vers PayPal...");
       
@@ -409,7 +417,7 @@ export default function Purchase() {
               </motion.div>
             </div>
 
-            {/* Right: Order summary */}
+            {/* Right: Order summary or Order Confirmation */}
             <motion.div
               variants={fadeUp}
               custom={3}
@@ -417,8 +425,46 @@ export default function Purchase() {
               animate="visible"
               className="lg:col-span-1"
             >
-              <div className="sticky top-24 glass-card rounded-lg p-6">
-                <h3 className="text-xl font-display font-bold mb-6">Récapitulatif</h3>
+              {orderCreated ? (
+                <div className="sticky top-24 glass-card rounded-lg p-6 border-2 border-green-500/50 bg-green-500/5">
+                  <div className="text-center space-y-4">
+                    <div className="flex justify-center">
+                      <Check className="w-12 h-12 text-green-400" />
+                    </div>
+                    <h3 className="text-2xl font-display font-bold text-green-400">Commande créée !</h3>
+                    <p className="text-sm text-muted-foreground">Votre numéro de commande :</p>
+                    <div className="bg-dark-elevated/80 border border-green-500/30 rounded-lg p-4 font-mono text-lg font-bold text-green-400 break-all">
+                      {orderCreated.orderNumber}
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <p className="text-muted-foreground">Produit : <span className="text-foreground font-semibold">{orderCreated.productName}</span></p>
+                      <p className="text-muted-foreground">Montant : <span className="text-foreground font-semibold">{orderCreated.price}€</span></p>
+                    </div>
+                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
+                      <p className="text-sm font-semibold text-blue-300">Instructions importantes :</p>
+                      <ol className="text-xs text-muted-foreground space-y-2 text-left">
+                        <li>1. Une fenêtre PayPal vient de s'ouvrir (vérifiez si elle est bloquée)</li>
+                        <li>2. Effectuez le paiement de <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
+                        <li>3. Vous recevrez un email de confirmation avec vos accès</li>
+                        <li>4. Si vous ne recevez pas d'email, contactez-nous sur Discord</li>
+                      </ol>
+                    </div>
+                    <a
+                      href={DISCORD_LINK}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block mt-4"
+                    >
+                      <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
+                        <MessageCircle className="w-4 h-4" />
+                        Nous contacter sur Discord
+                      </Button>
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <div className="sticky top-24 glass-card rounded-lg p-6">
+                  <h3 className="text-xl font-display font-bold mb-6">Récapitulatif</h3>
 
                 {selectedItems.length > 0 ? (
                   <div className="space-y-4">
@@ -474,7 +520,8 @@ export default function Purchase() {
                     </p>
                   </div>
                 )}
-              </div>
+                </div>
+              )}
             </motion.div>
           </div>
         </div>
