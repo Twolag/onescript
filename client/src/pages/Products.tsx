@@ -309,8 +309,8 @@ export default function Products() {
           "products.jitter.feature7",
         ]}
         compatibility={[
-          { label: "products.windowsopt.compat1_label", value: "Windows 10 / 11" }
-          { label: "products.windowsopt.compat2_label", value: "Tous modèles" }
+          { label: "products.windowsopt.compat1_label", value: "Windows 10 / 11" },
+          { label: "products.windowsopt.compat2_label", value: "Tous modèles" },
           { label: "products.jitter.compat3_label", value: "Abonnement" },
           { label: "products.jitter.compat4_label", value: "PC — manette uniquement" },
         ]}
