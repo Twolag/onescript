@@ -212,7 +212,7 @@ export default function Home() {
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <a href="https://discord.gg/onescript" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.com/invite/cU2kNQxxHu" target="_blank" rel="noopener noreferrer">
                 <Button
                   size="lg"
                   variant="outline"

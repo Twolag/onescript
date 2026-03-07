@@ -6,7 +6,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Menu, X, ChevronDown } from "lucide-react";
+import { Zap, Menu, X, ChevronDown, Globe } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/onescript-logo-full_647bb391.png";
 
@@ -29,6 +30,15 @@ export default function Navbar() {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setLangDropdownOpen(false);
+  };
+
+  const currentLang = i18n.language.startsWith('en') ? 'EN' : 'FR';
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
@@ -110,6 +120,50 @@ export default function Navbar() {
                       {product.name}
                     </Link>
                   ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Language selector */}
+          <div className="relative">
+            <button
+              onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-body font-medium text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Change language"
+            >
+              <Globe className="w-4 h-4" />
+              {currentLang}
+            </button>
+            <AnimatePresence>
+              {langDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full right-0 mt-2 w-32 bg-dark-elevated border border-violet-tech/30 rounded-lg shadow-lg overflow-hidden z-50"
+                >
+                  <button
+                    onClick={() => changeLanguage('fr')}
+                    className={`w-full text-left px-4 py-2 text-sm font-body transition-colors ${
+                      currentLang === 'FR'
+                        ? 'bg-violet-tech/20 text-violet-tech'
+                        : 'text-foreground hover:bg-violet-tech/10'
+                    }`}
+                  >
+                    Français
+                  </button>
+                  <button
+                    onClick={() => changeLanguage('en')}
+                    className={`w-full text-left px-4 py-2 text-sm font-body transition-colors border-t border-border/30 ${
+                      currentLang === 'EN'
+                        ? 'bg-violet-tech/20 text-violet-tech'
+                        : 'text-foreground hover:bg-violet-tech/10'
+                    }`}
+                  >
+                    English
+                  </button>
                 </motion.div>
               )}
             </AnimatePresence>
