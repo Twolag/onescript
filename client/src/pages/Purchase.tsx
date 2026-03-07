@@ -165,7 +165,9 @@ export default function Purchase() {
       
       // Ouvrir le lien PayPal dans un nouvel onglet
       // Cette méthode est plus robuste et ne peut pas être bloquée
-      window.open(paypalLink, '_blank');
+      setTimeout(() => {
+        window.open(paypalLink, '_blank');
+      }, 100);
       
       // Envoyer un email de confirmation au client (non-bloquant)
       try {
