@@ -213,11 +213,21 @@ export default function Reviews() {
                         </button>
                       </>
                     ) : (
-                      <img
-                        src={review.mediaUrl}
-                        alt={review.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                      />
+                      <>
+                        <img
+                          src={review.mediaUrl}
+                          alt={review.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                        <button
+                          onClick={() => review.mediaUrl && setSelectedMedia(review.mediaUrl)}
+                          className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors opacity-0 group-hover:opacity-100"
+                        >
+                          <div className="w-16 h-16 rounded-full bg-violet-tech flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <ImageIcon className="w-8 h-8 text-white" />
+                          </div>
+                        </button>
+                      </>
                     )}
                   </div>
                 )}
