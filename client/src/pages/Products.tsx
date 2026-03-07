@@ -5,6 +5,7 @@
  */
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 import {
   Cpu,
   Monitor,
@@ -57,6 +58,7 @@ function ProductSection({
   reverse,
   index,
 }: ProductSectionProps) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -105,16 +107,16 @@ function ProductSection({
                 <Icon className="w-5 h-5 text-violet-tech" />
               </div>
               <span className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-tech">
-                {subtitle}
+                {t(subtitle)}
               </span>
             </div>
 
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-              {title}
+              {t(title)}
             </h2>
 
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              {description}
+              {t(description)}
             </p>
 
             {/* Features */}
@@ -122,7 +124,7 @@ function ProductSection({
               {features.slice(0, expanded ? features.length : 4).map((f) => (
                 <div key={f} className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-violet-tech flex-shrink-0" />
-                  <span className="text-foreground/80">{f}</span>
+                  <span className="text-foreground/80">{t(f)}</span>
                 </div>
               ))}
               {features.length > 4 && (
@@ -130,7 +132,7 @@ function ProductSection({
                   onClick={() => setExpanded(!expanded)}
                   className="flex items-center gap-1.5 text-xs text-violet-tech hover:text-violet-accent transition-colors mt-2"
                 >
-                  {expanded ? "Voir moins" : `+${features.length - 4} fonctionnalités`}
+                  {expanded ? t("products.view_less") : t("products.view_more", { count: features.length - 4 })}
                   <ChevronDown
                     className={`w-3 h-3 transition-transform ${expanded ? "rotate-180" : ""}`}
                   />
@@ -141,12 +143,12 @@ function ProductSection({
             {/* Compatibility */}
             <div className="glass-card rounded-lg p-5 mb-6">
               <h4 className="font-display text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-3">
-                Compatibilité
+                {t("products.compatibility_title")}
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 {compatibility.map((c) => (
                   <div key={c.label}>
-                    <p className="text-xs text-muted-foreground">{c.label}</p>
+                    <p className="text-xs text-muted-foreground">{t(c.label)}</p>
                     <p className="text-sm font-medium text-foreground">{c.value}</p>
                   </div>
                 ))}
@@ -157,7 +159,7 @@ function ProductSection({
             <div className="flex flex-wrap items-end gap-4 mb-6">
               {pricing.map((p) => (
                 <div key={p.label} className="flex-shrink-0">
-                  <p className="text-xs text-muted-foreground mb-0.5">{p.label}</p>
+                  <p className="text-xs text-muted-foreground mb-0.5">{t(p.label)}</p>
                   <p className="font-display font-extrabold text-2xl text-foreground">
                     {p.price}
                     {p.note && (
@@ -177,7 +179,7 @@ function ProductSection({
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
                 >
                   <Zap className="w-4 h-4" />
-                  ACHETER MAINTENANT
+                  {t("products.buy_now")}
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -189,7 +191,7 @@ function ProductSection({
                     className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
                   >
                     <Gamepad2 className="w-4 h-4" />
-                    RÉSERVER UN ESSAI
+                    {t("products.book_trial")}
                   </Button>
                 </Link>
               )}

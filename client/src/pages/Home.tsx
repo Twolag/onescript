@@ -38,85 +38,83 @@ const SCRIPT_TOOLS = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/h
 
 const products = [
   {
-    title: "FUSION AI",
-    desc: "Traitement visuel IA en temps réel. 100% logiciel, performances qui évoluent avec votre matériel. Aucun périphérique externe.",
+    title: t("products.fusionai.title"),
+    desc: t("products.fusionai.description"),
     icon: Cpu,
     image: AI_ENGINE,
     price: "80 €",
-    priceLabel: "licence + installation",
+    priceLabel: t("pricing.aiaimbot"),
     href: "/products",
   },
   {
-    title: "Windows Optimization",
-    desc: "Nettoyage système, suppression des services inutiles, optimisation RAM/CPU. Gain minimum : 40-60 FPS.",
+    title: t("products.windowsopt.title"),
+    desc: t("products.windowsopt.description"),
     icon: Monitor,
     image: WINDOWS_OPT,
     price: "10 €",
-    priceLabel: "à partir de",
+    priceLabel: t("pricing.windowsopt"),
     href: "/products",
   },
   {
-    title: "Jitter Script",
-    desc: "Le meilleur script jitter Apex Legends anti-recul du marché. Indétectable, manette uniquement, ne coupe pas l'aim assist. Parfait pour Warzone et tous les FPS.",
+    title: t("products.jitterscript.title"),
+    desc: t("products.jitterscript.description"),
     icon: Gamepad2,
     image: SCRIPT_TOOLS,
     price: "2,50 €",
-    priceLabel: "à partir de",
+    priceLabel: t("pricing.jitterscript"),
     href: "/products",
   },
 ];
 
 const stats = [
-  { value: "+60", unit: "FPS", label: "Gain minimum" },
-  { value: "-40", unit: "%", label: "Latence réduite" },
-  { value: "99", unit: "%", label: "Stabilité" },
-  { value: "24/7", unit: "", label: "Support" },
+  { value: "+60", unit: "FPS", labelKey: "stats.fps" },
+  { value: "-40", unit: "%", labelKey: "stats.latency" },
+  { value: "99", unit: "%", labelKey: "stats.stability" },
+  { value: "24/7", unit: "", labelKey: "stats.support" },
 ];
 
 const pricingPlans = [
   {
-    name: "Windows Optimization",
+    name: t("pricing.windowsopt"),
     price: "10",
     period: "",
-    desc: "Optimisation simple de Windows",
+    desc: t("pricing.windowsopt_desc"),
     features: [
-      "Nettoyage système complet",
-      "Suppression services inutiles",
-      "Optimisation RAM & CPU",
-      "Réduction input lag",
+      t("pricing.windowsopt_feature1"),
+      t("pricing.windowsopt_feature2"),
+      t("pricing.windowsopt_feature3"),
     ],
     popular: false,
-    cta: "CHOISIR CE PLAN",
+    cta: t("pricing.choose_plan"),
   },
   {
-    name: "AI Aimbot",
+    name: t("pricing.aiaimbot"),
     price: "80",
-    period: "1er mois + inst.",
-    desc: "Installation complète + 1er mois inclus",
+    period: "",
+    desc: t("pricing.aiaimbot_desc"),
     features: [
-      "Traitement visuel IA en temps réel",
-      "100% logiciel — aucun périphérique",
-      "Renouvellement : 30 € / mois",
-      "Mises à jour incluses",
-      "Support prioritaire",
+      t("pricing.aiaimbot_feature1"),
+      t("pricing.aiaimbot_feature2"),
+      t("pricing.aiaimbot_feature3"),
+      t("pricing.aiaimbot_feature4"),
     ],
     popular: true,
-    cta: "Choisir ce plan",
+    cta: t("pricing.choose_plan"),
   },
   {
-    name: "Jitter Script",
+    name: t("pricing.jitterscript"),
     price: "2,50",
     period: "à partir de",
-    desc: "Script anti-recul jitter aim — manette uniquement",
+    desc: t("pricing.jitterscript_desc"),
     features: [
-      "Indétectable par l'anti-cheat",
-      "Ne coupe pas l'aim assist",
-      "Fonction Humanizer intégrée",
-      "Réglable depuis l'interface",
-      "Manette uniquement",
+      t("pricing.jitterscript_feature1"),
+      t("pricing.jitterscript_feature2"),
+      t("pricing.jitterscript_feature3"),
+      t("pricing.jitterscript_feature4"),
+      t("pricing.jitterscript_feature5"),
     ],
     popular: false,
-    cta: "CHOISIR CE PLAN",
+    cta: t("pricing.choose_plan"),
   },
 ];
 
@@ -159,7 +157,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide"
             >
               <Zap className="w-3 h-3" />
-              PC GAMING PERFORMANCE
+              {t("hero.badge")}
             </motion.div>
 
             {/* Title */}
@@ -254,7 +252,7 @@ export default function Home() {
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1 font-body">
-                  {stat.label}
+                  {t(stat.labelKey)}
                 </p>
               </motion.div>
             ))}
@@ -276,14 +274,13 @@ export default function Home() {
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-violet-tech/20 border border-violet-tech/30 text-[10px] font-bold text-violet-accent tracking-widest uppercase mb-4">
                 <Zap className="w-3 h-3" />
-                Offre Limitée
+                {t("trial.badge")}
               </div>
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-                Testez l'AI Aimbot <span className="text-violet-tech neon-text">gratuitement</span>
+                {t("trial.title")}
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Vous hésitez encore ? Réservez un essai gratuit de 24h pour découvrir la puissance de FUSION AI. 
-                Compatible Steam, Apex Legends et Call of Duty.
+                {t("trial.subtitle")}
               </p>
             </motion.div>
             
@@ -301,11 +298,11 @@ export default function Home() {
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-3 px-8 py-7 text-lg"
                 >
                   <Gamepad2 className="w-6 h-6" />
-                  RÉSERVER MON ESSAI
+                  {t("trial.cta")}
                 </Button>
               </Link>
               <p className="text-center text-xs text-muted-foreground mt-4">
-                Réponse sous 24h via Discord
+                {t("trial.response_time")}
               </p>
             </motion.div>
           </div>
@@ -325,15 +322,13 @@ export default function Home() {
             className="max-w-2xl mb-16"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Nos Solutions
+              {t("solutions.badge")}
             </span>
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              Des outils conçus pour la{" "}
-              <span className="text-violet-tech">performance</span>
+              {t("solutions.title")}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Trois produits complémentaires pour transformer votre expérience
-              gaming et exploiter chaque cycle de votre processeur.
+              {t("solutions.subtitle")}
             </p>
           </motion.div>
 
@@ -360,7 +355,7 @@ export default function Home() {
                       <div className="absolute inset-0 bg-gradient-to-t from-dark-base via-dark-base/40 to-transparent" />
                       {/* Price badge */}
                       <div className="absolute top-4 right-4 px-3 py-1.5 rounded-md bg-violet-tech/90 text-xs font-display font-bold text-white">
-                        {product.priceLabel} {product.price}
+                        {t(product.priceLabelKey)} {product.price}
                       </div>
                     </div>
 
@@ -371,14 +366,14 @@ export default function Home() {
                           <product.icon className="w-4.5 h-4.5 text-violet-tech" />
                         </div>
                         <h3 className="font-display font-bold text-base tracking-wide">
-                          {product.title}
+                          {t(product.titleKey)}
                         </h3>
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                        {product.desc}
+                        {t(product.descKey)}
                       </p>
                       <span className="inline-flex items-center gap-1.5 text-sm font-medium text-violet-tech group-hover:gap-2.5 transition-all duration-200">
-                        En savoir plus
+                        {t("products.learn_more")}
                         <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
