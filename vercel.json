@@ -1,10 +1,22 @@
 {
   "buildCommand": "pnpm run build",
-  "outputDirectory": "dist",
-  "public": true,
+  "outputDirectory": "dist/public",
   "devCommand": "pnpm run dev",
   "env": {
     "NODE_ENV": "production"
   },
-
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
