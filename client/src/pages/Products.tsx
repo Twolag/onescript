@@ -295,8 +295,8 @@ export default function Products() {
       <ProductSection
         id="jitter-script"
         title="Jitter Script"
-        subtitle="Anti-Recul"
-        description="Le meilleur script jitter du marché. Conçu pour être indétectable par l'anti-cheat, il simule un mouvement de jitter aim pour contrer le recul de vos armes. Pas ou très peu de tremblements selon l'optique pour paraître légitime au possible, mais néanmoins très puissant pour vous permettre de détruire vos adversaires à plus de 150 mètres. Tirs précis à 600 mètres selon réglage (fortement déconseillé). Contrairement aux autres jitter aim du marché, il ne coupe pas l'aim assist."
+        subtitle="Anti-Recul Apex Legends & Warzone"
+        description="Le meilleur script jitter Apex Legends et Warzone du marché. Conçu pour être indétectable par l'anti-cheat, il simule un mouvement de jitter aim pour contrer le recul de vos armes. Pas ou très peu de tremblements selon l'optique pour paraître légitime au possible, mais néanmoins très puissant pour vous permettre de détruire vos adversaires à plus de 150 mètres. Tirs précis à 600 mètres selon réglage (fortement déconseillé). Contrairement aux autres jitter aim du marché, il ne coupe pas l'aim assist. Parfait pour tous les FPS."
         image={SCRIPT_TOOLS}
         icon={Gamepad2}
         features={[

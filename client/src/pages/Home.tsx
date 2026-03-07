@@ -55,7 +55,7 @@ const products = [
   },
   {
     title: "Jitter Script",
-    desc: "Le meilleur script jitter anti-recul du marché. Indétectable, manette uniquement, ne coupe pas l'aim assist.",
+    desc: "Le meilleur script jitter Apex Legends anti-recul du marché. Indétectable, manette uniquement, ne coupe pas l'aim assist. Parfait pour Warzone et tous les FPS.",
     icon: Gamepad2,
     image: SCRIPT_TOOLS,
     price: "2,50 €",
@@ -180,8 +180,7 @@ export default function Home() {
               animate="visible"
               className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8"
             >
-              OneScript optimise votre PC pour le gaming. Plus de FPS, moins de
-              latence, une stabilité maximale. Compatible Windows 10 & 11.
+              OneScript optimise votre PC pour le gaming. Jitter Script Apex Legends, AI Aimbot, Windows Optimization. Plus de FPS, moins de latence, une stabilité maximale. Compatible Windows 10 & 11.
             </motion.p>
 
             {/* CTAs */}
