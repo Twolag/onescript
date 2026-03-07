@@ -1,6 +1,11 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendApiKey = process.env.RESEND_API_KEY;
+if (!resendApiKey) {
+  console.error("[Email] RESEND_API_KEY n'est pas défini");
+}
+
+const resend = new Resend(resendApiKey);
 
 export interface OrderData {
   orderNumber: string;
@@ -101,7 +106,7 @@ export async function sendOrderConfirmationEmail(order: OrderData): Promise<bool
       return false;
     }
 
-    console.log(`[Email] E-mail de confirmation envoyé à ${order.customerEmail}`);
+    console.log(`[Email] ✅ E-mail de confirmation envoyé à ${order.customerEmail}`);
     return true;
   } catch (error) {
     console.error("[Email] Erreur lors de l'envoi de l'e-mail client:", error);

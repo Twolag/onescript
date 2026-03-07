@@ -9,6 +9,8 @@ const router = express.Router();
  */
 router.post("/send-emails", async (req, res) => {
   try {
+    console.log("[Orders API] Requête reçue:", req.body);
+    
     const {
       orderNumber,
       customerEmail,
@@ -21,9 +23,12 @@ router.post("/send-emails", async (req, res) => {
 
     // Validation basique
     if (!orderNumber || !customerEmail || !customerName) {
+      console.error("[Orders API] Données manquantes");
       return res.status(400).json({ error: "Données manquantes" });
     }
 
+    console.log("[Orders API] Envoi des e-mails pour la commande:", orderNumber);
+    
     // Envoyer les e-mails
     const result = await sendOrderEmails({
       orderNumber,
@@ -37,6 +42,7 @@ router.post("/send-emails", async (req, res) => {
 
     // Retourner le résultat (même si les e-mails ont échoué, on retourne 200)
     // Car le paiement ne doit pas être bloqué
+    console.log("[Orders API] Résultat:", result);
     res.json({
       success: true,
       orderNumber,
