@@ -38,6 +38,7 @@ const fadeUp = {
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
 const EMAILJS_SERVICE_ID = "service_kiuxijv";
 const EMAILJS_TEMPLATE_ID = "template_37cc9eo";
+const ADMIN_EMAIL = "onsecript@outlook.fr";
 
 interface Product {
   id: string;
@@ -158,8 +159,7 @@ export default function Purchase() {
       // Cette méthode est plus robuste et ne peut pas être bloquée
       window.open(paypalLink, '_blank');
       
-      // Envoyer un email de confirmation (non-bloquant)
-      // Si l'email échoue, le paiement continue quand même
+      // Envoyer un email de confirmation au client (non-bloquant)
       try {
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
           to_email: formData.email,
@@ -171,7 +171,22 @@ export default function Purchase() {
           message: `Votre commande a été créée. Vous allez être redirigé vers PayPal pour finaliser le paiement.`,
         });
       } catch (emailError) {
-        console.warn("Erreur lors de l'envoi de l'email (non-bloquant):", emailError);
+        console.warn("Erreur lors de l'envoi de l'email client:", emailError);
+      }
+      
+      // Envoyer un email de notification ADMIN
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_email: ADMIN_EMAIL,
+          customer_name: `${formData.firstName} ${formData.lastName}`,
+          discord_pseudo: formData.discordPseudo,
+          order_number: orderNumber,
+          product_name: `${product.name} - ${selectedItem.label}`,
+          product_price: `${selectedItem.price}€`,
+          message: `[ADMIN] Nouvelle commande: ${formData.email} | Discord: ${formData.discordPseudo}`,
+        });
+      } catch (adminEmailError) {
+        console.warn("Erreur lors de l'envoi de l'email admin:", adminEmailError);
       }
       
       setIsLoading(false);
