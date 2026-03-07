@@ -95,7 +95,7 @@ export async function sendOrderConfirmationEmail(order: OrderData): Promise<bool
     `;
 
     const result = await resend.emails.send({
-      from: "onescript <onescript@resend.dev>",
+      from: "onescript <noreply@olunoonexa.resend.app>",
       to: order.customerEmail,
       subject: `Confirmation de commande - ${order.orderNumber}`,
       html: htmlContent,
@@ -196,7 +196,7 @@ export async function sendAdminOrderNotification(order: OrderData): Promise<bool
     `;
 
     const result = await resend.emails.send({
-      from: "onescript <onescript@resend.dev>",
+      from: "onescript <noreply@olunoonexa.resend.app>",
       to: adminEmail,
       subject: `[NOUVELLE COMMANDE] ${order.orderNumber} - ${order.customerName}`,
       html: htmlContent,
