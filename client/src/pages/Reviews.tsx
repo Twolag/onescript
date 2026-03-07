@@ -303,7 +303,7 @@ export default function Reviews() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="relative w-full max-w-6xl"
+            className="relative w-full max-w-sm h-[80vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -317,13 +317,13 @@ export default function Reviews() {
                 src={selectedMedia}
                 controls
                 autoPlay
-                className="w-full h-auto rounded-lg shadow-2xl"
+                className="w-full h-full object-contain rounded-lg shadow-2xl"
               />
             ) : (
               <img
                 src={selectedMedia}
                 alt="Media preview"
-                className="w-full h-auto rounded-lg shadow-2xl"
+                className="w-full h-full object-contain rounded-lg shadow-2xl"
               />
             )}
           </motion.div>
