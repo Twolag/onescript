@@ -5,7 +5,6 @@
  */
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { useTranslation } from "react-i18next";
 import {
   Cpu,
   Monitor,
@@ -58,7 +57,6 @@ function ProductSection({
   reverse,
   index,
 }: ProductSectionProps) {
-  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -107,16 +105,16 @@ function ProductSection({
                 <Icon className="w-5 h-5 text-violet-tech" />
               </div>
               <span className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-tech">
-                {t(subtitle)}
+                {subtitle}
               </span>
             </div>
 
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-              {t(title)}
+              {title}
             </h2>
 
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              {t(description)}
+              {description}
             </p>
 
             {/* Features */}
@@ -124,7 +122,7 @@ function ProductSection({
               {features.slice(0, expanded ? features.length : 4).map((f) => (
                 <div key={f} className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-violet-tech flex-shrink-0" />
-                  <span className="text-foreground/80">{t(f)}</span>
+                  <span className="text-foreground/80">{f}</span>
                 </div>
               ))}
               {features.length > 4 && (
@@ -132,7 +130,7 @@ function ProductSection({
                   onClick={() => setExpanded(!expanded)}
                   className="flex items-center gap-1.5 text-xs text-violet-tech hover:text-violet-accent transition-colors mt-2"
                 >
-                  {expanded ? t("products.view_less") : t("products.view_more", { count: features.length - 4 })}
+                  {expanded ? "Voir moins" : `+${features.length - 4} fonctionnalités`}
                   <ChevronDown
                     className={`w-3 h-3 transition-transform ${expanded ? "rotate-180" : ""}`}
                   />
@@ -143,12 +141,12 @@ function ProductSection({
             {/* Compatibility */}
             <div className="glass-card rounded-lg p-5 mb-6">
               <h4 className="font-display text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-3">
-                {t("products.compatibility_title")}
+                Compatibilité
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 {compatibility.map((c) => (
                   <div key={c.label}>
-                    <p className="text-xs text-muted-foreground">{t(c.label)}</p>
+                    <p className="text-xs text-muted-foreground">{c.label}</p>
                     <p className="text-sm font-medium text-foreground">{c.value}</p>
                   </div>
                 ))}
@@ -159,7 +157,7 @@ function ProductSection({
             <div className="flex flex-wrap items-end gap-4 mb-6">
               {pricing.map((p) => (
                 <div key={p.label} className="flex-shrink-0">
-                  <p className="text-xs text-muted-foreground mb-0.5">{t(p.label)}</p>
+                  <p className="text-xs text-muted-foreground mb-0.5">{p.label}</p>
                   <p className="font-display font-extrabold text-2xl text-foreground">
                     {p.price}
                     {p.note && (
@@ -179,7 +177,7 @@ function ProductSection({
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
                 >
                   <Zap className="w-4 h-4" />
-                  {t("products.buy_now")}
+                  ACHETER MAINTENANT
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -191,7 +189,7 @@ function ProductSection({
                     className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
                   >
                     <Gamepad2 className="w-4 h-4" />
-                    {t("products.book_trial")}
+                    RÉSERVER UN ESSAI
                   </Button>
                 </Link>
               )}
@@ -218,13 +216,15 @@ export default function Products() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              {t("products_page.badge")}
+              Nos Produits
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              {t("products_page.title")}
+              Outils de{" "}
+              <span className="text-violet-tech neon-text">performance</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              {t("products_page.subtitle")}
+              Découvrez nos trois solutions conçues pour transformer votre
+              expérience gaming et optimiser votre PC Windows.
             </p>
           </motion.div>
         </div>
@@ -234,29 +234,29 @@ export default function Products() {
       {/* Product 1: FUSION AI */}
       <ProductSection
         id="fusion-ai"
-        title="products.fusionai.title"
-        subtitle="products.fusionai.subtitle"
-        description="products.fusionai.description"
+        title="FUSION AI"
+        subtitle="Traitement Visuel IA"
+        description="FUSION AI est une solution 100% logicielle basée sur la vision par ordinateur et le traitement IA en temps réel. Les performances ne sont pas plafonnées — elles évoluent directement avec votre matériel. Plus votre PC est puissant, plus le moteur IA est rapide, fluide et précis. Aucun périphérique externe requis (PAS DE ZEN, PAS DE XIM, PAS DE TITAN, PAS DE DMA)."
         image={AI_ENGINE}
         icon={Cpu}
         features={[
-          "products.fusionai.feature1",
-          "products.fusionai.feature2",
-          "products.fusionai.feature3",
-          "products.fusionai.feature4",
-          "products.fusionai.feature5",
-          "products.fusionai.feature6",
-          "products.fusionai.feature7",
+          "Traitement visuel IA en temps réel",
+          "100% logiciel — aucun périphérique externe",
+          "Performances qui évoluent avec votre matériel",
+          "Vision par ordinateur avancée",
+          "Fluidité et réactivité adaptatives",
+          "Compatible NVIDIA RTX uniquement",
+          "Mises à jour régulières incluses",
         ]}
         compatibility={[
-          { label: "products.fusionai.compat1_label", value: "RTX 3060 / 3070 / 4060" },
-          { label: "products.fusionai.compat2_label", value: "RTX 4070 / 5060+" },
-          { label: "products.fusionai.compat3_label", value: "i5 13600K / Ryzen 5 5600X" },
-          { label: "products.windowsopt.compat1_label", value: "Windows 10 / 11" }
+          { label: "GPU Mid Range", value: "RTX 3060 / 3070 / 4060" },
+          { label: "GPU High End", value: "RTX 4070 / 5060+" },
+          { label: "CPU recommandé", value: "i5 13600K / Ryzen 5 5600X" },
+          { label: "OS", value: "Windows 10 / 11" },
         ]}
         pricing={[
-          { label: "products.fusionai.price1_label", price: "80 €", note: "products.fusionai.price1_note" },
-          { label: "products.fusionai.price2_label", price: "30 €", note: "products.fusionai.price2_note" },
+          { label: "Licence + installation", price: "80 €", note: "1er mois inclus" },
+          { label: "Renouvellement", price: "30 €", note: "/ mois" },
         ]}
         index={0}
       />
@@ -264,28 +264,28 @@ export default function Products() {
       {/* Product 2: Windows Optimization */}
       <ProductSection
         id="windows-opt"
-        title={t("products.windowsopt.title")}
-        subtitle={t("products.windowsopt.subtitle")}
-        description={t("products.windowsopt.description")}
+        title="Windows Optimization"
+        subtitle="Optimisation Système"
+        description="Optimisation avancée de Windows pour améliorer les performances gaming. Notre outil nettoie votre système, supprime les services inutiles et optimise la gestion de la RAM et du CPU pour un gain minimum de 40 à 60 FPS."
         image={WINDOWS_OPT}
         icon={Monitor}
         features={[
-          t("products.windowsopt.feature1"),
-          t("products.windowsopt.feature2"),
-          t("products.windowsopt.feature3"),
-          t("products.windowsopt.feature4"),
-          t("products.windowsopt.feature5"),
-          t("products.windowsopt.feature6"),
+          "Nettoyage système complet",
+          "Suppression des services inutiles",
+          "Optimisation RAM",
+          "Optimisation CPU",
+          "Réduction de l'input lag",
+          "Configuration réseau optimisée",
         ]}
         compatibility={[
-          { label: t("products.windowsopt.compat1_label"), value: "Windows 10 / 11" },
-          { label: t("products.windowsopt.compat2_label"), value: "Tous modèles" },
-          { label: t("products.windowsopt.compat3_label"), value: "40-60 FPS" },
-          { label: t("products.windowsopt.compat4_label"), value: "PC uniquement" },
+          { label: "OS", value: "Windows 10 / 11" },
+          { label: "GPU / CPU", value: "Tous modèles" },
+          { label: "Gain minimum", value: "40-60 FPS" },
+          { label: "Plateforme", value: "PC uniquement" },
         ]}
         pricing={[
-          { label: t("products.windowsopt.price1_label"), price: "10 €" },,
-          { label: t("products.windowsopt.price2_label"), price: "20 €" }
+          { label: "Optimisation simple", price: "10 €" },
+          { label: "Optim. + réinstall. Windows", price: "20 €" },
         ]}
         reverse
         index={1}
@@ -294,34 +294,34 @@ export default function Products() {
       {/* Product 3: Jitter Script */}
       <ProductSection
         id="jitter-script"
-        title="products.jitter.title"
-        subtitle="products.jitter.subtitle"
-        description="products.jitter.description"
+        title="Jitter Script"
+        subtitle="Anti-Recul Apex Legends & Warzone"
+        description="Le meilleur script jitter Apex Legends et Warzone du marché. Conçu pour être indétectable par l'anti-cheat, il simule un mouvement de jitter aim pour contrer le recul de vos armes. Pas ou très peu de tremblements selon l'optique pour paraître légitime au possible, mais néanmoins très puissant pour vous permettre de détruire vos adversaires à plus de 150 mètres. Tirs précis à 600 mètres selon réglage (fortement déconseillé). Contrairement aux autres jitter aim du marché, il ne coupe pas l'aim assist. Parfait pour tous les FPS."
         image={SCRIPT_TOOLS}
         icon={Gamepad2}
         features={[
-          "products.jitter.feature1",
-          "products.jitter.feature2",
-          "products.jitter.feature3",
-          "products.jitter.feature4",
-          "products.jitter.feature5",
-          "products.jitter.feature6",
-          "products.jitter.feature7",
+          "Indétectable par l'anti-cheat",
+          "Ne coupe pas l'aim assist",
+          "Fonction Humanizer intégrée",
+          "Réglable depuis l'interface du script",
+          "Manette uniquement (Xbox / PS)",
+          "Très peu de tremblements selon l'optique",
+          "Tirs précis jusqu'à 150m+ (600m selon réglage)",
         ]}
         compatibility={[
-          { label: "products.windowsopt.compat1_label", value: "Windows 10 / 11" },
-          { label: "products.windowsopt.compat2_label", value: "Tous modèles" },
-          { label: "products.jitter.compat3_label", value: "Abonnement" },
-          { label: "products.jitter.compat4_label", value: "PC — manette uniquement" },
+          { label: "OS", value: "Windows 10 / 11" },
+          { label: "GPU / CPU", value: "Tous modèles" },
+          { label: "Type", value: "Abonnement" },
+          { label: "Plateforme", value: "PC — manette uniquement" },
         ]}
         pricing={[
-          { label: "products.jitter.price1_label", price: "2,50 €" },
-          { label: "products.jitter.price2_label", price: "5 €" },
-          { label: "products.jitter.price3_label", price: "15 €" },
-          { label: "products.jitter.price4_label", price: "20 €" },
-          { label: "products.jitter.price5_label", price: "25 €" },
-          { label: "products.jitter.price6_label", price: "30 €" },
-          { label: "products.jitter.price7_label", price: "40 €" },
+          { label: "Essai 24h", price: "2,50 €" },
+          { label: "1 semaine", price: "5 €" },
+          { label: "1 mois", price: "15 €" },
+          { label: "3 mois", price: "20 €" },
+          { label: "6 mois", price: "25 €" },
+          { label: "1 an", price: "30 €" },
+          { label: "À vie", price: "40 €" },
         ]}
         index={2}
       />
