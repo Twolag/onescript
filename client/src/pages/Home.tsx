@@ -17,6 +17,7 @@ import {
   TrendingUp,
   Headphones,
   Check,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -211,6 +212,16 @@ export default function Home() {
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>
+              <a href="https://discord.com/invite/cU2kNQxxHu" target="_blank" rel="noopener noreferrer">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  DISCORD
+                </Button>
+              </a>
             </motion.div>
           </div>
         </div>
