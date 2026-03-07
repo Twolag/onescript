@@ -5,7 +5,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import emailjs from "@emailjs/browser";
 import {
   Zap,
   Cpu,
@@ -16,12 +15,10 @@ import {
   Lock,
   AlertCircle,
   Mail,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-
-// Initialize EmailJS
-emailjs.init("9IFBv8D5o7NBxRjbq");
 
 // PayPal configuration
 const PAYPAL_EMAIL = "OneLagTT@paypal.me";
@@ -36,9 +33,6 @@ const fadeUp = {
 };
 
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
-const EMAILJS_SERVICE_ID = "service_kiuxijv";
-const EMAILJS_TEMPLATE_ID = "template_37cc9eo";
-const ADMIN_EMAIL = "onsecript@outlook.fr";
 
 interface Product {
   id: string;
@@ -169,35 +163,12 @@ export default function Purchase() {
         window.open(paypalLink, '_blank');
       }, 100);
       
-      // Envoyer un email de confirmation au client (non-bloquant)
-      try {
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          to_email: formData.email,
-          customer_name: `${formData.firstName} ${formData.lastName}`,
-          discord_pseudo: formData.discordPseudo,
-          order_number: orderNumber,
-          product_name: `${product.name} - ${selectedItem.label}`,
-          product_price: `${selectedItem.price}€`,
-          message: `Votre commande a été créée. Vous allez être redirigé vers PayPal pour finaliser le paiement.`,
-        });
-      } catch (emailError) {
-        console.warn("Erreur lors de l'envoi de l'email client:", emailError);
-      }
-      
-      // Envoyer un email de notification ADMIN
-      try {
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          to_email: ADMIN_EMAIL,
-          customer_name: `${formData.firstName} ${formData.lastName}`,
-          discord_pseudo: formData.discordPseudo,
-          order_number: orderNumber,
-          product_name: `${product.name} - ${selectedItem.label}`,
-          product_price: `${selectedItem.price}€`,
-          message: `[ADMIN] Nouvelle commande: ${formData.email} | Discord: ${formData.discordPseudo}`,
-        });
-      } catch (adminEmailError) {
-        console.warn("Erreur lors de l'envoi de l'email admin:", adminEmailError);
-      }
+      // Log de la commande pour le serveur (à implémenter côté backend si nécessaire)
+      console.log(`Commande créée: ${orderNumber}`);
+      console.log(`Client: ${formData.firstName} ${formData.lastName} (${formData.email})`);
+      console.log(`Discord: ${formData.discordPseudo}`);
+      console.log(`Produit: ${product.name} - ${selectedItem.label}`);
+      console.log(`Montant: ${selectedItem.price}€`);
       
       setIsLoading(false);
       return;
@@ -328,6 +299,7 @@ export default function Purchase() {
                         placeholder="Jean"
                       />
                     </div>
+
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">
                         Nom
@@ -442,13 +414,21 @@ export default function Purchase() {
                       <p className="text-muted-foreground">Produit : <span className="text-foreground font-semibold">{orderCreated.productName}</span></p>
                       <p className="text-muted-foreground">Montant : <span className="text-foreground font-semibold">{orderCreated.price}€</span></p>
                     </div>
+                    
+                    <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 space-y-2 mb-4">
+                      <p className="text-sm font-semibold text-yellow-300">⚠️ Maintenance en cours</p>
+                      <p className="text-xs text-muted-foreground">
+                        Notre système d'e-mail est actuellement en maintenance. Vous ne recevrez pas d'e-mail de confirmation, mais votre commande est enregistrée.
+                      </p>
+                    </div>
+
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
                       <p className="text-sm font-semibold text-blue-300">Instructions importantes :</p>
                       <ol className="text-xs text-muted-foreground space-y-2 text-left">
                         <li>1. Une fenêtre PayPal vient de s'ouvrir (vérifiez si elle est bloquée)</li>
                         <li>2. Effectuez le paiement de <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
-                        <li>3. Vous recevrez un email de confirmation avec vos accès</li>
-                        <li>4. Si vous ne recevez pas d'email, contactez-nous sur Discord</li>
+                        <li>3. <span className="font-semibold text-yellow-300">Prenez une capture d'écran de ce numéro</span></li>
+                        <li>4. Envoyez ce numéro sur notre Discord pour recevoir vos accès immédiatement</li>
                       </ol>
                     </div>
                     <a
