@@ -145,6 +145,7 @@ export default function Purchase() {
       const orderNumber = generateOrderNumber();
 
       // Envoyer les e-mails via l'API (non-bloquant)
+      console.log('[Purchase] Appel API /api/orders/send-emails');
       fetch('/api/orders/send-emails', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -157,9 +158,17 @@ export default function Purchase() {
           productOption: selectedItem.label,
           price: selectedItem.price,
         }),
-      }).catch((error) => {
-        console.error("Erreur lors de l'envoi des e-mails:", error);
-      });
+      })
+        .then((res) => {
+          console.log('[Purchase] Reponse API:', res.status);
+          return res.json();
+        })
+        .then((data) => {
+          console.log('[Purchase] Donnees recues:', data);
+        })
+        .catch((error) => {
+          console.error('[Purchase] Erreur API:', error);
+        });
 
       // Construire l'URL PayPal - Format simple et direct
       const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
@@ -181,11 +190,11 @@ export default function Purchase() {
       }, 100);
       
       // Log de la commande pour le serveur
-      console.log(`Commande créée: ${orderNumber}`);
-      console.log(`Client: ${formData.firstName} ${formData.lastName} (${formData.email})`);
-      console.log(`Discord: ${formData.discordPseudo}`);
-      console.log(`Produit: ${product.name} - ${selectedItem.label}`);
-      console.log(`Montant: ${selectedItem.price}€`);
+      console.log(`[Purchase] Commande créée: ${orderNumber}`);
+      console.log(`[Purchase] Client: ${formData.firstName} ${formData.lastName} (${formData.email})`);
+      console.log(`[Purchase] Discord: ${formData.discordPseudo}`);
+      console.log(`[Purchase] Produit: ${product.name} - ${selectedItem.label}`);
+      console.log(`[Purchase] Montant: ${selectedItem.price}€`);
       
       setIsLoading(false);
       return;
