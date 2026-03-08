@@ -124,7 +124,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const result = await resend.emails.send({
-      from: 'OneScript <noreply@olunoonexa.resend.app>',
+      from: 'OneScript <noreply@onescript.fr>',
       to,
       subject: finalSubject,
       html: finalHtml,
