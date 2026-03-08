@@ -5,30 +5,22 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "functions": {
-    "dist/index.js": {
-      "runtime": "nodejs20.x",
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/index.js",
-      "methods": ["POST", "GET", "PUT", "DELETE", "PATCH"]
+      "source": "/api/(.*)",
+      "destination": "/index.js"
     },
     {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap.xml"
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
     },
     {
-      "src": "/robots.txt",
-      "dest": "/robots.txt"
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
