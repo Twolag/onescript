@@ -5,7 +5,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { Resend } from "resend";
 import {
   Zap,
   Cpu,
@@ -145,26 +144,26 @@ export default function Purchase() {
       const selectedItem = selectedItems[0];
       const orderNumber = generateOrderNumber();
 
-      // Envoyer les e-mails via Resend (non-bloquant)
-      console.log('[Purchase] Envoi des e-mails via Resend');
-      
-      // Initialiser Resend avec la clé API publique
-      const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+      // Envoyer les e-mails via la fonction serverless (non-bloquant)
+      console.log('[Purchase] Envoi des e-mails via fonction serverless');
       
       // Envoyer l'e-mail de confirmation au client
-      resend.emails.send({
-        from: 'onescript <noreply@olunoonexa.resend.app>',
-        to: formData.email,
-        template: 'order-confirmation',
-        props: {
-          orderNumber,
-          customerName: `${formData.firstName} ${formData.lastName}`,
-          customerEmail: formData.email,
-          productName: product.name,
-          productOption: selectedItem.label,
-          discordPseudo: formData.discordPseudo,
-          price: selectedItem.price,
-        },
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: formData.email,
+          template: 'order-confirmation',
+          props: {
+            orderNumber,
+            customerName: `${formData.firstName} ${formData.lastName}`,
+            customerEmail: formData.email,
+            productName: product.name,
+            productOption: selectedItem.label,
+            discordPseudo: formData.discordPseudo,
+            price: selectedItem.price,
+          },
+        }),
       }).then(() => {
         console.log('[Purchase] E-mail client envoyé');
       }).catch((error) => {
@@ -172,20 +171,23 @@ export default function Purchase() {
       });
       
       // Envoyer l'e-mail de notification à l'admin
-      resend.emails.send({
-        from: 'onescript <noreply@olunoonexa.resend.app>',
-        to: 'onescript@outlook.fr',
-        subject: `[NOUVELLE COMMANDE] ${orderNumber} - ${formData.firstName} ${formData.lastName}`,
-        html: `
-          <h2>Nouvelle Commande</h2>
-          <p><strong>Numéro:</strong> ${orderNumber}</p>
-          <p><strong>Client:</strong> ${formData.firstName} ${formData.lastName}</p>
-          <p><strong>E-mail:</strong> ${formData.email}</p>
-          <p><strong>Discord:</strong> ${formData.discordPseudo}</p>
-          <p><strong>Produit:</strong> ${product.name}</p>
-          <p><strong>Option:</strong> ${selectedItem.label}</p>
-          <p><strong>Montant:</strong> ${selectedItem.price}€</p>
-        `,
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: 'onescript@outlook.fr',
+          subject: `[NOUVELLE COMMANDE] ${orderNumber} - ${formData.firstName} ${formData.lastName}`,
+          html: `
+            <h2>Nouvelle Commande</h2>
+            <p><strong>Numéro:</strong> ${orderNumber}</p>
+            <p><strong>Client:</strong> ${formData.firstName} ${formData.lastName}</p>
+            <p><strong>E-mail:</strong> ${formData.email}</p>
+            <p><strong>Discord:</strong> ${formData.discordPseudo}</p>
+            <p><strong>Produit:</strong> ${product.name}</p>
+            <p><strong>Option:</strong> ${selectedItem.label}</p>
+            <p><strong>Montant:</strong> ${selectedItem.price}€</p>
+          `,
+        }),
       }).then(() => {
         console.log('[Purchase] E-mail admin envoyé');
       }).catch((error) => {
