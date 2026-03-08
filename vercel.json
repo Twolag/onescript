@@ -7,10 +7,6 @@
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/index.js"
-    },
-    {
       "source": "/sitemap.xml",
       "destination": "/sitemap.xml"
     },
