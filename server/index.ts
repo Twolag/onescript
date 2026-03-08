@@ -16,7 +16,7 @@ async function startServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // API Routes
+  // API Routes (AVANT les fichiers statiques)
   app.use("/api/checkout", checkoutRouter);
   app.use("/api/orders", ordersRouter);
 
@@ -28,12 +28,12 @@ async function startServer() {
 
   app.use(express.static(staticPath));
 
-  // Handle client-side routing - serve index.html for all routes
+  // Handle client-side routing - serve index.html for all routes (APRÈS les API routes)
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
   });
 
-  // Error handling middleware
+  // Error handling middleware (APRÈS tout le reste)
   app.use((err: any, _req: any, res: any, _next: any) => {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal server error" });
@@ -42,8 +42,14 @@ async function startServer() {
   const port = process.env.PORT || 3000;
 
   server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
+    console.log(`[Server] Démarré sur http://localhost:${port}/`);
+    console.log(`[Server] Routes API disponibles:`);
+    console.log(`  - POST /api/checkout`);
+    console.log(`  - POST /api/orders/send-emails`);
   });
 }
 
-startServer().catch(console.error);
+startServer().catch((err) => {
+  console.error("[Server] Erreur au démarrage:", err);
+  process.exit(1);
+});
