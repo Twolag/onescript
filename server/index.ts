@@ -19,6 +19,12 @@ async function startServer() {
   // API Routes (AVANT les fichiers statiques)
   app.use("/api/checkout", checkoutRouter);
   app.use("/api/orders", ordersRouter);
+  
+  // Route de test
+  app.post("/api/test", (req, res) => {
+    console.log("[Test] Route de test appelée");
+    res.json({ success: true, message: "Test route works" });
+  });
 
   // Serve static files from dist/public in production
   const staticPath =
