@@ -22,83 +22,19 @@ export interface OrderData {
  */
 export async function sendOrderConfirmationEmail(order: OrderData): Promise<boolean> {
   try {
-    const htmlContent = `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-        .content { background: #f9f9f9; padding: 20px; border-radius: 0 0 8px 8px; }
-        .order-details { background: white; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 4px solid #667eea; }
-        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
-        .detail-row:last-child { border-bottom: none; }
-        .label { font-weight: bold; color: #667eea; }
-        .price { font-size: 24px; color: #667eea; font-weight: bold; }
-        .footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>✅ Commande Confirmée</h1>
-            <p>Merci pour votre achat !</p>
-        </div>
-        <div class="content">
-            <p>Bonjour <strong>${order.customerName}</strong>,</p>
-            <p>Votre commande a été créée avec succès. Voici les détails :</p>
-            
-            <div class="order-details">
-                <div class="detail-row">
-                    <span class="label">Numéro de commande :</span>
-                    <span><strong>${order.orderNumber}</strong></span>
-                </div>
-                <div class="detail-row">
-                    <span class="label">Produit :</span>
-                    <span>${order.productName}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="label">Option :</span>
-                    <span>${order.productOption}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="label">Montant :</span>
-                    <span class="price">${order.price}€</span>
-                </div>
-                <div class="detail-row">
-                    <span class="label">Pseudo Discord :</span>
-                    <span>${order.discordPseudo}</span>
-                </div>
-            </div>
-
-            <p><strong>Prochaines étapes :</strong></p>
-            <ol>
-                <li>Une fenêtre PayPal devrait s'être ouverte pour finaliser le paiement</li>
-                <li>Effectuez le paiement de <strong>${order.price}€</strong></li>
-                <li>Après confirmation du paiement, vous recevrez vos accès</li>
-                <li>Si vous avez besoin d'aide, rejoignez notre Discord : <a href="https://discord.gg/cU2kNQxxHu">discord.gg/cU2kNQxxHu</a></li>
-            </ol>
-
-            <p><strong>Besoin d'aide ?</strong></p>
-            <p>Si vous n'avez pas reçu votre accès après le paiement, veuillez nous contacter sur Discord avec votre numéro de commande : <strong>${order.orderNumber}</strong></p>
-
-            <p>Merci d'avoir choisi OneScript Suite !<br>L'équipe OneScript</p>
-        </div>
-        <div class="footer">
-            <p>© 2026 OneScript Suite. Tous droits réservés.</p>
-        </div>
-    </div>
-</body>
-</html>
-    `;
-
     const result = await resend.emails.send({
       from: "onescript <noreply@olunoonexa.resend.app>",
       to: order.customerEmail,
-      subject: `Confirmation de commande - ${order.orderNumber}`,
-      html: htmlContent,
+      template: "order-confirmation",
+      props: {
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        productName: order.productName,
+        productOption: order.productOption,
+        discordPseudo: order.discordPseudo,
+        price: order.price,
+      },
     });
 
     if (result.error) {
