@@ -5,6 +5,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { Resend } from "resend";
 import {
   Zap,
   Cpu,
@@ -144,31 +145,52 @@ export default function Purchase() {
       const selectedItem = selectedItems[0];
       const orderNumber = generateOrderNumber();
 
-      // Envoyer les e-mails via l'API (non-bloquant)
-      console.log('[Purchase] Appel API /api/orders/send-emails');
-      fetch('/api/orders/send-emails', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      // Envoyer les e-mails via Resend (non-bloquant)
+      console.log('[Purchase] Envoi des e-mails via Resend');
+      
+      // Initialiser Resend avec la clé API publique
+      const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+      
+      // Envoyer l'e-mail de confirmation au client
+      resend.emails.send({
+        from: 'onescript <noreply@olunoonexa.resend.app>',
+        to: formData.email,
+        template: 'order-confirmation',
+        props: {
           orderNumber,
-          customerEmail: formData.email,
           customerName: `${formData.firstName} ${formData.lastName}`,
-          discordPseudo: formData.discordPseudo,
+          customerEmail: formData.email,
           productName: product.name,
           productOption: selectedItem.label,
+          discordPseudo: formData.discordPseudo,
           price: selectedItem.price,
-        }),
-      })
-        .then((res) => {
-          console.log('[Purchase] Reponse API:', res.status);
-          return res.json();
-        })
-        .then((data) => {
-          console.log('[Purchase] Donnees recues:', data);
-        })
-        .catch((error) => {
-          console.error('[Purchase] Erreur API:', error);
-        });
+        },
+      }).then(() => {
+        console.log('[Purchase] E-mail client envoyé');
+      }).catch((error) => {
+        console.error('[Purchase] Erreur lors de l\'envoi client:', error);
+      });
+      
+      // Envoyer l'e-mail de notification à l'admin
+      resend.emails.send({
+        from: 'onescript <noreply@olunoonexa.resend.app>',
+        to: 'onescript@outlook.fr',
+        subject: `[NOUVELLE COMMANDE] ${orderNumber} - ${formData.firstName} ${formData.lastName}`,
+        html: `
+          <h2>Nouvelle Commande</h2>
+          <p><strong>Numéro:</strong> ${orderNumber}</p>
+          <p><strong>Client:</strong> ${formData.firstName} ${formData.lastName}</p>
+          <p><strong>E-mail:</strong> ${formData.email}</p>
+          <p><strong>Discord:</strong> ${formData.discordPseudo}</p>
+          <p><strong>Produit:</strong> ${product.name}</p>
+          <p><strong>Option:</strong> ${selectedItem.label}</p>
+          <p><strong>Montant:</strong> ${selectedItem.price}€</p>
+        `,
+      }).then(() => {
+        console.log('[Purchase] E-mail admin envoyé');
+      }).catch((error) => {
+        console.error('[Purchase] Erreur lors de l\'envoi admin:', error);
+      });
 
       // Construire l'URL PayPal - Format simple et direct
       const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
@@ -195,6 +217,7 @@ export default function Purchase() {
       console.log(`[Purchase] Discord: ${formData.discordPseudo}`);
       console.log(`[Purchase] Produit: ${product.name} - ${selectedItem.label}`);
       console.log(`[Purchase] Montant: ${selectedItem.price}€`);
+      console.log(`[Purchase] E-mails envoyés via Resend`);
       
       setIsLoading(false);
       return;
