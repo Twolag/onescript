@@ -37,8 +37,8 @@ const SCRIPT_TOOLS = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/h
 
 const products = [
   {
-    title: "FUSION AI",
-    desc: "Traitement visuel IA en temps réel. 100% logiciel, performances qui évoluent avec votre matériel. Aucun périphérique externe.",
+    title: "FUSION AI - V7 (BETA)",
+    desc: "Traitement visuel IA en temps réel. Panic Button (Mode Streamer), Profile Keybinds, Triggers 100% Customizables. Interface ultérieure, stabilité améliorée. 100% logiciel, aucun périphérique externe.",
     icon: Cpu,
     image: AI_ENGINE,
     price: "80 €",
@@ -50,7 +50,7 @@ const products = [
     desc: "Nettoyage système, suppression des services inutiles, optimisation RAM/CPU. Gain minimum : 40-60 FPS.",
     icon: Monitor,
     image: WINDOWS_OPT,
-    price: "10 €",
+    price: "20 €",
     priceLabel: "à partir de",
     href: "/products",
   },
@@ -75,7 +75,7 @@ const stats = [
 const pricingPlans = [
   {
     name: "Windows Optimization",
-    price: "10",
+    price: "20",
     period: "",
     desc: "Optimisation simple de Windows",
     features: [
@@ -88,15 +88,16 @@ const pricingPlans = [
     cta: "CHOISIR CE PLAN",
   },
   {
-    name: "AI Aimbot",
+    name: "AI Aimbot - V7 (BETA)",
     price: "80",
     period: "1er mois + inst.",
-    desc: "Installation complète + 1er mois inclus",
+    desc: "Installation complète + 1er mois inclus - Nouvelle interface, Panic Button, Profile Keybinds",
     features: [
       "Traitement visuel IA en temps réel",
-      "100% logiciel — aucun périphérique",
+      "Panic Button (Mode Streamer) - 100% invisible",
+      "Profile Keybinds - Changez de config en plein match",
+      "Triggers 100% Customizables",
       "Renouvellement : 30 € / mois",
-      "Mises à jour incluses",
       "Support prioritaire",
     ],
     popular: true,
@@ -104,8 +105,8 @@ const pricingPlans = [
   },
   {
     name: "Jitter Script",
-    price: "2,50",
-    period: "à partir de",
+    price: "0,01",
+    period: "essai 24h",
     desc: "Script anti-recul jitter aim — manette uniquement",
     features: [
       "Indétectable par l'anti-cheat",

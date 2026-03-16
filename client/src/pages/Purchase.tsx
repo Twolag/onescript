@@ -61,8 +61,8 @@ const products: Product[] = [
     name: "Windows Optimization",
     icon: Monitor,
     options: [
-      { label: "Optimisation simple", price: 10 },
-      { label: "Optimisation + réinstall. Windows", price: 20 },
+      { label: "Optimisation simple", price: 20 },
+      { label: "Optimisation + réinstall. Windows", price: 40 },
     ],
   },
   {
