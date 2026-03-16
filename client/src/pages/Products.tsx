@@ -234,17 +234,18 @@ export default function Products() {
       {/* Product 1: FUSION AI */}
       <ProductSection
         id="fusion-ai"
-        title="FUSION AI"
+        title="FUSION AI - V7 (BETA)"
         subtitle="Traitement Visuel IA"
-        description="FUSION AI est une solution 100% logicielle basée sur la vision par ordinateur et le traitement IA en temps réel. Les performances ne sont pas plafonnées — elles évoluent directement avec votre matériel. Plus votre PC est puissant, plus le moteur IA est rapide, fluide et précis. Aucun périphérique externe requis (PAS DE ZEN, PAS DE XIM, PAS DE TITAN, PAS DE DMA)."
+        description="FUSION AI V7 est une solution 100% logicielle basée sur la vision par ordinateur et le traitement IA en temps réel. Avec la V7, découvrez le Panic Button (Mode Streamer), les Profile Keybinds pour changer de config en plein match, et des triggers 100% customizables. Les performances ne sont pas plafonnées — elles évoluent directement avec votre matériel. Aucun périphérique externe requis (PAS DE ZEN, PAS DE XIM, PAS DE TITAN, PAS DE DMA)."
         image={AI_ENGINE}
         icon={Cpu}
         features={[
           "Traitement visuel IA en temps réel",
-          "100% logiciel — aucun périphérique externe",
-          "Performances qui évoluent avec votre matériel",
-          "Vision par ordinateur avancée",
-          "Fluidité et réactivité adaptatives",
+          "Panic Button (Mode Streamer) - 100% invisible",
+          "Profile Keybinds - Changez de config en plein match",
+          "Triggers Aimbot 100% Customizables",
+          "Nouvelle Interface (UI) moderne et fluide",
+          "Rework du Profile Manager",
           "Compatible NVIDIA RTX uniquement",
           "Mises à jour régulières incluses",
         ]}
@@ -284,8 +285,8 @@ export default function Products() {
           { label: "Plateforme", value: "PC uniquement" },
         ]}
         pricing={[
-          { label: "Optimisation simple", price: "10 €" },
-          { label: "Optim. + réinstall. Windows", price: "20 €" },
+          { label: "Optimisation simple", price: "20 €" },
+          { label: "Optim. + réinstall. Windows", price: "40 €" },
         ]}
         reverse
         index={1}

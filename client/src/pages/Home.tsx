@@ -105,8 +105,8 @@ const pricingPlans = [
   },
   {
     name: "Jitter Script",
-    price: "0,01",
-    period: "essai 24h",
+    price: "2,50",
+    period: "à partir de",
     desc: "Script anti-recul jitter aim — manette uniquement",
     features: [
       "Indétectable par l'anti-cheat",
