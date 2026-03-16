@@ -441,15 +441,20 @@ export default function Documentation() {
             <div className="p-6">
               <div className="space-y-4">
                 <div className="pb-4 border-b border-purple-500/10">
-                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V7 - Bientôt disponible</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V7 (BETA) - HOTFIX - Version actuelle</h3>
                   <ul className="text-gray-300 text-sm space-y-1">
-                    <li>🔜 Streamer mode - Hide script</li>
-                    <li>🔜 Custom trigger</li>
-                    <li>🔜 Nouvelles fonctionnalités avancées</li>
+                    <li>✅ Panic Button (Streamer Mode) - 100% invisible</li>
+                    <li>✅ Profile Keybinds - Changez de config en plein match</li>
+                    <li>✅ Triggers Aimbot 100% Customizables</li>
+                    <li>✅ Nouvelle Interface (UI) moderne et fluide</li>
+                    <li>✅ Rework du Profile Manager</li>
+                    <li>✅ Panic Button fixé - Fonctionne sur TOUS les PC</li>
+                    <li>✅ Sauvegarde Confidence fixée</li>
+                    <li>✅ Fenêtre Debug IA fixée (TopMost)</li>
                   </ul>
                 </div>
                 <div className="pb-4 border-b border-purple-500/10">
-                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V6 - Version actuelle</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V6 - Ancienne version</h3>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>✅ Traitement visuel IA en temps réel</li>
                     <li>✅ Support Steam, Apex Legends, Call of Duty</li>
