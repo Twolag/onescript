@@ -76,7 +76,7 @@ const pricingPlans = [
   {
     name: "Windows Optimization",
     price: "20",
-    period: "",
+    period: "à partir de",
     desc: "Optimisation simple de Windows",
     features: [
       "Nettoyage système complet",
