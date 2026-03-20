@@ -176,26 +176,18 @@ export default function Purchase() {
       }),
     }).catch(console.error);
 
-    // Notification Discord
-    fetch("https://discord.com/api/webhooks/1484664642289799279/AYvCkBFWzRXVsHeEmjLKOnH_yPvWbRLdDlOkNRVmkJN03Fs5f-kBTGGTRAj_OkkfxOAs", {
+    // Notification Discord (via fonction serverless sécurisée)
+    fetch("/api/discord-notify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        embeds: [{
-          title: "🛒 Nouvelle commande en attente",
-          color: 0xc8ff00,
-          fields: [
-            { name: "N° commande", value: `\`${order.orderNumber}\``, inline: false },
-            { name: "👤 Client", value: customerName, inline: true },
-            { name: "📧 Email", value: formData.email, inline: true },
-            { name: "💬 Discord", value: formData.discordPseudo, inline: true },
-            { name: "🎮 Produit", value: product.name, inline: true },
-            { name: "📦 Option", value: selectedItem!.label, inline: true },
-            { name: "💰 Montant", value: `**${order.price}€**`, inline: true },
-          ],
-          footer: { text: "OneScript — En attente de paiement" },
-          timestamp: new Date().toISOString(),
-        }],
+        orderNumber: order.orderNumber,
+        customerName,
+        email: formData.email,
+        discordPseudo: formData.discordPseudo,
+        productName: product.name,
+        optionLabel: selectedItem!.label,
+        price: order.price,
       }),
     }).catch(console.error);
   };
