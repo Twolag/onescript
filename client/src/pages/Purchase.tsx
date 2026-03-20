@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import PayPalButton from "@/components/PayPalButton";
 
-const PAYPAL_CLIENT_ID = "TON_CLIENT_ID_ICI"; // Remplace par ton vrai Client ID Live
+const PAYPAL_CLIENT_ID = "ASe8m_mEYx-Ntf3Ch6uLr6JWtsFpXngfiOsoJ_GWb9hGpTgDZ4wZZEfY_EllApfHbIT4prwzuFFnZeQE"; // Client ID Live OneScript
 const PAYPAL_EMAIL = "OneLagTT@paypal.me";
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
 
