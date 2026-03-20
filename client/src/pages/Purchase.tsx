@@ -1,32 +1,34 @@
 /*
  * Purchase — Neon Circuit Design
- * Sélection produit, récapitulatif, formulaire de paiement avec PayPal
+ * Sélection produit, récapitulatif, PayPal + SumUp
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
-  Zap,
-  Cpu,
-  Monitor,
-  Gamepad2,
-  Check,
-  Shield,
-  Lock,
-  AlertCircle,
-  MessageCircle,
+  Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle, MessageCircle, CreditCard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-// import PayPalButton from "@/components/PayPalButton";
 
-// const PAYPAL_CLIENT_ID = "AcVVLCMJCUhDUtZL1yIwuIv6vQNHe0fOaaNloArsXipWqd-WLxRvWvIsOZsE5GOt0pPi2xhTWtBrFgnZ"; // Client ID Live Merchant OneScript
-const PAYPAL_EMAIL = "OneLagTT@paypal.me";
+const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
 
-// SumUp Payment Links
-const SUMUP_LINKS: { [key: number]: string } = {
-  80: "https://pay.sumup.com/b2c/QK3BXCMA",  // FUSION AI - Licence + Installation
-  30: "https://pay.sumup.com/b2c/Q8U1ZMJA",  // FUSION AI - Abonnement mensuel
+// Liens SumUp par produit/option (clé = "productId-index")
+const SUMUP_LINKS: { [key: string]: string } = {
+  // FUSION AI
+  "ai-engine-0": "https://pay.sumup.com/b2c/QK3BXCMA",  // 80€ Licence + Installation
+  "ai-engine-1": "https://pay.sumup.com/b2c/Q8U1ZMJA",  // 30€ Abonnement mensuel
+  // Windows Optimization
+  "windows-opt-0": "https://pay.sumup.com/b2c/QIT9A8T9", // 20€ Optimisation simple
+  "windows-opt-1": "https://pay.sumup.com/b2c/QFGYTX08", // 40€ Optimisation + réinstall
+  // Jitter Script
+  "jitter-script-0": "https://pay.sumup.com/b2c/QFQJ73UM", // 1€ Essai 24h
+  "jitter-script-1": "https://pay.sumup.com/b2c/QIO7OGCV", // 5€ 1 semaine
+  "jitter-script-2": "https://pay.sumup.com/b2c/Q0IRNUOF", // 15€ 1 mois
+  "jitter-script-3": "https://pay.sumup.com/b2c/QNOJ9MX7", // 20€ 3 mois
+  "jitter-script-4": "https://pay.sumup.com/b2c/QRLCF29E", // 25€ 6 mois
+  "jitter-script-5": "https://pay.sumup.com/b2c/QJRAZ96B", // 30€ 1 an
+  "jitter-script-6": "https://pay.sumup.com/b2c/QXOU9MD5", // 40€ À vie
 };
 
 const fadeUp = {
@@ -51,17 +53,8 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
-      {
-        label: "Licence + Installation",
-        price: 80,
-        description: "Premier mois + installation de l'AI Aimbot inclus",
-      },
-      {
-        label: "Abonnement mensuel",
-        price: 30,
-        note: "/ mois",
-        description: "Renouvellement mensuel uniquement",
-      },
+      { label: "Licence + Installation", price: 80, description: "Premier mois + installation de l'AI Aimbot inclus" },
+      { label: "Abonnement mensuel", price: 30, note: "/ mois", description: "Renouvellement mensuel uniquement" },
     ],
   },
   {
@@ -78,7 +71,7 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "Essai 24h", price: 1.00 },
+      { label: "Essai 24h", price: 1 },
       { label: "1 semaine", price: 5 },
       { label: "1 mois", price: 15 },
       { label: "3 mois", price: 20 },
@@ -100,25 +93,13 @@ export default function Purchase() {
   const productId = searchParams.get("product") || "ai-engine";
   const product = products.find((p) => p.id === productId) || products[0];
 
-  const [selectedItems, setSelectedItems] = useState<Array<{ label: string; price: number; note?: string; description?: string }>>([]);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    discordPseudo: "",
-  });
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
+  const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", discordPseudo: "" });
   const [isLoading, setIsLoading] = useState(false);
-  const [orderCreated, setOrderCreated] = useState<{
-    orderNumber: string;
-    productName: string;
-    price: number;
-  } | null>(null);
+  const [orderCreated, setOrderCreated] = useState<{ orderNumber: string; productName: string; price: number; optionIndex: number } | null>(null);
 
-  const total = selectedItems.reduce((sum, item) => sum + item.price, 0);
-
-  const selectOption = (option: typeof product.options[0]) => {
-    setSelectedItems([option]);
-  };
+  const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
+  const total = selectedItem?.price ?? 0;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -127,37 +108,97 @@ export default function Purchase() {
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo) {
       toast.error("Veuillez remplir tous les champs");
       return;
     }
-
-    if (selectedItems.length !== 1) {
+    if (selectedOptionIndex === null) {
       toast.error("Veuillez sélectionner une option");
       return;
     }
-
     setIsLoading(true);
-
     try {
-      const selectedItem = selectedItems[0];
       const orderNumber = generateOrderNumber();
-      const customerName = `${formData.firstName} ${formData.lastName}`;
-
       setOrderCreated({
         orderNumber,
-        productName: `${product.name} — ${selectedItem.label}`,
-        price: selectedItem.price,
+        productName: `${product.name} — ${selectedItem!.label}`,
+        price: selectedItem!.price,
+        optionIndex: selectedOptionIndex,
       });
-
-      toast.success("Informations validées. Veuillez procéder au paiement PayPal ci-dessous.");
+      toast.success("Informations validées ! Choisissez votre mode de paiement.");
     } catch (error) {
-      console.error("Erreur:", error);
       toast.error("Une erreur est survenue, veuillez réessayer.");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSumUpPayment = () => {
+    if (!orderCreated) return;
+    const key = `${product.id}-${orderCreated.optionIndex}`;
+    const link = SUMUP_LINKS[key];
+    if (link) {
+      // Envoyer les emails puis rediriger
+      sendEmails(orderCreated);
+      window.location.href = link;
+    } else {
+      toast.error("Lien de paiement indisponible, contactez le support.");
+    }
+  };
+
+  const handlePayPalPayment = () => {
+    if (!orderCreated) return;
+    sendEmails(orderCreated);
+    const paypalLink = `${PAYPAL_BASE}/${orderCreated.price}`;
+    setTimeout(() => { window.open(paypalLink, "_blank"); }, 100);
+    toast.success("Redirection vers PayPal...");
+  };
+
+  const sendEmails = (order: typeof orderCreated) => {
+    if (!order) return;
+    const customerName = `${formData.firstName} ${formData.lastName}`;
+
+    // Email client
+    fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: formData.email,
+        props: {
+          orderNumber: order.orderNumber,
+          customerName,
+          customerEmail: formData.email,
+          productName: product.name,
+          productOption: selectedItem!.label,
+          discordPseudo: formData.discordPseudo,
+          price: order.price,
+        },
+      }),
+    }).catch(console.error);
+
+    // Email admin
+    fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: "onescript@outlook.fr",
+        subject: `[NOUVELLE COMMANDE] ${order.orderNumber} — ${customerName}`,
+        html: `
+          <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#fff;padding:30px;border-radius:10px;">
+            <h2 style="color:#c8ff00;margin-top:0;">🛒 Nouvelle Commande</h2>
+            <table style="width:100%;border-collapse:collapse;">
+              <tr><td style="padding:8px 0;color:#888;">N° commande</td><td style="color:#c8ff00;font-family:monospace;font-weight:700;">${order.orderNumber}</td></tr>
+              <tr><td style="padding:8px 0;color:#888;">Client</td><td style="color:#fff;">${customerName}</td></tr>
+              <tr><td style="padding:8px 0;color:#888;">Email</td><td style="color:#fff;">${formData.email}</td></tr>
+              <tr><td style="padding:8px 0;color:#888;">Discord</td><td style="color:#fff;">${formData.discordPseudo}</td></tr>
+              <tr><td style="padding:8px 0;color:#888;">Produit</td><td style="color:#fff;">${product.name}</td></tr>
+              <tr><td style="padding:8px 0;color:#888;">Option</td><td style="color:#fff;">${selectedItem!.label}</td></tr>
+              <tr><td style="padding:8px 0;color:#888;">Montant</td><td style="color:#c8ff00;font-size:20px;font-weight:800;">${order.price}€</td></tr>
+            </table>
+          </div>
+        `,
+      }),
+    }).catch(console.error);
   };
 
   return (
@@ -182,8 +223,10 @@ export default function Purchase() {
         <div className="absolute inset-0 bg-dark-surface/20" />
         <div className="relative container">
           <div className="grid lg:grid-cols-3 gap-8">
+
             {/* Left: Product + Form */}
             <div className="lg:col-span-2 space-y-8">
+
               {/* Product Selection */}
               <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
                 <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
@@ -194,18 +237,18 @@ export default function Purchase() {
                   {product.options.map((option, idx) => (
                     <motion.button
                       key={idx}
-                      onClick={() => selectOption(option)}
+                      onClick={() => setSelectedOptionIndex(idx)}
                       whileHover={{ scale: 1.02 }}
                       className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                        selectedItems.includes(option)
+                        selectedOptionIndex === idx
                           ? "border-violet-tech bg-violet-tech/10"
                           : "border-border/50 hover:border-violet-tech/50 bg-dark-elevated/50"
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3 flex-1">
-                          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${selectedItems.includes(option) ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                            {selectedItems.includes(option) && <Check className="w-3 h-3 text-primary-foreground" />}
+                          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${selectedOptionIndex === idx ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                            {selectedOptionIndex === idx && <Check className="w-3 h-3 text-primary-foreground" />}
                           </div>
                           <div>
                             <p className="font-semibold text-foreground">{option.label}</p>
@@ -250,38 +293,37 @@ export default function Purchase() {
                       <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                       <div>
                         <h4 className="font-display font-semibold text-sm text-foreground mb-1">Paiement sécurisé</h4>
-                        <p className="text-xs text-muted-foreground">Choisissez votre mode de paiement (Carte Bancaire via SumUp ou PayPal) après avoir validé vos informations.</p>
+                        <p className="text-xs text-muted-foreground">Après validation, choisissez entre paiement par carte (SumUp) ou PayPal.</p>
                       </div>
                     </div>
                   </div>
 
                   {!orderCreated ? (
                     <Button type="submit" size="lg" disabled={total === 0 || isLoading} className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                      {isLoading ? (
-                        <><span className="animate-spin">⏳</span> Validation...</>
-                      ) : (
-                        <><Check className="w-4 h-4" /> VALIDER MES INFORMATIONS</>
-                      )}
+                      {isLoading ? <><span className="animate-spin">⏳</span> Validation...</> : <><Check className="w-4 h-4" /> VALIDER MES INFORMATIONS</>}
                     </Button>
                   ) : (
-                    <div className="space-y-4">
-                      <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm text-center">
-                        Informations validées ! Payez maintenant pour recevoir vos accès.
+                    <div className="space-y-3">
+                      <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm text-center font-semibold">
+                        ✓ Informations validées ! Choisissez votre mode de paiement :
                       </div>
-                      <Button 
-                        onClick={() => {
-                          const sumupLink = SUMUP_LINKS[total];
-                          if (sumupLink) {
-                            // Rediriger directement vers SumUp
-                            window.location.href = sumupLink;
-                          } else {
-                            toast.error(`Montant ${total}€ non supporté pour SumUp. Veuillez contacter le support.`);
-                          }
-                        }}
-                        disabled={isLoading}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3"
+                      {/* Bouton SumUp */}
+                      <Button
+                        onClick={handleSumUpPayment}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-base"
                       >
-                        <><Lock className="w-5 h-5" /> PAYER {total}€ PAR CARTE (SUMUP)</>
+                        <CreditCard className="w-5 h-5" />
+                        PAYER {total}€ PAR CARTE (SUMUP)
+                      </Button>
+                      {/* Bouton PayPal */}
+                      <Button
+                        onClick={handlePayPalPayment}
+                        className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-base"
+                      >
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M7.144 19.532l1.049-5.751c.11-.606.691-1.002 1.302-.832l.557.156c2.683.75 5.545-.617 6.578-3.213.366-.926.476-1.88.35-2.775C18.924 8.483 20 10.009 20 12c0 3.86-3.14 7-7 7H7.144zM4 12C4 7.03 8.03 3 13 3c2.39 0 4.56.94 6.15 2.47-.28-.07-.57-.12-.87-.15C16.08 3.1 13.2 3.9 11.3 5.8c-1.17 1.17-1.87 2.7-2.03 4.34L4 12z"/>
+                        </svg>
+                        PAYER {total}€ VIA PAYPAL
                       </Button>
                     </div>
                   )}
@@ -311,21 +353,14 @@ export default function Purchase() {
                       <p className="text-muted-foreground">Produit : <span className="text-foreground font-semibold">{orderCreated.productName}</span></p>
                       <p className="text-muted-foreground">Montant : <span className="text-foreground font-semibold">{orderCreated.price}€</span></p>
                     </div>
-
-                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-left">
-                      <p className="text-sm font-semibold text-green-300 mb-2">⏳ En attente de paiement</p>
-                      <p className="text-xs text-muted-foreground">L'email de confirmation vous sera envoyé automatiquement dès que le paiement sera validé.</p>
-                    </div>
-
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
                       <p className="text-sm font-semibold text-blue-300">Instructions :</p>
                       <ol className="text-xs text-muted-foreground space-y-2 text-left">
-                        <li>1. Cliquez sur le bouton de paiement à gauche</li>
+                        <li>1. Cliquez sur un bouton de paiement à gauche</li>
                         <li>2. Finalisez le paiement de <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
                         <li>3. Recevez vos accès par email et rejoignez notre Discord</li>
                       </ol>
                     </div>
-
                     <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="inline-block mt-4">
                       <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
                         <MessageCircle className="w-4 h-4" />
@@ -337,17 +372,15 @@ export default function Purchase() {
               ) : (
                 <div className="sticky top-24 glass-card rounded-lg p-6">
                   <h3 className="text-xl font-display font-bold mb-6">Récapitulatif</h3>
-                  {selectedItems.length > 0 ? (
+                  {selectedItem ? (
                     <div className="space-y-4">
-                      {selectedItems.map((item, idx) => (
-                        <div key={idx} className="flex justify-between items-start pb-4 border-b border-border/30">
-                          <div>
-                            <p className="font-semibold text-foreground">{product.name}</p>
-                            <p className="text-sm text-muted-foreground">{item.label}</p>
-                          </div>
-                          <p className="font-display font-bold text-violet-tech">{item.price}€</p>
+                      <div className="flex justify-between items-start pb-4 border-b border-border/30">
+                        <div>
+                          <p className="font-semibold text-foreground">{product.name}</p>
+                          <p className="text-sm text-muted-foreground">{selectedItem.label}</p>
                         </div>
-                      ))}
+                        <p className="font-display font-bold text-violet-tech">{selectedItem.price}€</p>
+                      </div>
                       <div className="pt-4 space-y-2">
                         <div className="flex justify-between items-center">
                           <span className="text-muted-foreground">Sous-total</span>
@@ -363,9 +396,7 @@ export default function Purchase() {
                         </div>
                       </div>
                       <div className="mt-6 p-4 bg-violet-tech/5 border border-violet-tech/20 rounded-lg">
-                        <p className="text-xs text-muted-foreground mb-2">
-                          💡 Après paiement, vous recevrez un email de confirmation avec les instructions d'accès.
-                        </p>
+                        <p className="text-xs text-muted-foreground mb-2">💡 Deux modes de paiement disponibles : carte bancaire (SumUp) ou PayPal.</p>
                         <p className="text-xs text-muted-foreground">
                           Besoin d'aide ? Rejoignez notre{" "}
                           <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-violet-tech hover:underline">Discord</a>
