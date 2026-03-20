@@ -23,6 +23,12 @@ import { toast } from "sonner";
 const PAYPAL_EMAIL = "OneLagTT@paypal.me";
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
 
+// SumUp Payment Links
+const SUMUP_LINKS: { [key: number]: string } = {
+  80: "https://pay.sumup.com/b2c/QK3BXCMA",  // FUSION AI - Licence + Installation
+  30: "https://pay.sumup.com/b2c/Q8U1ZMJA",  // FUSION AI - Abonnement mensuel
+};
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
@@ -263,42 +269,19 @@ export default function Purchase() {
                         Informations validées ! Payez maintenant pour recevoir vos accès.
                       </div>
                       <Button 
-                        onClick={async () => {
-                          setIsLoading(true);
-                          try {
-                            const response = await fetch('/api/sumup-checkout', {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({
-                                amount: total,
-                                orderNumber: orderCreated.orderNumber,
-                                customerEmail: formData.email,
-                                productName: product.name
-                              })
-                            });
-                            const data = await response.json();
-                            if (data.checkoutUrl) {
-                              window.location.href = data.checkoutUrl;
-                            } else {
-                              const errorMsg = data.message || "Erreur lors de la création du paiement SumUp";
-                              toast.error(`Erreur SumUp : ${errorMsg}`);
-                              console.error("Détails erreur SumUp:", data);
-                            }
-                          } catch (err) {
-                            console.error("Erreur SumUp:", err);
-                            toast.error("Une erreur est survenue avec SumUp");
-                          } finally {
-                            setIsLoading(false);
+                        onClick={() => {
+                          const sumupLink = SUMUP_LINKS[total];
+                          if (sumupLink) {
+                            // Rediriger directement vers SumUp
+                            window.location.href = sumupLink;
+                          } else {
+                            toast.error(`Montant ${total}€ non supporté pour SumUp. Veuillez contacter le support.`);
                           }
                         }}
                         disabled={isLoading}
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3"
                       >
-                        {isLoading ? (
-                          <><span className="animate-spin">⏳</span> Chargement...</>
-                        ) : (
-                          <><Lock className="w-5 h-5" /> PAYER {total}€ PAR CARTE (SUMUP)</>
-                        )}
+                        <><Lock className="w-5 h-5" /> PAYER {total}€ PAR CARTE (SUMUP)</>
                       </Button>
                     </div>
                   )}
