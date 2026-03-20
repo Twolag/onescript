@@ -1,0 +1,45 @@
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import axios from 'axios';
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { amount, orderNumber, customerEmail, productName } = req.body;
+  const SUMUP_SECRET_KEY = process.env.SUMUP_SECRET_KEY || "sup_sk_Szzn1x4J7r1lKsOE6eFIibEjZwns0Ju2o";
+
+  try {
+    // 1. Créer un Checkout SumUp
+    const response = await axios.post(
+      'https://api.sumup.com/v0.1/checkouts',
+      {
+        amount: parseFloat(amount),
+        currency: 'EUR',
+        pay_to_email: 'onescript@outlook.fr', // Ton email SumUp
+        description: `${productName} - ${orderNumber}`,
+        checkout_reference: orderNumber,
+        return_url: `${process.env.BASE_URL || 'https://' + req.headers.host}/purchase?success=true&order=${orderNumber}`,
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${SUMUP_SECRET_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    // 2. Retourner l'ID du checkout pour le frontend
+    return res.status(200).json({ 
+      checkoutId: response.data.id,
+      checkoutUrl: `https://me.sumup.com/checkout/${response.data.id}` // Optionnel si on veut rediriger directement
+    });
+
+  } catch (error: any) {
+    console.error('[SumUp API] Erreur:', error.response?.data || error.message);
+    return res.status(500).json({ 
+      error: 'Erreur lors de la création du paiement SumUp',
+      details: error.response?.data
+    });
+  }
+}

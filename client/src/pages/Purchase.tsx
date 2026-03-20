@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import PayPalButton from "@/components/PayPalButton";
+// import PayPalButton from "@/components/PayPalButton";
 
-const PAYPAL_CLIENT_ID = "AcVVLCMJCUhDUtZL1yIwuIv6vQNHe0fOaaNloArsXipWqd-WLxRvWvIsOZsE5GOt0pPi2xhTWtBrFgnZ"; // Client ID Live Merchant OneScript
+// const PAYPAL_CLIENT_ID = "AcVVLCMJCUhDUtZL1yIwuIv6vQNHe0fOaaNloArsXipWqd-WLxRvWvIsOZsE5GOt0pPi2xhTWtBrFgnZ"; // Client ID Live Merchant OneScript
 const PAYPAL_EMAIL = "OneLagTT@paypal.me";
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
 
@@ -262,22 +262,42 @@ export default function Purchase() {
                       <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm text-center">
                         Informations validées ! Payez maintenant pour recevoir vos accès.
                       </div>
-                      <PayPalButton 
-                        clientId={PAYPAL_CLIENT_ID}
-                        amount={total}
-                        orderData={{
-                          orderNumber: orderCreated.orderNumber,
-                          customerName: `${formData.firstName} ${formData.lastName}`,
-                          customerEmail: formData.email,
-                          productName: product.name,
-                          productOption: selectedItems[0].label,
-                          discordPseudo: formData.discordPseudo,
-                          price: total
+                      <Button 
+                        onClick={async () => {
+                          setIsLoading(true);
+                          try {
+                            const response = await fetch('/api/sumup-checkout', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                amount: total,
+                                orderNumber: orderCreated.orderNumber,
+                                customerEmail: formData.email,
+                                productName: product.name
+                              })
+                            });
+                            const data = await response.json();
+                            if (data.checkoutUrl) {
+                              window.location.href = data.checkoutUrl;
+                            } else {
+                              toast.error("Erreur lors de la création du paiement SumUp");
+                            }
+                          } catch (err) {
+                            console.error("Erreur SumUp:", err);
+                            toast.error("Une erreur est survenue avec SumUp");
+                          } finally {
+                            setIsLoading(false);
+                          }
                         }}
-                        onSuccess={(details) => {
-                          console.log("Paiement réussi:", details);
-                        }}
-                      />
+                        disabled={isLoading}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3"
+                      >
+                        {isLoading ? (
+                          <><span className="animate-spin">⏳</span> Chargement...</>
+                        ) : (
+                          <><Lock className="w-5 h-5" /> PAYER {total}€ PAR CARTE (SUMUP)</>
+                        )}
+                      </Button>
                     </div>
                   )}
 
