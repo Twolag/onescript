@@ -138,8 +138,7 @@ export default function Purchase() {
     const key = `${product.id}-${orderCreated.optionIndex}`;
     const link = SUMUP_LINKS[key];
     if (link) {
-      // Envoyer les emails puis rediriger
-      sendEmails(orderCreated);
+      sendEmails(orderCreated, "sumup");
       window.location.href = link;
     } else {
       toast.error("Lien de paiement indisponible, contactez le support.");
@@ -148,13 +147,13 @@ export default function Purchase() {
 
   const handlePayPalPayment = () => {
     if (!orderCreated) return;
-    sendEmails(orderCreated);
+    sendEmails(orderCreated, "paypal");
     const paypalLink = `${PAYPAL_BASE}/${orderCreated.price}`;
     setTimeout(() => { window.open(paypalLink, "_blank"); }, 100);
     toast.success("Redirection vers PayPal...");
   };
 
-  const sendEmails = (order: typeof orderCreated) => {
+  const sendEmails = (order: typeof orderCreated, paymentMethod: "sumup" | "paypal") => {
     if (!order) return;
     const customerName = `${formData.firstName} ${formData.lastName}`;
 
@@ -188,6 +187,7 @@ export default function Purchase() {
         productName: product.name,
         optionLabel: selectedItem!.label,
         price: order.price,
+        paymentMethod,
       }),
     }).catch(console.error);
   };
