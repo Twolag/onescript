@@ -182,7 +182,7 @@ export default function Purchase() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         to: "onescript@outlook.fr",
-        subject: `[NOUVELLE COMMANDE] ${order.orderNumber} — ${customerName}`,
+        subject: `[COMMANDE EN ATTENTE] ${order.orderNumber} — ${customerName}`,
         html: `
           <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#fff;padding:30px;border-radius:10px;">
             <h2 style="color:#c8ff00;margin-top:0;">🛒 Nouvelle Commande</h2>
@@ -288,12 +288,12 @@ export default function Purchase() {
                     <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="VotreNom#1234" />
                   </div>
 
-                  <div className="glass-card rounded-lg p-4 bg-blue-500/5 border border-blue-500/20">
+                  <div className="glass-card rounded-lg p-4 bg-yellow-500/5 border border-yellow-500/20">
                     <div className="flex items-start gap-3">
-                      <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">Paiement sécurisé</h4>
-                        <p className="text-xs text-muted-foreground">Après validation, choisissez entre paiement par carte (SumUp) ou PayPal.</p>
+                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">⚠️ Important — Lisez avant de payer</h4>
+                        <p className="text-xs text-muted-foreground">Un email de confirmation sera envoyé dès que vous cliquerez sur le bouton de paiement. <strong className="text-yellow-300">Votre commande ne sera activée qu'après confirmation du paiement</strong> de notre part via Discord. Si vous ne finalisez pas le paiement, ignorez cet email.</p>
                       </div>
                     </div>
                   </div>
