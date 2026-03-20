@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import checkoutRouter from "./routes/checkout.js";
 import ordersRouter from "./routes/orders.js";
+import sumupRouter from "./routes/sumup.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,6 +20,7 @@ async function startServer() {
   // API Routes (AVANT les fichiers statiques)
   app.use("/api/checkout", checkoutRouter);
   app.use("/api/orders", ordersRouter);
+  app.use("/api/sumup", sumupRouter);
   
   // Route de test
   app.post("/api/test", (req, res) => {
