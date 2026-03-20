@@ -176,27 +176,26 @@ export default function Purchase() {
       }),
     }).catch(console.error);
 
-    // Email admin
-    fetch("/api/send-email", {
+    // Notification Discord
+    fetch("https://discord.com/api/webhooks/1484664642289799279/AYvCkBFWzRXVsHeEmjLKOnH_yPvWbRLdDlOkNRVmkJN03Fs5f-kBTGGTRAj_OkkfxOAs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        to: "onescript@outlook.fr",
-        subject: `[COMMANDE EN ATTENTE] ${order.orderNumber} — ${customerName}`,
-        html: `
-          <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#fff;padding:30px;border-radius:10px;">
-            <h2 style="color:#c8ff00;margin-top:0;">🛒 Nouvelle Commande</h2>
-            <table style="width:100%;border-collapse:collapse;">
-              <tr><td style="padding:8px 0;color:#888;">N° commande</td><td style="color:#c8ff00;font-family:monospace;font-weight:700;">${order.orderNumber}</td></tr>
-              <tr><td style="padding:8px 0;color:#888;">Client</td><td style="color:#fff;">${customerName}</td></tr>
-              <tr><td style="padding:8px 0;color:#888;">Email</td><td style="color:#fff;">${formData.email}</td></tr>
-              <tr><td style="padding:8px 0;color:#888;">Discord</td><td style="color:#fff;">${formData.discordPseudo}</td></tr>
-              <tr><td style="padding:8px 0;color:#888;">Produit</td><td style="color:#fff;">${product.name}</td></tr>
-              <tr><td style="padding:8px 0;color:#888;">Option</td><td style="color:#fff;">${selectedItem!.label}</td></tr>
-              <tr><td style="padding:8px 0;color:#888;">Montant</td><td style="color:#c8ff00;font-size:20px;font-weight:800;">${order.price}€</td></tr>
-            </table>
-          </div>
-        `,
+        embeds: [{
+          title: "🛒 Nouvelle commande en attente",
+          color: 0xc8ff00,
+          fields: [
+            { name: "N° commande", value: `\`${order.orderNumber}\``, inline: false },
+            { name: "👤 Client", value: customerName, inline: true },
+            { name: "📧 Email", value: formData.email, inline: true },
+            { name: "💬 Discord", value: formData.discordPseudo, inline: true },
+            { name: "🎮 Produit", value: product.name, inline: true },
+            { name: "📦 Option", value: selectedItem!.label, inline: true },
+            { name: "💰 Montant", value: `**${order.price}€**`, inline: true },
+          ],
+          footer: { text: "OneScript — En attente de paiement" },
+          timestamp: new Date().toISOString(),
+        }],
       }),
     }).catch(console.error);
   };
