@@ -41,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { orderNumber, customerName, productName, productOption, discordPseudo, price } = props;
       const firstName = customerName ? customerName.split(' ')[0] : 'là';
 
-      finalSubject = `✓ Commande confirmée – ${productName} | OneScript`;
+      finalSubject = `⏳ Commande en attente de paiement – ${productName} | OneScript`;
       finalHtml = `<!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
@@ -54,14 +54,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             <div style="display:inline-block;background-color:#c8ff00;border-radius:8px;padding:8px 20px;margin-bottom:24px;">
               <span style="color:#0a0a0a;font-weight:800;font-size:18px;letter-spacing:2px;text-transform:uppercase;">OneScript</span>
             </div>
-            <h1 style="margin:0 0 8px 0;color:#fff;font-size:28px;font-weight:700;">Commande confirmée ✓</h1>
-            <p style="margin:0;color:#888;font-size:15px;">Merci ${firstName}, ton paiement est en cours de traitement.</p>
+            <h1 style="margin:0 0 8px 0;color:#fff;font-size:28px;font-weight:700;">Commande reçue ⏳</h1>
+            <p style="margin:0;color:#888;font-size:15px;">Merci ${firstName}, ta commande a bien été enregistrée. Elle sera activée dès réception de ton paiement.</p>
           </td>
         </tr>
         <tr>
           <td style="background-color:#111;border-left:1px solid #222;border-right:1px solid #222;padding:40px;">
             <p style="color:#ccc;font-size:16px;line-height:1.7;margin:0 0 32px 0;">
-              Hey ${firstName} 👋<br><br>On a bien reçu ta commande. Voici le récapitulatif :
+              Hey ${firstName} 👋<br><br>Ta commande est enregistrée. Finalise ton paiement pour recevoir tes accès :
             </p>
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;border:1px solid #222;border-radius:8px;">
               <tr style="background:#1a1a1a;">
@@ -90,9 +90,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </tr>
             </table>
             <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-left:3px solid #c8ff00;border-radius:8px;padding:24px;margin-bottom:32px;">
-              <p style="margin:0 0 12px 0;color:#c8ff00;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">🚀 Prochaines étapes</p>
+              <p style="margin:0 0 12px 0;color:#c8ff00;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">💳 Comment finaliser ta commande</p>
               <ol style="margin:0;padding-left:20px;color:#ccc;font-size:14px;line-height:2.2;">
-                <li>Finalise ton paiement via PayPal si ce n'est pas encore fait</li>
+                <li>Effectue ton paiement via le bouton SumUp ou PayPal sur le site</li>
                 <li>Rejoins notre Discord et ouvre un ticket</li>
                 <li>Communique ton numéro : <strong style="color:#c8ff00;font-family:monospace;">${orderNumber}</strong></li>
                 <li>On t'envoie tes accès rapidement ✓</li>
@@ -124,7 +124,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const result = await resend.emails.send({
-      from: 'OneScript <noreply@onescript.fr>',
+      from: 'OneScript <noreply@olunoonexa.resend.app>',
       to,
       subject: finalSubject,
       html: finalHtml,
