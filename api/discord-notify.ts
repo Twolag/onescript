@@ -10,7 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { orderNumber, customerName, email, discordPseudo, productName, optionLabel, price } = req.body;
+    const { orderNumber, customerName, email, discordPseudo, productName, optionLabel, price, paymentMethod } = req.body;
 
     if (!process.env.DISCORD_WEBHOOK_URL) {
       return res.status(500).json({ error: 'DISCORD_WEBHOOK_URL not configured' });
@@ -35,6 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             { name: '💬 Discord', value: discordPseudo, inline: true },
             { name: '🎮 Produit', value: productName, inline: true },
             { name: '📦 Option', value: optionLabel, inline: true },
+            { name: '💳 Paiement', value: paymentMethod === 'sumup' ? '💳 Carte bancaire (SumUp)' : '🅿️ PayPal', inline: true },
             { name: '💰 Montant', value: `**${price}€**`, inline: true },
             { name: '✅ Confirmer le paiement', value: `[Cliquez ici pour envoyer l'email de confirmation](${confirmUrl})`, inline: false },
             { name: '❌ Annuler la commande', value: `[Cliquez ici pour annuler et notifier le client](${BASE_URL}/api/cancel-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)})`, inline: false },
