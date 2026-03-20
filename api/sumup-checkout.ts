@@ -32,14 +32,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // 2. Retourner l'ID du checkout pour le frontend
     return res.status(200).json({ 
       checkoutId: response.data.id,
-      checkoutUrl: `https://me.sumup.com/checkout/${response.data.id}` // Optionnel si on veut rediriger directement
+      checkoutUrl: `https://me.sumup.com/checkout/${response.data.id}`
     });
 
   } catch (error: any) {
-    console.error('[SumUp API] Erreur:', error.response?.data || error.message);
+    const errorData = error.response?.data || { message: error.message };
+    console.error('[SumUp API] Erreur détaillée:', JSON.stringify(errorData, null, 2));
+    
+    // On renvoie l'erreur détaillée au frontend pour que l'utilisateur puisse la voir
     return res.status(500).json({ 
       error: 'Erreur lors de la création du paiement SumUp',
-      details: error.response?.data
+      message: errorData.message || 'Erreur inconnue',
+      details: errorData
     });
   }
 }

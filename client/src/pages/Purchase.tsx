@@ -280,7 +280,9 @@ export default function Purchase() {
                             if (data.checkoutUrl) {
                               window.location.href = data.checkoutUrl;
                             } else {
-                              toast.error("Erreur lors de la création du paiement SumUp");
+                              const errorMsg = data.message || "Erreur lors de la création du paiement SumUp";
+                              toast.error(`Erreur SumUp : ${errorMsg}`);
+                              console.error("Détails erreur SumUp:", data);
                             }
                           } catch (err) {
                             console.error("Erreur SumUp:", err);
