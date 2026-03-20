@@ -37,6 +37,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             { name: '📦 Option', value: optionLabel, inline: true },
             { name: '💰 Montant', value: `**${price}€**`, inline: true },
             { name: '✅ Confirmer le paiement', value: `[Cliquez ici pour envoyer l'email de confirmation](${confirmUrl})`, inline: false },
+            { name: '❌ Annuler la commande', value: `[Cliquez ici pour annuler et notifier le client](${BASE_URL}/api/cancel-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)})`, inline: false },
           ],
           footer: { text: 'OneScript — En attente de paiement' },
           timestamp: new Date().toISOString(),
