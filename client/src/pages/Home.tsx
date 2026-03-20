@@ -424,14 +424,14 @@ export default function Home() {
             >
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/hIzWjvHxAxYbjVmT.png"
+                  src="/images/dashboard-new.webp"
                   alt="Dashboard FUSION AI"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-4">
                 <h3 className="font-display font-bold text-base text-foreground mb-1">Dashboard</h3>
-                <p className="text-sm text-muted-foreground">Monitoring en temps réel - FPS: 262, Latence: 3.4ms</p>
+                <p className="text-sm text-muted-foreground">Monitoring en temps réel - FPS: 527, Latence: 1.8ms</p>
               </div>
             </motion.div>
 
@@ -445,14 +445,14 @@ export default function Home() {
             >
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/zPMKxwVyhEEnRpVX.png"
+                  src="/images/settings-new.webp"
                   alt="AI & Visuals FUSION AI"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-display font-bold text-base text-foreground mb-1">AI & Visuals</h3>
-                <p className="text-sm text-muted-foreground">Réglages avancés du modèle IA et des visuels</p>
+                <h3 className="font-display font-bold text-base text-foreground mb-1">Settings</h3>
+                <p className="text-sm text-muted-foreground">Configuration des raccourcis et réglages de l'application</p>
               </div>
             </motion.div>
           </div>
