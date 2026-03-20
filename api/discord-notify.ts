@@ -16,6 +16,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'DISCORD_WEBHOOK_URL not configured' });
     }
 
+    const BASE_URL = process.env.BASE_URL || 'https://onescript.fr';
+
+    // Lien de confirmation (clic = envoie l'email au client)
+    const confirmUrl = `${BASE_URL}/api/confirm-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)}`;
+
     const result = await fetch(process.env.DISCORD_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -31,6 +36,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             { name: '🎮 Produit', value: productName, inline: true },
             { name: '📦 Option', value: optionLabel, inline: true },
             { name: '💰 Montant', value: `**${price}€**`, inline: true },
+            { name: '✅ Confirmer le paiement', value: `[Cliquez ici pour envoyer l'email de confirmation](${confirmUrl})`, inline: false },
           ],
           footer: { text: 'OneScript — En attente de paiement' },
           timestamp: new Date().toISOString(),
