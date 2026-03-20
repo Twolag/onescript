@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toast } from "sonner";
 
 interface PayPalButtonProps {
@@ -24,15 +24,19 @@ declare global {
 
 const PayPalButton: React.FC<PayPalButtonProps> = ({ amount, orderData, onSuccess, clientId }) => {
   const paypalRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Charger le script PayPal SDK dynamiquement
-    const script = document.createElement('script');
-    script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`;
-    script.async = true;
-    
-    script.onload = () => {
+    // Éviter de charger le script plusieurs fois
+    const scriptId = 'paypal-sdk-script';
+    let script = document.getElementById(scriptId) as HTMLScriptElement;
+
+    const initPayPal = () => {
       if (window.paypal && paypalRef.current) {
+        // Nettoyer le conteneur avant de rendre le bouton
+        paypalRef.current.innerHTML = '';
+        
         window.paypal.Buttons({
           createOrder: (data: any, actions: any) => {
             return actions.order.create({
@@ -41,7 +45,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ amount, orderData, onSucces
                   description: `${orderData.productName} - ${orderData.productOption}`,
                   amount: {
                     currency_code: 'EUR',
-                    value: amount.toString(),
+                    value: amount.toFixed(2), // S'assurer du format 0.00
                   },
                   custom_id: orderData.orderNumber,
                 },
@@ -49,10 +53,11 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ amount, orderData, onSucces
             });
           },
           onApprove: async (data: any, actions: any) => {
-            const details = await actions.order.capture();
-            
-            // ✉️ Déclencher l'envoi d'e-mail UNIQUEMENT après approbation
             try {
+              const details = await actions.order.capture();
+              console.log("Paiement capturé:", details);
+              
+              // ✉️ Envoi des emails via l'API
               await fetch('/api/send-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -84,17 +89,18 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ amount, orderData, onSucces
                 }),
               });
               
-              toast.success("Paiement réussi ! Un e-mail de confirmation vous a été envoyé.");
+              toast.success("Paiement réussi ! Vos accès vous ont été envoyés par e-mail.");
               onSuccess(details);
-            } catch (error) {
-              console.error("Erreur lors de l'envoi des e-mails:", error);
+            } catch (err) {
+              console.error("Erreur post-paiement:", err);
               toast.error("Paiement validé, mais une erreur est survenue lors de l'envoi de l'e-mail. Contactez le support.");
-              onSuccess(details);
+              onSuccess({});
             }
           },
           onError: (err: any) => {
-            console.error("Erreur PayPal:", err);
-            toast.error("Une erreur est survenue avec PayPal. Veuillez réessayer.");
+            console.error("Erreur PayPal SDK:", err);
+            setError("Une erreur est survenue avec PayPal. Veuillez réessayer.");
+            toast.error("Erreur PayPal. Vérifiez vos informations de paiement.");
           },
           style: {
             layout: 'vertical',
@@ -106,17 +112,40 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ amount, orderData, onSucces
       }
     };
 
-    document.body.appendChild(script);
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR&disable-funding=credit,card`; // On désactive temporairement le mode CB direct pour tester la stabilité PayPal
+      script.async = true;
+      script.onload = () => {
+        setIsLoaded(true);
+        initPayPal();
+      };
+      document.body.appendChild(script);
+    } else {
+      setIsLoaded(true);
+      initPayPal();
+    }
 
     return () => {
-      // Nettoyage si nécessaire
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
+      // On ne supprime pas le script pour éviter les rechargements inutiles
+      // Mais on nettoie le conteneur du bouton
+      if (paypalRef.current) {
+        paypalRef.current.innerHTML = '';
       }
     };
   }, [amount, orderData, clientId]);
 
-  return <div ref={paypalRef} className="w-full mt-4" />;
+  if (error) {
+    return <div className="p-4 text-red-400 bg-red-500/10 border border-red-500/30 rounded-lg text-sm">{error}</div>;
+  }
+
+  return (
+    <div className="w-full min-h-[150px] flex flex-col items-center justify-center">
+      {!isLoaded && <div className="animate-pulse text-violet-tech text-sm">Chargement sécurisé de PayPal...</div>}
+      <div ref={paypalRef} className="w-full" />
+    </div>
+  );
 };
 
 export default PayPalButton;
