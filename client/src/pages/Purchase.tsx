@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import PayPalButton from "@/components/PayPalButton";
 
+const PAYPAL_CLIENT_ID = "TON_CLIENT_ID_ICI"; // Remplace par ton vrai Client ID Live
 const PAYPAL_EMAIL = "OneLagTT@paypal.me";
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
 
@@ -137,30 +139,13 @@ export default function Purchase() {
       const orderNumber = generateOrderNumber();
       const customerName = `${formData.firstName} ${formData.lastName}`;
 
-      // 📝 Préparation des données de commande pour PayPal
-      const orderData = {
-        orderNumber,
-        customerName,
-        customerEmail: formData.email,
-        productName: product.name,
-        productOption: selectedItem.label,
-        discordPseudo: formData.discordPseudo,
-        price: selectedItem.price,
-      };
-
-      console.log('[Purchase] Commande créée, en attente de paiement PayPal:', orderNumber);
-
-      // 💳 Redirection PayPal
-      const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
-      setTimeout(() => { window.open(paypalLink, '_blank'); }, 100);
-
       setOrderCreated({
         orderNumber,
         productName: `${product.name} — ${selectedItem.label}`,
         price: selectedItem.price,
       });
 
-      toast.success("Redirection vers PayPal...");
+      toast.success("Informations validées. Veuillez procéder au paiement PayPal ci-dessous.");
     } catch (error) {
       console.error("Erreur:", error);
       toast.error("Une erreur est survenue, veuillez réessayer.");
@@ -264,13 +249,37 @@ export default function Purchase() {
                     </div>
                   </div>
 
-                  <Button type="submit" size="lg" disabled={total === 0 || isLoading} className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                    {isLoading ? (
-                      <><span className="animate-spin">⏳</span> Redirection vers PayPal...</>
-                    ) : (
-                      <><Lock className="w-4 h-4" /> PAYER {total} € VIA PAYPAL</>
-                    )}
-                  </Button>
+                  {!orderCreated ? (
+                    <Button type="submit" size="lg" disabled={total === 0 || isLoading} className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
+                      {isLoading ? (
+                        <><span className="animate-spin">⏳</span> Validation...</>
+                      ) : (
+                        <><Check className="w-4 h-4" /> VALIDER MES INFORMATIONS</>
+                      )}
+                    </Button>
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm text-center">
+                        Informations validées ! Payez maintenant pour recevoir vos accès.
+                      </div>
+                      <PayPalButton 
+                        clientId={PAYPAL_CLIENT_ID}
+                        amount={total}
+                        orderData={{
+                          orderNumber: orderCreated.orderNumber,
+                          customerName: `${formData.firstName} ${formData.lastName}`,
+                          customerEmail: formData.email,
+                          productName: product.name,
+                          productOption: selectedItems[0].label,
+                          discordPseudo: formData.discordPseudo,
+                          price: total
+                        }}
+                        onSuccess={(details) => {
+                          console.log("Paiement réussi:", details);
+                        }}
+                      />
+                    </div>
+                  )}
 
                   <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Paiement sécurisé</span>
