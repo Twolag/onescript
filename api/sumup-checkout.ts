@@ -7,7 +7,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { amount, orderNumber, customerEmail, productName } = req.body;
-  const SUMUP_SECRET_KEY = process.env.SUMUP_SECRET_KEY || "sup_sk_Szzn1x4J7r1lKsOE6eFIibEjZwns0Ju2o";
+  const SUMUP_SECRET_KEY = process.env.SUMUP_API_KEY;
+
+  if (!SUMUP_SECRET_KEY) {
+    console.error('[SumUp] Clé API manquante! SUMUP_API_KEY n\'est pas défini.');
+    return res.status(500).json({ 
+      error: 'Configuration manquante',
+      message: 'La clé API SumUp n\'est pas configurée sur le serveur',
+      details: { missingVar: 'SUMUP_API_KEY' }
+    });
+  }
 
   try {
     // 1. Créer un Checkout SumUp
