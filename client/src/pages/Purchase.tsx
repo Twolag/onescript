@@ -137,51 +137,18 @@ export default function Purchase() {
       const orderNumber = generateOrderNumber();
       const customerName = `${formData.firstName} ${formData.lastName}`;
 
-      // ✉️ Email de confirmation au client
-      fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: formData.email,
-          props: {
-            orderNumber,
-            customerName,
-            customerEmail: formData.email,
-            productName: product.name,
-            productOption: selectedItem.label,
-            discordPseudo: formData.discordPseudo,
-            price: selectedItem.price,
-          },
-        }),
-      })
-        .then(() => console.log('[Purchase] ✅ Email client envoyé'))
-        .catch((err) => console.error('[Purchase] Erreur email client:', err));
+      // 📝 Préparation des données de commande pour PayPal
+      const orderData = {
+        orderNumber,
+        customerName,
+        customerEmail: formData.email,
+        productName: product.name,
+        productOption: selectedItem.label,
+        discordPseudo: formData.discordPseudo,
+        price: selectedItem.price,
+      };
 
-      // 📬 Email de notification admin
-      fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: 'onescript@outlook.fr',
-          subject: `[NOUVELLE COMMANDE] ${orderNumber} — ${customerName}`,
-          html: `
-            <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#fff;padding:30px;border-radius:10px;">
-              <h2 style="color:#c8ff00;margin-top:0;">🛒 Nouvelle Commande</h2>
-              <table style="width:100%;border-collapse:collapse;">
-                <tr><td style="padding:8px 0;color:#888;">N° commande</td><td style="color:#c8ff00;font-family:monospace;font-weight:700;">${orderNumber}</td></tr>
-                <tr><td style="padding:8px 0;color:#888;">Client</td><td style="color:#fff;">${customerName}</td></tr>
-                <tr><td style="padding:8px 0;color:#888;">Email</td><td style="color:#fff;">${formData.email}</td></tr>
-                <tr><td style="padding:8px 0;color:#888;">Discord</td><td style="color:#fff;">${formData.discordPseudo}</td></tr>
-                <tr><td style="padding:8px 0;color:#888;">Produit</td><td style="color:#fff;">${product.name}</td></tr>
-                <tr><td style="padding:8px 0;color:#888;">Option</td><td style="color:#fff;">${selectedItem.label}</td></tr>
-                <tr><td style="padding:8px 0;color:#888;">Montant</td><td style="color:#c8ff00;font-size:20px;font-weight:800;">${selectedItem.price}€</td></tr>
-              </table>
-            </div>
-          `,
-        }),
-      })
-        .then(() => console.log('[Purchase] ✅ Email admin envoyé'))
-        .catch((err) => console.error('[Purchase] Erreur email admin:', err));
+      console.log('[Purchase] Commande créée, en attente de paiement PayPal:', orderNumber);
 
       // 💳 Redirection PayPal
       const paypalLink = `https://www.paypal.me/OneLagTT/${selectedItem.price}`;
