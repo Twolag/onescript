@@ -308,16 +308,16 @@ export default function Purchase() {
                     </div>
 
                     <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-left">
-                      <p className="text-sm font-semibold text-green-300 mb-2">✅ Email envoyé !</p>
-                      <p className="text-xs text-muted-foreground">Un email de confirmation a été envoyé avec toutes les instructions.</p>
+                      <p className="text-sm font-semibold text-green-300 mb-2">⏳ En attente de paiement</p>
+                      <p className="text-xs text-muted-foreground">L'email de confirmation vous sera envoyé automatiquement dès que le paiement sera validé par PayPal.</p>
                     </div>
 
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
                       <p className="text-sm font-semibold text-blue-300">Instructions :</p>
                       <ol className="text-xs text-muted-foreground space-y-2 text-left">
-                        <li>1. Une fenêtre PayPal vient de s'ouvrir</li>
-                        <li>2. Effectue le paiement de <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
-                        <li>3. Rejoins notre Discord avec ton numéro de commande</li>
+                        <li>1. Cliquez sur le bouton PayPal à gauche</li>
+                        <li>2. Finalisez le paiement de <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
+                        <li>3. Recevez vos accès par email et rejoignez notre Discord</li>
                       </ol>
                     </div>
 
