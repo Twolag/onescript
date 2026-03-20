@@ -249,8 +249,8 @@ export default function Purchase() {
                     <div className="flex items-start gap-3">
                       <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">Paiement sécurisé via PayPal</h4>
-                        <p className="text-xs text-muted-foreground">Vous serez redirigé vers PayPal pour finaliser le paiement. Un email de confirmation vous sera envoyé automatiquement.</p>
+                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">Paiement sécurisé</h4>
+                        <p className="text-xs text-muted-foreground">Choisissez votre mode de paiement (Carte Bancaire via SumUp ou PayPal) après avoir validé vos informations.</p>
                       </div>
                     </div>
                   </div>
@@ -314,13 +314,13 @@ export default function Purchase() {
 
                     <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-left">
                       <p className="text-sm font-semibold text-green-300 mb-2">⏳ En attente de paiement</p>
-                      <p className="text-xs text-muted-foreground">L'email de confirmation vous sera envoyé automatiquement dès que le paiement sera validé par PayPal.</p>
+                      <p className="text-xs text-muted-foreground">L'email de confirmation vous sera envoyé automatiquement dès que le paiement sera validé.</p>
                     </div>
 
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
                       <p className="text-sm font-semibold text-blue-300">Instructions :</p>
                       <ol className="text-xs text-muted-foreground space-y-2 text-left">
-                        <li>1. Cliquez sur le bouton PayPal à gauche</li>
+                        <li>1. Cliquez sur le bouton de paiement à gauche</li>
                         <li>2. Finalisez le paiement de <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
                         <li>3. Recevez vos accès par email et rejoignez notre Discord</li>
                       </ol>
