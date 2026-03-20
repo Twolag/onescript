@@ -72,7 +72,7 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-        label: "Essai 24h", price: 0.01 },
+      { label: "Essai 24h", price: 0.01 },
       { label: "1 semaine", price: 5 },
       { label: "1 mois", price: 15 },
       { label: "3 mois", price: 20 },
