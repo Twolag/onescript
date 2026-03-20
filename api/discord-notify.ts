@@ -1,0 +1,50 @@
+import { VercelRequest, VercelResponse } from '@vercel/node';
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') { res.status(200).end(); return; }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  try {
+    const { orderNumber, customerName, email, discordPseudo, productName, optionLabel, price } = req.body;
+
+    if (!process.env.DISCORD_WEBHOOK_URL) {
+      return res.status(500).json({ error: 'DISCORD_WEBHOOK_URL not configured' });
+    }
+
+    const result = await fetch(process.env.DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        embeds: [{
+          title: '🛒 Nouvelle commande en attente',
+          color: 0xc8ff00,
+          fields: [
+            { name: 'N° commande', value: `\`${orderNumber}\``, inline: false },
+            { name: '👤 Client', value: customerName, inline: true },
+            { name: '📧 Email', value: email, inline: true },
+            { name: '💬 Discord', value: discordPseudo, inline: true },
+            { name: '🎮 Produit', value: productName, inline: true },
+            { name: '📦 Option', value: optionLabel, inline: true },
+            { name: '💰 Montant', value: `**${price}€**`, inline: true },
+          ],
+          footer: { text: 'OneScript — En attente de paiement' },
+          timestamp: new Date().toISOString(),
+        }],
+      }),
+    });
+
+    if (!result.ok) {
+      return res.status(500).json({ error: 'Discord webhook failed' });
+    }
+
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return res.status(500).json({ error: message });
+  }
+}
