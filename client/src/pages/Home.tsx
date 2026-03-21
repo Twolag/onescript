@@ -1,7 +1,7 @@
 /**
- * Home — Neon Circuit Design (Cyberpunk Industriel)
- * Sections: Hero, Produits, Performances, Prix, Support
- * Layout asymétrique, lignes de circuit, accents violet néon
+ * Home — Neon Circuit Design (Industrial Cyberpunk)
+ * Sections: Hero, Products, Performance, Pricing, Support
+ * Asymmetric layout, circuit lines, neon violet accents
  */
 import { motion } from "framer-motion";
 import { Link } from "wouter";
@@ -38,37 +38,37 @@ const SCRIPT_TOOLS = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/h
 const products = [
   {
     title: "FUSION AI - V7 (BETA)",
-    desc: "Traitement visuel IA en temps réel. Panic Button (Mode Streamer), Profile Keybinds, Triggers 100% Customizables. Interface ultérieure, stabilité améliorée. 100% logiciel, aucun périphérique externe.",
+    desc: "Real-time AI visual processing. Panic Button (Streamer Mode), Profile Keybinds, 100% Customizable Triggers. Advanced interface, improved stability. 100% software, no external hardware required.",
     icon: Cpu,
     image: AI_ENGINE,
     price: "80 €",
-    priceLabel: "licence + installation",
+    priceLabel: "license + installation",
     href: "/products",
   },
   {
     title: "Windows Optimization",
-    desc: "Nettoyage système, suppression des services inutiles, optimisation RAM/CPU. Gain minimum : 40-60 FPS.",
+    desc: "System cleanup, removal of unnecessary services, RAM/CPU optimization. Minimum gain: 40-60 FPS.",
     icon: Monitor,
     image: WINDOWS_OPT,
     price: "20 €",
-    priceLabel: "à partir de",
+    priceLabel: "starting from",
     href: "/products",
   },
   {
     title: "Jitter Script",
-    desc: "Le meilleur script jitter Apex Legends anti-recul du marché. Indétectable, manette uniquement, ne coupe pas l'aim assist. Parfait pour Warzone et tous les FPS.",
+    desc: "The best anti-recoil Apex Legends jitter script on the market. Undetectable, controller only, does not cut aim assist. Perfect for Warzone and all FPS games.",
     icon: Gamepad2,
     image: SCRIPT_TOOLS,
-    price: "2,50 €",
-    priceLabel: "à partir de",
+    price: "2.50 €",
+    priceLabel: "starting from",
     href: "/products",
   },
 ];
 
 const stats = [
-  { value: "+60", unit: "FPS", label: "Gain minimum" },
-  { value: "-40", unit: "%", label: "Latence réduite" },
-  { value: "99", unit: "%", label: "Stabilité" },
+  { value: "+60", unit: "FPS", label: "Minimum gain" },
+  { value: "-40", unit: "%", label: "Reduced latency" },
+  { value: "99", unit: "%", label: "Stability" },
   { value: "24/7", unit: "", label: "Support" },
 ];
 
@@ -76,47 +76,47 @@ const pricingPlans = [
   {
     name: "Windows Optimization",
     price: "20",
-    period: "à partir de",
-    desc: "Optimisation simple de Windows",
+    period: "starting from",
+    desc: "Simple Windows optimization",
     features: [
-      "Nettoyage système complet",
-      "Suppression services inutiles",
-      "Optimisation RAM & CPU",
-      "Réduction input lag",
+      "Complete system cleanup",
+      "Removal of unnecessary services",
+      "RAM & CPU optimization",
+      "Input lag reduction",
     ],
     popular: false,
-    cta: "CHOISIR CE PLAN",
+    cta: "CHOOSE THIS PLAN",
   },
   {
     name: "AI Aimbot - V7 (BETA)",
     price: "80",
-    period: "1er mois + inst.",
-    desc: "Installation complète + 1er mois inclus - Nouvelle interface, Panic Button, Profile Keybinds",
+    period: "1st month + inst.",
+    desc: "Complete installation + 1st month included - New interface, Panic Button, Profile Keybinds",
     features: [
-      "Traitement visuel IA en temps réel",
-      "Panic Button (Mode Streamer) - 100% invisible",
-      "Profile Keybinds - Changez de config en plein match",
-      "Triggers 100% Customizables",
-      "Renouvellement : 30 € / mois",
-      "Support prioritaire",
+      "Real-time AI visual processing",
+      "Panic Button (Streamer Mode) - 100% invisible",
+      "Profile Keybinds - Change config mid-match",
+      "100% Customizable Triggers",
+      "Renewal: 30 € / month",
+      "Priority support",
     ],
     popular: true,
-    cta: "Choisir ce plan",
+    cta: "Choose this plan",
   },
   {
     name: "Jitter Script",
-    price: "2,50",
-    period: "à partir de",
-    desc: "Script anti-recul jitter aim — manette uniquement",
+    price: "2.50",
+    period: "starting from",
+    desc: "Anti-recoil jitter aim script — controller only",
     features: [
-      "Indétectable par l'anti-cheat",
-      "Ne coupe pas l'aim assist",
-      "Fonction Humanizer intégrée",
-      "Réglable depuis l'interface",
-      "Manette uniquement",
+      "Undetectable by anti-cheat",
+      "Does not cut aim assist",
+      "Integrated Humanizer function",
+      "Adjustable from the interface",
+      "Controller only",
     ],
     popular: false,
-    cta: "CHOISIR CE PLAN",
+    cta: "CHOOSE THIS PLAN",
   },
 ];
 
@@ -182,7 +182,7 @@ export default function Home() {
               animate="visible"
               className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8"
             >
-              OneScript optimise votre PC pour le gaming. Jitter Script Apex Legends, AI Aimbot, Windows Optimization. Plus de FPS, moins de latence, une stabilité maximale. Compatible Windows 10 & 11.
+              OneScript optimizes your PC for gaming. Apex Legends Jitter Script, AI Aimbot, Windows Optimization. More FPS, less latency, maximum stability. Compatible with Windows 10 & 11.
             </motion.p>
 
             {/* CTAs */}
@@ -199,7 +199,7 @@ export default function Home() {
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
                 >
                   <Zap className="w-4 h-4" />
-                  COMMENCER
+                  GET STARTED
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -209,7 +209,7 @@ export default function Home() {
                   variant="outline"
                   className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
                 >
-                  VOIR LES PRODUITS
+                  VIEW PRODUCTS
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -277,195 +277,70 @@ export default function Home() {
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-violet-tech/20 border border-violet-tech/30 text-[10px] font-bold text-violet-accent tracking-widest uppercase mb-4">
                 <Zap className="w-3 h-3" />
-                Offre Limitée
+                Limited Offer
               </div>
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-                Testez l'AI Aimbot <span className="text-violet-tech neon-text">gratuitement</span>
+                Test the <span className="text-violet-tech">Jitter Script</span> for 24h
               </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Vous hésitez encore ? Réservez un essai gratuit de 24h pour découvrir la puissance de FUSION AI. 
-                Compatible Steam, Apex Legends et Call of Duty.
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                Experience the power of our anti-recoil script for only 2.50€. 
+                Undetectable, easy to configure, and compatible with all your favorite FPS games.
               </p>
+              <Link href="/purchase?product=jitter-script">
+                <Button className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
+                  START TRIAL
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
             </motion.div>
-            
+
             <motion.div
               variants={fadeUp}
-              custom={1}
+              custom={2}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="flex-shrink-0"
+              className="relative w-full max-w-md"
             >
-              <Link href="/trial">
-                <Button
-                  size="lg"
-                  className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-3 px-8 py-7 text-lg"
-                >
-                  <Gamepad2 className="w-6 h-6" />
-                  RÉSERVER MON ESSAI
-                </Button>
-              </Link>
-              <p className="text-center text-xs text-muted-foreground mt-4">
-                Réponse sous 24h via Discord
-              </p>
+              <div className="glass-card p-8 rounded-xl border-violet-tech/30 relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-3 rounded-lg bg-violet-tech/10 text-violet-tech">
+                    <Gamepad2 className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-xl">Jitter Script</h3>
+                    <p className="text-sm text-muted-foreground">24h Access</p>
+                  </div>
+                </div>
+                <div className="space-y-4 mb-8">
+                  {[
+                    "Anti-recoil Jitter Aim",
+                    "Undetectable by Anti-cheat",
+                    "Controller Only",
+                    "Instant Activation",
+                  ].map((f) => (
+                    <div key={f} className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <Check className="w-4 h-4 text-violet-tech" />
+                      {f}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-end gap-2">
+                  <span className="text-3xl font-display font-extrabold text-violet-tech">2.50€</span>
+                  <span className="text-sm text-muted-foreground mb-1">/ 24h</span>
+                </div>
+              </div>
+              {/* Decorative glow */}
+              <div className="absolute -inset-4 bg-violet-tech/20 blur-3xl rounded-full -z-10" />
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ PRODUCTS SECTION ═══════════════ */}
+      {/* ═══════════════ PERFORMANCE SECTION ═══════════════ */}
       <section className="relative py-24 lg:py-32">
         <div className="container">
-          {/* Section header — asymétrique, aligné à gauche */}
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="max-w-2xl mb-16"
-          >
-            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Nos Solutions
-            </span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              Des outils conçus pour la{" "}
-              <span className="text-violet-tech">performance</span>
-            </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Trois produits complémentaires pour transformer votre expérience
-              gaming et exploiter chaque cycle de votre processeur.
-            </p>
-          </motion.div>
-
-          {/* Product cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {products.map((product, i) => (
-              <motion.div
-                key={product.title}
-                custom={i + 1}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-              >
-                <Link href={product.href}>
-                  <div className="group relative h-full glass-card rounded-lg overflow-hidden hover:border-violet-tech/40 transition-all duration-300">
-                    {/* Image */}
-                    <div className="relative h-52 overflow-hidden">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-dark-base via-dark-base/40 to-transparent" />
-                      {/* Price badge */}
-                      <div className="absolute top-4 right-4 px-3 py-1.5 rounded-md bg-violet-tech/90 text-xs font-display font-bold text-white">
-                        {product.priceLabel} {product.price}
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-9 h-9 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
-                          <product.icon className="w-4.5 h-4.5 text-violet-tech" />
-                        </div>
-                        <h3 className="font-display font-bold text-base tracking-wide">
-                          {product.title}
-                        </h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                        {product.desc}
-                      </p>
-                      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-violet-tech group-hover:gap-2.5 transition-all duration-200">
-                        En savoir plus
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ INTERFACE GALLERY SECTION ═══════════════ */}
-      <section className="relative py-24 lg:py-32 border-t border-border/30">
-        <div className="container">
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="max-w-2xl mb-16"
-          >
-            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Galerie
-            </span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              Découvrez l'interface <span className="text-violet-tech">FUSION AI</span>
-            </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Des captures réelles de l'interface en action. Monitoring en temps réel, réglages avancés et résultats impressionnants.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            <motion.div
-              custom={1}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
-              className="group relative rounded-lg overflow-hidden glass-card border border-border/30 hover:border-violet-tech/50 transition-all"
-            >
-              <div className="relative h-80 overflow-hidden">
-                <img
-                  src="/images/dashboard-new.webp"
-                  alt="Dashboard FUSION AI"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-display font-bold text-base text-foreground mb-1">Dashboard</h3>
-                <p className="text-sm text-muted-foreground">Monitoring en temps réel - FPS: 527, Latence: 1.8ms</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              custom={2}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
-              className="group relative rounded-lg overflow-hidden glass-card border border-border/30 hover:border-violet-tech/50 transition-all"
-            >
-              <div className="relative h-80 overflow-hidden">
-                <img
-                  src="/images/settings-new.webp"
-                  alt="AI & Visuals FUSION AI"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-display font-bold text-base text-foreground mb-1">Settings</h3>
-                <p className="text-sm text-muted-foreground">Configuration des raccourcis et réglages de l'application</p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ PERFORMANCES SECTION ═══════════════ */}      <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-dark-surface/30" />
-        {/* Top line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
-
-        <div className="relative container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left — text */}
             <motion.div
               variants={fadeUp}
@@ -475,34 +350,33 @@ export default function Home() {
               viewport={{ once: true, margin: "-80px" }}
             >
               <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-                Performances
+                Performance
               </span>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-6">
-                Chaque milliseconde{" "}
-                <span className="text-violet-tech">compte</span>
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-6">
+                Dominate the <span className="text-violet-tech">Competition</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Nos outils analysent votre configuration en profondeur et
-                appliquent des optimisations ciblées pour maximiser les FPS et
-                réduire l'input lag. Compatible NVIDIA RTX 3060 et supérieur.
+                Our solutions are designed to give you a decisive advantage. 
+                Whether through AI visual processing or deep system optimization, 
+                we push the limits of what your PC can do.
               </p>
 
-              <div className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 {[
                   {
-                    icon: TrendingUp,
-                    title: "Gain de 40 à 60 FPS",
-                    desc: "Selon votre configuration matérielle",
+                    icon: Clock,
+                    title: "Low Latency",
+                    desc: "Optimized for minimum input lag",
                   },
                   {
-                    icon: Clock,
-                    title: "Latence réduite de 40%",
-                    desc: "Optimisation réseau et système",
+                    icon: TrendingUp,
+                    title: "FPS Boost",
+                    desc: "Gain up to 60 FPS on average",
                   },
                   {
                     icon: Shield,
-                    title: "Stabilité 99%",
-                    desc: "Aucun crash, aucun freeze",
+                    title: "99% Stability",
+                    desc: "No crashes, no freezes",
                   },
                 ].map((item, i) => (
                   <motion.div
@@ -553,7 +427,7 @@ export default function Home() {
                   +60 FPS
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Gain minimum constaté
+                  Minimum observed gain
                 </p>
               </div>
             </motion.div>
@@ -576,14 +450,13 @@ export default function Home() {
             className="text-center max-w-2xl mx-auto mb-16"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Tarifs
+              Pricing
             </span>
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              Choisissez votre{" "}
-              <span className="text-violet-tech">plan</span>
+              Choose your <span className="text-violet-tech">plan</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Des solutions adaptées à chaque besoin et chaque budget.
+              Solutions adapted to every need and every budget.
             </p>
           </motion.div>
 
@@ -604,7 +477,7 @@ export default function Home() {
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-violet-tech text-xs font-display font-bold text-white tracking-wider">
-                    RECOMMANDÉ
+                    RECOMMENDED
                   </div>
                 )}
 
@@ -639,7 +512,7 @@ export default function Home() {
                   ))}
                 </ul>
 
-                <Link href={`/purchase?product=${plan.name === 'AI Aimbot' ? 'ai-engine' : plan.name === 'Windows Optimization' ? 'windows-opt' : 'jitter-script'}`}>
+                <Link href={`/purchase?product=${plan.name === 'AI Aimbot - V7 (BETA)' ? 'ai-engine' : plan.name === 'Windows Optimization' ? 'windows-opt' : 'jitter-script'}`}>
                   <Button
                     className={`w-full font-display font-semibold tracking-wider ${
                       plan.popular
@@ -675,12 +548,11 @@ export default function Home() {
                 Support
               </span>
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-                Besoin d'aide ?{" "}
-                <span className="text-violet-tech">On est là.</span>
+                Need help? <span className="text-violet-tech">We're here.</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl">
-                Notre équipe de support est disponible pour vous accompagner.
-                Système de tickets, FAQ complète et documentation détaillée.
+                Our support team is available to assist you. 
+                Ticket system, complete FAQ, and detailed documentation.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/support">
@@ -689,7 +561,7 @@ export default function Home() {
                     className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
                   >
                     <Headphones className="w-4 h-4" />
-                    CONTACTER LE SUPPORT
+                    CONTACT SUPPORT
                   </Button>
                 </Link>
                 <Link href="/support">
@@ -698,7 +570,7 @@ export default function Home() {
                     variant="outline"
                     className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider"
                   >
-                    VOIR LA FAQ
+                    VIEW FAQ
                   </Button>
                 </Link>
               </div>
@@ -714,10 +586,10 @@ export default function Home() {
             >
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Headphones, label: "Support 24/7" },
-                  { icon: Shield, label: "Paiement sécurisé" },
-                  { icon: Zap, label: "Installation rapide" },
-                  { icon: TrendingUp, label: "Mises à jour" },
+                  { icon: Headphones, label: "24/7 Support" },
+                  { icon: Shield, label: "Secure Payment" },
+                  { icon: Zap, label: "Fast Installation" },
+                  { icon: TrendingUp, label: "Updates" },
                 ].map((item) => (
                   <div
                     key={item.label}

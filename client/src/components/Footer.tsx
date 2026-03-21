@@ -6,21 +6,21 @@ import { Link } from "wouter";
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/onescript-logo-full_647bb391.png";
 
 const footerLinks = {
-  produits: [
+  products: [
     { label: "FUSION AI", href: "/products" },
     { label: "Windows Optimization", href: "/products" },
     { label: "Jitter Script", href: "/products" },
   ],
-  ressources: [
-    { label: "Compatibilité", href: "/compatibility" },
+  resources: [
+    { label: "Compatibility", href: "/compatibility" },
     { label: "Support", href: "/support" },
     { label: "Documentation", href: "/documentation" },
   ],
   legal: [
     { label: "Documentation", href: "/documentation" },
-    { label: "Mentions légales", href: "/legal" },
-    { label: "Politique de confidentialité", href: "/privacy" },
-    { label: "CGV", href: "/terms" },
+    { label: "Legal Notice", href: "/legal" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms of Service", href: "/terms" },
   ],
 };
 
@@ -47,18 +47,18 @@ export default function Footer() {
                 </span>
               </Link>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-                Solutions d'optimisation PC et de performance gaming.
-                Libérez le vrai potentiel de votre machine.
+                PC optimization and gaming performance solutions.
+                Unleash the true potential of your machine.
               </p>
             </div>
 
-            {/* Produits */}
+            {/* Products */}
             <div>
               <h4 className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-accent mb-4">
-                Produits
+                Products
               </h4>
               <ul className="space-y-2.5">
-                {footerLinks.produits.map((link) => (
+                {footerLinks.products.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
@@ -71,13 +71,13 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Ressources */}
+            {/* Resources */}
             <div>
               <h4 className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-accent mb-4">
-                Ressources
+                Resources
               </h4>
               <ul className="space-y-2.5">
-                {footerLinks.ressources.map((link) => (
+                {footerLinks.resources.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
@@ -90,10 +90,10 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Légal */}
+            {/* Legal */}
             <div>
               <h4 className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-accent mb-4">
-                Légal
+                Legal
               </h4>
               <ul className="space-y-2.5">
                 {footerLinks.legal.map((link) => (
@@ -114,10 +114,10 @@ export default function Footer() {
           <div className="mt-12 pt-6 border-t border-border/50">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-xs text-muted-foreground">
-                &copy; {new Date().getFullYear()} OneScript. Tous droits réservés.
+                &copy; {new Date().getFullYear()} OneScript. All rights reserved.
               </p>
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span>PC uniquement</span>
+                <span>PC only</span>
                 <span className="text-violet-tech">•</span>
                 <span>Windows 10 / 11</span>
               </div>

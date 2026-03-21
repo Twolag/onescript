@@ -12,11 +12,11 @@ import { Zap, Menu, X, ChevronDown } from "lucide-react";
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/onescript-logo-full_647bb391.png";
 
 const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/products", label: "Produits" },
-  { href: "/compatibility", label: "Compatibilité" },
+  { href: "/", label: "Home" },
+  { href: "/products", label: "Products" },
+  { href: "/compatibility", label: "Compatibility" },
   { href: "/documentation", label: "Documentation" },
-  { href: "/reviews", label: "Avis" },
+  { href: "/reviews", label: "Reviews" },
   { href: "/support", label: "Support" },
 ];
 
@@ -90,7 +90,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 px-5 py-2 text-sm font-display font-semibold tracking-wider text-primary-foreground bg-violet-tech rounded-md hover:bg-violet-secondary transition-colors duration-200 neon-glow"
             >
               <Zap className="w-3.5 h-3.5" />
-              ACHETER
+              BUY NOW
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
             </button>
             <AnimatePresence>
@@ -159,7 +159,7 @@ export default function Navbar() {
                 );
               })}
               <div className="px-4 py-3 text-sm font-display font-semibold tracking-wider text-violet-tech">
-                ACHETER
+                BUY NOW
               </div>
               {purchaseProducts.map((product) => (
                 <Link

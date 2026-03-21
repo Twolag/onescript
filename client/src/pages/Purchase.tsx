@@ -1,6 +1,6 @@
 /*
  * Purchase — Neon Circuit Design
- * Sélection produit, récapitulatif, PayPal + SumUp
+ * Product selection, summary, PayPal + SumUp
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -13,22 +13,22 @@ import { toast } from "sonner";
 const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
 const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
 
-// Liens SumUp par produit/option (clé = "productId-index")
+// SumUp links by product/option (key = "productId-index")
 const SUMUP_LINKS: { [key: string]: string } = {
   // FUSION AI
-  "ai-engine-0": "https://pay.sumup.com/b2c/QK3BXCMA",  // 80€ Licence + Installation
-  "ai-engine-1": "https://pay.sumup.com/b2c/Q8U1ZMJA",  // 30€ Abonnement mensuel
+  "ai-engine-0": "https://pay.sumup.com/b2c/QK3BXCMA",  // 80€ License + Installation
+  "ai-engine-1": "https://pay.sumup.com/b2c/Q8U1ZMJA",  // 30€ Monthly subscription
   // Windows Optimization
-  "windows-opt-0": "https://pay.sumup.com/b2c/QIT9A8T9", // 20€ Optimisation simple
-  "windows-opt-1": "https://pay.sumup.com/b2c/QFGYTX08", // 40€ Optimisation + réinstall
+  "windows-opt-0": "https://pay.sumup.com/b2c/QIT9A8T9", // 20€ Simple optimization
+  "windows-opt-1": "https://pay.sumup.com/b2c/QFGYTX08", // 40€ Optimization + reinstall
   // Jitter Script
-  "jitter-script-0": "https://pay.sumup.com/b2c/QFQJ73UM", // 1€ Essai 24h
-  "jitter-script-1": "https://pay.sumup.com/b2c/QIO7OGCV", // 5€ 1 semaine
-  "jitter-script-2": "https://pay.sumup.com/b2c/Q0IRNUOF", // 15€ 1 mois
-  "jitter-script-3": "https://pay.sumup.com/b2c/QNOJ9MX7", // 20€ 3 mois
-  "jitter-script-4": "https://pay.sumup.com/b2c/QRLCF29E", // 25€ 6 mois
-  "jitter-script-5": "https://pay.sumup.com/b2c/QJRAZ96B", // 30€ 1 an
-  "jitter-script-6": "https://pay.sumup.com/b2c/QXOU9MD5", // 40€ À vie
+  "jitter-script-0": "https://pay.sumup.com/b2c/QFQJ73UM", // 1€ 24h Trial
+  "jitter-script-1": "https://pay.sumup.com/b2c/QIO7OGCV", // 5€ 1 week
+  "jitter-script-2": "https://pay.sumup.com/b2c/Q0IRNUOF", // 15€ 1 month
+  "jitter-script-3": "https://pay.sumup.com/b2c/QNOJ9MX7", // 20€ 3 months
+  "jitter-script-4": "https://pay.sumup.com/b2c/QRLCF29E", // 25€ 6 months
+  "jitter-script-5": "https://pay.sumup.com/b2c/QJRAZ96B", // 30€ 1 year
+  "jitter-script-6": "https://pay.sumup.com/b2c/QXOU9MD5", // 40€ Lifetime
 };
 
 const fadeUp = {
@@ -53,8 +53,8 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
-      { label: "Licence + Installation", price: 80, description: "Premier mois + installation de l'AI Aimbot inclus" },
-      { label: "Abonnement mensuel", price: 30, note: "/ mois", description: "Ce prix est uniquement pour ceux qui possèdent déjà le AI Aimbot et qui veulent renouveler leur licence." },
+      { label: "License + Installation", price: 80, description: "First month + AI Aimbot installation included" },
+      { label: "Monthly Subscription", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license." },
     ],
   },
   {
@@ -62,8 +62,8 @@ const products: Product[] = [
     name: "Windows Optimization",
     icon: Monitor,
     options: [
-      { label: "Optimisation simple", price: 20 },
-      { label: "Optimisation + réinstall. Windows", price: 40 },
+      { label: "Simple Optimization", price: 20 },
+      { label: "Optimization + Windows Reinstall", price: 40 },
     ],
   },
   {
@@ -71,13 +71,13 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "Essai 24h", price: 2.50 },
-      { label: "1 semaine", price: 5 },
-      { label: "1 mois", price: 15 },
-      { label: "3 mois", price: 20 },
-      { label: "6 mois", price: 25 },
-      { label: "1 an", price: 30 },
-      { label: "À vie", price: 40 },
+      { label: "24h Trial", price: 2.50 },
+      { label: "1 week", price: 5 },
+      { label: "1 month", price: 15 },
+      { label: "3 months", price: 20 },
+      { label: "6 months", price: 25 },
+      { label: "1 year", price: 30 },
+      { label: "Lifetime", price: 40 },
     ],
   },
 ];
@@ -109,11 +109,11 @@ export default function Purchase() {
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo) {
-      toast.error("Veuillez remplir tous les champs");
+      toast.error("Please fill in all fields");
       return;
     }
     if (selectedOptionIndex === null) {
-      toast.error("Veuillez sélectionner une option");
+      toast.error("Please select an option");
       return;
     }
     setIsLoading(true);
@@ -125,9 +125,9 @@ export default function Purchase() {
         price: selectedItem!.price,
         optionIndex: selectedOptionIndex,
       });
-      toast.success("Informations validées ! Choisissez votre mode de paiement.");
+      toast.success("Information validated! Choose your payment method.");
     } catch (error) {
-      toast.error("Une erreur est survenue, veuillez réessayer.");
+      toast.error("An error occurred, please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -135,7 +135,7 @@ export default function Purchase() {
 
   const handleSumUpPayment = () => {
     if (!orderCreated) return;
-    // Redirection directe vers le lien de paiement SumUp fourni par l'utilisateur
+    // Direct redirection to the SumUp payment link provided by the user
     sendEmails(orderCreated, "sumup");
     window.location.href = "https://pay.sumup.com/b2c/QLA8WDDD";
   };
@@ -145,14 +145,14 @@ export default function Purchase() {
     sendEmails(orderCreated, "paypal");
     const paypalLink = `${PAYPAL_BASE}/${orderCreated.price}`;
     setTimeout(() => { window.open(paypalLink, "_blank"); }, 100);
-    toast.success("Redirection vers PayPal...");
+    toast.success("Redirecting to PayPal...");
   };
 
   const sendEmails = (order: typeof orderCreated, paymentMethod: "sumup" | "paypal") => {
     if (!order) return;
     const customerName = `${formData.firstName} ${formData.lastName}`;
 
-    // Email client
+    // Customer Email
     fetch("/api/send-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -170,7 +170,7 @@ export default function Purchase() {
       }),
     }).catch(console.error);
 
-    // Notification Discord (via fonction serverless sécurisée)
+    // Discord Notification (via secure serverless function)
     fetch("/api/discord-notify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -195,10 +195,10 @@ export default function Purchase() {
         <div className="relative container">
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate="visible" className="max-w-2xl">
             <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight mb-4">
-              Finaliser votre <span className="text-violet-tech">achat</span>
+              Finalize your <span className="text-violet-tech">purchase</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Sélectionnez votre produit et complétez le formulaire pour accéder à votre achat.
+              Select your product and complete the form to access your purchase.
             </p>
           </motion.div>
         </div>
@@ -253,55 +253,55 @@ export default function Purchase() {
 
               {/* Form */}
               <motion.div variants={fadeUp} custom={2} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
-                <h2 className="text-2xl font-display font-bold mb-6">Vos informations</h2>
+                <h2 className="text-2xl font-display font-bold mb-6">Your Information</h2>
                 <form onSubmit={handleCheckout} className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-foreground mb-2">Prénom</label>
-                      <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="Jean" />
+                      <label className="block text-sm font-semibold text-foreground mb-2">First Name</label>
+                      <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="John" />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-foreground mb-2">Nom</label>
-                      <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="Dupont" />
+                      <label className="block text-sm font-semibold text-foreground mb-2">Last Name</label>
+                      <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="Doe" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="jean@email.com" />
+                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john@email.com" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-foreground mb-2">Pseudo Discord</label>
-                    <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="VotreNom#1234" />
+                    <label className="block text-sm font-semibold text-foreground mb-2">Discord Username</label>
+                    <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="YourName#1234" />
                   </div>
 
                   <div className="glass-card rounded-lg p-4 bg-yellow-500/5 border border-yellow-500/20">
                     <div className="flex items-start gap-3">
                       <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">⚠️ Important — Lisez avant de payer</h4>
-                        <p className="text-xs text-muted-foreground">Un email de confirmation sera envoyé dès que vous cliquerez sur le bouton de paiement. <strong className="text-yellow-300">Votre commande ne sera activée qu'après confirmation du paiement</strong> de notre part via Discord. Si vous ne finalisez pas le paiement, ignorez cet email.</p>
+                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">⚠️ Important — Read before paying</h4>
+                        <p className="text-xs text-muted-foreground">A confirmation email will be sent as soon as you click the payment button. <strong className="text-yellow-300">Your order will only be activated after payment confirmation</strong> from us via Discord. If you do not complete the payment, ignore this email.</p>
                       </div>
                     </div>
                   </div>
 
                   {!orderCreated ? (
                     <Button type="submit" size="lg" disabled={total === 0 || isLoading} className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                      {isLoading ? <><span className="animate-spin">⏳</span> Validation...</> : <><Check className="w-4 h-4" /> VALIDER MES INFORMATIONS</>}
+                      {isLoading ? <><span className="animate-spin">⏳</span> Validating...</> : <><Check className="w-4 h-4" /> VALIDATE MY INFORMATION</>}
                     </Button>
                   ) : (
                     <div className="space-y-3">
                       <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm text-center font-semibold">
-                        ✓ Informations validées ! Choisissez votre mode de paiement :
+                        ✓ Information validated! Choose your payment method:
                       </div>
-                      {/* Bouton SumUp */}
+                      {/* SumUp Button */}
                       <Button
                         onClick={handleSumUpPayment}
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-base"
                       >
                         <CreditCard className="w-5 h-5" />
-                        PAYER {total}€ PAR CARTE (SUMUP)
+                        PAY {total}€ BY CARD (SUMUP)
                       </Button>
-                      {/* Bouton PayPal */}
+                      {/* PayPal Button */}
                       <Button
                         onClick={handlePayPalPayment}
                         className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-base"
@@ -309,14 +309,14 @@ export default function Purchase() {
                         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M7.144 19.532l1.049-5.751c.11-.606.691-1.002 1.302-.832l.557.156c2.683.75 5.545-.617 6.578-3.213.366-.926.476-1.88.35-2.775C18.924 8.483 20 10.009 20 12c0 3.86-3.14 7-7 7H7.144zM4 12C4 7.03 8.03 3 13 3c2.39 0 4.56.94 6.15 2.47-.28-.07-.57-.12-.87-.15C16.08 3.1 13.2 3.9 11.3 5.8c-1.17 1.17-1.87 2.7-2.03 4.34L4 12z"/>
                         </svg>
-                        PAYER {total}€ VIA PAYPAL
+                        PAY {total}€ VIA PAYPAL
                       </Button>
                     </div>
                   )}
 
                   <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Paiement sécurisé</span>
-                    <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> SSL chiffré</span>
+                    <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Secure Payment</span>
+                    <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> SSL Encrypted</span>
                   </div>
                 </form>
               </motion.div>
@@ -330,34 +330,34 @@ export default function Purchase() {
                     <div className="flex justify-center">
                       <Check className="w-12 h-12 text-green-400" />
                     </div>
-                    <h3 className="text-2xl font-display font-bold text-green-400">Commande créée !</h3>
-                    <p className="text-sm text-muted-foreground">Ton numéro de commande :</p>
+                    <h3 className="text-2xl font-display font-bold text-green-400">Order Created!</h3>
+                    <p className="text-sm text-muted-foreground">Your order number:</p>
                     <div className="bg-dark-elevated/80 border border-green-500/30 rounded-lg p-4 font-mono text-lg font-bold text-green-400 break-all">
                       {orderCreated.orderNumber}
                     </div>
                     <div className="space-y-2 text-sm">
-                      <p className="text-muted-foreground">Produit : <span className="text-foreground font-semibold">{orderCreated.productName}</span></p>
-                      <p className="text-muted-foreground">Montant : <span className="text-foreground font-semibold">{orderCreated.price}€</span></p>
+                      <p className="text-muted-foreground">Product: <span className="text-foreground font-semibold">{orderCreated.productName}</span></p>
+                      <p className="text-muted-foreground">Amount: <span className="text-foreground font-semibold">{orderCreated.price}€</span></p>
                     </div>
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
-                      <p className="text-sm font-semibold text-blue-300">Instructions :</p>
+                      <p className="text-sm font-semibold text-blue-300">Instructions:</p>
                       <ol className="text-xs text-muted-foreground space-y-2 text-left">
-                        <li>1. Cliquez sur un bouton de paiement à gauche</li>
-                        <li>2. Finalisez le paiement de <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
-                        <li>3. Recevez vos accès par email et rejoignez notre Discord</li>
+                        <li>1. Click a payment button on the left</li>
+                        <li>2. Finalize the payment of <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
+                        <li>3. Receive your access by email and join our Discord</li>
                       </ol>
                     </div>
                     <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="inline-block mt-4">
                       <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
                         <MessageCircle className="w-4 h-4" />
-                        Nous contacter sur Discord
+                        Contact us on Discord
                       </Button>
                     </a>
                   </div>
                 </div>
               ) : (
                 <div className="sticky top-24 glass-card rounded-lg p-6">
-                  <h3 className="text-xl font-display font-bold mb-6">Récapitulatif</h3>
+                  <h3 className="text-xl font-display font-bold mb-6">Summary</h3>
                   {selectedItem ? (
                     <div className="space-y-4">
                       <div className="flex justify-between items-start pb-4 border-b border-border/30">
@@ -369,11 +369,11 @@ export default function Purchase() {
                       </div>
                       <div className="pt-4 space-y-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Sous-total</span>
+                          <span className="text-muted-foreground">Subtotal</span>
                           <span className="font-semibold">{total}€</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Frais</span>
+                          <span className="text-muted-foreground">Fees</span>
                           <span className="font-semibold">0€</span>
                         </div>
                         <div className="flex justify-between items-center pt-4 border-t border-border/30">
@@ -382,9 +382,9 @@ export default function Purchase() {
                         </div>
                       </div>
                       <div className="mt-6 p-4 bg-violet-tech/5 border border-violet-tech/20 rounded-lg">
-                        <p className="text-xs text-muted-foreground mb-2">💡 Deux modes de paiement disponibles : carte bancaire (SumUp) ou PayPal.</p>
+                        <p className="text-xs text-muted-foreground mb-2">💡 Two payment methods available: credit card (SumUp) or PayPal.</p>
                         <p className="text-xs text-muted-foreground">
-                          Besoin d'aide ? Rejoignez notre{" "}
+                          Need help? Join our{" "}
                           <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-violet-tech hover:underline">Discord</a>
                         </p>
                       </div>
@@ -392,7 +392,7 @@ export default function Purchase() {
                   ) : (
                     <div className="text-center py-8">
                       <AlertCircle className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
-                      <p className="text-muted-foreground">Sélectionnez une option pour voir le récapitulatif</p>
+                      <p className="text-muted-foreground">Select an option to see the summary</p>
                     </div>
                   )}
                 </div>
