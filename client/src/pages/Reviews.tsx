@@ -1,6 +1,6 @@
 /*
  * Reviews — Neon Circuit Design
- * Avis clients, preuves vidéos, captures d'écran de l'interface
+ * Customer reviews, video proof, interface screenshots
  */
 import { motion } from "framer-motion";
 import { Star, Video, Image as ImageIcon, User, Calendar, Play } from "lucide-react";
@@ -32,117 +32,117 @@ const reviews: Review[] = [
   {
     id: "1",
     author: "Raïjan",
-    date: "27/02/2026",
+    date: "02/27/2026",
     rating: 5,
-    title: "Franchement félicitation bon boulot",
-    content: "Tu peux être fier de toi. Je vais parler autour de moi.",
+    title: "Honestly, congratulations, great job",
+    content: "You can be proud of yourself. I'll spread the word.",
     product: "FUSION AI",
     type: "text",
   },
   {
     id: "2",
-    author: "Joueur Apex",
-    date: "Mars 2026",
+    author: "Apex Player",
+    date: "March 2026",
     rating: 5,
-    title: "30 frags, 5383 dégâts - Performance incroyable",
-    content: "Les résultats parlent d'eux-mêmes. Avec FUSION AI, j'ai atteint des statistiques jamais vues auparavant. La précision et la réactivité sont exceptionnelles.",
+    title: "30 kills, 5383 damage - Incredible performance",
+    content: "The results speak for themselves. With FUSION AI, I've reached stats never seen before. Precision and responsiveness are exceptional.",
     product: "FUSION AI",
     type: "screenshot",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/rjKjyrtBmgFNrGGO.png",
   },
   {
     id: "3",
-    author: "Interface FUSION AI",
+    author: "FUSION AI Interface",
     date: "Dashboard",
     rating: 5,
-    title: "Interface Dashboard - Monitoring en temps réel",
-    content: "FPS: 262, Latence: 3.4ms. L'interface affiche tous les paramètres critiques pour optimiser votre gameplay en direct.",
+    title: "Dashboard Interface - Real-time monitoring",
+    content: "FPS: 262, Latency: 3.4ms. The interface displays all critical parameters to optimize your gameplay live.",
     product: "FUSION AI",
     type: "interface",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/hIzWjvHxAxYbjVmT.png",
   },
   {
     id: "4",
-    author: "Interface FUSION AI",
+    author: "FUSION AI Interface",
     date: "AI & Visuals",
     rating: 5,
-    title: "Onglet AI & Visuals - Réglages avancés",
-    content: "Contrôlez le modèle IA, la capture vidéo et les visuels. Options complètes pour personnaliser votre expérience.",
+    title: "AI & Visuals Tab - Advanced settings",
+    content: "Control the AI model, video capture, and visuals. Comprehensive options to customize your experience.",
     product: "FUSION AI",
     type: "interface",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/zPMKxwVyhEEnRpVX.png",
   },
   {
     id: "5",
-    author: "Vidéo de démonstration",
-    date: "Mars 2026",
+    author: "Demo Video",
+    date: "March 2026",
     rating: 5,
-    title: "Démonstration en direct - Gameplay optimisé",
-    content: "Regardez FUSION AI en action. Précision, réactivité et performance combinées pour une expérience gaming ultime.",
+    title: "Live Demonstration - Optimized gameplay",
+    content: "Watch FUSION AI in action. Precision, responsiveness, and performance combined for the ultimate gaming experience.",
     product: "FUSION AI",
     type: "video",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/bXUNXdhFynzBMoCS.mov",
   },
   {
     id: "6",
-    author: "Vidéo de démonstration",
-    date: "Mars 2026",
+    author: "Demo Video",
+    date: "March 2026",
     rating: 5,
-    title: "Gameplay en partie réelle",
-    content: "Vidéo complète d'une partie avec FUSION AI activé. Voyez la différence en direct.",
+    title: "Real Match Gameplay",
+    content: "Full video of a match with FUSION AI enabled. See the difference live.",
     product: "FUSION AI",
     type: "video",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/jXIjJuMPXIFZZfQm.mov",
   },
   {
     id: "7",
-    author: "Joueur Pro",
-    date: "Février 2026",
+    author: "Pro Player",
+    date: "February 2026",
     rating: 5,
-    title: "Windows Optimization - +60 FPS en gaming",
-    content: "Installation simple et rapide. Vraiment recommandé pour tous les gamers qui veulent optimiser leur PC.",
+    title: "Windows Optimization - +60 FPS in gaming",
+    content: "Quick and easy installation. Highly recommended for all gamers who want to optimize their PC.",
     product: "Windows Optimization",
     type: "text",
   },
   {
     id: "8",
     author: "CompetitivePlayer",
-    date: "Janvier 2026",
+    date: "January 2026",
     rating: 5,
-    title: "Jitter Script - Le meilleur du marché",
-    content: "J'ai testé plusieurs jitter aim, celui-ci est sans doute le meilleur. Très discret, très puissant, et l'interface est simple à utiliser.",
+    title: "Jitter Script - The best on the market",
+    content: "I've tested several jitter aims, this one is undoubtedly the best. Very discreet, very powerful, and the interface is simple to use.",
     product: "Jitter Script",
     type: "text",
   },
   {
     id: "9",
-    author: "Joueur Apex Pro",
-    date: "Février 2026",
+    author: "Apex Pro Player",
+    date: "February 2026",
     rating: 5,
-    title: "40 frags, 7000 dégâts - Résultats exceptionnels",
-    content: "Les performances avec FUSION AI sont incroyables. 40 frags et 7000 dégâts en une seule partie. C'est un game-changer pour les joueurs compétitifs.",
+    title: "40 kills, 7000 damage - Exceptional results",
+    content: "Performance with FUSION AI is incredible. 40 kills and 7000 damage in a single match. It's a game-changer for competitive players.",
     product: "FUSION AI",
     type: "screenshot",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/kwEGlfEOKMBFgRMz.png",
   },
   {
     id: "10",
-    author: "Vidéo de démonstration",
-    date: "Mars 2026",
+    author: "Demo Video",
+    date: "March 2026",
     rating: 5,
-    title: "Démonstration sans interaction manette",
-    content: "Vidéo complète montrant FUSION AI en action. Regardez bien - pas de mouvement de manette, juste la précision IA pure.",
+    title: "Demonstration without controller interaction",
+    content: "Full video showing FUSION AI in action. Watch closely - no controller movement, just pure AI precision.",
     product: "FUSION AI",
     type: "video",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/NcnRsNUsFldqktuZ.mp4",
   },
   {
     id: "11",
-    author: "Vidéo de démonstration",
-    date: "Mars 2026",
+    author: "Demo Video",
+    date: "March 2026",
     rating: 5,
-    title: "Gameplay complet avec FUSION AI",
-    content: "Vidéo d'une partie entière avec FUSION AI activé. Voyez la différence en direct et la stabilité du système.",
+    title: "Full Gameplay with FUSION AI",
+    content: "Video of an entire match with FUSION AI enabled. See the difference live and the system's stability.",
     product: "FUSION AI",
     type: "video",
     mediaUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/UqTqnNMsOONardRt.mov",
@@ -166,13 +166,13 @@ export default function Reviews() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Avis Clients
+              Customer Reviews
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              Ce que disent nos <span className="text-violet-tech neon-text">utilisateurs</span>
+              What our <span className="text-violet-tech neon-text">users</span> say
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Découvrez les témoignages, vidéos et preuves de nos clients satisfaits.
+              Discover testimonials, videos, and proof from our satisfied customers.
             </p>
           </motion.div>
         </div>
@@ -274,28 +274,6 @@ export default function Reviews() {
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {review.content}
                   </p>
-
-                  {/* Media Type Badge */}
-                  {review.mediaUrl && (
-                    <div className="flex items-center gap-2 mt-4 p-2 rounded-md bg-dark-elevated/50 border border-border/30">
-                      {review.type === "video" && (
-                        <>
-                          <Video className="w-4 h-4 text-violet-tech flex-shrink-0" />
-                          <span className="text-xs text-muted-foreground">
-                            Vidéo de preuve
-                          </span>
-                        </>
-                      )}
-                      {(review.type === "screenshot" || review.type === "interface") && (
-                        <>
-                          <ImageIcon className="w-4 h-4 text-violet-tech flex-shrink-0" />
-                          <span className="text-xs text-muted-foreground">
-                            {review.type === "interface" ? "Capture d'interface" : "Capture d'écran"}
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  )}
                 </div>
               </motion.div>
             ))}
@@ -303,83 +281,33 @@ export default function Reviews() {
         </div>
       </section>
 
-      {/* Media Lightbox Modal */}
+      {/* Media Modal */}
       {selectedMedia && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
-          onClick={() => setSelectedMedia(null)}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="relative w-full max-w-sm h-[80vh] flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm">
+          <div className="relative w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-lg shadow-2xl">
             <button
               onClick={() => setSelectedMedia(null)}
-              className="absolute -top-10 right-0 text-white hover:text-violet-tech transition-colors"
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition-colors"
             >
-              ✕ Fermer
+              <Play className="w-5 h-5 rotate-45" />
             </button>
-            {selectedMedia.endsWith('.mp4') || selectedMedia.endsWith('.mov') ? (
+            {selectedMedia.endsWith('.mov') || selectedMedia.endsWith('.mp4') ? (
               <video
                 src={selectedMedia}
+                className="w-full h-full max-h-[85vh] object-contain"
                 controls
                 autoPlay
-                className="w-full h-full object-contain rounded-lg shadow-2xl"
               />
             ) : (
               <img
                 src={selectedMedia}
-                alt="Media preview"
-                className="w-full h-full object-contain rounded-lg shadow-2xl"
+                alt="Review media"
+                className="w-full h-full max-h-[85vh] object-contain"
               />
             )}
-          </motion.div>
+          </div>
         </div>
       )}
-
-      {/* CTA Section */}
-      <section className="relative py-20 lg:py-28 border-t border-border/30">
-        <div className="absolute inset-0 bg-gradient-to-b from-violet-tech/5 to-transparent" />
-        <div className="relative container">
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="max-w-2xl mx-auto text-center"
-          >
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-              Prêt à rejoindre nos <span className="text-violet-tech neon-text">utilisateurs satisfaits</span> ?
-            </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Testez nos produits dès maintenant et découvrez la différence par vous-même.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <a href="/products">
-                <Button
-                  size="lg"
-                  className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow"
-                >
-                  Découvrir nos produits
-                </Button>
-              </a>
-              <a href="/trial">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider"
-                >
-                  Réserver un essai gratuit
-                </Button>
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 }

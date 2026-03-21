@@ -1,6 +1,6 @@
 /**
  * Compatibility — Neon Circuit Design
- * Contenu : GPU supportés, CPU recommandés, OS supportés, plateformes gaming
+ * Content: Supported GPUs, Recommended CPUs, Supported OS, Gaming Platforms
  */
 import { motion } from "framer-motion";
 import {
@@ -25,40 +25,40 @@ const fadeUp = {
 };
 
 const gpuData = [
-  { name: "RTX 3060", tier: "Mid Range", status: "compatible", note: "Fonctionnement stable, CPU solide requis" },
-  { name: "RTX 3070", tier: "Mid Range", status: "compatible", note: "Fonctionnement stable, CPU solide requis" },
-  { name: "RTX 4060", tier: "Mid Range", status: "compatible", note: "Fonctionnement stable" },
-  { name: "RTX 4070", tier: "High End", status: "recommended", note: "Recommandé — performances maximales" },
-  { name: "RTX 4080 / 4090", tier: "High End", status: "recommended", note: "Performances optimales" },
-  { name: "RTX 5060+", tier: "High End", status: "recommended", note: "Dernière génération — optimal" },
-  { name: "GTX 1660 et inf.", tier: "Low End", status: "incompatible", note: "Non compatible — GPU trop ancien" },
-  { name: "AMD Radeon", tier: "Varié", status: "incompatible", note: "Non compatible — NVIDIA uniquement" },
+  { name: "RTX 3060", tier: "Mid Range", status: "compatible", note: "Stable operation, solid CPU required" },
+  { name: "RTX 3070", tier: "Mid Range", status: "compatible", note: "Stable operation, solid CPU required" },
+  { name: "RTX 4060", tier: "Mid Range", status: "compatible", note: "Stable operation" },
+  { name: "RTX 4070", tier: "High End", status: "recommended", note: "Recommended — maximum performance" },
+  { name: "RTX 4080 / 4090", tier: "High End", status: "recommended", note: "Optimal performance" },
+  { name: "RTX 5060+", tier: "High End", status: "recommended", note: "Latest generation — optimal" },
+  { name: "GTX 1660 and below", tier: "Low End", status: "incompatible", note: "Not compatible — GPU too old" },
+  { name: "AMD Radeon", tier: "Various", status: "incompatible", note: "Not compatible — NVIDIA only" },
 ];
 
 const cpuData = [
-  { name: "Intel i5 13600K", tier: "Recommandé", status: "recommended" },
+  { name: "Intel i5 13600K", tier: "Recommended", status: "recommended" },
   { name: "Intel i7 13700K+", tier: "Optimal", status: "recommended" },
   { name: "AMD Ryzen 5 5600X", tier: "Compatible", status: "compatible" },
-  { name: "AMD Ryzen 7 5800X+", tier: "Recommandé", status: "recommended" },
+  { name: "AMD Ryzen 7 5800X+", tier: "Recommended", status: "recommended" },
   { name: "Intel i5 12400", tier: "Compatible", status: "compatible" },
-  { name: "Intel i3 / Ryzen 3", tier: "Non compatible", status: "incompatible" },
+  { name: "Intel i3 / Ryzen 3", tier: "Not compatible", status: "incompatible" },
 ];
 
 const osData = [
-  { name: "Windows 10 (22H2)", status: "recommended", note: "Recommandé — support complet" },
-  { name: "Windows 11 (23H2+)", status: "compatible", note: "Compatible — support complet" },
-  { name: "Windows 10 (anciennes versions)", status: "limited", note: "Mise à jour recommandée" },
-  { name: "macOS / Linux", status: "incompatible", note: "Non supporté" },
+  { name: "Windows 10 (22H2)", status: "recommended", note: "Recommended — full support" },
+  { name: "Windows 11 (23H2+)", status: "compatible", note: "Compatible — full support" },
+  { name: "Windows 10 (older versions)", status: "limited", note: "Update recommended" },
+  { name: "macOS / Linux", status: "incompatible", note: "Not supported" },
 ];
 
 const gamingPlatformsData = [
-  { name: "Steam", status: "recommended", note: "Disponible maintenant — support complet" },
-  { name: "Apex Legends", status: "recommended", note: "Disponible maintenant — support complet" },
-  { name: "Call of Duty", status: "recommended", note: "Disponible maintenant — support complet" },
-  { name: "Autres plateformes", status: "limited", note: "En cours de développement — bientôt disponibles" },
+  { name: "Steam", status: "recommended", note: "Available now — full support" },
+  { name: "Apex Legends", status: "recommended", note: "Available now — full support" },
+  { name: "Call of Duty", status: "recommended", note: "Available now — full support" },
+  { name: "Other platforms", status: "limited", note: "Under development — coming soon" },
 ];
 
-const aiAimbotNote = "La compatibilité des plateformes gaming est directement liée à l'AI Aimbot de FUSION AI. Les jeux listés ci-dessus sont actuellement supportés. D'autres seront ajoutés régulièrement.";
+const aiAimbotNote = "Gaming platform compatibility is directly linked to FUSION AI's AI Aimbot. The games listed above are currently supported. Others will be added regularly.";
 
 function StatusIcon({ status }: { status: string }) {
   switch (status) {
@@ -83,10 +83,10 @@ function StatusBadge({ status }: { status: string }) {
     incompatible: "bg-red-400/10 text-red-400 border-red-400/20",
   };
   const labels: Record<string, string> = {
-    recommended: "Recommandé",
+    recommended: "Recommended",
     compatible: "Compatible",
-    limited: "Limité",
-    incompatible: "Non supporté",
+    limited: "Limited",
+    incompatible: "Not supported",
   };
   return (
     <span
@@ -113,15 +113,15 @@ export default function Compatibility() {
               animate="visible"
             >
               <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-                Compatibilité
+                Compatibility
               </span>
               <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-                Votre PC est-il{" "}
-                <span className="text-violet-tech neon-text">prêt</span> ?
+                Is your PC{" "}
+                <span className="text-violet-tech neon-text">ready</span>?
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Vérifiez la compatibilité de votre matériel avec nos outils.
-                NVIDIA RTX recommandé pour des performances optimales.
+                Check your hardware compatibility with our tools.
+                NVIDIA RTX recommended for optimal performance.
               </p>
             </motion.div>
             <motion.div
@@ -132,7 +132,7 @@ export default function Compatibility() {
               className="hidden lg:block"
             >
               <div className="relative rounded-lg overflow-hidden neon-glow">
-                <img src={COMPAT_IMG} alt="Compatibilité matérielle" className="w-full h-auto rounded-lg" />
+                <img src={COMPAT_IMG} alt="Hardware Compatibility" className="w-full h-auto rounded-lg" />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-base/50 to-transparent" />
               </div>
             </motion.div>
@@ -157,9 +157,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                GPU supportés (AI Aimbot uniquement)
+                Supported GPUs (AI Aimbot only)
               </h2>
-              <p className="text-sm text-muted-foreground">NVIDIA RTX requis pour l'IA. Les autres outils fonctionnent sur tous les GPU.</p>
+              <p className="text-sm text-muted-foreground">NVIDIA RTX required for AI. Other tools work on all GPUs.</p>
             </div>
           </motion.div>
 
@@ -179,10 +179,10 @@ export default function Compatibility() {
                       GPU
                     </th>
                     <th className="text-left px-6 py-4 font-display text-xs font-semibold tracking-wider uppercase text-violet-accent">
-                      Catégorie
+                      Category
                     </th>
                     <th className="text-left px-6 py-4 font-display text-xs font-semibold tracking-wider uppercase text-violet-accent">
-                      Statut
+                      Status
                     </th>
                     <th className="text-left px-6 py-4 font-display text-xs font-semibold tracking-wider uppercase text-violet-accent hidden sm:table-cell">
                       Note
@@ -234,9 +234,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                CPU recommandés (AI Aimbot uniquement)
+                Recommended CPUs (AI Aimbot only)
               </h2>
-              <p className="text-sm text-muted-foreground">Recommandations pour le traitement IA. Les autres outils fonctionnent sur tous les CPU.</p>
+              <p className="text-sm text-muted-foreground">Recommendations for AI processing. Other tools work on all CPUs.</p>
             </div>
           </motion.div>
 
@@ -264,7 +264,6 @@ export default function Compatibility() {
 
       {/* Gaming Platforms Section */}
       <section className="py-16 lg:py-24 relative">
-        <div className="absolute inset-0 bg-dark-surface/20" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/15 to-transparent" />
         <div className="relative container">
           <motion.div
@@ -280,9 +279,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Compatibilité des jeux (AI Aimbot)
+                Game Compatibility (AI Aimbot)
               </h2>
-              <p className="text-sm text-muted-foreground">Plateformes supportées par FUSION AI</p>
+              <p className="text-sm text-muted-foreground">Platforms supported by FUSION AI</p>
             </div>
           </motion.div>
 
@@ -335,9 +334,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Systèmes d'exploitation
+                Operating Systems
               </h2>
-              <p className="text-sm text-muted-foreground">Windows uniquement</p>
+              <p className="text-sm text-muted-foreground">Windows only</p>
             </div>
           </motion.div>
 
@@ -362,8 +361,6 @@ export default function Compatibility() {
           </div>
         </div>
       </section>
-
-
     </div>
   );
 }

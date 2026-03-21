@@ -1,7 +1,7 @@
 /**
  * Products — Neon Circuit Design
- * Présentation détaillée : FUSION AI, Windows Optimization, Script Tools
- * Chaque produit : description, compatibilité, prix, bouton achat
+ * Detailed presentation: FUSION AI, Windows Optimization, Script Tools
+ * Each product: description, compatibility, price, buy button
  */
 import { motion } from "framer-motion";
 import { Link } from "wouter";
@@ -130,7 +130,7 @@ function ProductSection({
                   onClick={() => setExpanded(!expanded)}
                   className="flex items-center gap-1.5 text-xs text-violet-tech hover:text-violet-accent transition-colors mt-2"
                 >
-                  {expanded ? "Voir moins" : `+${features.length - 4} fonctionnalités`}
+                  {expanded ? "Show less" : `+${features.length - 4} features`}
                   <ChevronDown
                     className={`w-3 h-3 transition-transform ${expanded ? "rotate-180" : ""}`}
                   />
@@ -141,7 +141,7 @@ function ProductSection({
             {/* Compatibility */}
             <div className="glass-card rounded-lg p-5 mb-6">
               <h4 className="font-display text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-3">
-                Compatibilité
+                Compatibility
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 {compatibility.map((c) => (
@@ -177,7 +177,7 @@ function ProductSection({
                   className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
                 >
                   <Zap className="w-4 h-4" />
-                  ACHETER MAINTENANT
+                  BUY NOW
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -189,7 +189,7 @@ function ProductSection({
                     className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
                   >
                     <Gamepad2 className="w-4 h-4" />
-                    RÉSERVER UN ESSAI
+                    BOOK A TRIAL
                   </Button>
                 </Link>
               )}
@@ -216,15 +216,14 @@ export default function Products() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Nos Produits
+              Our Products
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              Outils de{" "}
-              <span className="text-violet-tech neon-text">performance</span>
+              Performance{" "}
+              <span className="text-violet-tech neon-text">Tools</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Découvrez nos trois solutions conçues pour transformer votre
-              expérience gaming et optimiser votre PC Windows.
+              Discover our three solutions designed to transform your gaming experience and optimize your Windows PC.
             </p>
           </motion.div>
         </div>
@@ -235,29 +234,29 @@ export default function Products() {
       <ProductSection
         id="fusion-ai"
         title="FUSION AI - V7 (BETA)"
-        subtitle="Traitement Visuel IA"
-        description="FUSION AI V7 est une solution 100% logicielle basée sur la vision par ordinateur et le traitement IA en temps réel. Avec la V7, découvrez le Panic Button (Mode Streamer), les Profile Keybinds pour changer de config en plein match, et des triggers 100% customizables. Les performances ne sont pas plafonnées — elles évoluent directement avec votre matériel. Aucun périphérique externe requis (PAS DE ZEN, PAS DE XIM, PAS DE TITAN, PAS DE DMA)."
+        subtitle="AI Visual Processing"
+        description="FUSION AI V7 is a 100% software solution based on computer vision and real-time AI processing. With V7, discover the Panic Button (Streamer Mode), Profile Keybinds to change config mid-match, and 100% customizable triggers. Performance is not capped — it evolves directly with your hardware. No external peripherals required (NO ZEN, NO XIM, NO TITAN, NO DMA)."
         image={AI_ENGINE}
         icon={Cpu}
         features={[
-          "Traitement visuel IA en temps réel",
-          "Panic Button (Mode Streamer) - 100% invisible",
-          "Profile Keybinds - Changez de config en plein match",
-          "Triggers Aimbot 100% Customizables",
-          "Nouvelle Interface (UI) moderne et fluide",
-          "Rework du Profile Manager",
-          "Compatible NVIDIA RTX uniquement",
-          "Mises à jour régulières incluses",
+          "Real-time AI visual processing",
+          "Panic Button (Streamer Mode) - 100% invisible",
+          "Profile Keybinds - Change config mid-match",
+          "100% Customizable Aimbot Triggers",
+          "New modern and fluid Interface (UI)",
+          "Profile Manager Rework",
+          "Compatible with NVIDIA RTX only",
+          "Regular updates included",
         ]}
         compatibility={[
-          { label: "GPU Mid Range", value: "RTX 3060 / 3070 / 4060" },
-          { label: "GPU High End", value: "RTX 4070 / 5060+" },
-          { label: "CPU recommandé", value: "i5 13600K / Ryzen 5 5600X" },
+          { label: "Mid Range GPU", value: "RTX 3060 / 3070 / 4060" },
+          { label: "High End GPU", value: "RTX 4070 / 5060+" },
+          { label: "Recommended CPU", value: "i5 13600K / Ryzen 5 5600X" },
           { label: "OS", value: "Windows 10 / 11" },
         ]}
         pricing={[
-          { label: "Licence + installation", price: "80 €", note: "1er mois inclus" },
-          { label: "Renouvellement", price: "30 €", note: "/ mois" },
+          { label: "License + installation", price: "80 €", note: "1st month included" },
+          { label: "Renewal", price: "30 €", note: "/ month" },
         ]}
         index={0}
       />
@@ -266,27 +265,27 @@ export default function Products() {
       <ProductSection
         id="windows-opt"
         title="Windows Optimization"
-        subtitle="Optimisation Système"
-        description="Optimisation avancée de Windows pour améliorer les performances gaming. Notre outil nettoie votre système, supprime les services inutiles et optimise la gestion de la RAM et du CPU pour un gain minimum de 40 à 60 FPS."
+        subtitle="System Optimization"
+        description="Advanced Windows optimization to improve gaming performance. Our tool cleans your system, removes unnecessary services, and optimizes RAM and CPU management for a minimum gain of 40 to 60 FPS."
         image={WINDOWS_OPT}
         icon={Monitor}
         features={[
-          "Nettoyage système complet",
-          "Suppression des services inutiles",
-          "Optimisation RAM",
-          "Optimisation CPU",
-          "Réduction de l'input lag",
-          "Configuration réseau optimisée",
+          "Complete system cleanup",
+          "Removal of unnecessary services",
+          "RAM optimization",
+          "CPU optimization",
+          "Input lag reduction",
+          "Optimized network configuration",
         ]}
         compatibility={[
           { label: "OS", value: "Windows 10 / 11" },
-          { label: "GPU / CPU", value: "Tous modèles" },
-          { label: "Gain minimum", value: "40-60 FPS" },
-          { label: "Plateforme", value: "PC uniquement" },
+          { label: "GPU / CPU", value: "All models" },
+          { label: "Minimum gain", value: "40-60 FPS" },
+          { label: "Platform", value: "PC only" },
         ]}
         pricing={[
-          { label: "Optimisation simple", price: "20 €" },
-          { label: "Optim. + réinstall. Windows", price: "40 €" },
+          { label: "Simple optimization", price: "20 €" },
+          { label: "Optim. + Windows reinstall", price: "40 €" },
         ]}
         reverse
         index={1}
@@ -296,33 +295,33 @@ export default function Products() {
       <ProductSection
         id="jitter-script"
         title="Jitter Script"
-        subtitle="Anti-Recul Apex Legends & Warzone"
-        description="Le meilleur script jitter Apex Legends et Warzone du marché. Conçu pour être indétectable par l'anti-cheat, il simule un mouvement de jitter aim pour contrer le recul de vos armes. Pas ou très peu de tremblements selon l'optique pour paraître légitime au possible, mais néanmoins très puissant pour vous permettre de détruire vos adversaires à plus de 150 mètres. Tirs précis à 600 mètres selon réglage (fortement déconseillé). Contrairement aux autres jitter aim du marché, il ne coupe pas l'aim assist. Parfait pour tous les FPS."
+        subtitle="Apex Legends & Warzone Anti-Recoil"
+        description="The best Apex Legends and Warzone jitter script on the market. Designed to be undetectable by anti-cheat, it simulates a jitter aim movement to counter your weapons' recoil. Little to no shaking depending on the optics to appear as legitimate as possible, yet very powerful to allow you to destroy your opponents at over 150 meters. Precise shots up to 600 meters depending on settings (strongly discouraged). Unlike other jitter aims on the market, it does not cut aim assist. Perfect for all FPS games."
         image={SCRIPT_TOOLS}
         icon={Gamepad2}
         features={[
-          "Indétectable par l'anti-cheat",
-          "Ne coupe pas l'aim assist",
-          "Fonction Humanizer intégrée",
-          "Réglable depuis l'interface du script",
-          "Manette uniquement (Xbox / PS)",
-          "Très peu de tremblements selon l'optique",
-          "Tirs précis jusqu'à 150m+ (600m selon réglage)",
+          "Undetectable by anti-cheat",
+          "Does not cut aim assist",
+          "Integrated Humanizer function",
+          "Adjustable from the script interface",
+          "Controller only (Xbox / PS)",
+          "Very little shaking depending on optics",
+          "Precise shots up to 150m+ (600m depending on settings)",
         ]}
         compatibility={[
           { label: "OS", value: "Windows 10 / 11" },
-          { label: "GPU / CPU", value: "Tous modèles" },
-          { label: "Type", value: "Abonnement" },
-          { label: "Plateforme", value: "PC — manette uniquement" },
+          { label: "GPU / CPU", value: "All models" },
+          { label: "Type", value: "Subscription" },
+          { label: "Platform", value: "PC — controller only" },
         ]}
         pricing={[
-          { label: "Essai 24h", price: "2,50 €" },
-          { label: "1 semaine", price: "5 €" },
-          { label: "1 mois", price: "15 €" },
-          { label: "3 mois", price: "20 €" },
-          { label: "6 mois", price: "25 €" },
-          { label: "1 an", price: "30 €" },
-          { label: "À vie", price: "40 €" },
+          { label: "24h Trial", price: "2.50 €" },
+          { label: "1 week", price: "5 €" },
+          { label: "1 month", price: "15 €" },
+          { label: "3 months", price: "20 €" },
+          { label: "6 months", price: "25 €" },
+          { label: "1 year", price: "30 €" },
+          { label: "Lifetime", price: "40 €" },
         ]}
         index={2}
       />

@@ -1,5 +1,5 @@
 /**
- * Documentation — Guides d'installation et tutoriels
+ * Documentation — Installation guides and tutorials
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -46,47 +46,47 @@ const documentation: DocSection[] = [
     icon: Zap,
     content: [
       {
-        title: "Pré-requis Matériels",
+        title: "Hardware Requirements",
         description:
-          "Pour utiliser FUSION AI, votre système doit répondre aux critères suivants :",
+          "To use FUSION AI, your system must meet the following criteria:",
         requirements: [
-          "GPU NVIDIA RTX (RTX 3060 minimum recommandé)",
-          "Windows 10 ou Windows 11 64-bit",
-          "8 GB de RAM minimum (16 GB recommandé)",
-          "SSD avec au moins 10 GB d'espace libre",
-          "Connexion Internet stable",
+          "NVIDIA RTX GPU (RTX 3060 minimum recommended)",
+          "Windows 10 or Windows 11 64-bit",
+          "8 GB RAM minimum (16 GB recommended)",
+          "SSD with at least 10 GB free space",
+          "Stable Internet connection",
         ],
       },
       {
         title: "Installation",
         description:
-          "Suivez ces étapes pour installer FUSION AI sur votre système :",
+          "Follow these steps to install FUSION AI on your system:",
         steps: [
-          "1. Effectuez votre achat sur le site OneScript",
-          "2. Vous recevrez un email de confirmation avec votre numéro de commande",
-          "3. Rejoignez notre serveur Discord : https://discord.gg/cU2kNQxxHu",
-          "4. Créez un ticket de support avec votre numéro de commande",
-          "5. Notre équipe vous enverra le lien de téléchargement et les instructions détaillées",
-          "6. Téléchargez et exécutez l'installateur",
-          "7. Suivez l'assistant d'installation",
-          "8. Lancez FUSION AI et connectez-vous avec vos identifiants",
+          "1. Complete your purchase on the OneScript website",
+          "2. You will receive a confirmation email with your order number",
+          "3. Join our Discord server: https://discord.gg/cU2kNQxxHu",
+          "4. Create a support ticket with your order number",
+          "5. Our team will send you the download link and detailed instructions",
+          "6. Download and run the installer",
+          "7. Follow the installation wizard",
+          "8. Launch FUSION AI and log in with your credentials",
         ],
         notes: [
-          "L'installation prend environ 15-30 minutes selon votre connexion Internet",
-          "Assurez-vous que votre antivirus ne bloque pas l'installation",
-          "Redémarrez votre PC après l'installation pour une meilleure performance",
+          "Installation takes about 15-30 minutes depending on your Internet connection",
+          "Ensure your antivirus does not block the installation",
+          "Restart your PC after installation for better performance",
         ],
       },
 
       {
-        title: "Dépannage",
-        description: "Si vous rencontrez des problèmes :",
+        title: "Troubleshooting",
+        description: "If you encounter any issues:",
         steps: [
-          "Vérifiez que votre GPU NVIDIA est à jour (Driver)",
-          "Assurez-vous que Windows Defender n'interfère pas",
-          "Vérifiez votre connexion Internet",
-          "Redémarrez votre PC et relancez FUSION AI",
-          "Si le problème persiste, créez un ticket Discord avec une description détaillée",
+          "Check that your NVIDIA GPU driver is up to date",
+          "Ensure Windows Defender is not interfering",
+          "Check your Internet connection",
+          "Restart your PC and relaunch FUSION AI",
+          "If the problem persists, create a Discord ticket with a detailed description",
         ],
       },
     ],
@@ -97,44 +97,44 @@ const documentation: DocSection[] = [
     icon: Monitor,
     content: [
       {
-        title: "À propos",
+        title: "About",
         description:
-          "Windows Optimization est un outil de nettoyage et d'optimisation système qui améliore les performances gaming.",
+          "Windows Optimization is a system cleanup and optimization tool that improves gaming performance.",
         requirements: [
-          "Windows 10 ou Windows 11 64-bit",
-          "2 GB de RAM minimum",
-          "Accès administrateur",
+          "Windows 10 or Windows 11 64-bit",
+          "2 GB RAM minimum",
+          "Administrator access",
         ],
       },
       {
-        title: "Fonctionnalités",
-        description: "Windows Optimization effectue les optimisations suivantes :",
+        title: "Features",
+        description: "Windows Optimization performs the following optimizations:",
         steps: [
-          "Nettoyage complet du système (fichiers temporaires, cache)",
-          "Suppression des services inutiles",
-          "Optimisation de la RAM et du CPU",
-          "Réduction de l'input lag",
-          "Amélioration de la stabilité du système",
+          "Complete system cleanup (temporary files, cache)",
+          "Removal of unnecessary services",
+          "RAM and CPU optimization",
+          "Input lag reduction",
+          "Improved system stability",
         ],
       },
       {
         title: "Installation",
-        description: "Installation simple et rapide :",
+        description: "Quick and easy installation:",
         steps: [
-          "1. Achetez Windows Optimization sur le site",
-          "2. Téléchargez l'exécutable depuis votre email de confirmation",
-          "3. Lancez l'installateur avec les droits administrateur",
-          "4. Suivez les étapes de l'assistant",
-          "5. Redémarrez votre PC pour appliquer les modifications",
+          "1. Purchase Windows Optimization on the site",
+          "2. Download the executable from your confirmation email",
+          "3. Launch the installer with administrator rights",
+          "4. Follow the wizard steps",
+          "5. Restart your PC to apply changes",
         ],
       },
       {
-        title: "Restauration",
-        description: "Si vous souhaitez restaurer votre système :",
+        title: "Restoration",
+        description: "If you wish to restore your system:",
         steps: [
-          "Windows Optimization crée automatiquement un point de restauration",
-          "Vous pouvez restaurer votre système via Panneau de Contrôle > Récupération",
-          "Contactez notre support Discord pour une assistance complète",
+          "Windows Optimization automatically creates a restore point",
+          "You can restore your system via Control Panel > Recovery",
+          "Contact our Discord support for full assistance",
         ],
       },
     ],
@@ -145,51 +145,51 @@ const documentation: DocSection[] = [
     icon: Gamepad2,
     content: [
       {
-        title: "À propos",
+        title: "About",
         description:
-          "Jitter Script est un script anti-recul pour manette qui améliore votre précision de tir.",
+          "Jitter Script is a controller anti-recoil script that improves your shooting accuracy.",
         requirements: [
-          "Manette Xbox ou PlayStation compatible",
-          "Windows 10 ou Windows 11",
-          "Logiciel de configuration manette (inclus)",
+          "Compatible Xbox or PlayStation controller",
+          "Windows 10 or Windows 11",
+          "Controller configuration software (included)",
         ],
       },
       {
-        title: "Caractéristiques",
-        description: "Jitter Script offre :",
+        title: "Features",
+        description: "Jitter Script offers:",
         steps: [
-          "✅ Anti-recul efficace et indétectable",
-          "✅ Compatible avec tous les jeux supportés",
-          "✅ Ne désactive pas l'aim assist",
-          "✅ Fonction Humanizer intégrée",
-          "✅ Interface de configuration intuitive",
-          "✅ Manette uniquement (pas de clavier/souris)",
+          "✅ Effective and undetectable anti-recoil",
+          "✅ Compatible with all supported games",
+          "✅ Does not disable aim assist",
+          "✅ Integrated Humanizer function",
+          "✅ Intuitive configuration interface",
+          "✅ Controller only (no keyboard/mouse)",
         ],
       },
       {
         title: "Configuration",
-        description: "Configurez Jitter Script en quelques étapes :",
+        description: "Configure Jitter Script in a few steps:",
         steps: [
-          "1. Lancez l'application Jitter Script",
-          "2. Connectez votre manette",
-          "3. Accédez à l'onglet 'Configuration'",
-          "4. Ajustez l'intensité du jitter selon vos préférences",
-          "5. Testez dans un jeu pour trouver le réglage idéal",
-          "6. Sauvegardez votre profil",
+          "1. Launch the Jitter Script application",
+          "2. Connect your controller",
+          "3. Go to the 'Configuration' tab",
+          "4. Adjust jitter intensity according to your preferences",
+          "5. Test in-game to find the ideal setting",
+          "6. Save your profile",
         ],
         notes: [
-          "Commencez avec une intensité faible et augmentez progressivement",
-          "Différents jeux peuvent nécessiter des réglages différents",
-          "Utilisez la fonction 'Humanizer' pour plus de naturel",
+          "Start with low intensity and increase gradually",
+          "Different games may require different settings",
+          "Use the 'Humanizer' function for a more natural feel",
         ],
       },
       {
-        title: "Compatibilité Manettes",
-        description: "Jitter Script est compatible avec :",
+        title: "Controller Compatibility",
+        description: "Jitter Script is compatible with:",
         requirements: [
           "✅ Xbox One / Xbox Series X|S",
           "✅ PlayStation 4 / PlayStation 5",
-          "✅ Manettes compatibles DirectInput",
+          "✅ DirectInput compatible controllers",
         ],
       },
     ],
@@ -200,7 +200,7 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const Icon = section.icon;
 
-  // Ajouter un attribut data pour permettre le scroll vers la section
+  // Add a data attribute to allow scrolling to the section
   const sectionRef = React.useRef<HTMLDivElement>(null);
 
   return (
@@ -215,7 +215,7 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
       className="mb-8"
     >
       <div className="bg-slate-900/50 border border-purple-500/20 rounded-lg overflow-hidden">
-        {/* En-tête de section */}
+        {/* Section Header */}
         <div className="p-6 border-b border-purple-500/10">
           <div className="flex items-center gap-3">
             <Icon className="w-6 h-6 text-purple-400" />
@@ -223,7 +223,7 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
           </div>
         </div>
 
-        {/* Contenu */}
+        {/* Content */}
         <div className="divide-y divide-purple-500/10">
           {section.content.map((item, itemIndex) => (
             <div key={itemIndex}>
@@ -252,7 +252,7 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
                   {item.requirements && (
                     <div className="mb-4">
                       <h4 className="font-semibold text-gray-200 mb-2">
-                        Pré-requis :
+                        Requirements:
                       </h4>
                       <ul className="space-y-1">
                         {item.requirements.map((req, i) => (
@@ -271,7 +271,7 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
                   {item.steps && (
                     <div className="mb-4">
                       <h4 className="font-semibold text-gray-200 mb-2">
-                        Étapes :
+                        Steps:
                       </h4>
                       <ol className="space-y-2">
                         {item.steps.map((step, i) => (
@@ -291,7 +291,7 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
 
                   {item.notes && (
                     <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded text-sm text-blue-200">
-                      <p className="font-semibold mb-1">💡 Notes :</p>
+                      <h4 className="font-semibold mb-1">Notes:</h4>
                       <ul className="space-y-1">
                         {item.notes.map((note, i) => (
                           <li key={i}>• {note}</li>
@@ -310,194 +310,99 @@ function DocumentationSection({ section, index }: { section: DocSection; index: 
 }
 
 export default function Documentation() {
-
-
-  const quickGuides = [
-    {
-      id: "getting-started",
-      title: "Guide de démarrage",
-      description: "Installation et première configuration de vos outils OneScript",
-      icon: Download,
-      section: "fusion-ai",
-      subsection: "Installation",
-    },
-    {
-      id: "advanced-opt",
-      title: "Optimisation avancée",
-      description: "Tutoriels pour tirer le maximum de votre configuration",
-      icon: TrendingUp,
-      section: "windows-opt",
-      subsection: "Fonctionnalités",
-    },
-    {
-      id: "troubleshooting",
-      title: "Résolution de problèmes",
-      description: "Solutions aux problèmes courants et FAQ technique",
-      icon: Shield,
-      section: "fusion-ai",
-      subsection: "Dépannage",
-    },
-    {
-      id: "changelog",
-      title: "Changelog & Mises à jour",
-      description: "Historique des versions et nouvelles fonctionnalités",
-      icon: Clock,
-      section: "changelog",
-      subsection: "Dernières versions",
-    },
-  ];
+  const scrollToSection = (id: string) => {
+    const element = document.querySelector(`[data-section="${id}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pt-32 pb-20">
-      {/* Fond animé */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4">
-        {/* En-tête */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Book className="w-8 h-8 text-purple-500" />
-            <h1 className="text-4xl font-bold text-white">Documentation</h1>
-            <Book className="w-8 h-8 text-purple-500" />
-          </div>
-          <p className="text-gray-300 text-lg">
-            Guides d'installation et tutoriels pour tous nos produits
-          </p>
-        </motion.div>
-
-        {/* Guides de démarrage rapide */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <h2 className="text-2xl font-bold text-white mb-8 text-center">Guides de Démarrage Rapide</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {quickGuides.map((guide) => {
-              const GuideIcon = guide.icon;
-              return (
-                <motion.a
-                  key={guide.id}
-                  href={`#${guide.section}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    // Scroll to section
-                    const element = document.querySelector(`[data-section="${guide.section}"]`);
-                    if (element) {
-                      element.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
-                  className="group p-6 bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-lg hover:border-purple-500/50 transition cursor-pointer"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="flex items-start gap-4">
-                    <GuideIcon className="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-white group-hover:text-purple-300 transition">
-                        {guide.title}
-                      </h3>
-                      <p className="text-sm text-gray-400 mt-1">{guide.description}</p>
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-purple-400 flex-shrink-0 group-hover:translate-x-1 transition" />
-                  </div>
-                </motion.a>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Sections de documentation */}
-        <div id="fusion-ai" />
-        <div id="windows-opt" />
-        <div id="jitter-script" />
-        {documentation.map((section, index) => (
-          <DocumentationSection key={section.id} section={section} index={index} />
-        ))}
-
-        {/* Section Changelog */}
-        <motion.div
-          custom={documentation.length}
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mb-8"
-        >
-          <div className="bg-slate-900/50 border border-purple-500/20 rounded-lg overflow-hidden">
-            <div className="p-6 border-b border-purple-500/10">
-              <div className="flex items-center gap-3">
-                <Clock className="w-6 h-6 text-purple-400" />
-                <h2 className="text-2xl font-bold text-white">Changelog & Mises à jour</h2>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                <div className="pb-4 border-b border-purple-500/10">
-                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V7 (BETA) - HOTFIX - Version actuelle</h3>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>✅ Panic Button (Streamer Mode) - 100% invisible</li>
-                    <li>✅ Profile Keybinds - Changez de config en plein match</li>
-                    <li>✅ Triggers Aimbot 100% Customizables</li>
-                    <li>✅ Nouvelle Interface (UI) moderne et fluide</li>
-                    <li>✅ Rework du Profile Manager</li>
-                    <li>✅ Panic Button fixé - Fonctionne sur TOUS les PC</li>
-                    <li>✅ Sauvegarde Confidence fixée</li>
-                    <li>✅ Fenêtre Debug IA fixée (TopMost)</li>
-                  </ul>
-                </div>
-                <div className="pb-4 border-b border-purple-500/10">
-                  <h3 className="text-lg font-semibold text-white mb-2">FUSION AI V6 - Ancienne version</h3>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>✅ Traitement visuel IA en temps réel</li>
-                    <li>✅ Support Steam, Apex Legends, Call of Duty</li>
-                    <li>✅ Optimisations GPU avancées</li>
-                  </ul>
-                </div>
-                <div className="pb-4 border-b border-purple-500/10">
-                  <h3 className="text-lg font-semibold text-white mb-2">Jitter Script V14 - Mars 2026</h3>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>✅ Critical bug fixed - Window crash issue fully resolved</li>
-                    <li>✅ PlayStation Controller Support - Full gamepad support enabled</li>
-                    <li>✅ Interface redesigned - Better readability and smoother navigation</li>
-                    <li>✅ Performance Optimizations - Bind latency up to 9x faster</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Support */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-12 p-6 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-lg text-center"
-        >
-          <Shield className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-          <h3 className="text-xl font-bold text-white mb-2">
-            Besoin d'aide supplémentaire ?
-          </h3>
-          <p className="text-gray-300 mb-4">
-            Rejoignez notre serveur Discord pour obtenir une assistance en temps réel.
-          </p>
-          <a
-            href="https://discord.gg/cU2kNQxxHu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition"
+    <div className="min-h-screen bg-dark-base">
+      {/* Header */}
+      <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20">
+        <div className="absolute inset-0 bg-dark-surface/30" />
+        <div className="relative container">
+          <motion.div
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            className="max-w-2xl"
           >
-            Rejoindre Discord
-          </a>
-        </motion.div>
+            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
+              Documentation
+            </span>
+            <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
+              Guides & <span className="text-violet-tech neon-text">Tutorials</span>
+            </h1>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Everything you need to know to install and configure our tools.
+              Follow our step-by-step guides for optimal performance.
+            </p>
+          </motion.div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
+      </section>
+
+      <div className="container py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sidebar Navigation */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-4">
+              <div className="glass-card rounded-lg p-4">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <Book className="w-4 h-4 text-purple-400" />
+                  Navigation
+                </h3>
+                <nav className="space-y-1">
+                  {documentation.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => scrollToSection(section.id)}
+                      className="w-full flex items-center justify-between px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-purple-500/10 rounded-md transition group"
+                    >
+                      <span className="flex items-center gap-2">
+                        <section.icon className="w-4 h-4" />
+                        {section.title}
+                      </span>
+                      <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="glass-card rounded-lg p-4 bg-purple-500/5 border-purple-500/20">
+                <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-purple-400" />
+                  Need Help?
+                </h4>
+                <p className="text-xs text-gray-400 mb-4">
+                  Our support team is available on Discord to assist you with installation.
+                </p>
+                <a
+                  href="https://discord.gg/cU2kNQxxHu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-2 text-center text-xs font-bold text-white bg-purple-600 hover:bg-purple-700 rounded transition"
+                >
+                  Join Discord
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+            {documentation.map((section, index) => (
+              <DocumentationSection
+                key={section.id}
+                section={section}
+                index={index}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
