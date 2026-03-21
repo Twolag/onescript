@@ -1,6 +1,6 @@
 /**
  * Support — Neon Circuit Design
- * Sections : FAQ, Système de tickets (Formspree), Documentation
+ * Sections: FAQ, Ticket System (Formspree), Documentation
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -30,57 +30,57 @@ const fadeUp = {
 
 const faqItems = [
   {
-    q: "Comment installer FUSION AI ?",
-    a: "Une fois votre commande passée, vous recevrez un numéro de commande unique par email. Vous devrez ensuite rejoindre notre serveur Discord (https://discord.gg/cU2kNQxxHu) et ouvrir un ticket en indiquant ce numéro. Notre équipe organisera alors l'installation avec vous sous un délai maximum de 24 heures. Le processus d'installation prend environ 15-30 minutes.",
+    q: "How do I install FUSION AI?",
+    a: "Once your order is placed, you will receive a unique order number by email. You will then need to join our Discord server (https://discord.gg/cU2kNQxxHu) and open a ticket with this number. Our team will then organize the installation with you within a maximum of 24 hours. The installation process takes about 15-30 minutes.",
   },
   {
-    q: "Quels GPU sont compatibles ?",
-    a: "Nous recommandons les GPU NVIDIA RTX 3060 et supérieur pour des performances optimales. Les RTX 4070 et RTX 5060+ offrent les meilleurs résultats. Consultez notre page Compatibilité pour plus de détails.",
+    q: "Which GPUs are compatible?",
+    a: "We recommend NVIDIA RTX 3060 GPUs and above for optimal performance. RTX 4070 and RTX 5060+ offer the best results. Check our Compatibility page for more details.",
   },
   {
-    q: "L'abonnement est-il obligatoire pour FUSION AI ?",
-    a: "L'abonnement mensuel de 30 €/mois inclut les mises à jour régulières et le support technique. La licence initiale de 80 € est un paiement unique pour l'installation et la configuration.",
+    q: "Is a subscription required for FUSION AI?",
+    a: "The monthly subscription of €30/month includes regular updates and technical support. The initial €80 license is a one-time payment for installation and configuration.",
   },
   {
-    q: "Quel gain de FPS puis-je espérer ?",
-    a: "Le gain minimum constaté est de 40 à 60 FPS, selon votre configuration matérielle. Les configurations High End (RTX 4070+) obtiennent généralement les meilleurs résultats.",
+    q: "What FPS gain can I expect?",
+    a: "The minimum observed gain is 40 to 60 FPS, depending on your hardware configuration. High-end setups (RTX 4070+) generally get the best results.",
   },
   {
-    q: "Windows Optimization est-il sûr pour mon PC ?",
-    a: "Oui, toutes nos optimisations sont réversibles et testées sur des centaines de configurations. Nous ne modifions que les paramètres non essentiels et créons un point de restauration avant chaque intervention.",
+    q: "Is Windows Optimization safe for my PC?",
+    a: "Yes, all our optimizations are reversible and tested on hundreds of configurations. We only modify non-essential settings and create a restore point before each intervention.",
   },
   {
-    q: "Puis-je obtenir un remboursement ?",
-    a: "Nous offrons un remboursement sous 14 jours si vous n'êtes pas satisfait. Contactez notre support via le système de tickets pour initier la procédure.",
+    q: "Can I get a refund?",
+    a: "We offer a refund within 14 days if you are not satisfied. Contact our support via the ticket system to initiate the procedure.",
   },
   {
-    q: "Comment fonctionne le support technique ?",
-    a: "Notre support est disponible via le système de tickets ci-dessous. Nous répondons généralement sous 24h. Pour les abonnés FUSION AI, le support est prioritaire.",
+    q: "How does technical support work?",
+    a: "Our support is available via the ticket system below. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",
   },
 ];
 
 const docs = [
   {
-    title: "Guide de démarrage",
-    desc: "Installation et première configuration de vos outils OneScript.",
+    title: "Getting Started Guide",
+    desc: "Installation and first configuration of your OneScript tools.",
     icon: BookOpen,
     href: "/documentation#fusion-ai-installation",
   },
   {
-    title: "Optimisation avancée",
-    desc: "Tutoriels pour tirer le maximum de votre configuration.",
+    title: "Advanced Optimization",
+    desc: "Tutorials to get the most out of your setup.",
     icon: BookOpen,
     href: "/documentation#windows-opt-features",
   },
   {
-    title: "Résolution de problèmes",
-    desc: "Solutions aux problèmes courants et FAQ technique.",
+    title: "Troubleshooting",
+    desc: "Solutions to common problems and technical FAQ.",
     icon: BookOpen,
     href: "/documentation#fusion-ai-troubleshooting",
   },
   {
-    title: "Changelog & mises à jour",
-    desc: "Historique des versions et nouvelles fonctionnalités.",
+    title: "Changelog & Updates",
+    desc: "Version history and new features.",
     icon: BookOpen,
     href: "/documentation#changelog",
   },
@@ -150,18 +150,18 @@ export default function Support() {
 
       if (response.ok) {
         setSubmitStatus("success");
-        toast.success("Ticket envoyé avec succès !", {
-          description: `Sujet : ${ticketForm.subject} — Nous vous répondrons sous 24h.`,
+        toast.success("Ticket sent successfully!", {
+          description: `Subject: ${ticketForm.subject} — We will respond within 24h.`,
         });
         setTicketForm({ name: "", email: "", subject: "", message: "" });
       } else {
         const data = await response.json();
-        throw new Error(data?.error ?? "Erreur lors de l'envoi");
+        throw new Error(data?.error ?? "Error while sending");
       }
     } catch (err: unknown) {
       setSubmitStatus("error");
-      const message = err instanceof Error ? err.message : "Erreur inconnue";
-      toast.error("Échec de l'envoi du ticket", {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast.error("Failed to send ticket", {
         description: message,
       });
     } finally {
@@ -186,12 +186,12 @@ export default function Support() {
               Support
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              Comment pouvons-nous{" "}
-              <span className="text-violet-tech neon-text">vous aider</span> ?
+              How can we{" "}
+              <span className="text-violet-tech neon-text">help you</span>?
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              FAQ, système de tickets et documentation complète. Notre équipe
-              est disponible pour vous accompagner.
+              FAQ, ticket system, and full documentation. Our team
+              is available to assist you.
             </p>
           </motion.div>
         </div>
@@ -214,10 +214,10 @@ export default function Support() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Questions fréquentes
+                Frequently Asked Questions
               </h2>
               <p className="text-sm text-muted-foreground">
-                Les réponses aux questions les plus posées
+                Answers to the most common questions
               </p>
             </div>
           </motion.div>
@@ -250,16 +250,16 @@ export default function Support() {
                   </div>
                   <div>
                     <h2 className="font-display font-bold text-2xl tracking-tight">
-                      Créer un ticket
+                      Create a Ticket
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Réponse sous 24h
+                      Response within 24h
                     </p>
                   </div>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  Décrivez votre problème ou votre question et notre équipe
-                  technique vous répondra dans les plus brefs délais.
+                  Describe your issue or question and our technical team
+                  will respond as soon as possible.
                 </p>
                 <div className="glass-card rounded-lg p-5">
                   <div className="flex items-center gap-3 mb-3">
@@ -269,7 +269,7 @@ export default function Support() {
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Vous pouvez aussi nous contacter directement par email.
+                    You can also contact us directly by email.
                   </p>
                 </div>
               </motion.div>
@@ -283,34 +283,41 @@ export default function Support() {
               viewport={{ once: true, margin: "-80px" }}
               className="lg:col-span-3"
             >
-              {/* Bannière de succès */}
+              {/* Success Banner */}
               {submitStatus === "success" && (
-                <div className="flex items-center gap-3 mb-5 p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                  <p className="text-sm font-medium">
-                    Votre ticket a bien été envoyé ! Nous vous répondrons sous 24h.
-                  </p>
-                </div>
-              )}
-
-              {/* Bannière d'erreur */}
-              {submitStatus === "error" && (
-                <div className="flex items-center gap-3 mb-5 p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400">
-                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                  <p className="text-sm font-medium">
-                    Une erreur est survenue. Veuillez réessayer ou nous contacter par email.
-                  </p>
-                </div>
-              )}
-
-              <form
-                onSubmit={handleSubmit}
-                className="glass-card rounded-lg p-6 lg:p-8"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
-                      Nom
+                    <h4 className="text-sm font-bold text-green-400 mb-1">
+                      Ticket sent successfully!
+                    </h4>
+                    <p className="text-xs text-green-400/80">
+                      Thank you for your message. Our team will respond within 24 hours.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Banner */}
+              {submitStatus === "error" && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-red-400 mb-1">
+                      Failed to send ticket
+                    </h4>
+                    <p className="text-xs text-red-400/80">
+                      An error occurred. Please try again or contact us by email.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      Name
                     </label>
                     <input
                       type="text"
@@ -319,12 +326,12 @@ export default function Support() {
                       onChange={(e) =>
                         setTicketForm({ ...ticketForm, name: e.target.value })
                       }
-                      className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
-                      placeholder="Votre nom"
+                      className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors"
+                      placeholder="Your name"
                     />
                   </div>
-                  <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                       Email
                     </label>
                     <input
@@ -334,14 +341,14 @@ export default function Support() {
                       onChange={(e) =>
                         setTicketForm({ ...ticketForm, email: e.target.value })
                       }
-                      className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
-                      placeholder="votre@email.com"
+                      className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors"
+                      placeholder="your@email.com"
                     />
                   </div>
                 </div>
-                <div className="mb-4">
-                  <label className="block text-xs font-medium text-muted-foreground mb-1.5">
-                    Sujet
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Subject
                   </label>
                   <input
                     type="text"
@@ -350,12 +357,12 @@ export default function Support() {
                     onChange={(e) =>
                       setTicketForm({ ...ticketForm, subject: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none"
-                    placeholder="Sujet de votre demande"
+                    className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors"
+                    placeholder="Subject of your request"
                   />
                 </div>
-                <div className="mb-6">
-                  <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     Message
                   </label>
                   <textarea
@@ -365,24 +372,21 @@ export default function Support() {
                     onChange={(e) =>
                       setTicketForm({ ...ticketForm, message: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none resize-none"
-                    placeholder="Décrivez votre problème ou votre question..."
+                    className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors resize-none"
+                    placeholder="Describe your problem in detail..."
                   />
                 </div>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20"
                 >
                   {isSubmitting ? (
-                    <>
-                      <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                      ENVOI EN COURS...
-                    </>
+                    "Sending..."
                   ) : (
                     <>
-                      <Send className="w-4 h-4" />
-                      ENVOYER LE TICKET
+                      <Send className="w-4 h-4 mr-2" />
+                      Send Ticket
                     </>
                   )}
                 </Button>
@@ -392,7 +396,7 @@ export default function Support() {
         </div>
       </section>
 
-      {/* Documentation */}
+      {/* Documentation Links */}
       <section className="py-16 lg:py-24">
         <div className="container">
           <motion.div
@@ -401,39 +405,36 @@ export default function Support() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
-            className="flex items-center gap-3 mb-10"
+            className="text-center max-w-2xl mx-auto mb-12"
           >
-            <div className="w-10 h-10 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
-              <BookOpen className="w-5 h-5 text-violet-tech" />
-            </div>
-            <div>
-              <h2 className="font-display font-bold text-2xl tracking-tight">
-                Documentation
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                Guides et tutoriels
-              </p>
-            </div>
+            <h2 className="font-display font-bold text-3xl tracking-tight mb-4">
+              Need more info?
+            </h2>
+            <p className="text-muted-foreground">
+              Consult our documentation for detailed guides on each tool.
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {docs.map((doc, i) => (
-              <motion.div
-                key={doc.title}
+              <motion.a
+                key={i}
+                href={doc.href}
                 custom={i}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="glass-card rounded-lg p-6 hover:border-violet-tech/30 transition-colors duration-300 cursor-pointer group"
-                onClick={() => window.location.href = doc.href}
+                className="glass-card rounded-lg p-6 hover:border-violet-tech/50 transition-all group"
               >
-                <doc.icon className="w-5 h-5 text-violet-tech mb-3" />
-                <h4 className="font-display font-semibold text-sm tracking-wide mb-1 group-hover:text-violet-tech transition-colors">
-                  {doc.title}
-                </h4>
-                <p className="text-xs text-muted-foreground">{doc.desc}</p>
-              </motion.div>
+                <div className="w-10 h-10 rounded-md bg-violet-tech/10 flex items-center justify-center mb-4 group-hover:bg-violet-tech/20 transition-colors">
+                  <doc.icon className="w-5 h-5 text-violet-tech" />
+                </div>
+                <h4 className="font-bold text-foreground mb-2">{doc.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {doc.desc}
+                </p>
+              </motion.a>
             ))}
           </div>
         </div>
