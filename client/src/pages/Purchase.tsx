@@ -71,9 +71,9 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "Essai 24h", price: 1 },
+      { label: "Essai 24h", price: 2.50 },
       { label: "1 semaine", price: 5 },
-      { label: "1 mois", price: 15 },
+      { label: "1 mois", price: 2.505 },
       { label: "3 mois", price: 20 },
       { label: "6 mois", price: 25 },
       { label: "1 an", price: 30 },
