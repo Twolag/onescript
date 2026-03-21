@@ -54,7 +54,7 @@ const products: Product[] = [
     icon: Cpu,
     options: [
       { label: "Licence + Installation", price: 80, description: "Premier mois + installation de l'AI Aimbot inclus" },
-      { label: "Abonnement mensuel", price: 30, note: "/ mois", description: "Renouvellement mensuel uniquement" },
+      { label: "Abonnement mensuel", price: 30, note: "/ mois", description: "Ce prix est uniquement pour ceux qui possèdent déjà le AI Aimbot et qui veulent renouveler leur licence." },
     ],
   },
   {
