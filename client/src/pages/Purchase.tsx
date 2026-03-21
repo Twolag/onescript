@@ -135,14 +135,9 @@ export default function Purchase() {
 
   const handleSumUpPayment = () => {
     if (!orderCreated) return;
-    const key = `${product.id}-${orderCreated.optionIndex}`;
-    const link = SUMUP_LINKS[key];
-    if (link) {
-      sendEmails(orderCreated, "sumup");
-      window.location.href = link;
-    } else {
-      toast.error("Lien de paiement indisponible, contactez le support.");
-    }
+    // Redirection directe vers le lien de paiement SumUp fourni par l'utilisateur
+    sendEmails(orderCreated, "sumup");
+    window.location.href = "https://pay.sumup.com/b2c/QLA8WDDD";
   };
 
   const handlePayPalPayment = () => {
