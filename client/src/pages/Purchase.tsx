@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
-const DISCORD_LINK = "https://discord.gg/cU2kNQxxHu";
+const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
 
 // SumUp links by product/option (key = "productId-index")
 const SUMUP_LINKS: { [key: string]: string } = {

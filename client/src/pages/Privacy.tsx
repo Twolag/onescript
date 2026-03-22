@@ -220,7 +220,7 @@ export default function Privacy() {
             <p>
               <strong className="text-gray-200">Discord :</strong>{" "}
               <a
-                href="https://discord.gg/cU2kNQxxHu"
+                href="https://discord.gg/XV9PhqbA4r"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-400 hover:text-purple-300"

@@ -31,7 +31,7 @@ const fadeUp = {
 const faqItems = [
   {
     q: "How do I install FUSION AI?",
-    a: "Once your order is placed, you will receive a unique order number by email. You will then need to join our Discord server (https://discord.gg/cU2kNQxxHu) and open a ticket with this number. Our team will then organize the installation with you within a maximum of 24 hours. The installation process takes about 15-30 minutes.",
+    a: "Once your order is placed, you will receive a unique order number by email. You will then need to join our Discord server (https://discord.gg/XV9PhqbA4r) and open a ticket with this number. Our team will then organize the installation with you within a maximum of 24 hours. The installation process takes about 15-30 minutes.",
   },
   {
     q: "Which GPUs are compatible?",

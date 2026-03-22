@@ -64,7 +64,7 @@ const documentation: DocSection[] = [
         steps: [
           "1. Complete your purchase on the OneScript website",
           "2. You will receive a confirmation email with your order number",
-          "3. Join our Discord server: https://discord.gg/cU2kNQxxHu",
+          "3. Join our Discord server: https://discord.gg/XV9PhqbA4r",
           "4. Create a support ticket with your order number",
           "5. Our team will send you the download link and detailed instructions",
           "6. Download and run the installer",
@@ -381,7 +381,7 @@ export default function Documentation() {
                   Our support team is available on Discord to assist you with installation.
                 </p>
                 <a
-                  href="https://discord.gg/cU2kNQxxHu"
+                  href="https://discord.gg/XV9PhqbA4r"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full py-2 text-center text-xs font-bold text-white bg-purple-600 hover:bg-purple-700 rounded transition"

@@ -99,7 +99,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </ol>
             </div>
             <div style="text-align:center;margin-bottom:32px;">
-              <a href="https://discord.gg/cU2kNQxxHu" style="display:inline-block;background-color:#5865F2;color:#fff;font-weight:800;font-size:15px;text-decoration:none;padding:14px 36px;border-radius:8px;">Rejoindre le Discord →</a>
+              <a href="https://discord.gg/XV9PhqbA4r" style="display:inline-block;background-color:#5865F2;color:#fff;font-weight:800;font-size:15px;text-decoration:none;padding:14px 36px;border-radius:8px;">Rejoindre le Discord →</a>
             </div>
             <p style="margin:0;color:#666;font-size:14px;line-height:1.6;">Des questions ? Réponds à cet email.<br>— L'équipe OneScript</p>
           </td>
