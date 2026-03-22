@@ -10,7 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { orderNumber, customerName, email, discordPseudo, productName, optionLabel, price, paymentMethod } = req.body;
+    const { orderNumber, customerName, email, discordPseudo, productName, optionLabel, price, paymentMethod, cpu, gpu, os } = req.body;
 
     if (!process.env.DISCORD_WEBHOOK_URL) {
       return res.status(500).json({ error: 'DISCORD_WEBHOOK_URL not configured' });
@@ -18,29 +18,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const BASE_URL = process.env.BASE_URL || 'https://onescript.fr';
 
-    // Lien de confirmation (clic = envoie l'email au client)
-    const confirmUrl = `${BASE_URL}/api/confirm-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)}`;
+    // Confirmation link (click = sends email to customer)
+    const confirmUrl = `${BASE_URL}/api/confirm-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)}&cpu=${encodeURIComponent(cpu)}&gpu=${encodeURIComponent(gpu)}&os=${encodeURIComponent(os)}`;
 
     const result = await fetch(process.env.DISCORD_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         embeds: [{
-          title: '🛒 Nouvelle commande en attente',
+          title: '🛒 New Order Pending',
           color: 0xc8ff00,
           fields: [
-            { name: 'N° commande', value: `\`${orderNumber}\``, inline: false },
-            { name: '👤 Client', value: customerName, inline: true },
+            { name: 'Order N°', value: `\`${orderNumber}\``, inline: false },
+            { name: '👤 Customer', value: customerName, inline: true },
             { name: '📧 Email', value: email, inline: true },
             { name: '💬 Discord', value: discordPseudo, inline: true },
-            { name: '🎮 Produit', value: productName, inline: true },
+            { name: '🎮 Product', value: productName, inline: true },
             { name: '📦 Option', value: optionLabel, inline: true },
-            { name: '💳 Paiement', value: paymentMethod === 'sumup' ? '💳 Carte bancaire (SumUp)' : '🅿️ PayPal', inline: true },
-            { name: '💰 Montant', value: `**${price}€**`, inline: true },
-            { name: '✅ Confirmer le paiement', value: `[Cliquez ici pour envoyer l'email de confirmation](${confirmUrl})`, inline: false },
-            { name: '❌ Annuler la commande', value: `[Cliquez ici pour annuler et notifier le client](${BASE_URL}/api/cancel-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)})`, inline: false },
+            { name: '💳 Payment', value: paymentMethod === 'sumup' ? '💳 Credit Card (SumUp)' : '🅿️ PayPal', inline: true },
+            { name: '💰 Amount', value: `**${price}€**`, inline: true },
+            { name: '🖥️ Hardware', value: `**CPU:** ${cpu}\n**GPU:** ${gpu}\n**OS:** ${os}`, inline: false },
+            { name: '✅ Confirm Payment', value: `[Click here to send confirmation email](${confirmUrl})`, inline: false },
+            { name: '❌ Cancel Order', value: `[Click here to cancel and notify customer](${BASE_URL}/api/cancel-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)})`, inline: false },
           ],
-          footer: { text: 'OneScript — En attente de paiement' },
+          footer: { text: 'OneScript — Pending Payment' },
           timestamp: new Date().toISOString(),
         }],
       }),

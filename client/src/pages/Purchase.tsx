@@ -16,19 +16,19 @@ const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
 // SumUp links by product/option (key = "productId-index")
 const SUMUP_LINKS: { [key: string]: string } = {
   // FUSION AI
-  "ai-engine-0": "https://pay.sumup.com/b2c/QK3BXCMA",  // 80€ License + Installation
-  "ai-engine-1": "https://pay.sumup.com/b2c/Q8U1ZMJA",  // 30€ Monthly subscription
+  "ai-engine-0": "https://pay.sumup.com/b2c/QLA8WDDD",  // 80€ License + Installation
+  "ai-engine-1": "https://pay.sumup.com/b2c/QLA8WDDD",  // 30€ Monthly subscription
   // Windows Optimization
-  "windows-opt-0": "https://pay.sumup.com/b2c/QIT9A8T9", // 20€ Simple optimization
-  "windows-opt-1": "https://pay.sumup.com/b2c/QFGYTX08", // 40€ Optimization + reinstall
+  "windows-opt-0": "https://pay.sumup.com/b2c/QLA8WDDD", // 20€ Simple optimization
+  "windows-opt-1": "https://pay.sumup.com/b2c/QLA8WDDD", // 40€ Optimization + reinstall
   // Jitter Script
-  "jitter-script-0": "https://pay.sumup.com/b2c/QFQJ73UM", // 1€ 24h Trial
-  "jitter-script-1": "https://pay.sumup.com/b2c/QIO7OGCV", // 5€ 1 week
-  "jitter-script-2": "https://pay.sumup.com/b2c/Q0IRNUOF", // 15€ 1 month
-  "jitter-script-3": "https://pay.sumup.com/b2c/QNOJ9MX7", // 20€ 3 months
-  "jitter-script-4": "https://pay.sumup.com/b2c/QRLCF29E", // 25€ 6 months
-  "jitter-script-5": "https://pay.sumup.com/b2c/QJRAZ96B", // 30€ 1 year
-  "jitter-script-6": "https://pay.sumup.com/b2c/QXOU9MD5", // 40€ Lifetime
+  "jitter-script-0": "https://pay.sumup.com/b2c/QLA8WDDD", // 2.50€ 24h Trial
+  "jitter-script-1": "https://pay.sumup.com/b2c/QLA8WDDD", // 5€ 1 week
+  "jitter-script-2": "https://pay.sumup.com/b2c/QLA8WDDD", // 15€ 1 month
+  "jitter-script-3": "https://pay.sumup.com/b2c/QLA8WDDD", // 20€ 3 months
+  "jitter-script-4": "https://pay.sumup.com/b2c/QLA8WDDD", // 25€ 6 months
+  "jitter-script-5": "https://pay.sumup.com/b2c/QLA8WDDD", // 30€ 1 year
+  "jitter-script-6": "https://pay.sumup.com/b2c/QLA8WDDD", // 40€ Lifetime
 };
 
 const fadeUp = {
@@ -94,21 +94,29 @@ export default function Purchase() {
   const product = products.find((p) => p.id === productId) || products[0];
 
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
-  const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", discordPseudo: "" });
+  const [formData, setFormData] = useState({ 
+    firstName: "", 
+    lastName: "", 
+    email: "", 
+    discordPseudo: "",
+    cpu: "",
+    gpu: "",
+    os: "Windows 10"
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{ orderNumber: string; productName: string; price: number; optionIndex: number } | null>(null);
 
   const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   const total = selectedItem?.price ?? 0;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo) {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo || !formData.cpu || !formData.gpu) {
       toast.error("Please fill in all fields");
       return;
     }
@@ -135,7 +143,6 @@ export default function Purchase() {
 
   const handleSumUpPayment = () => {
     if (!orderCreated) return;
-    // Direct redirection to the SumUp payment link provided by the user
     sendEmails(orderCreated, "sumup");
     window.location.href = "https://pay.sumup.com/b2c/QLA8WDDD";
   };
@@ -166,11 +173,14 @@ export default function Purchase() {
           productOption: selectedItem!.label,
           discordPseudo: formData.discordPseudo,
           price: order.price,
+          cpu: formData.cpu,
+          gpu: formData.gpu,
+          os: formData.os,
         },
       }),
     }).catch(console.error);
 
-    // Discord Notification (via secure serverless function)
+    // Discord Notification
     fetch("/api/discord-notify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -183,6 +193,9 @@ export default function Purchase() {
         optionLabel: selectedItem!.label,
         price: order.price,
         paymentMethod,
+        cpu: formData.cpu,
+        gpu: formData.gpu,
+        os: formData.os,
       }),
     }).catch(console.error);
   };
@@ -265,139 +278,109 @@ export default function Purchase() {
                       <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="Doe" />
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john@email.com" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-foreground mb-2">Discord Username</label>
-                    <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="YourName#1234" />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">Email Address</label>
+                      <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john@example.com" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">Discord Username</label>
+                      <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john_doe#1234" />
+                    </div>
                   </div>
 
-                  <div className="glass-card rounded-lg p-4 bg-yellow-500/5 border border-yellow-500/20">
-                    <div className="flex items-start gap-3">
-                      <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                  {/* Hardware Configuration Section */}
+                  <div className="pt-4 border-t border-border/30">
+                    <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Hardware Configuration</h3>
+                    <div className="grid sm:grid-cols-3 gap-4">
                       <div>
-                        <h4 className="font-display font-semibold text-sm text-foreground mb-1">⚠️ Important — Read before paying</h4>
-                        <p className="text-xs text-muted-foreground">A confirmation email will be sent as soon as you click the payment button. <strong className="text-yellow-300">Your order will only be activated after payment confirmation</strong> from us via Discord. If you do not complete the payment, ignore this email.</p>
+                        <label className="block text-sm font-semibold text-foreground mb-2">Processor (CPU)</label>
+                        <input type="text" name="cpu" value={formData.cpu} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="e.g. i7-12700K" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">Graphics Card (GPU)</label>
+                        <input type="text" name="gpu" value={formData.gpu} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="e.g. RTX 3060" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">Operating System (OS)</label>
+                        <select name="os" value={formData.os} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none appearance-none">
+                          <option value="Windows 10">Windows 10</option>
+                          <option value="Windows 11">Windows 11</option>
+                        </select>
                       </div>
                     </div>
                   </div>
 
-                  {!orderCreated ? (
-                    <Button type="submit" size="lg" disabled={total === 0 || isLoading} className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                      {isLoading ? <><span className="animate-spin">⏳</span> Validating...</> : <><Check className="w-4 h-4" /> VALIDATE MY INFORMATION</>}
-                    </Button>
-                  ) : (
-                    <div className="space-y-3">
-                      <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm text-center font-semibold">
-                        ✓ Information validated! Choose your payment method:
-                      </div>
-                      {/* SumUp Button */}
-                      <Button
-                        onClick={handleSumUpPayment}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-base"
-                      >
-                        <CreditCard className="w-5 h-5" />
-                        PAY {total}€ BY CARD (SUMUP)
-                      </Button>
-                      {/* PayPal Button */}
-                      <Button
-                        onClick={handlePayPalPayment}
-                        className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-display font-bold py-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-base"
-                      >
-                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M7.144 19.532l1.049-5.751c.11-.606.691-1.002 1.302-.832l.557.156c2.683.75 5.545-.617 6.578-3.213.366-.926.476-1.88.35-2.775C18.924 8.483 20 10.009 20 12c0 3.86-3.14 7-7 7H7.144zM4 12C4 7.03 8.03 3 13 3c2.39 0 4.56.94 6.15 2.47-.28-.07-.57-.12-.87-.15C16.08 3.1 13.2 3.9 11.3 5.8c-1.17 1.17-1.87 2.7-2.03 4.34L4 12z"/>
-                        </svg>
-                        PAY {total}€ VIA PAYPAL
-                      </Button>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Secure Payment</span>
-                    <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> SSL Encrypted</span>
-                  </div>
+                  <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
+                    {isLoading ? "Processing..." : "Validate my information"}
+                  </Button>
                 </form>
               </motion.div>
             </div>
 
-            {/* Right: Summary / Confirmation */}
-            <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="lg:col-span-1">
-              {orderCreated ? (
-                <div className="sticky top-24 glass-card rounded-lg p-6 border-2 border-green-500/50 bg-green-500/5">
-                  <div className="text-center space-y-4">
-                    <div className="flex justify-center">
-                      <Check className="w-12 h-12 text-green-400" />
+            {/* Right: Summary */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-24 space-y-6">
+                <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="glass-card rounded-lg p-6 border-t-4 border-violet-tech">
+                  <h2 className="text-xl font-display font-bold mb-6">Order Summary</h2>
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Product</span>
+                      <span className="text-foreground font-medium">{product.name}</span>
                     </div>
-                    <h3 className="text-2xl font-display font-bold text-green-400">Order Created!</h3>
-                    <p className="text-sm text-muted-foreground">Your order number:</p>
-                    <div className="bg-dark-elevated/80 border border-green-500/30 rounded-lg p-4 font-mono text-lg font-bold text-green-400 break-all">
-                      {orderCreated.orderNumber}
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Option</span>
+                      <span className="text-foreground font-medium">{selectedItem?.label || "Not selected"}</span>
                     </div>
-                    <div className="space-y-2 text-sm">
-                      <p className="text-muted-foreground">Product: <span className="text-foreground font-semibold">{orderCreated.productName}</span></p>
-                      <p className="text-muted-foreground">Amount: <span className="text-foreground font-semibold">{orderCreated.price}€</span></p>
+                    <div className="h-px bg-border/30" />
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-bold">Total</span>
+                      <span className="text-2xl font-display font-bold text-violet-tech">{total}€</span>
                     </div>
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
-                      <p className="text-sm font-semibold text-blue-300">Instructions:</p>
-                      <ol className="text-xs text-muted-foreground space-y-2 text-left">
-                        <li>1. Click a payment button on the left</li>
-                        <li>2. Finalize the payment of <span className="font-semibold text-foreground">{orderCreated.price}€</span></li>
-                        <li>3. Receive your access by email and join our Discord</li>
-                      </ol>
-                    </div>
-                    <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="inline-block mt-4">
-                      <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
-                        <MessageCircle className="w-4 h-4" />
-                        Contact us on Discord
-                      </Button>
-                    </a>
                   </div>
-                </div>
-              ) : (
-                <div className="sticky top-24 glass-card rounded-lg p-6">
-                  <h3 className="text-xl font-display font-bold mb-6">Summary</h3>
-                  {selectedItem ? (
+
+                  {orderCreated ? (
                     <div className="space-y-4">
-                      <div className="flex justify-between items-start pb-4 border-b border-border/30">
-                        <div>
-                          <p className="font-semibold text-foreground">{product.name}</p>
-                          <p className="text-sm text-muted-foreground">{selectedItem.label}</p>
-                        </div>
-                        <p className="font-display font-bold text-violet-tech">{selectedItem.price}€</p>
+                      <div className="p-4 bg-violet-tech/10 border border-violet-tech/20 rounded-lg">
+                        <p className="text-xs text-violet-tech font-bold uppercase tracking-wider mb-1">Order Number</p>
+                        <p className="text-sm font-mono font-bold text-foreground">{orderCreated.orderNumber}</p>
                       </div>
-                      <div className="pt-4 space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Subtotal</span>
-                          <span className="font-semibold">{total}€</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Fees</span>
-                          <span className="font-semibold">0€</span>
-                        </div>
-                        <div className="flex justify-between items-center pt-4 border-t border-border/30">
-                          <span className="font-display font-bold">Total</span>
-                          <span className="font-display font-bold text-violet-tech text-lg">{total}€</span>
-                        </div>
+                      <div className="space-y-3">
+                        <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
+                        <Button onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
+                          <CreditCard className="w-4 h-4" />
+                          PAY BY CARD (SUMUP)
+                        </Button>
+                        <Button onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
+                          <MessageCircle className="w-4 h-4" />
+                          PAY BY PAYPAL
+                        </Button>
                       </div>
-                      <div className="mt-6 p-4 bg-violet-tech/5 border border-violet-tech/20 rounded-lg">
-                        <p className="text-xs text-muted-foreground mb-2">💡 Two payment methods available: credit card (SumUp) or PayPal.</p>
-                        <p className="text-xs text-muted-foreground">
-                          Need help? Join our{" "}
-                          <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-violet-tech hover:underline">Discord</a>
+                      <div className="mt-4 p-3 bg-dark-elevated/50 rounded-lg border border-border/30">
+                        <p className="text-[10px] text-muted-foreground leading-relaxed">
+                          <span className="text-violet-tech font-bold">Note:</span> After payment, your order will be processed. You will receive a confirmation email. Join our Discord to finalize the installation.
                         </p>
                       </div>
                     </div>
                   ) : (
-                    <div className="text-center py-8">
-                      <AlertCircle className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
-                      <p className="text-muted-foreground">Select an option to see the summary</p>
+                    <div className="p-4 bg-dark-elevated/50 rounded-lg border border-dashed border-border/50 text-center">
+                      <p className="text-sm text-muted-foreground italic">Please fill in your information to proceed to payment.</p>
                     </div>
                   )}
+                </motion.div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="glass-card p-4 rounded-lg text-center">
+                    <Shield className="w-6 h-6 text-violet-tech mx-auto mb-2" />
+                    <p className="text-[10px] font-bold uppercase text-muted-foreground">Secure Payment</p>
+                  </div>
+                  <div className="glass-card p-4 rounded-lg text-center">
+                    <Lock className="w-6 h-6 text-violet-tech mx-auto mb-2" />
+                    <p className="text-[10px] font-bold uppercase text-muted-foreground">Encrypted Data</p>
+                  </div>
                 </div>
-              )}
-            </motion.div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
