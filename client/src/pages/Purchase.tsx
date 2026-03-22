@@ -16,19 +16,19 @@ const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
 // SumUp links by product/option (key = "productId-index")
 const SUMUP_LINKS: { [key: string]: string } = {
   // FUSION AI
-  "ai-engine-0": "https://pay.sumup.com/b2c/QLA8WDDD",  // 80€ License + Installation
-  "ai-engine-1": "https://pay.sumup.com/b2c/QLA8WDDD",  // 30€ Monthly subscription
+  "ai-engine-0": "https://pay.sumup.com/b2c/QK3BXCMA",  // 80€ License + Installation
+  "ai-engine-1": "https://pay.sumup.com/b2c/Q8U1ZMJA",  // 30€ Monthly subscription
   // Windows Optimization
-  "windows-opt-0": "https://pay.sumup.com/b2c/QLA8WDDD", // 20€ Simple optimization
-  "windows-opt-1": "https://pay.sumup.com/b2c/QLA8WDDD", // 40€ Optimization + reinstall
+  "windows-opt-0": "https://pay.sumup.com/b2c/QIT9A8T9", // 20€ Simple optimization
+  "windows-opt-1": "https://pay.sumup.com/b2c/QFGYTX08", // 40€ Optimization + reinstall
   // Jitter Script
-  "jitter-script-0": "https://pay.sumup.com/b2c/QLA8WDDD", // 2.50€ 24h Trial
-  "jitter-script-1": "https://pay.sumup.com/b2c/QLA8WDDD", // 5€ 1 week
-  "jitter-script-2": "https://pay.sumup.com/b2c/QLA8WDDD", // 15€ 1 month
-  "jitter-script-3": "https://pay.sumup.com/b2c/QLA8WDDD", // 20€ 3 months
-  "jitter-script-4": "https://pay.sumup.com/b2c/QLA8WDDD", // 25€ 6 months
-  "jitter-script-5": "https://pay.sumup.com/b2c/QLA8WDDD", // 30€ 1 year
-  "jitter-script-6": "https://pay.sumup.com/b2c/QLA8WDDD", // 40€ Lifetime
+  "jitter-script-0": "https://pay.sumup.com/b2c/QFQJ73UM", // 2.50€ 24h Trial
+  "jitter-script-1": "https://pay.sumup.com/b2c/QIO7OGCV", // 5€ 1 week
+  "jitter-script-2": "https://pay.sumup.com/b2c/Q0IRNUOF", // 15€ 1 month
+  "jitter-script-3": "https://pay.sumup.com/b2c/QNOJ9MX7", // 20€ 3 months
+  "jitter-script-4": "https://pay.sumup.com/b2c/QRLCF29E", // 25€ 6 months
+  "jitter-script-5": "https://pay.sumup.com/b2c/QJRAZ96B", // 30€ 1 year
+  "jitter-script-6": "https://pay.sumup.com/b2c/QXOU9MD5", // 40€ Lifetime
 };
 
 const fadeUp = {
@@ -143,8 +143,10 @@ export default function Purchase() {
 
   const handleSumUpPayment = () => {
     if (!orderCreated) return;
+    const sumupKey = `${productId}-${orderCreated.optionIndex}`;
+    const sumupLink = SUMUP_LINKS[sumupKey] || "https://pay.sumup.com/b2c/QLA8WDDD";
     sendEmails(orderCreated, "sumup");
-    window.location.href = "https://pay.sumup.com/b2c/QLA8WDDD";
+    window.location.href = sumupLink;
   };
 
   const handlePayPalPayment = () => {
