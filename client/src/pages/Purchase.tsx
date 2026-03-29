@@ -62,8 +62,8 @@ const products: Product[] = [
     name: "Windows Optimization",
     icon: Monitor,
     options: [
-      { label: "Simple Optimization", price: 20 },
-      { label: "Optimization + Windows Reinstall", price: 40 },
+      { label: "Simple Optimization", price: 20, description: "Full system optimization for maximum performance." },
+      { label: "Optimization + Windows Reinstall", price: 40, description: "Complete Windows reinstallation + full optimization. (Requires a USB drive of at least 8GB)" },
     ],
   },
   {

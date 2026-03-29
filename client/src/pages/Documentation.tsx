@@ -104,6 +104,7 @@ const documentation: DocSection[] = [
           "Windows 10 or Windows 11 64-bit",
           "2 GB RAM minimum",
           "Administrator access",
+          "USB Drive (8GB minimum) for Windows reinstallation",
         ],
       },
       {
