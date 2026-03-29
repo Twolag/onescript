@@ -5,7 +5,24 @@
   "env": {
     "NODE_ENV": "production"
   },
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "@vercel/node@5"
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/booking-request",
+      "destination": "/api/booking-request"
+    },
+    {
+      "source": "/api/booking-confirm",
+      "destination": "/api/booking-confirm"
+    },
+    {
+      "source": "/api/booking-cancel",
+      "destination": "/api/booking-cancel"
+    },
     {
       "source": "/sitemap.xml",
       "destination": "/sitemap.xml"

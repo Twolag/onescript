@@ -18,6 +18,7 @@ const navLinks = [
   { href: "/documentation", label: "Documentation" },
   { href: "/reviews", label: "Reviews" },
   { href: "/support", label: "Support" },
+  { href: "/booking", label: "Book" },
 ];
 
 const purchaseProducts = [
