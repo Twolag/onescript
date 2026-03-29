@@ -522,11 +522,11 @@ export default function Purchase() {
                       </div>
                       <div className="space-y-3">
                         <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
-                        <Button onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
+                        <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
                           <CreditCard className="w-4 h-4" />
                           PAY BY CARD (SUMUP)
                         </Button>
-                        <Button onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
+                        <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
                           <MessageCircle className="w-4 h-4" />
                           PAY BY PAYPAL
                         </Button>
