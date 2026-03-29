@@ -78,7 +78,7 @@ interface Product {
   id: string;
   name: string;
   icon: React.ElementType;
-  options: { label: string; price: number; note?: string; description?: string }[];
+  options: { label: string; price: number; note?: string; description?: string; duration?: string }[];
 }
 
 const products: Product[] = [
@@ -87,8 +87,8 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
-      { label: "License + Installation", price: 80, description: "First month + AI Aimbot installation included" },
-      { label: "Monthly Subscription", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license." },
+      { label: "License + Installation", price: 80, description: "First month + AI Aimbot installation included", duration: "~1 hour" },
+      { label: "Monthly Subscription", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license.", duration: "~30 min" },
     ],
   },
   {
@@ -96,8 +96,8 @@ const products: Product[] = [
     name: "Windows Optimization",
     icon: Monitor,
     options: [
-      { label: "Simple Optimization", price: 20, description: "Full system optimization for maximum performance." },
-      { label: "Optimization + Windows Reinstall", price: 40, description: "Complete Windows reinstallation + full optimization. (Requires a USB drive of at least 8GB)" },
+      { label: "Simple Optimization", price: 20, description: "Full system optimization for maximum performance.", duration: "~30 min" },
+      { label: "Optimization + Windows Reinstall", price: 40, description: "Complete Windows reinstallation + full optimization. (Requires a USB drive of at least 8GB)", duration: "~2 hours" },
     ],
   },
   {
@@ -311,6 +311,11 @@ export default function Purchase() {
                           <div>
                             <p className="font-semibold text-foreground">{option.label}</p>
                             {option.description && <p className="text-xs text-muted-foreground mt-1">{option.description}</p>}
+                            {option.duration && (
+                              <p className="text-xs text-violet-tech/70 mt-1 flex items-center gap-1">
+                                <Clock className="w-3 h-3" />{option.duration}
+                              </p>
+                            )}
                           </div>
                         </div>
                         <div className="text-right">
