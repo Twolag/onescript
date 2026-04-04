@@ -596,7 +596,7 @@ export default function Purchase() {
                                 <CreditCard className="w-4 h-4" />
                                 PAY BY CARD (BUNQ)
                               </Button>
-                              <p className="text-[10px] text-center text-cyan-400/80">✓ No extra fees — works for non-EU cards — {total.toFixed(2)}€ charged</p>
+                              <p className="text-[10px] text-center text-cyan-400/80">✓ Card payment, no fees — all cards accepted (incl. non-EU) — {total.toFixed(2)}€ charged</p>
                             </div>
 
                             {/* Bank transfer — no fee */}
