@@ -590,6 +590,15 @@ export default function Purchase() {
                               PAY BY PAYPAL
                             </Button>
 
+                            {/* bunq.me — card payment, no fees, works for non-EU cards */}
+                            <div className="space-y-1">
+                              <Button type="button" onClick={() => { sendDiscordAndEmail(orderCreated!, "bunq"); window.open(`https://bunq.me/NoamFranckGeorgesRobert/${total.toFixed(2)}/OneScript%20Order%20${orderCreated!.orderNumber}`, "_blank"); }} className="w-full bg-[#00b9e8] hover:bg-[#009dc7] text-white font-bold py-4 flex items-center justify-center gap-2">
+                                <CreditCard className="w-4 h-4" />
+                                PAY BY CARD (BUNQ)
+                              </Button>
+                              <p className="text-[10px] text-center text-cyan-400/80">✓ No extra fees — works for non-EU cards — {total.toFixed(2)}€ charged</p>
+                            </div>
+
                             {/* Bank transfer — no fee */}
                             <div className="space-y-1">
                               <Button type="button" onClick={handleBankTransfer} className="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 flex items-center justify-center gap-2">

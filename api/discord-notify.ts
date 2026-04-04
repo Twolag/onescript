@@ -35,7 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             { name: '💬 Discord', value: discordPseudo, inline: true },
             { name: '🎮 Product', value: productName, inline: true },
             { name: '📦 Option', value: optionLabel, inline: true },
-            { name: '💳 Payment', value: paymentMethod === 'sumup' ? '💳 Credit Card (SumUp)' : paymentMethod === 'bank_transfer' ? '🏦 Bank Transfer (Virement SEPA)' : '🅿️ PayPal', inline: true },
+            { name: '💳 Payment', value: paymentMethod === 'sumup' ? '💳 Credit Card (SumUp)' : paymentMethod === 'bank_transfer' ? '🏦 Bank Transfer (Virement SEPA)' : paymentMethod === 'bunq' ? '🟦 Card via bunq.me (no fees)' : '🅿️ PayPal', inline: true },
             { name: '💰 Amount', value: `**${price}€**`, inline: true },
             { name: '🖥️ Hardware', value: `**CPU:** ${cpu}\n**GPU:** ${gpu}\n**OS:** ${os}`, inline: false },
             ...(requestedDate ? [{ name: '📅 Requested Slot', value: `**${requestedDate}** à **${requestedTime || 'N/A'}**`, inline: false }] : []),
