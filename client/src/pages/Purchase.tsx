@@ -16,18 +16,42 @@ const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
 const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
 
 // SumUp links by product/option (key = "productId-index")
+// Prices include 2.5% SumUp fee
 const SUMUP_LINKS: { [key: string]: string } = {
-  "ai-engine-0": "https://pay.sumup.com/b2c/QK3BXCMA",
-  "ai-engine-1": "https://pay.sumup.com/b2c/Q8U1ZMJA",
-  "windows-opt-0": "https://pay.sumup.com/b2c/QIT9A8T9",
-  "windows-opt-1": "https://pay.sumup.com/b2c/QFGYTX08",
-  "jitter-script-0": "https://pay.sumup.com/b2c/QFQJ73UM",
-  "jitter-script-1": "https://pay.sumup.com/b2c/QIO7OGCV",
-  "jitter-script-2": "https://pay.sumup.com/b2c/Q0IRNUOF",
-  "jitter-script-3": "https://pay.sumup.com/b2c/QNOJ9MX7",
-  "jitter-script-4": "https://pay.sumup.com/b2c/QRLCF29E",
-  "jitter-script-5": "https://pay.sumup.com/b2c/QJRAZ96B",
-  "jitter-script-6": "https://pay.sumup.com/b2c/QXOU9MD5",
+  "ai-engine-0": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€
+  "ai-engine-1": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€
+  "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
+  "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
+  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.60€  — 24h Trial
+  "jitter-script-1": "https://pay.sumup.com/b2c/QLKSKZZV", // 5.20€  — 1 week
+  "jitter-script-2": "https://pay.sumup.com/b2c/Q8GDNO7G", // 15.50€ — 1 month
+  "jitter-script-3": "https://pay.sumup.com/b2c/QVOOAVWS", // 20.50€ — 3 months
+  "jitter-script-4": "https://pay.sumup.com/b2c/QEXQZ0WH", // 25.70€ — 6 months
+  "jitter-script-5": "https://pay.sumup.com/b2c/QB46JT9F", // 30.80€ — 1 year
+  "jitter-script-6": "https://pay.sumup.com/b2c/QRLHHGQ2", // 41.00€ — Lifetime
+};
+
+// SumUp prices (with 2.5% fee) for display
+const SUMUP_PRICES: { [key: string]: number } = {
+  "ai-engine-0": 82.00,
+  "ai-engine-1": 30.80,
+  "windows-opt-0": 20.50,
+  "windows-opt-1": 41.00,
+  "jitter-script-0": 2.60,
+  "jitter-script-1": 5.20,
+  "jitter-script-2": 15.50,
+  "jitter-script-3": 20.50,
+  "jitter-script-4": 25.70,
+  "jitter-script-5": 30.80,
+  "jitter-script-6": 41.00,
+};
+
+// Bank transfer (SEPA) details
+const BANK_TRANSFER = {
+  holder: "Noam Huruguen",
+  bank: "SumUp Limited",
+  iban: "IE79SUMU99036511881898",
+  bic: "SUMUIE22XXX",
 };
 
 // Products that show the slot picker
@@ -132,6 +156,14 @@ export default function Purchase() {
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
   } | null>(null);
+  const [showBankTransfer, setShowBankTransfer] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, field: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(field);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
 
   // ── Slot state (optional) ──
   const today = new Date();
@@ -208,6 +240,12 @@ export default function Purchase() {
     window.location.href = sumupLink;
   };
 
+  const handleBankTransfer = () => {
+    if (!orderCreated) return;
+    sendDiscordAndEmail(orderCreated, "bank_transfer" as "sumup");
+    setShowBankTransfer(true);
+  };
+
   const handlePayPalPayment = () => {
     if (!orderCreated) return;
     sendDiscordAndEmail(orderCreated, "paypal");
@@ -216,7 +254,7 @@ export default function Purchase() {
     toast.success("Redirecting to PayPal...");
   };
 
-  const sendDiscordAndEmail = (order: typeof orderCreated, paymentMethod: "sumup" | "paypal") => {
+  const sendDiscordAndEmail = (order: typeof orderCreated, paymentMethod: string) => {
     if (!order) return;
     const customerName = `${formData.firstName} ${formData.lastName}`;
 
@@ -525,22 +563,95 @@ export default function Purchase() {
                         <p className="text-xs text-violet-tech font-bold uppercase tracking-wider mb-1">Order Number</p>
                         <p className="text-sm font-mono font-bold text-foreground">{orderCreated.orderNumber}</p>
                       </div>
-                      <div className="space-y-3">
-                        <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
-                        <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
-                          <CreditCard className="w-4 h-4" />
-                          PAY BY CARD (SUMUP)
-                        </Button>
-                        <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
-                          <MessageCircle className="w-4 h-4" />
-                          PAY BY PAYPAL
-                        </Button>
-                      </div>
-                      <div className="mt-4 p-3 bg-dark-elevated/50 rounded-lg border border-border/30">
-                        <p className="text-[10px] text-muted-foreground leading-relaxed">
-                          <span className="text-violet-tech font-bold">Note:</span> After payment, your order will be processed. You will receive a confirmation email. Join our Discord to finalize the installation.
-                        </p>
-                      </div>
+                      {!showBankTransfer ? (
+                        <>
+                          <div className="space-y-3">
+                            <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
+
+                            {/* SumUp — card payment with 2.5% fee */}
+                            <div className="space-y-1">
+                              <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
+                                <CreditCard className="w-4 h-4" />
+                                PAY BY CARD (SUMUP)
+                              </Button>
+                              <p className="text-[10px] text-center text-amber-400/80">
+                                ⚠ 2.5% processing fee included — {(() => { const k = `${productId}-${orderCreated.optionIndex}`; return (SUMUP_PRICES[k] ?? total).toFixed(2); })()}€ charged
+                              </p>
+                            </div>
+
+                            {/* PayPal */}
+                            <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
+                              <MessageCircle className="w-4 h-4" />
+                              PAY BY PAYPAL
+                            </Button>
+
+                            {/* Bank transfer — no fee */}
+                            <div className="space-y-1">
+                              <Button type="button" onClick={handleBankTransfer} className="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 flex items-center justify-center gap-2">
+                                <Shield className="w-4 h-4" />
+                                BANK TRANSFER (NO FEES)
+                              </Button>
+                              <p className="text-[10px] text-center text-emerald-400/80">✓ No extra fees — exact amount {total.toFixed(2)}€</p>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 p-3 bg-dark-elevated/50 rounded-lg border border-border/30">
+                            <p className="text-[10px] text-muted-foreground leading-relaxed">
+                              <span className="text-violet-tech font-bold">Note:</span> After payment, your order will be processed. You will receive a confirmation email. Join our Discord to finalize the installation.
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        /* Bank transfer RIB panel */
+                        <div className="space-y-3">
+                          <div className="p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-lg">
+                            <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                              <Shield className="w-3.5 h-3.5" /> Bank Transfer Details
+                            </p>
+                            <div className="space-y-2.5">
+                              {[
+                                { label: "Account holder", value: BANK_TRANSFER.holder },
+                                { label: "Bank", value: BANK_TRANSFER.bank },
+                                { label: "IBAN", value: BANK_TRANSFER.iban },
+                                { label: "BIC", value: BANK_TRANSFER.bic },
+                                { label: "Amount to send", value: `${total.toFixed(2)}€` },
+                                { label: "Reference", value: orderCreated.orderNumber },
+                              ].map(({ label, value }) => (
+                                <div key={label} className="flex items-center justify-between gap-2">
+                                  <span className="text-xs text-muted-foreground shrink-0">{label}</span>
+                                  <div className="flex items-center gap-1.5 min-w-0">
+                                    <span className="text-xs font-mono font-bold text-foreground truncate">{value}</span>
+                                    <button
+                                      type="button"
+                                      onClick={() => copyToClipboard(value, label)}
+                                      className="shrink-0 text-violet-tech hover:text-violet-accent transition-colors"
+                                      title="Copy"
+                                    >
+                                      {copiedField === label ? (
+                                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                      ) : (
+                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" strokeWidth="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" strokeWidth="2"/></svg>
+                                      )}
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="p-3 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+                            <p className="text-[10px] text-amber-300/80 leading-relaxed">
+                              <span className="font-bold">Important:</span> Please include your order number <span className="font-mono font-bold text-white">{orderCreated.orderNumber}</span> as the payment reference. Your order will be activated once the transfer is confirmed (usually within a few hours).
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowBankTransfer(false)}
+                            className="text-xs text-muted-foreground hover:text-foreground transition-colors underline w-full text-center"
+                          >
+                            ← Back to payment methods
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className="p-4 bg-dark-elevated/50 rounded-lg border border-dashed border-border/50 text-center">
