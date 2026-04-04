@@ -580,7 +580,7 @@ export default function Purchase() {
                                 PAY BY CARD (SUMUP)
                               </Button>
                               <p className="text-[10px] text-center text-amber-400/80">
-                                ⚠ 2.5% processing fee included — {(() => { const k = `${productId}-${orderCreated.optionIndex}`; return (SUMUP_PRICES[k] ?? total).toFixed(2); })()}€ charged
+                                ⚠ 2.5% processing fee included — {(Math.ceil(total * 1.025 * 100) / 100).toFixed(2)}€ charged
                               </p>
                             </div>
 
