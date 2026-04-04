@@ -142,7 +142,12 @@ const products: Product[] = [
 
 export default function Purchase() {
   const searchParams = new URLSearchParams(window.location.search);
-  const productId = searchParams.get("product") || "ai-engine";
+  const rawProductId = searchParams.get("product") || "ai-engine";
+  // Normalize aliases from different pages
+  const productId = rawProductId === "fusion-ai" || rawProductId === "ai" ? "ai-engine"
+    : rawProductId === "windows" || rawProductId === "windows-optimization" ? "windows-opt"
+    : rawProductId === "jitter" ? "jitter-script"
+    : rawProductId;
   const product = products.find((p) => p.id === productId) || products[0];
   const showSlotPicker = BOOKING_PRODUCTS.includes(productId);
 
