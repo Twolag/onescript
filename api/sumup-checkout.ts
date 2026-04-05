@@ -25,7 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       {
         amount: parseFloat(amount),
         currency: 'EUR',
-        pay_to_email: 'onescript@outlook.fr', // Ton email SumUp
+        pay_to_email: 'onescript.fr@proton.me', // Ton email SumUp
         description: `${productName} - ${orderNumber}`,
         checkout_reference: orderNumber,
         return_url: `${process.env.BASE_URL || 'https://' + req.headers.host}/purchase?success=true&order=${orderNumber}`,

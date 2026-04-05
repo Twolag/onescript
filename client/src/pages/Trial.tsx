@@ -141,7 +141,7 @@ export default function Trial() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          to: 'onescript@outlook.fr',
+          to: 'onescript.fr@proton.me',
           subject: `[ESSAI GRATUIT] ${formData.discordPseudo} – ${formData.gpu}`,
           html: `
             <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#fff;padding:30px;border-radius:10px;">

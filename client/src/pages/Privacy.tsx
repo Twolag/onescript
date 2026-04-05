@@ -152,7 +152,7 @@ export default function Privacy() {
               <li><strong className="text-gray-200">Limitation</strong> : Limiter le traitement de vos données</li>
             </ul>
             <p>
-              Pour exercer ces droits, contactez-nous à : onescript@outlook.fr
+              Pour exercer ces droits, contactez-nous à : onescript.fr@proton.me
             </p>
           </section>
 
@@ -211,10 +211,10 @@ export default function Privacy() {
             <p className="mb-2">
               <strong className="text-gray-200">Email :</strong>{" "}
               <a
-                href="mailto:onescript@outlook.fr"
+                href="mailto:onescript.fr@proton.me"
                 className="text-purple-400 hover:text-purple-300"
               >
-                onescript@outlook.fr
+                onescript.fr@proton.me
               </a>
             </p>
             <p>

@@ -175,7 +175,7 @@ export default function Terms() {
               <strong className="text-gray-200">Temps de réponse :</strong> Nous nous engageons à répondre à vos demandes sous 24h maximum.
             </p>
             <p>
-              <strong className="text-gray-200">Email :</strong> onescript@outlook.fr
+              <strong className="text-gray-200">Email :</strong> onescript.fr@proton.me
             </p>
           </section>
 

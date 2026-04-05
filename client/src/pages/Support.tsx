@@ -265,7 +265,7 @@ export default function Support() {
                   <div className="flex items-center gap-3 mb-3">
                     <Mail className="w-4 h-4 text-violet-tech" />
                     <span className="text-sm text-foreground">
-                      onescript@outlook.fr
+                      onescript.fr@proton.me
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground">

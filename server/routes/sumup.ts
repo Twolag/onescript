@@ -36,7 +36,7 @@ router.post("/create-checkout", async (req, res) => {
       checkout_reference: `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
       amount: Math.round(totalAmount),
       currency: "EUR",
-      pay_to_email: "onescript@outlook.fr", // Email du compte SumUp
+      pay_to_email: "onescript.fr@proton.me", // Email du compte SumUp
       description: description,
       customer_email: customerEmail,
       customer_name: customerName,

@@ -42,10 +42,10 @@ export default function LegalNotice() {
               <p>
                 <strong className="text-gray-200">Email :</strong>{" "}
                 <a
-                  href="mailto:onescript@outlook.fr"
+                  href="mailto:onescript.fr@proton.me"
                   className="text-purple-400 hover:text-purple-300"
                 >
-                  onescript@outlook.fr
+                  onescript.fr@proton.me
                 </a>
               </p>
               <p>
