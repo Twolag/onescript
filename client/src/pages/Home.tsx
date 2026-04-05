@@ -148,7 +148,8 @@ export default function Home() {
         </div>
 
         <div className="relative container">
-          <div className="max-w-3xl">
+          <div className="flex items-center justify-between gap-8">
+            <div className="max-w-2xl flex-1">
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -224,7 +225,27 @@ export default function Home() {
                 </Button>
               </a>
             </motion.div>
-          </div>
+            </div>{/* end text col */}
+
+            {/* Robot image — right column */}
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="hidden lg:flex flex-shrink-0 items-center justify-center relative"
+              style={{ width: '420px', height: '480px' }}
+            >
+              {/* Glow behind the robot */}
+              <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(ellipse at center, rgba(123,46,255,0.35) 0%, rgba(123,46,255,0.1) 50%, transparent 75%)' }} />
+              <img
+                src="/hero-robot.png"
+                alt="FUSION AI"
+                className="relative z-10 w-full h-full object-contain"
+                style={{ filter: 'drop-shadow(0 0 32px rgba(123,46,255,0.6)) drop-shadow(0 0 8px rgba(255,50,50,0.4))' }}
+              />
+            </motion.div>
+
+          </div>{/* end flex row */}
         </div>
 
         {/* Decorative circuit lines */}
