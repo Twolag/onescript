@@ -51,7 +51,7 @@ const faqItems = [
   },
   {
     q: "Can I get a refund?",
-    a: "We offer a refund within 14 days if you are not satisfied. Contact our support via the ticket system to initiate the procedure.",
+    a: "For FUSION AI, refunds are only available if your GPU is below RTX 3060 (e.g., RTX 3050, 4060, 4070) and the software doesn't work after full optimization (including Windows 10 reinstall). No refunds if recommended optimizations are refused. For other products, a 14-day refund policy applies if unused.",
   },
   {
     q: "How does technical support work?",
