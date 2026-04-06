@@ -51,10 +51,10 @@ const faqItems = [
   },
   {
     q: "Can I get a refund?",
-    a: "Pour FUSION AI, les remboursements sont possibles uniquement si votre GPU est strictement inférieur à RTX 3060 (ex: RTX 3050 ou équivalent/inférieur) ET que le logiciel ne fonctionne pas correctement après une optimisation complète (incluant une réinstallation de Windows 10 si nécessaire). Aucun remboursement ne sera accordé si les optimisations recommandées sont refusées. Pour les autres produits, une politique de remboursement de 14 jours s\'applique si le produit n\'a pas été utilisé.", },
+    a: "For FUSION AI, refunds are only possible if your GPU is strictly below RTX 3060 (e.g., RTX 3050 or equivalent/inferior) AND the software does not function correctly after full optimization (including a Windows 10 reinstallation if necessary). No refund will be granted if recommended optimizations are refused. For other products, a 14-day refund policy applies if the product has not been used.", },
   {
     q: "Which Windows version is recommended for FUSION AI?",
-    a: "Windows 10 est fortement recommandé pour les GPUs comme les RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 afin d\'assurer une performance et une stabilité optimales de FUSION AI. Cette recommandation est distincte des conditions de remboursement."  },
+    a: "Windows 10 is strongly recommended for GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 to ensure optimal FUSION AI performance and stability. This recommendation is distinct from refund conditions."  },
   {
     q: "How does technical support work?",
     a: "Our support is available via the ticket system below. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",

@@ -32,218 +32,218 @@ export default function Terms() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-slate-900/50 border border-purple-500/20 rounded-lg p-8 space-y-8 text-gray-300"
         >
-          {/* Objet */}
+          {/* Purpose */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">1. Objet</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">1. Purpose</h2>
             <p>
-              Les présentes Conditions Générales de Vente (CGV) régissent la vente de produits et services numériques proposés par OneScript, notamment :
+              These General Terms and Conditions of Sale (GTC) govern the sale of digital products and services offered by OneScript, including:
             </p>
             <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>FUSION AI (licence logicielle + installation)</li>
-              <li>Windows Optimization (logiciel d'optimisation système)</li>
-              <li>Jitter Script (script de configuration manette)</li>
-              <li>Essais gratuits et services associés</li>
+              <li>FUSION AI (software license + installation)</li>
+              <li>Windows Optimization (system optimization software)</li>
+              <li>Jitter Script (controller configuration script)</li>
+              <li>Free trials and associated services</li>
             </ul>
           </section>
 
-          {/* Conditions d'accès */}
+          {/* Access Conditions */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">2. Conditions d'Accès</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">2. Access Conditions</h2>
             <p className="mb-4">
-              Pour accéder et utiliser les produits OneScript, vous devez :
+              To access and use OneScript products, you must:
             </p>
             <ul className="list-disc list-inside space-y-1">
-              <li>Avoir au moins 18 ans ou l'autorisation d'un parent/tuteur</li>
-              <li>Disposer d'un système Windows 10/11 64-bit</li>
-              <li>Accepter les présentes CGV et la politique de confidentialité</li>
-              <li>Fournir des informations exactes lors de votre inscription</li>
+              <li>Be at least 18 years old or have parental/guardian authorization</li>
+              <li>Have a 64-bit Windows 10/11 system</li>
+              <li>Accept these GTC and the privacy policy</li>
+              <li>Provide accurate information during registration</li>
             </ul>
           </section>
 
-          {/* Processus d'achat */}
+          {/* Purchase Process */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">3. Processus d'Achat</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">3. Purchase Process</h2>
             <p className="mb-4">
-              <strong className="text-gray-200">Commande :</strong> Vous sélectionnez un produit et complétez le formulaire de paiement.
+              <strong className="text-gray-200">Order:</strong> You select a product and complete the payment form.
             </p>
             <p className="mb-4">
-              <strong className="text-gray-200">Paiement :</strong> Le paiement est traité via Stripe. Vous recevez une confirmation par email avec votre numéro de commande unique.
+              <strong className="text-gray-200">Payment:</strong> Payment is processed via Stripe. You receive an email confirmation with your unique order number.
             </p>
             <p className="mb-4">
-              <strong className="text-gray-200">Livraison :</strong> Pour les produits numériques, la livraison se fait via email et Discord sous 24h maximum.
+              <strong className="text-gray-200">Delivery:</strong> For digital products, delivery is via email and Discord within a maximum of 24 hours.
             </p>
             <p>
-              <strong className="text-gray-200">Installation :</strong> Notre équipe support vous guidera via Discord pour l'installation et la configuration.
+              <strong className="text-gray-200">Installation:</strong> Our support team will guide you via Discord for installation and configuration.
             </p>
           </section>
 
-          {/* Tarifs et paiement */}
+          {/* Pricing and Payment */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">4. Tarifs et Paiement</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">4. Pricing and Payment</h2>
             <p className="mb-4">
-              Tous les tarifs sont affichés en euros TTC. Les prix peuvent être modifiés sans préavis.
+              All prices are displayed in euros, including VAT. Prices may be changed without prior notice.
             </p>
             <p className="mb-4">
-              <strong className="text-gray-200">Moyens de paiement :</strong> Carte bancaire (via Stripe). Tous les paiements sont sécurisés et chiffrés.
+              <strong className="text-gray-200">Payment Methods:</strong> Credit card (via Stripe). All payments are secure and encrypted.
             </p>
             <p className="mb-4">
-              <strong className="text-gray-200">Facture :</strong> Une facture est envoyée à votre adresse email après confirmation du paiement.
+              <strong className="text-gray-200">Invoice:</strong> An invoice is sent to your email address after payment confirmation.
             </p>
             <p>
-              <strong className="text-gray-200">Remboursement :</strong> Voir section "Conditions de Remboursement".
+              <strong className="text-gray-200">Refund:</strong> See "Refund Policy" section.
             </p>
           </section>
 
-          {/* Conditions de Remboursement */}
+          {/* Refund Policy */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">5. Conditions de Remboursement</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">5. Refund Policy</h2>
             
             <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-              <p className="text-red-300 font-bold mb-2">⚠️ FUSION AI — Remboursement Conditionnel</p>
+              <p className="text-red-300 font-bold mb-2">⚠️ FUSION AI — Conditional Refund</p>
               <p className="text-sm text-red-200/90 leading-relaxed">
-                Les remboursements pour FUSION AI ne sont possibles <strong>uniquement et uniquement</strong> si les deux conditions suivantes sont remplies :
+                Refunds for FUSION AI are possible <strong>only and exclusively</strong> if the following two conditions are met:
               </p>
             </div>
 
             <p className="mb-4">
-              <strong className="text-gray-200">1. Configuration matérielle insuffisante :</strong>
+              <strong className="text-gray-200">1. Insufficient Hardware Configuration:</strong>
             </p>
             <ul className="list-disc list-inside space-y-1 mb-4 text-gray-300">
-              <li>Votre GPU est inférieur à RTX 3060 (ex: RTX 3050 ou équivalent/inférieur)</li>
-              <li>Malgré nos conseils d'optimisation complets et une réinstallation Windows 10 complète, FUSION AI ne fonctionne pas correctement</li>
-              <li>Vous avez suivi toutes les recommandations de notre équipe support</li>
+              <li>Your GPU is strictly below RTX 3060 (e.g., RTX 3050 or equivalent/inferior)</li>
+              <li>Despite our complete optimization advice and a full Windows 10 reinstallation, FUSION AI does not function correctly</li>
+              <li>You have followed all recommendations from our support team</li>
             </ul>
 
             <p className="mb-4">
-              <strong className="text-gray-200">2. Refus d'optimisation :</strong>
+              <strong className="text-gray-200">2. Refusal of Optimization:</strong>
             </p>
             <ul className="list-disc list-inside space-y-1 mb-4 text-gray-300">
-              <li><strong>Aucun remboursement</strong> ne sera accordé si vous refusez les modifications et optimisations recommandées par notre équipe</li>
-              <li><strong>Aucun remboursement</strong> si vous refusez la réinstallation Windows 10 (fortement recommandée pour les configurations faibles)</li>
-              <li>Le remboursement ne s'applique que si vous avez accepté et suivi toutes les étapes d'optimisation</li>
+              <li><strong>No refund</strong> will be granted if you refuse the modifications and optimizations recommended by our team</li>
+              <li><strong>No refund</strong> if you refuse Windows 10 reinstallation (strongly recommended for low-end configurations)</li>
+              <li>The refund only applies if you have accepted and followed all optimization steps</li>
             </ul>
 
             <p className="mb-4">
-              <strong className="text-gray-200">Procédure de remboursement :</strong>
+              <strong className="text-gray-200">Refund Procedure:</strong>
             </p>
             <ol className="list-decimal list-inside space-y-1 text-gray-300">
-              <li>Contactez-nous via Discord ou email avec votre numéro de commande et vos spécifications GPU</li>
-              <li>Nous vérifierons que votre configuration est bien inférieure à RTX 3060</li>
-              <li>Nous confirmerons que vous avez suivi toutes les étapes d'optimisation recommandées</li>
-              <li>Si les conditions sont remplies, nous traiterons votre remboursement sous 7 jours</li>
+              <li>Contact us via Discord or email with your order number and GPU specifications</li>
+              <li>We will verify that your configuration is indeed below RTX 3060</li>
+              <li>We will confirm that you have followed all recommended optimization steps</li>
+              <li>If the conditions are met, we will process your refund within 7 days</li>
             </ol>
 
             <div className="mt-4 p-4 bg-amber-900/20 border border-amber-500/30 rounded-lg">
-              <p className="text-amber-300 font-bold mb-2">💡 Recommandation</p>
+              <p className="text-amber-300 font-bold mb-2">💡 Recommendation</p>
               <p className="text-sm text-amber-200/90 leading-relaxed">
-                <strong>Windows 10</strong> est fortement recommandé pour les configurations GPU faibles. Cela optimise significativement les performances de FUSION AI et réduit les problèmes de compatibilité.
+                <strong>Windows 10</strong> is strongly recommended for low-end GPU configurations. This significantly optimizes FUSION AI performance and reduces compatibility issues.
               </p>
             </div>
 
             <p className="mt-4 text-sm text-gray-400">
-              <strong className="text-gray-200">Autres produits :</strong> Pour Windows Optimization et Jitter Script, le droit de rétractation standard s'applique (14 jours, sans utilisation du produit). Pour FUSION AI, les conditions ci-dessus s'appliquent exclusivement.
+              <strong className="text-gray-200">Other Products:</strong> For Windows Optimization and Jitter Script, the standard right of withdrawal applies (14 days, without product use). For FUSION AI, the above conditions apply exclusively.
             </p>
           </section>
 
-          {/* Abonnements */}
+          {/* Subscriptions */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">6. Abonnements Récurrents</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">6. Recurring Subscriptions</h2>
             <p className="mb-4">
-              <strong className="text-gray-200">FUSION AI :</strong>
+              <strong className="text-gray-200">FUSION AI:</strong>
             </p>
             <ul className="list-disc list-inside space-y-1 mb-4">
-              <li>Premier mois : 80 € (licence + installation)</li>
-              <li>Renouvellement : 30 € par mois</li>
-              <li>Facturation automatique le même jour chaque mois</li>
-              <li>Annulation possible à tout moment (sans frais)</li>
+              <li>First month: €80 (license + installation)</li>
+              <li>Renewal: €30 per month</li>
+              <li>Automatic billing on the same day each month</li>
+              <li>Cancellation possible at any time (no fees)</li>
             </ul>
             <p>
-              Vous recevrez un email de rappel 7 jours avant chaque renouvellement.
+              You will receive a reminder email 7 days before each renewal.
             </p>
           </section>
 
-          {/* Utilisation acceptable */}
+          {/* Acceptable Use */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">7. Utilisation Acceptable</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">7. Acceptable Use</h2>
             <p className="mb-4">
-              Vous acceptez d'utiliser nos produits conformément à la loi et aux conditions d'utilisation des plateformes de jeux.
+              You agree to use our products in accordance with the law and the terms of use of gaming platforms.
             </p>
             <p className="mb-4">
-              <strong className="text-gray-200">Interdictions :</strong>
+              <strong className="text-gray-200">Prohibitions:</strong>
             </p>
             <ul className="list-disc list-inside space-y-1">
-              <li>Partage ou revente de votre licence</li>
-              <li>Rétro-ingénierie ou modification du code</li>
-              <li>Utilisation à des fins commerciales sans autorisation</li>
-              <li>Utilisation sur plusieurs comptes simultanément</li>
-              <li>Contournement des mesures de sécurité</li>
+              <li>Sharing or reselling your license</li>
+              <li>Reverse engineering or modifying the code</li>
+              <li>Commercial use without authorization</li>
+              <li>Simultaneous use on multiple accounts</li>
+              <li>Bypassing security measures</li>
             </ul>
           </section>
 
-          {/* Garantie */}
+          {/* Warranty */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">8. Garantie</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">8. Warranty</h2>
             <p className="mb-4">
-              OneScript garantit que ses produits fonctionnent conformément à la description fournie.
+              OneScript guarantees that its products function in accordance with the description provided.
             </p>
             <p className="mb-4">
-              <strong className="text-gray-200">Limitations :</strong>
+              <strong className="text-gray-200">Limitations:</strong>
             </p>
             <ul className="list-disc list-inside space-y-1">
-              <li>Pas de garantie de résultats spécifiques (ex: amélioration de performance)</li>
-              <li>Pas de garantie en cas de modification du système d'exploitation</li>
-              <li>Pas de garantie en cas de mise à jour des jeux</li>
+              <li>No guarantee of specific results (e.g., performance improvement)</li>
+              <li>No guarantee in case of operating system modification</li>
+              <li>No guarantee in case of game updates</li>
             </ul>
           </section>
 
-          {/* Support */}
+          {/* Customer Support */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">9. Support Client</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">9. Customer Support</h2>
             <p className="mb-4">
-              Un support technique est disponible via notre serveur Discord : https://discord.gg/XV9PhqbA4r
+              Technical support is available via our Discord server: https://discord.gg/XV9PhqbA4r
             </p>
             <p className="mb-4">
-              <strong className="text-gray-200">Temps de réponse :</strong> Nous nous engageons à répondre à vos demandes sous 24h maximum.
+              <strong className="text-gray-200">Response Time:</strong> We commit to responding to your requests within a maximum of 24 hours.
             </p>
             <p>
-              <strong className="text-gray-200">Email :</strong> onescript.fr@proton.me
+              <strong className="text-gray-200">Email:</strong> onescript.fr@proton.me
             </p>
           </section>
 
-          {/* Responsabilité */}
+          {/* Limitation of Liability */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">10. Limitation de Responsabilité</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">10. Limitation of Liability</h2>
             <p className="mb-4">
-              OneScript ne peut être tenu responsable de :
+              OneScript cannot be held responsible for:
             </p>
             <ul className="list-disc list-inside space-y-1">
-              <li>Les interdictions de compte imposées par les éditeurs de jeux</li>
-              <li>Les pertes de données ou d'accès aux comptes</li>
-              <li>Les dommages causés par une mauvaise utilisation</li>
-              <li>Les interruptions de service ou les erreurs techniques</li>
+              <li>Account bans imposed by game publishers</li>
+              <li>Loss of data or account access</li>
+              <li>Damage caused by misuse</li>
+              <li>Service interruptions or technical errors</li>
             </ul>
           </section>
 
           {/* Modifications */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">11. Modifications des CGV</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">11. Modifications to the GTC</h2>
             <p>
-              OneScript se réserve le droit de modifier ces CGV à tout moment. Les modifications entrent en vigueur dès leur publication. Votre utilisation continue des produits après modification constitue votre acceptation des nouvelles conditions.
+              OneScript reserves the right to modify these GTC at any time. Modifications come into effect upon their publication. Your continued use of the products after modification constitutes your acceptance of the new conditions.
             </p>
           </section>
 
-          {/* Droit applicable */}
+          {/* Applicable Law */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">12. Droit Applicable</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">12. Applicable Law</h2>
             <p>
-              Ces CGV sont régies par la loi française. Tout litige sera soumis à la juridiction compétente.
+              These GTC are governed by French law. Any dispute will be submitted to the competent jurisdiction.
             </p>
           </section>
 
-          {/* Dernière mise à jour */}
+          {/* Last Update */}
           <div className="pt-4 border-t border-purple-500/20">
             <p className="text-sm text-gray-400">
-              Dernière mise à jour : {new Date().toLocaleDateString("fr-FR")}
+              Last Update: {new Date().toLocaleDateString("en-US")}
             </p>
           </div>
         </motion.div>
