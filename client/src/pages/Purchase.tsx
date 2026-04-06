@@ -256,7 +256,7 @@ export default function Purchase() {
     sendDiscordAndEmail(orderCreated, "paypal");
     const paypalLink = `${PAYPAL_BASE}/${orderCreated.price}`;
     setTimeout(() => { window.open(paypalLink, "_blank"); }, 100);
-    toast.success("Redirecting to PayPal...");
+    toast.success("Redirecting to PayPal... Please use 'Friends & Family' only.");
   };
 
   const sendDiscordAndEmail = (order: typeof orderCreated, paymentMethod: string) => {
@@ -534,6 +534,17 @@ export default function Purchase() {
               <div className="sticky top-24 space-y-6">
                 <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="glass-card rounded-lg p-6 border-t-4 border-violet-tech">
                   <h2 className="text-xl font-display font-bold mb-6">Order Summary</h2>
+
+                  {/* Windows 10 Recommendation for low-end GPUs */}
+                  {productId === "ai-engine" && (
+                    <div className="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 flex gap-3">
+                      <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                      <div className="text-sm text-amber-200/90 leading-relaxed">
+                        <strong className="text-amber-400 block mb-1">System Recommendation</strong>
+                        For low-end GPUs (GTX series or RTX 3050), <strong>Windows 10</strong> is strongly recommended for optimal AI performance and stability.
+                      </div>
+                    </div>
+                  )}
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Product</span>
@@ -585,10 +596,15 @@ export default function Purchase() {
                             </div>
 
                             {/* PayPal */}
-                            <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
-                              <MessageCircle className="w-4 h-4" />
-                              PAY BY PAYPAL
-                            </Button>
+                            <div className="space-y-1">
+                              <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
+                                <MessageCircle className="w-4 h-4" />
+                                PAY BY PAYPAL
+                              </Button>
+                              <p className="text-[10px] text-center text-blue-400/80 font-bold uppercase tracking-widest">
+                                ⚠️ Friends & Family payment only
+                              </p>
+                            </div>
 
                             {/* bunq.me — card payment, no fees, works for non-EU cards */}
                             <div className="space-y-1">

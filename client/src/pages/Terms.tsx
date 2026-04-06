@@ -90,28 +90,59 @@ export default function Terms() {
               <strong className="text-gray-200">Facture :</strong> Une facture est envoyée à votre adresse email après confirmation du paiement.
             </p>
             <p>
-              <strong className="text-gray-200">Remboursement :</strong> Voir section "Droit de rétractation".
+              <strong className="text-gray-200">Remboursement :</strong> Voir section "Conditions de Remboursement".
             </p>
           </section>
 
-          {/* Droit de rétractation */}
+          {/* Conditions de Remboursement */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">5. Droit de Rétractation</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">5. Conditions de Remboursement</h2>
+            
+            <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+              <p className="text-red-300 font-bold mb-2">⚠️ FUSION AI — Remboursement Conditionnel</p>
+              <p className="text-sm text-red-200/90 leading-relaxed">
+                Les remboursements pour FUSION AI ne sont possibles <strong>uniquement et uniquement</strong> si les deux conditions suivantes sont remplies :
+              </p>
+            </div>
+
             <p className="mb-4">
-              Conformément à la loi française, vous disposez d'un délai de 14 jours pour vous rétracter après votre achat.
+              <strong className="text-gray-200">1. Configuration matérielle insuffisante :</strong>
             </p>
+            <ul className="list-disc list-inside space-y-1 mb-4 text-gray-300">
+              <li>Votre GPU est inférieur à RTX 3060 (ex: GTX 1080, RTX 2080, RTX 3050)</li>
+              <li>Malgré nos conseils d'optimisation complets et une réinstallation Windows 10 complète, FUSION AI ne fonctionne pas correctement</li>
+              <li>Vous avez suivi toutes les recommandations de notre équipe support</li>
+            </ul>
+
             <p className="mb-4">
-              <strong className="text-gray-200">Important :</strong> Comme nos produits sont des biens numériques, le droit de rétractation s'applique uniquement si vous n'avez pas commencé le téléchargement ou l'utilisation du produit.
+              <strong className="text-gray-200">2. Refus d'optimisation :</strong>
             </p>
+            <ul className="list-disc list-inside space-y-1 mb-4 text-gray-300">
+              <li><strong>Aucun remboursement</strong> ne sera accordé si vous refusez les modifications et optimisations recommandées par notre équipe</li>
+              <li><strong>Aucun remboursement</strong> si vous refusez la réinstallation Windows 10 (fortement recommandée pour les configurations faibles)</li>
+              <li>Le remboursement ne s'applique que si vous avez accepté et suivi toutes les étapes d'optimisation</li>
+            </ul>
+
             <p className="mb-4">
-              <strong className="text-gray-200">Procédure de rétractation :</strong>
+              <strong className="text-gray-200">Procédure de remboursement :</strong>
             </p>
-            <ol className="list-decimal list-inside space-y-1">
-              <li>Contactez-nous via Discord ou email dans les 14 jours</li>
-              <li>Indiquez votre numéro de commande</li>
-              <li>Confirmez que vous n'avez pas utilisé le produit</li>
-              <li>Nous traiterons votre remboursement sous 7 jours</li>
+            <ol className="list-decimal list-inside space-y-1 text-gray-300">
+              <li>Contactez-nous via Discord ou email avec votre numéro de commande et vos spécifications GPU</li>
+              <li>Nous vérifierons que votre configuration est bien inférieure à RTX 3060</li>
+              <li>Nous confirmerons que vous avez suivi toutes les étapes d'optimisation recommandées</li>
+              <li>Si les conditions sont remplies, nous traiterons votre remboursement sous 7 jours</li>
             </ol>
+
+            <div className="mt-4 p-4 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+              <p className="text-amber-300 font-bold mb-2">💡 Recommandation</p>
+              <p className="text-sm text-amber-200/90 leading-relaxed">
+                <strong>Windows 10</strong> est fortement recommandé pour les configurations GPU faibles. Cela optimise significativement les performances de FUSION AI et réduit les problèmes de compatibilité.
+              </p>
+            </div>
+
+            <p className="mt-4 text-sm text-gray-400">
+              <strong className="text-gray-200">Autres produits :</strong> Pour Windows Optimization et Jitter Script, le droit de rétractation standard s'applique (14 jours, sans utilisation du produit).
+            </p>
           </section>
 
           {/* Abonnements */}
