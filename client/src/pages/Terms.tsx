@@ -109,7 +109,7 @@ export default function Terms() {
               <strong className="text-gray-200">1. Configuration matérielle insuffisante :</strong>
             </p>
             <ul className="list-disc list-inside space-y-1 mb-4 text-gray-300">
-              <li>Votre GPU est inférieur à RTX 3060 (ex: GTX 1080, RTX 2080, RTX 3050)</li>
+              <li>Votre GPU est inférieur à RTX 3060 (ex: RTX 3050, RTX 4060, RTX 4070)</li>
               <li>Malgré nos conseils d'optimisation complets et une réinstallation Windows 10 complète, FUSION AI ne fonctionne pas correctement</li>
               <li>Vous avez suivi toutes les recommandations de notre équipe support</li>
             </ul>
@@ -141,7 +141,7 @@ export default function Terms() {
             </div>
 
             <p className="mt-4 text-sm text-gray-400">
-              <strong className="text-gray-200">Autres produits :</strong> Pour Windows Optimization et Jitter Script, le droit de rétractation standard s'applique (14 jours, sans utilisation du produit).
+              <strong className="text-gray-200">Autres produits :</strong> Pour Windows Optimization et Jitter Script, le droit de rétractation standard s'applique (14 jours, sans utilisation du produit). Pour FUSION AI, les conditions ci-dessus s'appliquent exclusivement.
             </p>
           </section>
 
