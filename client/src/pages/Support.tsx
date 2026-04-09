@@ -59,6 +59,10 @@ const faqItems = [
     q: "How does technical support work?",
     a: "Our support is available via the ticket system below. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",
   },
+  {
+    q: "Is FUSION AI compatible with Xbox and PlayStation 5?",
+    a: "Yes! FUSION AI is now fully compatible with both Xbox and PlayStation 5. Our team will handle all configuration during the installation process. Simply select your platform during checkout, and we will ensure everything is set up perfectly for your console.",
+  },
 ];
 
 const docs = [
