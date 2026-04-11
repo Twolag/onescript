@@ -18,8 +18,10 @@ const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
 // SumUp links by product/option (key = "productId-index")
 // Prices include 2.5% SumUp fee
 const SUMUP_LINKS: { [key: string]: string } = {
-  "ai-engine-0": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€
-  "ai-engine-1": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€
+  "ai-engine-0": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€ — Monthly
+  "ai-engine-1": "https://pay.sumup.com/b2c/QZKAONRN",   // 256.25€ — Annual (250€ + 2.5% fee)
+  "ai-engine-2": "https://pay.sumup.com/b2c/QRLHHGQ2",   // 461.25€ — Lifetime (450€ + 2.5% fee)
+  "ai-engine-3": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
   "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.60€  — 24h Trial
@@ -34,7 +36,9 @@ const SUMUP_LINKS: { [key: string]: string } = {
 // SumUp prices (with 2.5% fee) for display
 const SUMUP_PRICES: { [key: string]: number } = {
   "ai-engine-0": 82.00,
-  "ai-engine-1": 30.80,
+  "ai-engine-1": 256.25,
+  "ai-engine-2": 461.25,
+  "ai-engine-3": 30.80,
   "windows-opt-0": 20.50,
   "windows-opt-1": 41.00,
   "jitter-script-0": 2.60,
@@ -111,8 +115,10 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
-      { label: "License + Installation", price: 80, description: "First month + AI Aimbot installation included", duration: "~1 hour" },
-      { label: "Monthly Subscription", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license.", duration: "~30 min" },
+      { label: "License + Installation (Monthly)", price: 80, description: "First month + AI Aimbot installation included. Renewal: 30 EUR/month", duration: "~1 hour" },
+      { label: "Annual Subscription", price: 250, description: "Full access to FUSION AI for 12 months. Includes all updates and priority support.", duration: "~1 hour" },
+      { label: "Lifetime License", price: 450, description: "Permanent access to FUSION AI with all future updates included. One-time payment.", duration: "~1 hour" },
+      { label: "Monthly Renewal", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license.", duration: "~30 min" },
     ],
   },
   {
