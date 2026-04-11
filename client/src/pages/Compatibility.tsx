@@ -318,66 +318,6 @@ export default function Compatibility() {
         </div>
       </section>
 
-      {/* Console Compatibility Section */}
-      <section className="py-16 lg:py-24 relative">
-        <div className="absolute inset-0 bg-dark-surface/20" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/15 to-transparent" />
-        <div className="relative container">
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-10 h-10 flex items-center justify-center rounded-md bg-green-500/15 border border-green-500/20">
-              <Gamepad2 className="w-5 h-5 text-green-400" />
-            </div>
-            <div>
-              <h2 className="font-display font-bold text-2xl tracking-tight">
-                Console Compatibility
-              </h2>
-              <p className="text-sm text-muted-foreground">FUSION AI now supports Xbox and PlayStation 5</p>
-            </div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { name: "Xbox Series X/S", status: "recommended", note: "Full support — optimized for console" },
-              { name: "PlayStation 5", status: "recommended", note: "Full support — optimized for console" },
-            ].map((console, i) => (
-              <motion.div
-                key={console.name}
-                custom={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="glass-card rounded-lg p-5 hover:border-green-500/30 transition-colors duration-300 border-l-2 border-green-500"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-foreground">{console.name}</h4>
-                  <StatusBadge status={console.status} />
-                </div>
-                <p className="text-xs text-muted-foreground">{console.note}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            variants={fadeUp}
-            custom={2}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            className="glass-card rounded-lg p-5 mt-6 border-l-2 border-green-500 bg-green-900/10"
-          >
-            <p className="text-sm text-green-200/90"><strong className="text-green-400">Installation Note:</strong> Console setup is handled entirely by our support team during the installation process. Simply select your platform during checkout, and we will ensure everything is configured perfectly for your Xbox or PlayStation 5.</p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* OS Section */}
       <section className="py-16 lg:py-24">
         <div className="container">

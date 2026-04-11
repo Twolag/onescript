@@ -187,10 +187,10 @@ export default function Home() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-green-500/30 bg-green-500/10 text-xs font-body font-medium text-green-400 tracking-wide"
+              className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide"
             >
               <Zap className="w-3 h-3" />
-              NOW COMPATIBLE: PC, XBOX & PS5
+              PC GAMING PERFORMANCE
             </motion.div>
 
             {/* Title */}
@@ -201,7 +201,7 @@ export default function Home() {
               animate="visible"
               className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight mb-6"
             >
-              Unlock Your Gaming{" "}
+              Unlock Your PC's{" "}
               <span className="text-violet-tech neon-text">
                 True Performance
               </span>
@@ -215,7 +215,7 @@ export default function Home() {
               animate="visible"
               className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8"
             >
-              OneScript optimizes your gaming experience across PC, Xbox, and PlayStation 5. Apex Legends Jitter Script, AI Aimbot, Windows Optimization. More FPS, less latency, maximum stability. Compatible with Windows 10 & 11.
+              OneScript optimizes your PC for gaming. Apex Legends Jitter Script, AI Aimbot, Windows Optimization. More FPS, less latency, maximum stability. Compatible with Windows 10 & 11.
             </motion.p>
 
             {/* CTAs */}

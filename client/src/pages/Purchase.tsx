@@ -159,10 +159,9 @@ export default function Purchase() {
 
   // ── Form state ──
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<"pc" | "xbox" | "ps5">("pc");
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", email: "", discordPseudo: "",
-    cpu: "", gpu: "", os: "Windows 10", platform: "pc",
+    cpu: "", gpu: "", os: "Windows 10",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
@@ -219,13 +218,8 @@ export default function Purchase() {
   // ── Validate form → show payment buttons (same as before) ──
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo) {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo || !formData.cpu || !formData.gpu) {
       toast.error("Please fill in all fields");
-      return;
-    }
-    // For PC platform, require CPU and GPU; for consoles, they're optional
-    if (selectedPlatform === "pc" && (!formData.cpu || !formData.gpu)) {
-      toast.error("Please specify your CPU and GPU for PC");
       return;
     }
     if (selectedOptionIndex === null) {
@@ -512,37 +506,7 @@ export default function Purchase() {
                     </div>
                   </div>
 
-                  {/* Platform Selection */}
-                  <div className="pt-4 border-t border-border/30">
-                    <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Select Your Platform</h3>
-                    <div className="grid grid-cols-3 gap-3">
-                      {[
-                        { id: "pc", label: "PC", icon: "🖥️" },
-                        { id: "xbox", label: "Xbox", icon: "🎮" },
-                        { id: "ps5", label: "PlayStation 5", icon: "🎮" },
-                      ].map(platform => (
-                        <button
-                          key={platform.id}
-                          type="button"
-                          onClick={() => {
-                            setSelectedPlatform(platform.id as "pc" | "xbox" | "ps5");
-                            setFormData(prev => ({ ...prev, platform: platform.id }));
-                          }}
-                          className={`py-3 px-4 rounded-lg border-2 font-semibold transition-all ${
-                            selectedPlatform === platform.id
-                              ? "border-violet-tech bg-violet-tech/20 text-violet-tech"
-                              : "border-border/50 text-foreground hover:border-violet-tech/50 hover:text-violet-tech"
-                          }`}
-                        >
-                          <span className="text-xl block mb-1">{platform.icon}</span>
-                          {platform.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Hardware Configuration - Only for PC */}
-                  {selectedPlatform === "pc" && (
+                  {/* Hardware Configuration */}
                   <div className="pt-4 border-t border-border/30">
                     <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Hardware Configuration</h3>
                     <div className="grid sm:grid-cols-3 gap-4">
@@ -563,20 +527,7 @@ export default function Purchase() {
                       </div>
                     </div>
                   </div>
-                  )}
 
-                  {/* Console Info - For Xbox/PS5 */}
-                  {(selectedPlatform === "xbox" || selectedPlatform === "ps5") && (
-                  <div className="pt-4 border-t border-border/30">
-                    <div className="p-4 rounded-lg bg-green-900/20 border border-green-500/30 flex gap-3">
-                      <span className="text-2xl">✅</span>
-                      <div className="text-sm text-green-200/90 leading-relaxed">
-                        <strong className="text-green-400 block mb-1">Console Compatible</strong>
-                        FUSION AI is now fully compatible with {selectedPlatform === "xbox" ? "Xbox" : "PlayStation 5"}. Our team will configure everything during installation.
-                      </div>
-                    </div>
-                  </div>
-                  )}
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? "Processing..." : "Validate my information"}
