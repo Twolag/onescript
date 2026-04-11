@@ -19,8 +19,8 @@ const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
 // Prices include 2.5% SumUp fee
 const SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-0": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€ — Monthly
-  "ai-engine-1": "https://pay.sumup.com/b2c/QZKAONRN",   // 256.25€ — Annual (250€ + 2.5% fee)
-  "ai-engine-2": "https://pay.sumup.com/b2c/QRLHHGQ2",   // 461.25€ — Lifetime (450€ + 2.5% fee)
+  "ai-engine-1": "https://pay.sumup.com/b2c/QJBMR5C5",   // Annual (250€)
+  "ai-engine-2": "https://pay.sumup.com/b2c/QKRIB0L6",   // Lifetime (450€)
   "ai-engine-3": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
@@ -36,8 +36,8 @@ const SUMUP_LINKS: { [key: string]: string } = {
 // SumUp prices (with 2.5% fee) for display
 const SUMUP_PRICES: { [key: string]: number } = {
   "ai-engine-0": 82.00,
-  "ai-engine-1": 256.25,
-  "ai-engine-2": 461.25,
+  "ai-engine-1": 250.00,
+  "ai-engine-2": 450.00,
   "ai-engine-3": 30.80,
   "windows-opt-0": 20.50,
   "windows-opt-1": 41.00,
