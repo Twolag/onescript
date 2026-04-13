@@ -107,7 +107,7 @@ const pricingPlans = [
     name: "AI Aimbot - V7 (BETA) - Annual",
     price: "250",
     period: "per year",
-    desc: "Annual subscription - Full access to all features for 12 months",
+    desc: "Annual subscription - Full access to all features for 12 months | Coming Soon - On Request Only",
     features: [
       "Real-time AI visual processing",
       "Panic Button (Streamer Mode) - 100% invisible",
@@ -123,7 +123,7 @@ const pricingPlans = [
     name: "AI Aimbot - V7 (BETA) - Lifetime",
     price: "450",
     period: "one-time",
-    desc: "Lifetime access - Permanent license with all future updates included",
+    desc: "Lifetime access - Permanent license with all future updates included | Coming Soon - On Request Only",
     features: [
       "Real-time AI visual processing",
       "Panic Button (Streamer Mode) - 100% invisible",
