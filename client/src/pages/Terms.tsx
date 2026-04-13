@@ -103,6 +103,9 @@ export default function Terms() {
               <p className="text-sm text-red-200/90 leading-relaxed">
                 Refunds for FUSION AI are possible <strong>only and exclusively</strong> if the following two conditions are met:
               </p>
+              <p className="mb-4 text-red-200/90">
+                <strong>Important:</strong> No refund will be processed or accepted if you have not read and understood the minimum PC configuration requirements. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final.
+              </p>
             </div>
 
             <p className="mb-4">

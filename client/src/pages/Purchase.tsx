@@ -528,6 +528,14 @@ export default function Purchase() {
                     </div>
                   </div>
 
+                  {/* Configuration Requirements Reminder */}
+                  <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 flex gap-3 mb-4">
+                    <span className="text-xl flex-shrink-0">⚠️</span>
+                    <div className="text-sm text-amber-200/90 leading-relaxed">
+                      <strong className="text-amber-400 block mb-1">Important Reminder</strong>
+                      <p>By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. Purchases with non-compliant configurations are considered final and are not eligible for refunds.</p>
+                    </div>
+                  </div>
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? "Processing..." : "Validate my information"}

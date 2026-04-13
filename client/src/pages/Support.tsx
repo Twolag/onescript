@@ -51,7 +51,7 @@ const faqItems = [
   },
   {
     q: "Can I get a refund?",
-    a: "For FUSION AI, refunds are only possible if your GPU is strictly below RTX 3060 (e.g., RTX 3050 or equivalent/inferior) AND the software does not function correctly after full optimization (including a Windows 10 reinstallation if necessary). No refund will be granted if recommended optimizations are refused. For other products, a 14-day refund policy applies if the product has not been used.", },
+    a: "For FUSION AI, refunds are only possible if your GPU is strictly below RTX 3060 (e.g., RTX 3050 or equivalent/inferior) AND the software does not function correctly after full optimization (including a Windows 10 reinstallation if necessary). No refund will be granted if recommended optimizations are refused. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final. For other products, a 14-day refund policy applies if the product has not been used.", },
   {
     q: "Which Windows version is recommended for FUSION AI?",
     a: "Windows 10 is strongly recommended for GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 to ensure optimal FUSION AI performance and stability. This recommendation is distinct from refund conditions."  },
