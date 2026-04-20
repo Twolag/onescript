@@ -61,7 +61,7 @@ const faqItems = [
   },
   {
     q: "Are Jitter Script and AI Aimbot compatible with keyboard and mouse?",
-    a: "No. Both Jitter Script and AI Aimbot are exclusively designed for controllers. Keyboard and Mouse are not supported. You must use a compatible controller such as Xbox, PlayStation 5, or PlayStation 5 Edge. These tools are optimized for controller input only.",
+    a: "Jitter Script is controller-only and does not support keyboard and mouse. AI Aimbot has native support for controllers only, but keyboard and mouse can be used with AI Aimbot if you have a Cronus or XIM adapter that converts your KBM input to controller input. Without an adapter, you must use a native controller (Xbox, PS5, or PS5 Edge).",
   },
   {
     q: "Which controllers are supported?",
