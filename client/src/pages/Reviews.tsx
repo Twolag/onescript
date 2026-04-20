@@ -293,7 +293,7 @@ export default function Reviews() {
       <section className="relative py-20 lg:py-28">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {reviews.map((review, i) => (
+            {[...reviews].reverse().map((review, i) => (
               <motion.div
                 key={review.id}
                 custom={i}
