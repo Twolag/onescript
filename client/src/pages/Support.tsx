@@ -59,6 +59,14 @@ const faqItems = [
     q: "How does technical support work?",
     a: "Our support is available via the ticket system below. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",
   },
+  {
+    q: "Are Jitter Script and AI Aimbot compatible with keyboard and mouse?",
+    a: "No. Both Jitter Script and AI Aimbot are exclusively designed for controllers. Keyboard and Mouse are not supported. You must use a compatible controller such as Xbox, PlayStation 5, or PlayStation 5 Edge. These tools are optimized for controller input only.",
+  },
+  {
+    q: "Which controllers are supported?",
+    a: "We support Xbox controllers, PlayStation 5 controllers, and PlayStation 5 Edge controllers. During checkout, you will be asked to specify which controller you are using. If you have a different controller model, please select 'Other' and contact our support team via Discord for compatibility verification.",
+  },
 ];
 
 const docs = [

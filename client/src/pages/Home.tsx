@@ -91,7 +91,7 @@ const pricingPlans = [
     name: "AI Aimbot - V7 (BETA) - Monthly",
     price: "80",
     period: "1st month + inst.",
-    desc: "Complete installation + 1st month included - New interface, Panic Button, Profile Keybinds",
+    desc: "Complete installation + 1st month included - New interface, Panic Button, Profile Keybinds | Controller Only",
     features: [
       "Real-time AI visual processing",
       "Panic Button (Streamer Mode) - 100% invisible",
@@ -107,7 +107,7 @@ const pricingPlans = [
     name: "AI Aimbot - V7 (BETA) - Annual",
     price: "250",
     period: "per year",
-    desc: "Annual subscription - Full access to all features for 12 months | Coming Soon - On Request Only",
+    desc: "Annual subscription - Full access to all features for 12 months | Coming Soon - On Request Only | Controller Only",
     features: [
       "Real-time AI visual processing",
       "Panic Button (Streamer Mode) - 100% invisible",
@@ -123,7 +123,7 @@ const pricingPlans = [
     name: "AI Aimbot - V7 (BETA) - Lifetime",
     price: "450",
     period: "one-time",
-    desc: "Lifetime access - Permanent license with all future updates included | Coming Soon - On Request Only",
+    desc: "Lifetime access - Permanent license with all future updates included | Coming Soon - On Request Only | Controller Only",
     features: [
       "Real-time AI visual processing",
       "Panic Button (Streamer Mode) - 100% invisible",
@@ -139,7 +139,7 @@ const pricingPlans = [
     name: "Jitter Script",
     price: "2.50",
     period: "starting from",
-    desc: "Anti-recoil jitter aim script — controller only",
+    desc: "Anti-recoil jitter aim script — Controller Only | Keyboard & Mouse not supported",
     features: [
       "Undetectable by anti-cheat",
       "Does not cut aim assist",
