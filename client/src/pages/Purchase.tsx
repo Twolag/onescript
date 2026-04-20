@@ -533,7 +533,7 @@ export default function Purchase() {
                     <div className="pt-4 border-t border-border/30">
                       <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Controller Type</h3>
                       <div className="p-4 rounded-lg bg-blue-900/20 border border-blue-500/30 mb-4">
-                        <p className="text-sm text-blue-200/90"><strong className="text-blue-400">⚠️ Important:</strong> AI Aimbot has native support for <strong>controllers only</strong>. Keyboard & Mouse are not natively supported, but can be used via <strong>Cronus or XIM adapters</strong>.</p>
+                        <p className="text-sm text-blue-200/90"><strong className="text-blue-400">⚠️ Important:</strong> AI Aimbot supports <strong>controllers and keyboard/mouse natively</strong> on all games. <strong>For Apex Legends only:</strong> Keyboard & Mouse requires a <strong>Cronus or XIM adapter</strong>.</p>
                       </div>
                       <div>
                         <label className="block text-sm font-semibold text-foreground mb-2">Select Your Input Method</label>
@@ -542,8 +542,9 @@ export default function Purchase() {
                           <option value="Xbox">Xbox Controller</option>
                           <option value="PS5">PlayStation 5 Controller</option>
                           <option value="PS5 Edge">PlayStation 5 Edge Controller</option>
-                          <option value="Cronus">Keyboard & Mouse (Cronus Adapter)</option>
-                          <option value="XIM">Keyboard & Mouse (XIM Adapter)</option>
+                          <option value="KBM Native">Keyboard & Mouse (Native)</option>
+                          <option value="Cronus">Keyboard & Mouse (Cronus Adapter - Apex)</option>
+                          <option value="XIM">Keyboard & Mouse (XIM Adapter - Apex)</option>
                           <option value="Other">Other</option>
                         </select>
                       </div>
