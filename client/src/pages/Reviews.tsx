@@ -235,6 +235,28 @@ const reviews: Review[] = [
     type: "screenshot",
     mediaUrl: "/reviews/image_2026-04-06_182659218.png",
   },
+  {
+    id: "20",
+    author: "Etienne ALG",
+    date: "17/04/2026",
+    rating: 5,
+    title: "Very fast and kind people",
+    content: "Excellent customer service and support team. OneScript interface is intuitive and responsive. Professional setup and installation process.",
+    product: "FUSION AI",
+    type: "screenshot",
+    mediaUrl: "/reviews/R10.PNG",
+  },
+  {
+    id: "21",
+    author: "AaE HuslA",
+    date: "18/04/2026",
+    rating: 5,
+    title: "Best services and ai aimbot 100% recommend very professional",
+    content: "Outstanding service quality and professional support. FUSION AI performance is incredible with perfect configuration. Highly recommend to everyone looking for premium AI aimbot solution.",
+    product: "FUSION AI",
+    type: "screenshot",
+    mediaUrl: "/reviews/husla_review.png",
+  },
 ];
 
 export default function Reviews() {
