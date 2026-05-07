@@ -181,7 +181,7 @@ function ProductSection({
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              {title === "FUSION AI" && (
+              {title === "FUSION AI - v6.8" && (
                 <Link href="/trial">
                   <Button
                     size="lg"
@@ -233,9 +233,9 @@ export default function Products() {
       {/* Product 1: FUSION AI */}
       <ProductSection
         id="fusion-ai"
-        title="FUSION AI - V7 (BETA)"
+        title="FUSION AI - v6.8"
         subtitle="AI Visual Processing"
-        description="FUSION AI V7 is a 100% software solution based on computer vision and real-time AI processing. With V7, discover the Panic Button (Streamer Mode), Profile Keybinds to change config mid-match, and 100% customizable triggers. Performance is not capped — it evolves directly with your hardware. No external peripherals required (NO ZEN, NO XIM, NO TITAN, NO DMA)."
+        description="FUSION AI v6.8 is a 100% software solution based on computer vision and real-time AI processing. With v6.8, discover the Panic Button (Streamer Mode), Profile Keybinds to change config mid-match, and 100% customizable triggers. Performance is not capped — it evolves directly with your hardware. No external peripherals required (NO ZEN, NO XIM, NO TITAN, NO DMA)."
         image={AI_ENGINE}
         icon={Cpu}
         features={[
