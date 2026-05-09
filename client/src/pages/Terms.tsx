@@ -104,6 +104,9 @@ export default function Terms() {
                 Refunds for FUSION AI are possible <strong>only and exclusively</strong> if the following two conditions are met:
               </p>
               <p className="mb-4 text-red-200/90">
+                <strong className="text-red-400">⛔ IMPORTANT:</strong> No refund will be processed or accepted if the malfunction is due to the customer's PC (hardware, third-party software, drivers, non-compliant operating system, etc.) or its components. Refunds are only applicable if the malfunction is proven to be directly caused by the OneScript software itself.
+              </p>
+              <p className="mb-4 text-red-200/90">
                 <strong>Important:</strong> No refund will be processed or accepted if you have not read and understood the minimum PC configuration requirements. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final.
               </p>
             </div>

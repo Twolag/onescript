@@ -580,7 +580,7 @@ export default function Purchase() {
                       <div className="text-sm text-amber-200/90 leading-relaxed">
                         <strong className="text-amber-400 block mb-1">System Recommendation</strong>
                         <p className="mb-2">For GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, <strong>Windows 10</strong> is strongly recommended for optimal AI performance and stability. For refund eligibility, only GPUs strictly below RTX 3060 (e.g., RTX 3050 or equivalent/inferior) are considered under specific conditions.</p>
-                        <p className="text-amber-300/90 text-xs font-semibold border-t border-amber-500/20 pt-2 mt-2">Please ensure your hardware meets the minimum requirements before purchasing. Non-compliant configurations are not eligible for refunds.</p>
+                        <p className="text-amber-300/90 text-xs font-semibold border-t border-amber-500/20 pt-2 mt-2">Please ensure your hardware meets the minimum requirements before purchasing. Non-compliant configurations are not eligible for refunds. Refunds are only processed if the malfunction is directly caused by the OneScript software itself. Issues related to your PC (hardware, drivers, third-party software, OS) are not valid refund reasons.</p>
                       </div>
                     </div>
                   )}
