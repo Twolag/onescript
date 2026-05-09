@@ -101,13 +101,16 @@ export default function Terms() {
             <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
               <p className="text-red-300 font-bold mb-2">⚠️ FUSION AI — Conditional Refund</p>
               <p className="text-sm text-red-200/90 leading-relaxed">
-                Refunds for FUSION AI are possible <strong>only and exclusively</strong> if the following two conditions are met:
+                Refunds for FUSION AI are possible <strong>only and exclusively</strong> if the following conditions are met:
               </p>
+              <div className="my-4 p-3 bg-red-950/40 border-l-4 border-red-500 rounded">
+                <p className="text-red-400 font-bold mb-1">⛔ IMPORTANT: Technical Responsibility</p>
+                <p className="text-sm text-red-200/90">
+                  No refund will be processed or accepted if the malfunction is due to the customer's PC (hardware, third-party software, drivers, non-compliant operating system, antivirus/firewall, etc.) or its components. Refunds are <strong>only applicable</strong> if the malfunction is proven to be directly and solely caused by the OneScript software itself.
+                </p>
+              </div>
               <p className="mb-4 text-red-200/90">
-                <strong className="text-red-400">⛔ IMPORTANT:</strong> No refund will be processed or accepted if the malfunction is due to the customer's PC (hardware, third-party software, drivers, non-compliant operating system, etc.) or its components. Refunds are only applicable if the malfunction is proven to be directly caused by the OneScript software itself.
-              </p>
-              <p className="mb-4 text-red-200/90">
-                <strong>Important:</strong> No refund will be processed or accepted if you have not read and understood the minimum PC configuration requirements. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final.
+                <strong>Hardware Compliance:</strong> No refund will be processed if you have not respected the minimum PC configuration requirements. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final.
               </p>
             </div>
 
