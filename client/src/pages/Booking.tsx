@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Link } from "wouter";
 
-const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
+const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },

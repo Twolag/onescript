@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
-const DISCORD_LINK = "https://discord.gg/XV9PhqbA4r";
+const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 // SumUp links by product/option (key = "productId-index")
 // Prices include 2.5% SumUp fee

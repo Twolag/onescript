@@ -209,7 +209,7 @@ export default function Terms() {
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">9. Customer Support</h2>
             <p className="mb-4">
-              Technical support is available via our Discord server: https://discord.gg/XV9PhqbA4r
+              Technical support is available via our Discord server: https://discord.gg/5btq6znUvN
             </p>
             <p className="mb-4">
               <strong className="text-gray-200">Response Time:</strong> We commit to responding to your requests within a maximum of 24 hours.
