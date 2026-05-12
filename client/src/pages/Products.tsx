@@ -235,7 +235,7 @@ export default function Products() {
         id="fusion-ai"
         title="FUSION AI - v6.8"
         subtitle="AI Visual Processing"
-        description="FUSION AI v6.8 is a 100% software solution based on computer vision and real-time AI processing. With v6.8, discover the Panic Button (Streamer Mode), Profile Keybinds to change config mid-match, and 100% customizable triggers. Performance is not capped — it evolves directly with your hardware. No external peripherals required (NO ZEN, NO XIM, NO TITAN, NO DMA)."
+       description="FUSION AI v6.8 is a 100% software solution based on computer vision and real-time AI processing. With v6.8, discover the Panic Button (Streamer Mode), Profile Keybinds to change config mid-match, and 100% customizable triggers. Performance is not capped — it evolves directly with your hardware. Controller Only Support (PS5, Xbox, Gamesir)."
         image={AI_ENGINE}
         icon={Cpu}
         features={[

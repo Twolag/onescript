@@ -61,7 +61,7 @@ const faqItems = [
   },
   {
     q: "Are Jitter Script and AI Aimbot compatible with keyboard and mouse?",
-    a: "Jitter Script is controller-only and does not support keyboard and mouse. AI Aimbot supports both controllers and keyboard/mouse natively on all games. However, for Apex Legends specifically, keyboard and mouse require a Cronus or XIM adapter to function. For all other games, keyboard and mouse work natively without any external adapter.",
+    a: "No, OneScript solutions are strictly controller-only (PS5, Xbox, Gamesir, etc.). Keyboard and mouse are not supported on any game.",
   },
   {
     q: "Which controllers are supported?",
