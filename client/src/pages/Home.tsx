@@ -189,7 +189,7 @@ export default function Home() {
                     VIEW PRODUCTS<ChevronRight className="w-4 h-4" />
                   </Button>
                 </Link>
-                <a href="https://discord.com/invite/cU2kNQxxHu" target="_blank" rel="noopener noreferrer">
+                <a href="https://discord.gg/5btq6znUvN" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" variant="outline" className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2">
                     <MessageCircle className="w-4 h-4" />DISCORD
                   </Button>
