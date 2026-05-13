@@ -214,6 +214,15 @@ const reviews: Review[] = [
     content: "Works flawlessly ❤️ W sellers too — gameplay proof with OneScript interface.",
     product: "FUSION AI",
   },
+  {
+    id: "31",
+    author: "ukvor",
+    date: "05/13/2026",
+    rating: 5,
+    title: "Very quick and helpful",
+    content: "Bought ai fusion today and they were very quick and helpful on my order, 10/10 will buy again.",
+    product: "FUSION AI",
+  },
 ];
 
 export default function Reviews() {
