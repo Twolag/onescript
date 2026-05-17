@@ -16,12 +16,11 @@ const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 // SumUp links by product/option (key = "productId-index")
 const SUMUP_LINKS: { [key: string]: string } = {
-  "ai-engine-0": "https://pay.sumup.com/b2c/QGXZSHKC",   // 25.70€ — Weekly (License only)
-  "ai-engine-1": "https://pay.sumup.com/b2c/Q6A0L1GO",   // 51.30€ — Monthly (License only)
-  "ai-engine-2": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€ — Monthly (License + Inst.)
-  "ai-engine-3": "https://pay.sumup.com/b2c/QJBMR5C5",   // Annual (250€)
-  "ai-engine-4": "https://pay.sumup.com/b2c/QKRIB0L6",   // Lifetime (450€)
-  "ai-engine-5": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
+  "ai-engine-0": "https://pay.sumup.com/b2c/Q6A0L1GO",   // 51.30€ — Monthly (License only)
+  "ai-engine-1": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€ — Monthly (License + Inst.)
+  "ai-engine-2": "https://pay.sumup.com/b2c/QJBMR5C5",   // Annual (250€)
+  "ai-engine-3": "https://pay.sumup.com/b2c/QKRIB0L6",   // Lifetime (450€)
+  "ai-engine-4": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
   "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.60€  — 24h Trial
@@ -35,12 +34,11 @@ const SUMUP_LINKS: { [key: string]: string } = {
 
 // SumUp prices (with 2.5% fee) for display
 const SUMUP_PRICES: { [key: string]: number } = {
-  "ai-engine-0": 25.70,
-  "ai-engine-1": 51.30,
-  "ai-engine-2": 82.00,
-  "ai-engine-3": 250.00,
-  "ai-engine-4": 450.00,
-  "ai-engine-5": 30.80,
+  "ai-engine-0": 51.30,
+  "ai-engine-1": 82.00,
+  "ai-engine-2": 250.00,
+  "ai-engine-3": 450.00,
+  "ai-engine-4": 30.80,
   "windows-opt-0": 20.50,
   "windows-opt-1": 41.00,
   "jitter-script-0": 2.60,
@@ -88,7 +86,6 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
-      { label: "License Only (Weekly)", price: 25, description: "1 week license. Includes a PDF setup guide. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
       { label: "License Only (Monthly)", price: 50, description: "1 month license. Includes a PDF setup guide. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
       { label: "License + Installation (Monthly)", price: 80, description: "First month + AI Aimbot installation included. We do everything for you. Renewal: 30 EUR/month", duration: "~1 hour" },
       { label: "Annual Subscription (Coming Soon - On Request Only)", price: 250, description: "Full access to FUSION AI for 12 months. Includes all updates and priority support. Currently available on request via Discord.", duration: "~1 hour" },
@@ -152,7 +149,7 @@ export default function Purchase() {
 
   const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   const total = selectedItem?.price ?? 0;
-  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 0 || selectedOptionIndex === 1);
+  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
