@@ -1,13 +1,12 @@
 /*
  * Purchase — Neon Circuit Design
- * Product selection, summary, PayPal + SumUp
- * + optional slot picker for installation services (sent to Discord)
+ * Product selection, summary, PayPal + SumUp + Bunq
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Calendar, Clock, ChevronLeft, ChevronRight,
+  MessageCircle, CreditCard, Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -16,7 +15,6 @@ const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
 const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 // SumUp links by product/option (key = "productId-index")
-// Prices include 2.5% SumUp fee
 const SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-0": "https://pay.sumup.com/b2c/QGXZSHKC",   // 25.70€ — Weekly (License only)
   "ai-engine-1": "https://pay.sumup.com/b2c/Q6A0L1GO",   // 51.30€ — Monthly (License only)
@@ -62,35 +60,6 @@ const BANK_TRANSFER = {
   bic: "SUMUIE22XXX",
 };
 
-// Products that show the slot picker
-const BOOKING_PRODUCTS = ["ai-engine", "windows-opt"];
-
-// Time slots: 11h → 22h, lundi–samedi
-const TIME_SLOTS = [
-  "11:00", "12:00", "13:00", "14:00", "15:00", "16:00",
-  "17:00", "18:00", "19:00", "20:00", "21:00", "22:00",
-];
-
-const MONTH_NAMES = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
-];
-const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-function getDaysInMonth(year: number, month: number) {
-  return new Date(year, month + 1, 0).getDate();
-}
-function getFirstDayOfMonth(year: number, month: number) {
-  return new Date(year, month, 1).getDay();
-}
-function isPastDate(year: number, month: number, day: number) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return new Date(year, month, day) < today;
-}
-function isSunday(year: number, month: number, day: number) {
-  return new Date(year, month, day).getDay() === 0;
-}
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -155,20 +124,19 @@ const products: Product[] = [
 export default function Purchase() {
   const searchParams = new URLSearchParams(window.location.search);
   const rawProductId = searchParams.get("product") || "ai-engine";
-  // Normalize aliases from different pages
   const productId = rawProductId === "fusion-ai" || rawProductId === "ai" ? "ai-engine"
     : rawProductId === "windows" || rawProductId === "windows-optimization" ? "windows-opt"
     : rawProductId === "jitter" ? "jitter-script"
     : rawProductId;
   const product = products.find((p) => p.id === productId) || products[0];
-  const showSlotPicker = BOOKING_PRODUCTS.includes(productId);
 
   // ── Form state ──
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", email: "", discordPseudo: "",
-    cpu: "", gpu: "", os: "Windows 10",
+    cpu: "", gpu: "", os: "Windows 10", controller: "",
   });
+  const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
@@ -182,46 +150,15 @@ export default function Purchase() {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  // ── Slot state (optional) ──
-  const today = new Date();
-  const [calYear, setCalYear] = useState(today.getFullYear());
-  const [calMonth, setCalMonth] = useState(today.getMonth());
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-
   const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   const total = selectedItem?.price ?? 0;
-
-  // Calendar helpers
-  const daysInMonth = getDaysInMonth(calYear, calMonth);
-  const firstDay = getFirstDayOfMonth(calYear, calMonth);
-  const prevMonth = () => {
-    if (calMonth === 0) { setCalYear(y => y - 1); setCalMonth(11); }
-    else setCalMonth(m => m - 1);
-  };
-  const nextMonth = () => {
-    if (calMonth === 11) { setCalYear(y => y + 1); setCalMonth(0); }
-    else setCalMonth(m => m + 1);
-  };
-  const handleDayClick = (day: number) => {
-    if (isPastDate(calYear, calMonth, day)) return;
-    if (isSunday(calYear, calMonth, day)) return;
-    const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    setSelectedDate(dateStr);
-    setSelectedTime(null);
-  };
-  const formattedDate = selectedDate
-    ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", {
-        weekday: "long", year: "numeric", month: "long", day: "numeric",
-      })
-    : null;
+  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 0 || selectedOptionIndex === 1);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // ── Validate form → show payment buttons (same as before) ──
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo || !formData.cpu || !formData.gpu) {
@@ -232,6 +169,15 @@ export default function Purchase() {
       toast.error("Please select an option");
       return;
     }
+    if ((productId === "jitter-script" || productId === "ai-engine") && !formData.controller) {
+      toast.error("Please select your controller type");
+      return;
+    }
+    if (isSelfSetupOption && !selfSetupConfirmed) {
+      toast.error("You must confirm that you will handle the installation yourself");
+      return;
+    }
+
     setIsLoading(true);
     try {
       const orderNumber = generateOrderNumber();
@@ -290,7 +236,7 @@ export default function Purchase() {
       }),
     }).catch(console.error);
 
-    // Discord notification — includes slot if chosen
+    // Discord notification
     fetch("/api/discord-notify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -299,13 +245,7 @@ export default function Purchase() {
         discordPseudo: formData.discordPseudo, productName: product.name,
         optionLabel: selectedItem!.label, price: order.price, paymentMethod,
         cpu: formData.cpu, gpu: formData.gpu, os: formData.os,
-        // slot fields (empty string if not chosen)
-        requestedDate: selectedDate
-          ? new Date(selectedDate + "T12:00:00").toLocaleDateString("fr-FR", {
-              weekday: "long", year: "numeric", month: "long", day: "numeric",
-            })
-          : "",
-        requestedTime: selectedTime || "",
+        selfSetupConfirmed: isSelfSetupOption ? "YES (Confirmed)" : "N/A",
       }),
     }).catch(console.error);
   };
@@ -333,7 +273,7 @@ export default function Purchase() {
         <div className="relative container">
           <div className="grid lg:grid-cols-3 gap-8">
 
-            {/* Left: Product + Slot Picker + Form */}
+            {/* Left: Product + Form */}
             <div className="lg:col-span-2 space-y-8">
 
               {/* Product Selection */}
@@ -348,8 +288,7 @@ export default function Purchase() {
                       key={idx}
                       onClick={() => {
                         setSelectedOptionIndex(idx);
-                        setSelectedDate(null);
-                        setSelectedTime(null);
+                        setSelfSetupConfirmed(false);
                       }}
                       whileHover={{ scale: 1.02 }}
                       className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
@@ -383,114 +322,13 @@ export default function Purchase() {
                 </div>
               </motion.div>
 
-              {/* ── Slot Picker (optional, only for installation products) ── */}
-              {showSlotPicker && selectedOptionIndex !== null && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35 }}
-                  className="glass-card rounded-lg p-6"
-                >
-                  <h2 className="text-2xl font-display font-bold mb-1 flex items-center gap-3">
-                    <Calendar className="w-6 h-6 text-violet-tech" />
-                    Request a Time Slot
-                    <span className="text-sm font-normal text-muted-foreground ml-1">(optional)</span>
-                  </h2>
-                  <p className="text-sm text-muted-foreground mb-6">
-                    You can request a preferred date and time for your remote session. This is optional — our team will contact you on Discord to confirm.
-                  </p>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {/* Calendar */}
-                    <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <button onClick={prevMonth} className="p-2 rounded-lg hover:bg-dark-elevated text-muted-foreground hover:text-foreground transition-colors">
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <span className="font-display font-bold text-sm text-foreground">
-                          {MONTH_NAMES[calMonth]} {calYear}
-                        </span>
-                        <button onClick={nextMonth} className="p-2 rounded-lg hover:bg-dark-elevated text-muted-foreground hover:text-foreground transition-colors">
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <div className="grid grid-cols-7 mb-1">
-                        {DAY_NAMES.map(d => (
-                          <div key={d} className="text-center text-[10px] font-semibold text-muted-foreground py-1">{d}</div>
-                        ))}
-                      </div>
-                      <div className="grid grid-cols-7 gap-0.5">
-                        {Array.from({ length: firstDay }).map((_, i) => <div key={`e-${i}`} />)}
-                        {Array.from({ length: daysInMonth }).map((_, i) => {
-                          const day = i + 1;
-                          const past = isPastDate(calYear, calMonth, day);
-                          const sunday = isSunday(calYear, calMonth, day);
-                          const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-                          const isSelected = selectedDate === dateStr;
-                          const disabled = past || sunday;
-                          return (
-                            <button
-                              key={day}
-                              onClick={() => handleDayClick(day)}
-                              disabled={disabled}
-                              className={`aspect-square rounded-md text-xs font-medium transition-all ${
-                                isSelected
-                                  ? "bg-violet-tech text-white font-bold"
-                                  : disabled
-                                  ? "text-muted-foreground/25 cursor-not-allowed"
-                                  : "hover:bg-violet-tech/20 hover:text-violet-tech text-foreground"
-                              }`}
-                            >
-                              {day}
-                            </button>
-                          );
-                        })}
-                      </div>
-                      <p className="text-[10px] text-muted-foreground mt-2 text-center">
-                        Mon–Sat · 11:00–22:00 CET · Sundays unavailable
-                      </p>
-                    </div>
-
-                    {/* Time slots */}
-                    <div>
-                      {selectedDate ? (
-                        <>
-                          <p className="text-xs font-semibold text-foreground mb-3">
-                            Slots for <span className="text-violet-tech">{formattedDate}</span>
-                          </p>
-                          <div className="grid grid-cols-3 gap-2">
-                            {TIME_SLOTS.map(slot => (
-                              <button
-                                key={slot}
-                                onClick={() => setSelectedTime(prev => prev === slot ? null : slot)}
-                                className={`py-2.5 rounded-lg text-sm font-display font-bold border-2 transition-all ${
-                                  selectedTime === slot
-                                    ? "border-violet-tech bg-violet-tech text-white"
-                                    : "border-border/40 hover:border-violet-tech/60 text-foreground hover:text-violet-tech"
-                                }`}
-                              >
-                                {slot}
-                              </button>
-                            ))}
-                          </div>
-                        </>
-                      ) : (
-                        <div className="h-full flex items-center justify-center text-muted-foreground">
-                          <div className="text-center">
-                            <Clock className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                            <p className="text-xs">Select a date first</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Form */}
+              {/* Information Form */}
               <motion.div variants={fadeUp} custom={2} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
-                <h2 className="text-2xl font-display font-bold mb-6">Your Information</h2>
-                <form onSubmit={handleCheckout} className="space-y-4">
+                <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
+                  <Shield className="w-6 h-6 text-violet-tech" />
+                  Your Information
+                </h2>
+                <form onSubmit={handleCheckout} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">First Name</label>
@@ -534,7 +372,7 @@ export default function Purchase() {
                     </div>
                   </div>
 
-                  {/* Controller Selection (for Jitter & AI Aimbot) */}
+                  {/* Controller Selection */}
                   {(productId === "jitter-script" || productId === "ai-engine") && (
                     <div className="pt-4 border-t border-border/30">
                       <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Controller Type</h3>
@@ -551,6 +389,28 @@ export default function Purchase() {
                           <option value="Gamesir">Gamesir Controller</option>
                           <option value="Other">Other Controller</option>
                         </select>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Self-Setup Confirmation Checkbox */}
+                  {isSelfSetupOption && (
+                    <div className="pt-4 border-t border-border/30">
+                      <div className="p-4 rounded-lg bg-violet-900/20 border border-violet-500/30">
+                        <div className="flex items-start gap-3">
+                          <div className="flex items-center h-5 mt-1">
+                            <input
+                              id="self-setup-check"
+                              type="checkbox"
+                              checked={selfSetupConfirmed}
+                              onChange={(e) => setSelfSetupConfirmed(e.target.checked)}
+                              className="w-5 h-5 rounded border-border/50 bg-dark-elevated text-violet-tech focus:ring-violet-tech/30 transition-all cursor-pointer"
+                            />
+                          </div>
+                          <label htmlFor="self-setup-check" className="text-sm text-foreground font-medium leading-relaxed cursor-pointer select-none">
+                            I understand that I will receive a <strong>PDF guide</strong> and that I must perform the installation <strong>myself</strong>. I confirm that OneScript staff will <strong>not intervene</strong> in the installation process for this specific plan.
+                          </label>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -577,14 +437,13 @@ export default function Purchase() {
                 <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="glass-card rounded-lg p-6 border-t-4 border-violet-tech">
                   <h2 className="text-xl font-display font-bold mb-6">Order Summary</h2>
 
-                  {/* Windows 10 Recommendation for low-end GPUs */}
                   {productId === "ai-engine" && (
                     <div className="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 flex gap-3">
                       <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                       <div className="text-sm text-amber-200/90 leading-relaxed">
                         <strong className="text-amber-400 block mb-1">System Recommendation</strong>
-                        <p className="mb-2">For GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, <strong>Windows 10</strong> is strongly recommended for optimal AI performance and stability. For refund eligibility, only GPUs strictly below RTX 3060 (e.g., RTX 3050 or equivalent/inferior) are considered under specific conditions.</p>
-                        <p className="text-amber-300/90 text-xs font-semibold border-t border-amber-500/20 pt-2 mt-2">Please ensure your hardware meets the minimum requirements before purchasing. Non-compliant configurations are not eligible for refunds. <strong>Refunds are only processed if the malfunction is directly and solely caused by the OneScript software itself.</strong> Issues related to your PC (hardware, drivers, third-party software, OS, antivirus) are not valid refund reasons.</p>
+                        <p className="mb-2">For GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, <strong>Windows 10</strong> is strongly recommended for optimal AI performance and stability.</p>
+                        <p className="text-amber-300/90 text-xs font-semibold border-t border-amber-500/20 pt-2 mt-2">Issues related to your PC (hardware, drivers, third-party software, OS, antivirus) are not valid refund reasons.</p>
                       </div>
                     </div>
                   )}
@@ -597,18 +456,6 @@ export default function Purchase() {
                       <span className="text-muted-foreground">Option</span>
                       <span className="text-foreground font-medium">{selectedItem?.label || "Not selected"}</span>
                     </div>
-                    {selectedDate && (
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Requested date</span>
-                        <span className="text-foreground font-medium text-right max-w-[140px] leading-tight">{formattedDate}</span>
-                      </div>
-                    )}
-                    {selectedTime && (
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Requested time</span>
-                        <span className="text-violet-tech font-display font-bold">{selectedTime}</span>
-                      </div>
-                    )}
                     <div className="h-px bg-border/30" />
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold">Total</span>
@@ -627,7 +474,6 @@ export default function Purchase() {
                           <div className="space-y-3">
                             <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
 
-                            {/* SumUp — card payment with 2.5% fee */}
                             <div className="space-y-1">
                               <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
                                 <CreditCard className="w-4 h-4" />
@@ -638,7 +484,6 @@ export default function Purchase() {
                               </p>
                             </div>
 
-                            {/* PayPal */}
                             <div className="space-y-1">
                               <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
                                 <MessageCircle className="w-4 h-4" />
@@ -649,7 +494,6 @@ export default function Purchase() {
                               </p>
                             </div>
 
-                            {/* bunq.me — card payment, no fees, works for non-EU cards */}
                             <div className="space-y-1">
                               <Button type="button" onClick={() => { sendDiscordAndEmail(orderCreated!, "bunq"); window.open(`https://bunq.me/NoamFranckGeorgesRobert/${total.toFixed(2)}/OneScript%20Order%20${orderCreated!.orderNumber}`, "_blank"); }} className="w-full bg-[#00b9e8] hover:bg-[#009dc7] text-white font-bold py-4 flex items-center justify-center gap-2">
                                 <CreditCard className="w-4 h-4" />
@@ -658,94 +502,92 @@ export default function Purchase() {
                               <p className="text-[10px] text-center text-cyan-400/80">✓ Card payment, no fees — all cards accepted (incl. non-EU) — {total.toFixed(2)}€ charged</p>
                             </div>
 
-                            {/* Bank transfer — no fee */}
-                            <div className="space-y-1">
-                              <Button type="button" onClick={handleBankTransfer} className="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 flex items-center justify-center gap-2">
-                                <Shield className="w-4 h-4" />
-                                BANK TRANSFER (NO FEES)
-                              </Button>
-                              <p className="text-[10px] text-center text-emerald-400/80">✓ No extra fees — exact amount {total.toFixed(2)}€</p>
-                            </div>
-                          </div>
-
-                          <div className="mt-4 p-3 bg-dark-elevated/50 rounded-lg border border-border/30">
-                            <p className="text-[10px] text-muted-foreground leading-relaxed">
-                              <span className="text-violet-tech font-bold">Note:</span> After payment, your order will be processed. You will receive a confirmation email. Join our Discord to finalize the installation.
-                            </p>
+                            <Button type="button" onClick={handleBankTransfer} variant="outline" className="w-full border-border/50 text-muted-foreground hover:text-foreground font-bold py-4">
+                              BANK TRANSFER (SEPA)
+                            </Button>
                           </div>
                         </>
                       ) : (
-                        /* Bank transfer RIB panel */
-                        <div className="space-y-3">
-                          <div className="p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-lg">
-                            <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                              <Shield className="w-3.5 h-3.5" /> Bank Transfer Details
-                            </p>
-                            <div className="space-y-2.5">
-                              {[
-                                { label: "Account holder", value: BANK_TRANSFER.holder },
-                                { label: "Bank", value: BANK_TRANSFER.bank },
-                                { label: "IBAN", value: BANK_TRANSFER.iban },
-                                { label: "BIC", value: BANK_TRANSFER.bic },
-                                { label: "Amount to send", value: `${total.toFixed(2)}€` },
-                                { label: "Reference", value: orderCreated.orderNumber },
-                              ].map(({ label, value }) => (
-                                <div key={label} className="flex items-center justify-between gap-2">
-                                  <span className="text-xs text-muted-foreground shrink-0">{label}</span>
-                                  <div className="flex items-center gap-1.5 min-w-0">
-                                    <span className="text-xs font-mono font-bold text-foreground truncate">{value}</span>
-                                    <button
-                                      type="button"
-                                      onClick={() => copyToClipboard(value, label)}
-                                      className="shrink-0 text-violet-tech hover:text-violet-accent transition-colors"
-                                      title="Copy"
-                                    >
-                                      {copiedField === label ? (
-                                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                                      ) : (
-                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" strokeWidth="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" strokeWidth="2"/></svg>
-                                      )}
-                                    </button>
-                                  </div>
-                                </div>
-                              ))}
+                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-6 bg-dark-elevated rounded-lg border border-violet-tech/30 space-y-4">
+                          <div className="flex items-center gap-2 text-violet-tech mb-2">
+                            <Shield className="w-5 h-5" />
+                            <h3 className="font-bold">Bank Transfer Details</h3>
+                          </div>
+                          <div className="space-y-3">
+                            <div>
+                              <p className="text-[10px] text-muted-foreground uppercase">Account Holder</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-medium">{BANK_TRANSFER.holder}</p>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.holder, "holder")} className="text-violet-tech text-xs hover:underline">{copiedField === "holder" ? "Copied!" : "Copy"}</button>
+                              </div>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-muted-foreground uppercase">IBAN</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-mono">{BANK_TRANSFER.iban}</p>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.iban, "iban")} className="text-violet-tech text-xs hover:underline">{copiedField === "iban" ? "Copied!" : "Copy"}</button>
+                              </div>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-muted-foreground uppercase">BIC / SWIFT</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-mono">{BANK_TRANSFER.bic}</p>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.bic, "bic")} className="text-violet-tech text-xs hover:underline">{copiedField === "bic" ? "Copied!" : "Copy"}</button>
+                              </div>
+                            </div>
+                            <div className="pt-2 border-t border-border/30">
+                              <p className="text-[10px] text-muted-foreground uppercase">Reference (Required)</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-bold text-violet-tech">{orderCreated.orderNumber}</p>
+                                <button onClick={() => copyToClipboard(orderCreated.orderNumber, "ref")} className="text-violet-tech text-xs hover:underline">{copiedField === "ref" ? "Copied!" : "Copy"}</button>
+                              </div>
                             </div>
                           </div>
-                          <div className="p-3 bg-amber-900/20 border border-amber-500/30 rounded-lg">
-                            <p className="text-[10px] text-amber-300/80 leading-relaxed">
-                              <span className="font-bold">Important:</span> Please include your order number <span className="font-mono font-bold text-white">{orderCreated.orderNumber}</span> as the payment reference. Your order will be activated once the transfer is confirmed (usually within a few hours).
-                            </p>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => setShowBankTransfer(false)}
-                            className="text-xs text-muted-foreground hover:text-foreground transition-colors underline w-full text-center"
-                          >
-                            ← Back to payment methods
-                          </button>
-                        </div>
+                          <Button onClick={() => setShowBankTransfer(false)} variant="ghost" className="w-full text-xs text-muted-foreground hover:text-foreground">
+                            Go back to payment methods
+                          </Button>
+                        </motion.div>
                       )}
+
+                      <div className="p-4 bg-dark-elevated/50 rounded-lg border border-border/30">
+                        <div className="flex gap-3">
+                          <Lock className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
+                          <p className="text-[11px] text-muted-foreground leading-relaxed">
+                            Payments are secure. After payment, send your order number <strong>{orderCreated.orderNumber}</strong> on our <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-violet-tech hover:underline">Discord server</a> to receive your access.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   ) : (
-                    <div className="p-4 bg-dark-elevated/50 rounded-lg border border-dashed border-border/50 text-center">
-                      <p className="text-sm text-muted-foreground italic">Please fill in your information to proceed to payment.</p>
+                    <div className="text-center p-8 border-2 border-dashed border-border/30 rounded-lg">
+                      <AlertCircle className="w-8 h-8 text-muted-foreground/30 mx-auto mb-3" />
+                      <p className="text-sm text-muted-foreground">Complete the form to see payment options</p>
                     </div>
                   )}
                 </motion.div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="glass-card p-4 rounded-lg text-center">
-                    <Shield className="w-6 h-6 text-violet-tech mx-auto mb-2" />
-                    <p className="text-[10px] font-bold uppercase text-muted-foreground">Secure Payment</p>
-                  </div>
-                  <div className="glass-card p-4 rounded-lg text-center">
-                    <Lock className="w-6 h-6 text-violet-tech mx-auto mb-2" />
-                    <p className="text-[10px] font-bold uppercase text-muted-foreground">Encrypted Data</p>
+                <div className="glass-card rounded-lg p-6">
+                  <h3 className="text-sm font-bold mb-4 flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-violet-tech" />
+                    Secure Purchase
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 text-green-500" />
+                      Instant notification after validation
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 text-green-500" />
+                      Dedicated Discord support
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 text-green-500" />
+                      Regular updates included
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
