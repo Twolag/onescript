@@ -23,13 +23,12 @@ const SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-4": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
-  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.60€  — 24h Trial
-  "jitter-script-1": "https://pay.sumup.com/b2c/QLKSKZZV", // 5.20€  — 1 week
-  "jitter-script-2": "https://pay.sumup.com/b2c/Q8GDNO7G", // 15.50€ — 1 month
-  "jitter-script-3": "https://pay.sumup.com/b2c/QVOOAVWS", // 20.50€ — 3 months
-  "jitter-script-4": "https://pay.sumup.com/b2c/QEXQZ0WH", // 25.70€ — 6 months
-  "jitter-script-5": "https://pay.sumup.com/b2c/QB46JT9F", // 30.80€ — 1 year
-  "jitter-script-6": "https://pay.sumup.com/b2c/QRLHHGQ2", // 41.00€ — Lifetime
+  "jitter-script-0": "https://pay.sumup.com/b2c/QLKSKZZV", // 5.20€  — 1 week
+  "jitter-script-1": "https://pay.sumup.com/b2c/Q8GDNO7G", // 15.50€ — 1 month
+  "jitter-script-2": "https://pay.sumup.com/b2c/QVOOAVWS", // 20.50€ — 3 months
+  "jitter-script-3": "https://pay.sumup.com/b2c/QEXQZ0WH", // 25.70€ — 6 months
+  "jitter-script-4": "https://pay.sumup.com/b2c/QB46JT9F", // 30.80€ — 1 year
+  "jitter-script-5": "https://pay.sumup.com/b2c/QRLHHGQ2", // 41.00€ — Lifetime
 };
 
 // SumUp prices (with 2.5% fee) for display
@@ -41,13 +40,12 @@ const SUMUP_PRICES: { [key: string]: number } = {
   "ai-engine-4": 30.80,
   "windows-opt-0": 20.50,
   "windows-opt-1": 41.00,
-  "jitter-script-0": 2.60,
-  "jitter-script-1": 5.20,
-  "jitter-script-2": 15.50,
-  "jitter-script-3": 20.50,
-  "jitter-script-4": 25.70,
-  "jitter-script-5": 30.80,
-  "jitter-script-6": 41.00,
+  "jitter-script-0": 5.20,
+  "jitter-script-1": 15.50,
+  "jitter-script-2": 20.50,
+  "jitter-script-3": 25.70,
+  "jitter-script-4": 30.80,
+  "jitter-script-5": 41.00,
 };
 
 // Bank transfer (SEPA) details
@@ -107,7 +105,6 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "24h Trial", price: 2.50 },
       { label: "1 week", price: 5 },
       { label: "1 month", price: 15 },
       { label: "3 months", price: 20 },

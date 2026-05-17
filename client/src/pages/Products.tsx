@@ -181,18 +181,7 @@ function ProductSection({
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              {title === "FUSION AI - v6.8" && (
-                <Link href="/trial">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2"
-                  >
-                    <Gamepad2 className="w-4 h-4" />
-                    BOOK A TRIAL
-                  </Button>
-                </Link>
-              )}
+
             </div>
           </motion.div>
         </div>
@@ -316,7 +305,6 @@ export default function Products() {
           { label: "Platform", value: "PC — controller only" },
         ]}
         pricing={[
-          { label: "24h Trial", price: "2.50 €" },
           { label: "1 week", price: "5 €" },
           { label: "1 month", price: "15 €" },
           { label: "3 months", price: "20 €" },

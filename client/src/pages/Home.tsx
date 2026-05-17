@@ -240,53 +240,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════ TRIAL SECTION ═══════════════ */}
-      <section className="relative py-20 border-y border-violet-tech/20 bg-violet-tech/5">
-        <div className="container">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-            <motion.div variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-violet-tech/20 border border-violet-tech/30 text-[10px] font-bold text-violet-accent tracking-widest uppercase mb-4">
-                <Zap className="w-3 h-3" />Limited Offer
-              </div>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-                Test the <span className="text-violet-tech">Jitter Script</span> for 24h
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Experience the power of our anti-recoil script for only 2.50€. Undetectable, easy to configure, and compatible with all your favorite FPS games.
-              </p>
-              <Link href="/purchase?product=jitter-script">
-                <Button className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                  START TRIAL<ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
-            </motion.div>
-            <motion.div variants={fadeUp} custom={2} initial="hidden" whileInView="visible" viewport={{ once: true }} className="relative w-full max-w-md">
-              <div className="glass-card p-8 rounded-xl border-violet-tech/30 relative z-10">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 rounded-lg bg-violet-tech/10 text-violet-tech"><Gamepad2 className="w-6 h-6" /></div>
-                  <div>
-                    <h3 className="font-display font-bold text-xl">Jitter Script</h3>
-                    <p className="text-sm text-muted-foreground">24h Access</p>
-                  </div>
-                </div>
-                <div className="space-y-4 mb-8">
-                  {["Anti-recoil Jitter Aim", "Undetectable by Anti-cheat", "Controller Only", "Instant Activation"].map((f) => (
-                    <div key={f} className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <Check className="w-4 h-4 text-violet-tech" />{f}
-                    </div>
-                  ))}
-                </div>
-                <div className="flex items-end gap-2">
-                  <span className="text-3xl font-display font-extrabold text-violet-tech">2.50€</span>
-                  <span className="text-sm text-muted-foreground mb-1">/ 24h</span>
-                </div>
-              </div>
-              <div className="absolute -inset-4 bg-violet-tech/20 blur-3xl rounded-full -z-10" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* ═══════════════ PERFORMANCE SECTION ═══════════════ */}
       <section className="relative py-24 lg:py-32">
         <div className="container">
