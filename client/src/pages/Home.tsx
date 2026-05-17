@@ -41,8 +41,8 @@ const products = [
     desc: "Real-time AI visual processing. Panic Button (Streamer Mode), Profile Keybinds, 100% Customizable Triggers. Advanced interface, improved stability. 100% software, no external hardware required.",
     icon: Cpu,
     image: AI_ENGINE,
-    price: "50 €",
-    priceLabel: "license only (PDF guide)",
+    price: "25 €",
+    priceLabel: "license only (1 week)",
     href: "/products",
   },
   {

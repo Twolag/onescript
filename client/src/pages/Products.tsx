@@ -255,6 +255,7 @@ export default function Products() {
           { label: "OS", value: "Windows 10 / 11" },
         ]}
         pricing={[
+          { label: "License only (PDF Guide)", price: "25 €", note: "1 week" },
           { label: "License only (PDF Guide)", price: "50 €", note: "1 month" },
           { label: "License + installation", price: "80 €", note: "1st month included" },
           { label: "Renewal", price: "30 €", note: "/ month" },
