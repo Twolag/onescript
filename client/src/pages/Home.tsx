@@ -91,9 +91,10 @@ const pricingPlans = [
     name: "AI Aimbot - v6.8 - Standard",
     price: "50",
     period: "1 month license",
-    desc: "PDF Installation Guide included - No remote installation support | Controller Only Support (PS5, Xbox, Gamesir)",
+    desc: "PDF Installation Guide included - No remote installation support | Controller Only Support (PS5, Xbox, Gamesir) | STEAM ONLY",
     features: [
       "Real-time AI visual processing",
+      "Apex Legends: STEAM ONLY",
       "Panic Button (Streamer Mode) - 100% invisible",
       "Profile Keybinds - Change config mid-match",
       "100% Customizable Triggers",
@@ -107,9 +108,10 @@ const pricingPlans = [
     name: "AI Aimbot - v6.8 - Premium",
     price: "80",
     period: "1st month + inst.",
-    desc: "Complete remote installation by our team + 1st month included | Controller Only Support (PS5, Xbox, Gamesir)",
+    desc: "Complete remote installation by our team + 1st month included | Controller Only Support (PS5, Xbox, Gamesir) | STEAM ONLY",
     features: [
       "Real-time AI visual processing",
+      "Apex Legends: STEAM ONLY",
       "Panic Button (Streamer Mode) - 100% invisible",
       "Profile Keybinds - Change config mid-match",
       "100% Customizable Triggers",

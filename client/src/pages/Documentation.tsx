@@ -46,11 +46,12 @@ const documentation: DocSection[] = [
     icon: Zap,
     content: [
       {
-        title: "Hardware Requirements",
+        title: "Hardware & Software Requirements",
         description:
           "To use FUSION AI, your system must meet the following criteria:",
         requirements: [
           "NVIDIA RTX GPU (RTX 3060 minimum recommended)",
+          "Apex Legends: STEAM ONLY (EA App / Origin not supported)",
           "Windows 10 or Windows 11 64-bit",
           "8 GB RAM minimum (16 GB recommended)",
           "SSD with at least 10 GB free space",

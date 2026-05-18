@@ -241,6 +241,7 @@ export default function Products() {
           { label: "Mid Range GPU", value: "RTX 3060 / 3070 / 4060" },
           { label: "High End GPU", value: "RTX 4070 / 5060+" },
           { label: "Recommended CPU", value: "i5 13600K / Ryzen 5 5600X" },
+          { label: "Platform", value: "STEAM ONLY (Apex)" },
           { label: "OS", value: "Windows 10 / 11" },
         ]}
         pricing={[
@@ -302,7 +303,7 @@ export default function Products() {
           { label: "OS", value: "Windows 10 / 11" },
           { label: "GPU / CPU", value: "All models" },
           { label: "Type", value: "Subscription" },
-          { label: "Platform", value: "PC — controller only" },
+          { label: "Platform", value: "STEAM ONLY (Apex)" },
         ]}
         pricing={[
           { label: "1 week", price: "5 €" },
