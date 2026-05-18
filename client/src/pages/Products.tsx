@@ -315,6 +315,7 @@ export default function Products() {
           { label: "Platform", value: "STEAM ONLY (Apex)" },
         ]}
         pricing={[
+          { label: "1 day", price: "2.50 €" },
           { label: "1 week", price: "5 €" },
           { label: "1 month", price: "15 €" },
           { label: "3 months", price: "20 €" },
