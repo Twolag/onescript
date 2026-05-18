@@ -131,6 +131,7 @@ export default function Purchase() {
     cpu: "", gpu: "", os: "Windows 10", controller: "",
   });
   const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
+  const [hardwareConfirmed, setHardwareConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
@@ -169,6 +170,10 @@ export default function Purchase() {
     }
     if (isSelfSetupOption && !selfSetupConfirmed) {
       toast.error("You must confirm that you will handle the installation yourself");
+      return;
+    }
+    if (!hardwareConfirmed) {
+      toast.error("You must confirm that your PC meets the hardware requirements");
       return;
     }
 
@@ -421,11 +426,28 @@ export default function Purchase() {
                   )}
 
                   {/* Configuration Requirements Reminder */}
-                  <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 flex gap-3 mb-4">
-                    <span className="text-xl flex-shrink-0">⚠️</span>
-                    <div className="text-sm text-amber-200/90 leading-relaxed">
-                      <strong className="text-amber-400 block mb-1">Important Reminder</strong>
-                      <p>By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. Purchases with non-compliant configurations are considered final. <strong>Note:</strong> Malfunctions caused by the customer's PC (hardware, drivers, OS, etc.) are not eligible for refunds.</p>
+                  <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 mb-6">
+                    <div className="flex gap-3 mb-4">
+                      <span className="text-xl flex-shrink-0">⚠️</span>
+                      <div className="text-sm text-amber-200/90 leading-relaxed">
+                        <strong className="text-amber-400 block mb-1">Important Reminder</strong>
+                        <p>By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. Purchases with non-compliant configurations are considered final. <strong>Note:</strong> Malfunctions caused by the customer's PC (hardware, drivers, OS, etc.) are not eligible for refunds.</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3 pt-3 border-t border-amber-500/20">
+                      <div className="flex items-center h-5 mt-1">
+                        <input
+                          id="hardware-check"
+                          type="checkbox"
+                          checked={hardwareConfirmed}
+                          onChange={(e) => setHardwareConfirmed(e.target.checked)}
+                          className="w-5 h-5 rounded border-amber-500/50 bg-dark-elevated text-amber-500 focus:ring-amber-500/30 transition-all cursor-pointer"
+                        />
+                      </div>
+                      <label htmlFor="hardware-check" className="text-sm text-amber-100 font-medium leading-relaxed cursor-pointer select-none">
+                        I confirm that my PC meets all the <strong>hardware requirements</strong> (NVIDIA RTX GPU, etc.) and that I have <strong>Steam</strong> installed for Apex Legends. I understand that no refunds will be issued for hardware incompatibility.
+                      </label>
                     </div>
                   </div>
 
