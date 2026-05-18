@@ -113,6 +113,15 @@ function ProductSection({
               {title}
             </h2>
 
+            {title.includes("FUSION AI") && (
+              <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                <p className="text-sm font-bold text-red-400 tracking-wide uppercase">
+                  Important: Apex Legends must be installed on <span className="underline">STEAM</span> only (EA App/Origin not supported)
+                </p>
+              </div>
+            )}
+
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
               {description}
             </p>

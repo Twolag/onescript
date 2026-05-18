@@ -272,6 +272,17 @@ export default function Purchase() {
 
               {/* Product Selection */}
               <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
+                {(productId === "ai-engine" || productId === "jitter-script") && (
+                  <div className="mb-8 p-5 rounded-lg bg-red-500/10 border border-red-500/30">
+                    <div className="flex items-center gap-3 mb-2">
+                      <AlertCircle className="w-5 h-5 text-red-500" />
+                      <h3 className="text-sm font-bold text-red-400 tracking-wider uppercase">Mandatory Requirement</h3>
+                    </div>
+                    <p className="text-sm text-red-200/80 leading-relaxed">
+                      For Apex Legends, you <span className="text-red-400 font-bold underline">MUST</span> use the <strong>STEAM</strong> version. The EA App (Origin) version is <strong>NOT supported</strong> and will not work with our tools.
+                    </p>
+                  </div>
+                )}
                 <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
                   <product.icon className="w-6 h-6 text-violet-tech" />
                   {product.name}
