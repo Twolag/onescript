@@ -125,7 +125,7 @@ const pricingPlans = [
     name: "AI Aimbot - v6.8 - Annual",
     price: "250",
     period: "per year",
-    desc: "Annual subscription - Full access to all features for 12 months | Coming Soon - On Request Only | Controller Only Support (PS5, Xbox, Gamesir)",
+    desc: "Annual subscription - Full access to all features for 12 months | Controller Only Support (PS5, Xbox, Gamesir)",
     features: [
       "Real-time AI visual processing",
       "Panic Button (Streamer Mode) - 100% invisible",
@@ -141,7 +141,7 @@ const pricingPlans = [
     name: "AI Aimbot - v6.8 - Lifetime",
     price: "450",
     period: "one-time",
-    desc: "Lifetime access - Permanent license with all future updates included | Coming Soon - On Request Only | Controller Only Support (PS5, Xbox, Gamesir)",
+    desc: "Lifetime access - Permanent license with all future updates included | Controller Only Support (PS5, Xbox, Gamesir)",
     features: [
       "Real-time AI visual processing",
       "Panic Button (Streamer Mode) - 100% invisible",

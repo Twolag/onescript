@@ -256,6 +256,8 @@ export default function Products() {
         pricing={[
           { label: "License only (PDF Guide)", price: "50 €", note: "1 month" },
           { label: "License + installation", price: "80 €", note: "1st month included" },
+          { label: "Annual Subscription", price: "250 €", note: "/ year" },
+          { label: "Lifetime License", price: "450 €", note: "one-time" },
           { label: "Renewal", price: "30 €", note: "/ month" },
         ]}
         index={0}

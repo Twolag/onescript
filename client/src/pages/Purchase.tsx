@@ -88,8 +88,8 @@ const products: Product[] = [
     options: [
       { label: "License Only (Monthly)", price: 50, description: "1 month license. Includes a PDF setup guide. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
       { label: "License + Installation (Monthly)", price: 80, description: "First month + AI Aimbot installation included. We do everything for you. Renewal: 30 EUR/month", duration: "~1 hour" },
-      { label: "Annual Subscription (Coming Soon - On Request Only)", price: 250, description: "Full access to FUSION AI for 12 months. Includes all updates and priority support. Currently available on request via Discord.", duration: "~1 hour" },
-      { label: "Lifetime License (Coming Soon - On Request Only)", price: 450, description: "Permanent access to FUSION AI with all future updates included. One-time payment. Currently available on request via Discord.", duration: "~1 hour" },
+      { label: "Annual Subscription", price: 250, description: "Full access to FUSION AI for 12 months. Includes all updates and priority support.", duration: "~1 hour" },
+      { label: "Lifetime License", price: 450, description: "Permanent access to FUSION AI with all future updates included. One-time payment.", duration: "~1 hour" },
       { label: "Monthly Renewal", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license.", duration: "~30 min" },
     ],
   },
