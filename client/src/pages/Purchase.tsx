@@ -23,7 +23,7 @@ const SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-4": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
-  "jitter-script-0": "https://pay.sumup.com/b2c/Q5F0Z9L6", // 2.50€  — 1 day (Approx)
+  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.50€  — 1 day (Approx)
   "jitter-script-1": "https://pay.sumup.com/b2c/QLKSKZZV", // 5.20€  — 1 week
   "jitter-script-2": "https://pay.sumup.com/b2c/Q8GDNO7G", // 15.50€ — 1 month
   "jitter-script-3": "https://pay.sumup.com/b2c/QVOOAVWS", // 20.50€ — 3 months
