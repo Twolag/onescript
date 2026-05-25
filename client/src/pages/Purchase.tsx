@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock, Zap, ChevronRight
+  MessageCircle, CreditCard, Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -83,14 +83,14 @@ interface Product {
 const products: Product[] = [
   {
     id: "ai-engine",
-    name: "FUSION IA V7.0",
+    name: "FUSION AI",
     icon: Cpu,
     options: [
-      { label: "License Only (Monthly) - V7.0", price: 50, description: "1 month license. Includes a PDF setup guide. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
-      { label: "License + Installation (Monthly) - V7.0", price: 80, description: "First month + AI Aimbot installation included. We do everything for you. Renewal: 30 EUR/month", duration: "~1 hour" },
-      { label: "Annual Subscription - V7.0", price: 250, description: "Full access to FUSION IA V7.0 for 12 months. Includes all updates and priority support.", duration: "~1 hour" },
-      { label: "Lifetime License - V7.0", price: 450, description: "Permanent access to FUSION IA V7.0 with all future updates included. One-time payment.", duration: "~1 hour" },
-      { label: "Monthly Renewal - V7.0", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license.", duration: "~30 min" },
+      { label: "License Only (Monthly)", price: 50, description: "1 month license. Includes a PDF setup guide. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
+      { label: "License + Installation (Monthly)", price: 80, description: "First month + AI Aimbot installation included. We do everything for you. Renewal: 30 EUR/month", duration: "~1 hour" },
+      { label: "Annual Subscription", price: 250, description: "Full access to FUSION AI for 12 months. Includes all updates and priority support.", duration: "~1 hour" },
+      { label: "Lifetime License", price: 450, description: "Permanent access to FUSION AI with all future updates included. One-time payment.", duration: "~1 hour" },
+      { label: "Monthly Renewal", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license.", duration: "~30 min" },
     ],
   },
   {
@@ -259,280 +259,366 @@ export default function Purchase() {
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate="visible" className="max-w-2xl">
-            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">Order</span>
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              Complete your <span className="text-violet-tech">Purchase</span>
+            <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight mb-4">
+              Finalize your <span className="text-violet-tech">purchase</span>
             </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Secure checkout for your gaming performance tools.
+            <p className="text-lg text-muted-foreground">
+              Select your product and complete the form to access your purchase.
             </p>
           </motion.div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
       </section>
 
-      <section className="relative py-12 lg:py-20">
-        <div className="container">
-          {orderCreated ? (
-            <div className="max-w-3xl mx-auto">
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-card rounded-xl p-8 lg:p-12 border-violet-tech/30">
-                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-violet-tech/15 border border-violet-tech/20 mx-auto mb-8">
-                  <Lock className="w-8 h-8 text-violet-tech" />
-                </div>
-                <div className="text-center mb-10">
-                  <h2 className="font-display font-bold text-2xl mb-2">Select Payment Method</h2>
-                  <p className="text-muted-foreground">Order: <span className="text-foreground font-mono">{orderCreated.orderNumber}</span></p>
-                </div>
+      {/* Main Content */}
+      <section className="relative py-12 lg:py-16">
+        <div className="absolute inset-0 bg-dark-surface/20" />
+        <div className="relative container">
+          <div className="grid lg:grid-cols-3 gap-8">
 
-                <div className="grid gap-6">
-                  <button onClick={handleSumUpPayment} className="flex items-center justify-between p-6 rounded-lg bg-dark-elevated/50 border border-border/50 hover:border-violet-tech/50 hover:bg-violet-tech/5 transition-all group">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 flex items-center justify-center rounded-md bg-white/5">
-                        <CreditCard className="w-6 h-6 text-violet-tech" />
-                      </div>
-                      <div className="text-left">
-                        <h4 className="font-display font-bold text-lg">Credit Card (SumUp)</h4>
-                        <p className="text-sm text-muted-foreground">Visa, Mastercard, AMEX, Apple Pay, Google Pay</p>
-                      </div>
+            {/* Left: Product + Form */}
+            <div className="lg:col-span-2 space-y-8">
+
+              {/* Product Selection */}
+              <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
+                {(productId === "ai-engine" || productId === "jitter-script") && (
+                  <div className="mb-8 p-5 rounded-lg bg-red-500/10 border border-red-500/30">
+                    <div className="flex items-center gap-3 mb-2">
+                      <AlertCircle className="w-5 h-5 text-red-500" />
+                      <h3 className="text-sm font-bold text-red-400 tracking-wider uppercase">Mandatory Requirement</h3>
                     </div>
-                    <ChevronRight className="w-6 h-6 text-muted-foreground group-hover:text-violet-tech transition-colors" />
-                  </button>
-
-                  <button onClick={handlePayPalPayment} className="flex items-center justify-between p-6 rounded-lg bg-dark-elevated/50 border border-border/50 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 flex items-center justify-center rounded-md bg-white/5">
-                        <MessageCircle className="w-6 h-6 text-blue-400" />
-                      </div>
-                      <div className="text-left">
-                        <h4 className="font-display font-bold text-lg">PayPal (Friends & Family)</h4>
-                        <p className="text-sm text-muted-foreground">Fast and secure payment via PayPal</p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-6 h-6 text-muted-foreground group-hover:text-blue-400 transition-colors" />
-                  </button>
-
-                  <button onClick={handleBankTransfer} className="flex items-center justify-between p-6 rounded-lg bg-dark-elevated/50 border border-border/50 hover:border-violet-tech/50 hover:bg-violet-tech/5 transition-all group">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 flex items-center justify-center rounded-md bg-white/5">
-                        <Zap className="w-6 h-6 text-violet-tech" />
-                      </div>
-                      <div className="text-left">
-                        <h4 className="font-display font-bold text-lg">Bank Transfer (SEPA)</h4>
-                        <p className="text-sm text-muted-foreground">Direct transfer from your bank account</p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-6 h-6 text-muted-foreground group-hover:text-violet-tech transition-colors" />
-                  </button>
-                </div>
-
-                <div className="mt-10 p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 flex gap-3">
-                  <AlertCircle className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                  <p className="text-xs text-amber-200/80 leading-relaxed">
-                    <strong>After payment:</strong> Join our Discord and create a support ticket with your order number. Our team will verify the payment and deliver your product immediately.
-                  </p>
-                </div>
-
-                {showBankTransfer && (
-                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 p-6 rounded-lg bg-dark-base border border-violet-tech/30">
-                    <h4 className="font-display font-bold text-lg mb-4 text-violet-tech">SEPA Transfer Details</h4>
-                    <div className="space-y-4">
-                      {[
-                        { label: "Account Holder", value: BANK_TRANSFER.holder },
-                        { label: "Bank", value: BANK_TRANSFER.bank },
-                        { label: "IBAN", value: BANK_TRANSFER.iban },
-                        { label: "BIC/SWIFT", value: BANK_TRANSFER.bic },
-                        { label: "Amount", value: `${orderCreated.price} €` },
-                        { label: "Reference", value: orderCreated.orderNumber },
-                      ].map((field) => (
-                        <div key={field.label} className="flex justify-between items-center gap-4 py-2 border-b border-border/20 last:border-0">
-                          <span className="text-xs text-muted-foreground uppercase tracking-wider">{field.label}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-mono text-foreground">{field.value}</span>
-                            <button onClick={() => copyToClipboard(field.value, field.label)} className="p-1.5 hover:bg-white/5 rounded transition-colors">
-                              {copiedField === field.label ? <Check className="w-3 h-3 text-green-500" /> : <Clock className="w-3 h-3 text-muted-foreground" />}
-                            </button>
+                    <p className="text-sm text-red-200/80 leading-relaxed">
+                      For Apex Legends, you <span className="text-red-400 font-bold underline">MUST</span> use the <strong>STEAM</strong> version. The EA App (Origin) version is <strong>NOT supported</strong> and will not work with our tools.
+                    </p>
+                  </div>
+                )}
+                <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
+                  <product.icon className="w-6 h-6 text-violet-tech" />
+                  {product.name}
+                </h2>
+                <div className="space-y-3">
+                  {product.options.map((option, idx) => (
+                    <motion.button
+                      key={idx}
+                      onClick={() => {
+                        setSelectedOptionIndex(idx);
+                        setSelfSetupConfirmed(false);
+                      }}
+                      whileHover={{ scale: 1.02 }}
+                      className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                        selectedOptionIndex === idx
+                          ? "border-violet-tech bg-violet-tech/10"
+                          : "border-border/50 hover:border-violet-tech/50 bg-dark-elevated/50"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 flex-1">
+                          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${selectedOptionIndex === idx ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                            {selectedOptionIndex === idx && <Check className="w-3 h-3 text-primary-foreground" />}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground">{option.label}</p>
+                            {option.description && <p className="text-xs text-muted-foreground mt-1">{option.description}</p>}
+                            {option.duration && (
+                              <p className="text-xs text-violet-tech/70 mt-1 flex items-center gap-1">
+                                <Clock className="w-3 h-3" />{option.duration}
+                              </p>
+                            )}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
+                        <div className="text-right">
+                          <p className="font-display font-bold text-violet-tech text-lg">{option.price}€</p>
+                          {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
+                        </div>
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
               </motion.div>
-            </div>
-          ) : (
-            <div className="grid lg:grid-cols-3 gap-12">
-              <div className="lg:col-span-2">
-                <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-xl p-8 border-border/40">
-                  <h2 className="font-display font-bold text-2xl mb-8">Customer Information</h2>
 
-                  {/* Red Alert Box for Steam Only */}
-                  {(productId === "ai-engine" || productId === "jitter-script") && (
-                    <div className="mb-8 p-4 rounded-lg bg-red-500/10 border border-red-500/30 flex items-start gap-3">
-                      <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+              {/* Information Form */}
+              <motion.div variants={fadeUp} custom={2} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
+                <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
+                  <Shield className="w-6 h-6 text-violet-tech" />
+                  Your Information
+                </h2>
+                <form onSubmit={handleCheckout} className="space-y-6">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">First Name</label>
+                      <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="John" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">Last Name</label>
+                      <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="Doe" />
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">Email Address</label>
+                      <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john@example.com" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">Discord Username</label>
+                      <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john_doe#1234" />
+                    </div>
+                  </div>
+
+                  {/* Hardware Configuration */}
+                  <div className="pt-4 border-t border-border/30">
+                    <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Hardware Configuration</h3>
+                    <div className="grid sm:grid-cols-3 gap-4">
                       <div>
-                        <p className="text-sm font-bold text-red-400 tracking-wide uppercase mb-1">
-                          Important: Steam Required
-                        </p>
-                        <p className="text-xs text-red-300/80 leading-relaxed">
-                          Apex Legends must be installed on **STEAM ONLY**. The EA App/Origin version is NOT compatible with our tools. Please ensure you have the correct version before purchasing.
-                        </p>
+                        <label className="block text-sm font-semibold text-foreground mb-2">Processor (CPU)</label>
+                        <input type="text" name="cpu" value={formData.cpu} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="e.g. i7-12700K" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">Graphics Card (GPU)</label>
+                        <input type="text" name="gpu" value={formData.gpu} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="e.g. RTX 3060" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">Operating System (OS)</label>
+                        <select name="os" value={formData.os} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none appearance-none">
+                          <option value="Windows 10">Windows 10</option>
+                          <option value="Windows 11">Windows 11</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Controller Selection */}
+                  {(productId === "jitter-script" || productId === "ai-engine") && (
+                    <div className="pt-4 border-t border-border/30">
+                      <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Controller Type</h3>
+                      <div className="p-4 rounded-lg bg-blue-900/20 border border-blue-500/30 mb-4">
+                        <p className="text-sm text-blue-200/90"><strong className="text-blue-400">⚠️ Important:</strong> OneScript supports <strong>controllers only</strong> (PS5, Xbox, Gamesir, etc.). Keyboard and Mouse are <strong>not supported</strong>.</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">Select Your Input Method</label>
+                        <select name="controller" value={formData.controller || ""} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none appearance-none">
+                          <option value="">Choose your input method...</option>
+                          <option value="Xbox">Xbox Controller</option>
+                          <option value="PS5">PlayStation 5 Controller</option>
+                          <option value="PS5 Edge">PlayStation 5 Edge Controller</option>
+                          <option value="Gamesir">Gamesir Controller</option>
+                          <option value="Other">Other Controller</option>
+                        </select>
                       </div>
                     </div>
                   )}
 
-                  <form onSubmit={handleCheckout} className="space-y-6">
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">First Name</label>
-                        <input type="text" name="firstName" required value={formData.firstName} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all" />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">Last Name</label>
-                        <input type="text" name="lastName" required value={formData.lastName} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all" />
-                      </div>
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">Email Address</label>
-                        <input type="email" name="email" required value={formData.email} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all" />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">Discord Username</label>
-                        <input type="text" name="discordPseudo" required placeholder="username#0000" value={formData.discordPseudo} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-6 pt-6 border-t border-border/20">
-                      <h3 className="font-display font-bold text-lg">System Specifications</h3>
-                      <div className="grid sm:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">CPU (Processor)</label>
-                          <input type="text" name="cpu" required placeholder="e.g. Intel i7-13700K" value={formData.cpu} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all" />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">GPU (Graphics Card)</label>
-                          <input type="text" name="gpu" required placeholder="e.g. NVIDIA RTX 3080" value={formData.gpu} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all" />
-                        </div>
-                      </div>
-
-                      <div className="grid sm:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">Operating System</label>
-                          <select name="os" value={formData.os} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all">
-                            <option value="Windows 10">Windows 10</option>
-                            <option value="Windows 11">Windows 11</option>
-                          </select>
-                        </div>
-                        {(productId === "jitter-script" || productId === "ai-engine") && (
-                          <div className="space-y-2">
-                            <label className="text-xs font-display font-semibold uppercase tracking-wider text-muted-foreground">Controller Type</label>
-                            <select name="controller" required value={formData.controller} onChange={handleInputChange} className="w-full bg-dark-base border border-border/50 rounded-md px-4 py-2.5 text-sm focus:border-violet-tech focus:ring-1 focus:ring-violet-tech outline-none transition-all">
-                              <option value="">Select your controller...</option>
-                              <option value="PS5 DualSense">PS5 DualSense</option>
-                              <option value="PS5 Edge">PS5 Edge</option>
-                              <option value="PS4 DualShock">PS4 DualShock</option>
-                              <option value="Xbox Series X/S">Xbox Series X/S</option>
-                              <option value="Xbox One">Xbox One</option>
-                              <option value="Xbox Elite">Xbox Elite</option>
-                              <option value="Gamesir Controller">Gamesir Controller</option>
-                              <option value="Other Controller">Other Controller</option>
-                            </select>
+                  {/* Self-Setup Confirmation Checkbox */}
+                  {isSelfSetupOption && (
+                    <div className="pt-4 border-t border-border/30">
+                      <div className="p-4 rounded-lg bg-violet-900/20 border border-violet-500/30">
+                        <div className="flex items-start gap-3">
+                          <div className="flex items-center h-5 mt-1">
+                            <input
+                              id="self-setup-check"
+                              type="checkbox"
+                              checked={selfSetupConfirmed}
+                              onChange={(e) => setSelfSetupConfirmed(e.target.checked)}
+                              className="w-5 h-5 rounded border-border/50 bg-dark-elevated text-violet-tech focus:ring-violet-tech/30 transition-all cursor-pointer"
+                            />
                           </div>
-                        )}
+                          <label htmlFor="self-setup-check" className="text-sm text-foreground font-medium leading-relaxed cursor-pointer select-none">
+                            I understand that I will receive a <strong>PDF guide</strong> and that I must perform the installation <strong>myself</strong>. I confirm that OneScript staff will <strong>not intervene</strong> in the installation process for this specific plan.
+                          </label>
+                        </div>
                       </div>
                     </div>
+                  )}
 
-                    <div className="space-y-4 pt-6">
-                      {isSelfSetupOption && (
-                        <label className="flex items-start gap-3 cursor-pointer group">
-                          <div className="relative flex items-center mt-1">
-                            <input type="checkbox" checked={selfSetupConfirmed} onChange={(e) => setSelfSetupConfirmed(e.target.checked)} className="sr-only" />
-                            <div className={`w-5 h-5 border rounded transition-all ${selfSetupConfirmed ? "bg-violet-tech border-violet-tech" : "border-border group-hover:border-violet-tech"}`} />
-                            {selfSetupConfirmed && <Check className="absolute w-3.5 h-3.5 text-white left-0.75" />}
-                          </div>
-                          <span className="text-xs text-muted-foreground leading-relaxed">
-                            I understand that I will receive a PDF guide and that I must perform the installation myself. I confirm that OneScript staff will not intervene in the installation process for this specific plan.
-                          </span>
-                        </label>
-                      )}
-
-                      <label className="flex items-start gap-3 cursor-pointer group">
-                        <div className="relative flex items-center mt-1">
-                          <input type="checkbox" checked={hardwareConfirmed} onChange={(e) => setHardwareConfirmed(e.target.checked)} className="sr-only" />
-                          <div className={`w-5 h-5 border rounded transition-all ${hardwareConfirmed ? "bg-violet-tech border-violet-tech" : "border-border group-hover:border-violet-tech"}`} />
-                          {hardwareConfirmed && <Check className="absolute w-3.5 h-3.5 text-white left-0.75" />}
-                        </div>
-                        <span className="text-xs text-muted-foreground leading-relaxed">
-                          I confirm that my PC meets the hardware requirements (NVIDIA GTX/RTX or AMD Native Support) and that I have installed Apex Legends on **STEAM**. I understand that no refunds will be issued for hardware incompatibility.
-                        </span>
+                  {/* Configuration Requirements Reminder */}
+                  <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 mb-6">
+                    <div className="flex gap-3 mb-4">
+                      <span className="text-xl flex-shrink-0">⚠️</span>
+                      <div className="text-sm text-amber-200/90 leading-relaxed">
+                        <strong className="text-amber-400 block mb-1">Important Reminder</strong>
+                        <p>By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. Purchases with non-compliant configurations are considered final. <strong>Note:</strong> Malfunctions caused by the customer's PC (hardware, drivers, OS, etc.) are not eligible for refunds.</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3 pt-3 border-t border-amber-500/20">
+                      <div className="flex items-center h-5 mt-1">
+                        <input
+                          id="hardware-check"
+                          type="checkbox"
+                          checked={hardwareConfirmed}
+                          onChange={(e) => setHardwareConfirmed(e.target.checked)}
+                          className="w-5 h-5 rounded border-amber-500/50 bg-dark-elevated text-amber-500 focus:ring-amber-500/30 transition-all cursor-pointer"
+                        />
+                      </div>
+                      <label htmlFor="hardware-check" className="text-sm text-amber-100 font-medium leading-relaxed cursor-pointer select-none">
+                        I confirm that my PC meets all the <strong>hardware requirements</strong> (NVIDIA RTX GPU, etc.) and that I have <strong>Steam</strong> installed for Apex Legends. I understand that no refunds will be issued for hardware incompatibility.
                       </label>
                     </div>
+                  </div>
 
-                    <Button type="submit" disabled={isLoading} className="w-full h-12 bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-bold tracking-widest neon-glow">
-                      {isLoading ? "PROCESSING..." : "VALIDATE MY INFORMATION"}
-                    </Button>
-                  </form>
-                </motion.div>
-              </div>
+                  <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
+                    {isLoading ? "Processing..." : "Validate my information"}
+                  </Button>
+                </form>
+              </motion.div>
+            </div>
 
-              <div className="lg:col-span-1">
-                <motion.div variants={fadeUp} custom={2} initial="hidden" animate="visible" className="glass-card rounded-xl p-6 border-violet-tech/30 sticky top-24">
-                  <h3 className="font-display font-bold text-lg mb-6">Order Summary</h3>
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-border/20">
-                      <div className="w-10 h-10 flex items-center justify-center rounded bg-violet-tech/15">
-                        <product.icon className="w-5 h-5 text-violet-tech" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider">Product</p>
-                        <p className="text-sm font-bold">{product.name}</p>
+            {/* Right: Summary */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-24 space-y-6">
+                <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="glass-card rounded-lg p-6 border-t-4 border-violet-tech">
+                  <h2 className="text-xl font-display font-bold mb-6">Order Summary</h2>
+
+                  {productId === "ai-engine" && (
+                    <div className="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 flex gap-3">
+                      <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                      <div className="text-sm text-amber-200/90 leading-relaxed">
+                        <strong className="text-amber-400 block mb-1">System Recommendation</strong>
+                        <p className="mb-2">For GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, <strong>Windows 10</strong> is strongly recommended for optimal AI performance and stability.</p>
+                        <p className="text-amber-300/90 text-xs font-semibold border-t border-amber-500/20 pt-2 mt-2">Issues related to your PC (hardware, drivers, third-party software, OS, antivirus) are not valid refund reasons.</p>
                       </div>
                     </div>
+                  )}
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Product</span>
+                      <span className="text-foreground font-medium">{product.name}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Option</span>
+                      <span className="text-foreground font-medium">{selectedItem?.label || "Not selected"}</span>
+                    </div>
+                    <div className="h-px bg-border/30" />
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-bold">Total</span>
+                      <span className="text-2xl font-display font-bold text-violet-tech">{total}€</span>
+                    </div>
+                  </div>
 
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-display font-bold uppercase tracking-[0.2em] text-violet-accent">Select Plan</label>
-                      <div className="grid gap-2">
-                        {product.options.map((option, i) => (
-                          <button key={option.label} onClick={() => setSelectedOptionIndex(i)} className={`text-left p-3 rounded-md border transition-all ${selectedOptionIndex === i ? "bg-violet-tech/10 border-violet-tech ring-1 ring-violet-tech/30" : "bg-dark-base border-border/40 hover:border-violet-tech/30"}`}>
-                            <div className="flex justify-between items-center mb-1">
-                              <span className="text-xs font-bold">{option.label}</span>
-                              <span className="text-sm font-display font-extrabold text-violet-tech">{option.price}€</span>
+                  {orderCreated ? (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-violet-tech/10 border border-violet-tech/20 rounded-lg">
+                        <p className="text-xs text-violet-tech font-bold uppercase tracking-wider mb-1">Order Number</p>
+                        <p className="text-sm font-mono font-bold text-foreground">{orderCreated.orderNumber}</p>
+                      </div>
+                      {!showBankTransfer ? (
+                        <>
+                          <div className="space-y-3">
+                            <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
+
+                            <div className="space-y-1">
+                              <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
+                                <CreditCard className="w-4 h-4" />
+                                PAY BY CARD (SUMUP)
+                              </Button>
+                              <p className="text-[10px] text-center text-amber-400/80">
+                                ⚠ 2.5% processing fee included — {(Math.ceil(total * 1.025 * 100) / 100).toFixed(2)}€ charged — EU cards only
+                              </p>
                             </div>
-                            {option.description && <p className="text-[10px] text-muted-foreground leading-tight">{option.description}</p>}
-                          </button>
-                        ))}
+
+                            <div className="space-y-1">
+                              <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
+                                <MessageCircle className="w-4 h-4" />
+                                PAY BY PAYPAL
+                              </Button>
+                              <p className="text-[10px] text-center text-blue-400/80 font-bold uppercase tracking-widest">
+                                ⚠️ Friends & Family payment only
+                              </p>
+                            </div>
+
+                            <div className="space-y-1">
+                              <Button type="button" onClick={() => { sendDiscordAndEmail(orderCreated!, "bunq"); window.open(`https://bunq.me/NoamFranckGeorgesRobert/${total.toFixed(2)}/OneScript%20Order%20${orderCreated!.orderNumber}`, "_blank"); }} className="w-full bg-[#00b9e8] hover:bg-[#009dc7] text-white font-bold py-4 flex items-center justify-center gap-2">
+                                <CreditCard className="w-4 h-4" />
+                                PAY BY CARD (BUNQ)
+                              </Button>
+                              <p className="text-[10px] text-center text-cyan-400/80">✓ Card payment, no fees — all cards accepted (incl. non-EU) — {total.toFixed(2)}€ charged</p>
+                            </div>
+
+                            <Button type="button" onClick={handleBankTransfer} variant="outline" className="w-full border-border/50 text-muted-foreground hover:text-foreground font-bold py-4">
+                              BANK TRANSFER (SEPA)
+                            </Button>
+                          </div>
+                        </>
+                      ) : (
+                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-6 bg-dark-elevated rounded-lg border border-violet-tech/30 space-y-4">
+                          <div className="flex items-center gap-2 text-violet-tech mb-2">
+                            <Shield className="w-5 h-5" />
+                            <h3 className="font-bold">Bank Transfer Details</h3>
+                          </div>
+                          <div className="space-y-3">
+                            <div>
+                              <p className="text-[10px] text-muted-foreground uppercase">Account Holder</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-medium">{BANK_TRANSFER.holder}</p>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.holder, "holder")} className="text-violet-tech text-xs hover:underline">{copiedField === "holder" ? "Copied!" : "Copy"}</button>
+                              </div>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-muted-foreground uppercase">IBAN</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-mono">{BANK_TRANSFER.iban}</p>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.iban, "iban")} className="text-violet-tech text-xs hover:underline">{copiedField === "iban" ? "Copied!" : "Copy"}</button>
+                              </div>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-muted-foreground uppercase">BIC / SWIFT</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-mono">{BANK_TRANSFER.bic}</p>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.bic, "bic")} className="text-violet-tech text-xs hover:underline">{copiedField === "bic" ? "Copied!" : "Copy"}</button>
+                              </div>
+                            </div>
+                            <div className="pt-2 border-t border-border/30">
+                              <p className="text-[10px] text-muted-foreground uppercase">Reference (Required)</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-bold text-violet-tech">{orderCreated.orderNumber}</p>
+                                <button onClick={() => copyToClipboard(orderCreated.orderNumber, "ref")} className="text-violet-tech text-xs hover:underline">{copiedField === "ref" ? "Copied!" : "Copy"}</button>
+                              </div>
+                            </div>
+                          </div>
+                          <Button onClick={() => setShowBankTransfer(false)} variant="ghost" className="w-full text-xs text-muted-foreground hover:text-foreground">
+                            Go back to payment methods
+                          </Button>
+                        </motion.div>
+                      )}
+
+                      <div className="p-4 bg-dark-elevated/50 rounded-lg border border-border/30">
+                        <div className="flex gap-3">
+                          <Lock className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
+                          <p className="text-[11px] text-muted-foreground leading-relaxed">
+                            Payments are secure. After payment, send your order number <strong>{orderCreated.orderNumber}</strong> on our <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-violet-tech hover:underline">Discord server</a> to receive your access.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="space-y-3 pt-6 border-t border-border/20">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Subtotal</span>
-                      <span className="text-sm font-medium">{total} €</span>
+                  ) : (
+                    <div className="text-center p-8 border-2 border-dashed border-border/30 rounded-lg">
+                      <AlertCircle className="w-8 h-8 text-muted-foreground/30 mx-auto mb-3" />
+                      <p className="text-sm text-muted-foreground">Complete the form to see payment options</p>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Fees</span>
-                      <span className="text-sm font-medium">0.00 €</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-border/20">
-                      <span className="font-display font-bold">Total</span>
-                      <span className="font-display font-extrabold text-2xl text-violet-tech">{total} €</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 space-y-3">
-                    <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                      <Shield className="w-3 h-3 text-violet-tech" /> Secure encrypted checkout
-                    </div>
-                    <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                      <Clock className="w-3 h-3 text-violet-tech" /> Instant delivery after verification
-                    </div>
-                  </div>
+                  )}
                 </motion.div>
+
+                <div className="glass-card rounded-lg p-6">
+                  <h3 className="text-sm font-bold mb-4 flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-violet-tech" />
+                    Secure Purchase
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 text-green-500" />
+                      Instant notification after validation
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 text-green-500" />
+                      Dedicated Discord support
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 text-green-500" />
+                      Regular updates included
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </section>
     </div>
