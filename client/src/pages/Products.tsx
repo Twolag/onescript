@@ -221,7 +221,7 @@ export default function Products() {
               <span className="text-violet-tech neon-text">Tools</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Discover our three solutions designed to transform your gaming experience and optimize your Windows PC.
+              Discover our solutions designed to transform your gaming experience. Featuring the brand new **FUSION IA V7.0**.
             </p>
           </motion.div>
         </div>
@@ -231,25 +231,27 @@ export default function Products() {
       {/* Product 1: FUSION AI */}
       <ProductSection
         id="fusion-ai"
-        title="FUSION AI - v6.8"
+        title="FUSION IA - V7.0"
         subtitle="AI Visual Processing"
-       description="FUSION AI v6.8 is a 100% software solution based on computer vision and real-time AI processing. With v6.8, discover the Panic Button (Streamer Mode), Profile Keybinds to change config mid-match, and 100% customizable triggers. Performance is not capped — it evolves directly with your hardware. Controller Only Support (PS5, Xbox, Gamesir)."
+        description="FUSION IA V7.0 is a revolutionary update. Completely redesigned architecture for maximum smoothness. Native AMD compatibility, zero FPS drops, and ultra-low controller latency. Experience a premium interface with real-time synchronization and a cinematic launch intro. Controller Only Support (PS5, Xbox, Gamesir)."
         image={AI_ENGINE}
         icon={Cpu}
         features={[
-          "Real-time AI visual processing",
-          "Panic Button (Streamer Mode) - 100% invisible",
-          "Profile Keybinds - Change config mid-match",
-          "100% Customizable Aimbot Triggers",
-          "New modern and fluid Interface (UI)",
-          "Profile Manager Rework",
-          "Compatible with NVIDIA RTX only",
+          "New V7.0 Redesigned Architecture",
+          "Native AMD & NVIDIA Compatibility",
+          "Zero FPS Drops Guarantee",
+          "Ultra-Low Controller Latency ⚡",
+          "Premium UI Redesign (Dark Theme)",
+          "Native Fullscreen Support (1920x1080)",
+          "Integrated Cinematic Video Launch",
+          "New Advanced Precise Settings",
+          "Real-Time Intelligent Sync",
           "Regular updates included",
         ]}
         compatibility={[
-          { label: "Mid Range GPU", value: "RTX 3060 / 3070 / 4060" },
-          { label: "High End GPU", value: "RTX 4070 / 5060+" },
-          { label: "Recommended CPU", value: "i5 13600K / Ryzen 5 5600X" },
+          { label: "NVIDIA GPU", value: "RTX 3060 / 4060 / 5060+" },
+          { label: "AMD GPU", value: "RX 6000 / 7000+ (Native)" },
+          { label: "Recommended CPU", value: "i5 13th Gen / Ryzen 5 5000+" },
           { label: "Platform", value: "STEAM ONLY (Apex)" },
           { label: "OS", value: "Windows 10 / 11" },
         ]}

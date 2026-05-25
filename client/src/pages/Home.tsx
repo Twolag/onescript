@@ -18,6 +18,7 @@ import {
   Headphones,
   Check,
   MessageCircle,
+  Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -34,11 +35,12 @@ const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizD
 const AI_ENGINE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/ai-engine-6SKTfecoMvNZP2zUzG7RJC.webp";
 const WINDOWS_OPT = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/windows-opt-hbtfPZHCAfaAwuw4Ngcm4n.webp";
 const SCRIPT_TOOLS = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/script-tools-9s4442CUnpqxX9XkT96GRA.webp";
+const V7_VIDEO = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663410292855/EkUnSGkfbgRkUXzg.mp4";
 
 const products = [
   {
-    title: "FUSION AI - v6.8",
-    desc: "Real-time AI visual processing. Panic Button (Streamer Mode), Profile Keybinds, 100% Customizable Triggers. Advanced interface, improved stability. 100% software, no external hardware required.",
+    title: "FUSION IA - V7.0",
+    desc: "Major update! Completely redesigned architecture. Native AMD & NVIDIA support. Zero FPS drops, improved controller latency, and a brand new premium interface. The ultimate AI visual processing engine.",
     icon: Cpu,
     image: AI_ENGINE,
     price: "50 €",
@@ -47,7 +49,7 @@ const products = [
   },
   {
     title: "Windows Optimization",
-    desc: "System cleanup, removal of unnecessary services, RAM/CPU optimization. Minimum gain: 40-60 FPS.",
+    desc: "System cleanup, removal of unnecessary services, RAM/CPU optimization. Minimum gain: 40-60 FPS. Essential for maximum smoothness with FUSION IA.",
     icon: Monitor,
     image: WINDOWS_OPT,
     price: "20 €",
@@ -66,9 +68,9 @@ const products = [
 ];
 
 const stats = [
-  { value: "+60", unit: "FPS", label: "Minimum gain" },
-  { value: "-40", unit: "%", label: "Reduced latency" },
-  { value: "99", unit: "%", label: "Stability" },
+  { value: "V7.0", unit: "NEW", label: "Architecture" },
+  { value: "0", unit: "FPS", label: "Drop Guaranteed" },
+  { value: "AMD", unit: "& NV", label: "Native Support" },
   { value: "24/7", unit: "", label: "Support" },
 ];
 
@@ -88,16 +90,16 @@ const pricingPlans = [
     cta: "CHOOSE THIS PLAN",
   },
   {
-    name: "AI Aimbot - v6.8 - Standard",
+    name: "AI Aimbot - V7.0 - Standard",
     price: "50",
     period: "1 month license",
-    desc: "PDF Installation Guide included - No remote installation support | Controller Only Support (PS5, Xbox, Gamesir) | STEAM ONLY",
+    desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY",
     features: [
-      "Real-time AI visual processing",
+      "New V7.0 Redesigned Architecture",
+      "Native AMD & NVIDIA Support",
       "Apex Legends: STEAM ONLY",
-      "Panic Button (Streamer Mode) - 100% invisible",
-      "Profile Keybinds - Change config mid-match",
-      "100% Customizable Triggers",
+      "Improved Controller Latency ⚡",
+      "Zero FPS Drops Guarantee",
       "PDF Setup Guide included",
       "No installation assistance",
     ],
@@ -105,16 +107,15 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - v6.8 - Premium",
+    name: "AI Aimbot - V7.0 - Premium",
     price: "80",
     period: "1st month + inst.",
-    desc: "Complete remote installation by our team + 1st month included | Controller Only Support (PS5, Xbox, Gamesir) | STEAM ONLY",
+    desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY",
     features: [
-      "Real-time AI visual processing",
+      "New V7.0 Redesigned Architecture",
+      "Native AMD & NVIDIA Support",
       "Apex Legends: STEAM ONLY",
-      "Panic Button (Streamer Mode) - 100% invisible",
-      "Profile Keybinds - Change config mid-match",
-      "100% Customizable Triggers",
+      "Improved Controller Latency ⚡",
       "Full Remote Installation",
       "Renewal: 30 € / month",
     ],
@@ -122,15 +123,15 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - v6.8 - Annual",
+    name: "AI Aimbot - V7.0 - Annual",
     price: "250",
     period: "per year",
-    desc: "Annual subscription - Full access to all features for 12 months | Controller Only Support (PS5, Xbox, Gamesir)",
+    desc: "Annual subscription - Full access to all features for 12 months | AMD & NVIDIA Support",
     features: [
-      "Real-time AI visual processing",
-      "Panic Button (Streamer Mode) - 100% invisible",
-      "Profile Keybinds - Change config mid-match",
-      "100% Customizable Triggers",
+      "V7.0 Full Access",
+      "Native AMD & NVIDIA Support",
+      "Improved Controller Latency ⚡",
+      "Zero FPS Drops Guarantee",
       "12 months of updates & support",
       "Priority support",
     ],
@@ -138,15 +139,15 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - v6.8 - Lifetime",
+    name: "AI Aimbot - V7.0 - Lifetime",
     price: "450",
     period: "one-time",
-    desc: "Lifetime access - Permanent license with all future updates included | Controller Only Support (PS5, Xbox, Gamesir)",
+    desc: "Lifetime access - Permanent license with all future updates included | AMD & NVIDIA Support",
     features: [
-      "Real-time AI visual processing",
-      "Panic Button (Streamer Mode) - 100% invisible",
-      "Profile Keybinds - Change config mid-match",
-      "100% Customizable Triggers",
+      "V7.0 Full Access",
+      "Native AMD & NVIDIA Support",
+      "Improved Controller Latency ⚡",
+      "Zero FPS Drops Guarantee",
       "Lifetime updates & support",
       "Priority support",
     ],
@@ -184,22 +185,22 @@ export default function Home() {
           <div className="w-full h-full" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(123,46,255,0.03) 2px, rgba(123,46,255,0.03) 4px)" }} />
         </div>
         <div className="relative container">
-          <div className="flex items-center justify-between gap-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             <div className="max-w-2xl flex-1">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
                 <Zap className="w-3 h-3" />
-                PC GAMING PERFORMANCE
+                FUSION IA V7.0 IS LIVE
               </motion.div>
               <motion.h1 custom={1} variants={fadeUp} initial="hidden" animate="visible" className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight mb-6">
-                Unlock Your PC's{" "}<span className="text-violet-tech neon-text">True Performance</span>
+                Dominate with{" "}<span className="text-violet-tech neon-text">FUSION IA V7.0</span>
               </motion.h1>
               <motion.p custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
-                OneScript optimizes your PC for gaming. Apex Legends Jitter Script, AI Aimbot, Windows Optimization. More FPS, less latency, maximum stability. Compatible with Windows 10 & 11.
+                The most advanced AI visual engine. Now with **Native AMD & NVIDIA support**, zero FPS drops, and ultra-low controller latency. Experience the future of gaming performance.
               </motion.p>
               <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-wrap gap-4">
                 <Link href="/purchase?product=ai-engine">
                   <Button size="lg" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                    <Zap className="w-4 h-4" />GET STARTED<ArrowRight className="w-4 h-4" />
+                    <Zap className="w-4 h-4" />GET V7.0 NOW<ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Link href="/products">
@@ -214,9 +215,20 @@ export default function Home() {
                 </a>
               </motion.div>
             </div>
-            <motion.div initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="hidden lg:flex flex-shrink-0 items-center justify-center relative" style={{ width: '420px', height: '480px' }}>
-              <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(ellipse at center, rgba(123,46,255,0.35) 0%, rgba(123,46,255,0.1) 50%, transparent 75%)' }} />
-              <img src="/hero-robot.png" alt="FUSION AI" className="relative z-10 w-full h-full object-contain" style={{ filter: 'drop-shadow(0 0 32px rgba(123,46,255,0.6)) drop-shadow(0 0 8px rgba(255,50,50,0.4))' }} />
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.3 }} className="w-full lg:w-[500px] aspect-video relative rounded-xl overflow-hidden border border-violet-tech/30 shadow-[0_0_50px_rgba(123,46,255,0.2)]">
+              <video 
+                src={V7_VIDEO} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                <span className="text-[10px] font-display font-bold text-white tracking-widest uppercase bg-black/50 px-2 py-1 rounded">V7.0 CINEMATIC LAUNCH</span>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -249,16 +261,17 @@ export default function Home() {
             <motion.div variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
               <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">Performance</span>
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-6">
-                Dominate the <span className="text-violet-tech">Competition</span>
+                Next-Gen <span className="text-violet-tech">AI Engine</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Our solutions are designed to give you a decisive advantage. Whether through AI visual processing or deep system optimization, we push the limits of what your PC can do.
+                FUSION IA V7.0 introduces a revolutionary architecture. By decoupling visual processing from game threads, we guarantee **zero FPS drops** and **instant responsiveness**, regardless of your system configuration.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { icon: Clock, title: "Low Latency", desc: "Optimized for minimum input lag" },
-                  { icon: TrendingUp, title: "FPS Boost", desc: "Gain up to 60 FPS on average" },
-                  { icon: Shield, title: "99% Stability", desc: "No crashes, no freezes" },
+                  { icon: Layers, title: "AMD & NVIDIA", desc: "Native support for all modern GPUs" },
+                  { icon: Clock, title: "Low Latency", desc: "Drastically reduced controller input lag" },
+                  { icon: TrendingUp, title: "Optimized Engine", desc: "No hardware monitoring conflicts" },
+                  { icon: Shield, title: "V7.0 Stability", desc: "Completely redesigned for Windows 10/11" },
                 ].map((item, i) => (
                   <motion.div key={item.title} custom={i + 1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="flex items-start gap-4 p-4 rounded-lg bg-dark-elevated/50 border border-border/30 hover:border-violet-tech/20 transition-colors duration-300">
                     <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
@@ -278,8 +291,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-base/60 to-transparent" />
               </div>
               <div className="absolute -bottom-6 -left-4 sm:left-auto sm:-right-6 glass-card rounded-lg p-4 neon-glow">
-                <div className="font-display font-extrabold text-2xl text-violet-tech">+60 FPS</div>
-                <p className="text-xs text-muted-foreground mt-0.5">Minimum observed gain</p>
+                <div className="font-display font-extrabold text-2xl text-violet-tech">V7.0 LIVE</div>
+                <p className="text-xs text-muted-foreground mt-0.5">Architecture redesigned</p>
               </div>
             </motion.div>
           </div>
