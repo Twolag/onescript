@@ -233,13 +233,12 @@ export default function Products() {
         id="fusion-ai"
         title="FUSION IA - V7.0"
         subtitle="AI Visual Processing"
-        description="FUSION IA V7.0 is a revolutionary update. Completely redesigned architecture for maximum smoothness. Native AMD compatibility, zero FPS drops, and ultra-low controller latency. Experience a premium interface with real-time synchronization and a cinematic launch intro. Controller Only Support (PS5, Xbox, Gamesir)."
-        image={AI_ENGINE}
+        description: "FUSION IA V7.0 is a revolutionary update. Completely redesigned architecture for maximum smoothness. Native NVIDIA & AMD compatibility and ultra-low controller latency. Experience a premium interface with real-time synchronization and a cinematic launch intro. Controller Only Support (PS5, Xbox, Gamesir).",       image={AI_ENGINE}
         icon={Cpu}
         features={[
           "New V7.0 Redesigned Architecture",
-          "Native AMD & NVIDIA Compatibility",
-          "Zero FPS Drops Guarantee",
+          "Native NVIDIA & AMD Compatibility",
+          "Ultra-optimized Engine",
           "Ultra-Low Controller Latency ⚡",
           "Premium UI Redesign (Dark Theme)",
           "Native Fullscreen Support (1920x1080)",
@@ -249,8 +248,8 @@ export default function Products() {
           "Regular updates included",
         ]}
         compatibility={[
-          { label: "NVIDIA GPU", value: "RTX 3060 / 4060 / 5060+" },
-          { label: "AMD GPU", value: "RX 6000 / 7000+ (Native)" },
+          { label: "NVIDIA GPU", value: "GTX 10 Series / RTX 20 / 30 / 40 / 50+" },
+          { label: "AMD GPU", value: "RX 5000 / 6000 / 7000+ (Native)" },
           { label: "Recommended CPU", value: "i5 13th Gen / Ryzen 5 5000+" },
           { label: "Platform", value: "STEAM ONLY (Apex)" },
           { label: "OS", value: "Windows 10 / 11" },

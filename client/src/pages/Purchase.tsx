@@ -464,7 +464,7 @@ export default function Purchase() {
                           {hardwareConfirmed && <Check className="absolute w-3.5 h-3.5 text-white left-0.75" />}
                         </div>
                         <span className="text-xs text-muted-foreground leading-relaxed">
-                          I confirm that my PC meets the hardware requirements (NVIDIA RTX / AMD Native Support) and that I have installed Apex Legends on **STEAM**. I understand that no refunds will be issued for hardware incompatibility.
+                          I confirm that my PC meets the hardware requirements (NVIDIA GTX/RTX or AMD Native Support) and that I have installed Apex Legends on **STEAM**. I understand that no refunds will be issued for hardware incompatibility.
                         </span>
                       </label>
                     </div>

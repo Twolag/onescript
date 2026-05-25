@@ -93,13 +93,10 @@ export default function Documentation() {
                   </h3>
                   <ul className="space-y-3">
                     <li className="text-sm text-muted-foreground flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> NVIDIA RTX 3060 / 4060+
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> NVIDIA GTX 10 / RTX 20 / 30 / 40 / 50+
                     </li>
                     <li className="text-sm text-muted-foreground flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> AMD RX 6000 / 7000+
-                    </li>
-                    <li className="text-sm text-red-400 flex items-center gap-2 font-medium">
-                      <AlertTriangle className="w-3.5 h-3.5" /> GTX Series Not Supported
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> AMD RX 5000 / 6000 / 7000+
                     </li>
                   </ul>
                 </div>

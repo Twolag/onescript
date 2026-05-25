@@ -69,8 +69,7 @@ const products = [
 
 const stats = [
   { value: "V7.0", unit: "NEW", label: "Architecture" },
-  { value: "0", unit: "FPS", label: "Drop Guaranteed" },
-  { value: "AMD", unit: "& NV", label: "Native Support" },
+  { value: "NV", unit: "& AMD", label: "Native Support" },
   { value: "24/7", unit: "", label: "Support" },
 ];
 
@@ -195,7 +194,7 @@ export default function Home() {
                 Dominate with{" "}<span className="text-violet-tech neon-text">FUSION IA V7.0</span>
               </motion.h1>
               <motion.p custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
-                The most advanced AI visual engine. Now with **Native AMD & NVIDIA support**, zero FPS drops, and ultra-low controller latency. Experience the future of gaming performance.
+                The most advanced AI visual engine. Now with **Native NVIDIA & AMD support** and ultra-low controller latency. Experience the future of gaming performance.
               </motion.p>
               <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-wrap gap-4">
                 <Link href="/purchase?product=ai-engine">
@@ -215,7 +214,7 @@ export default function Home() {
                 </a>
               </motion.div>
             </div>
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.3 }} className="w-full lg:w-[500px] aspect-video relative rounded-xl overflow-hidden border border-violet-tech/30 shadow-[0_0_50px_rgba(123,46,255,0.2)]">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.3 }} className="w-full lg:w-[700px] aspect-video relative rounded-xl overflow-hidden border border-violet-tech/30 shadow-[0_0_50px_rgba(123,46,255,0.2)]">
               <video 
                 src={V7_VIDEO} 
                 autoPlay 
@@ -241,7 +240,7 @@ export default function Home() {
       <section className="relative py-12 border-y border-border/30">
         <div className="absolute inset-0 bg-dark-surface/50" />
         <div className="relative container">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {stats.map((stat, i) => (
               <motion.div key={stat.label} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="text-center lg:text-left">
                 <div className="font-display font-extrabold text-3xl sm:text-4xl text-violet-tech neon-text">
@@ -268,7 +267,7 @@ export default function Home() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { icon: Layers, title: "AMD & NVIDIA", desc: "Native support for all modern GPUs" },
+                  { icon: Layers, title: "NVIDIA & AMD", desc: "Native support for all modern GPUs" },
                   { icon: Clock, title: "Low Latency", desc: "Drastically reduced controller input lag" },
                   { icon: TrendingUp, title: "Optimized Engine", desc: "No hardware monitoring conflicts" },
                   { icon: Shield, title: "V7.0 Stability", desc: "Completely redesigned for Windows 10/11" },
