@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock, Zap
+  MessageCircle, CreditCard, Clock, Zap, ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
