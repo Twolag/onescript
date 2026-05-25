@@ -233,7 +233,7 @@ export default function Products() {
         id="fusion-ai"
         title="FUSION IA - V7.0"
         subtitle="AI Visual Processing"
-        description: "FUSION IA V7.0 is a revolutionary update. Completely redesigned architecture for maximum smoothness. Native NVIDIA & AMD compatibility and ultra-low controller latency. Experience a premium interface with real-time synchronization and a cinematic launch intro. Controller Only Support (PS5, Xbox, Gamesir).",       image={AI_ENGINE}
+        description="FUSION IA V7.0 is a revolutionary update. Completely redesigned architecture for maximum smoothness. Native NVIDIA & AMD compatibility and ultra-low controller latency. Experience a premium interface with real-time synchronization and a cinematic launch intro. Controller Only Support (PS5, Xbox, Gamesir)."       image={AI_ENGINE}
         icon={Cpu}
         features={[
           "New V7.0 Redesigned Architecture",
