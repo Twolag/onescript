@@ -32,7 +32,7 @@ const gpuData = [
   { name: "RTX 4080 / 4090", tier: "High End", status: "recommended", note: "Optimal performance" },
   { name: "RTX 5060+", tier: "High End", status: "recommended", note: "Latest generation — optimal" },
   { name: "GTX 1660 and below", tier: "Low End", status: "incompatible", note: "Not compatible — GPU too old" },
-  { name: "AMD Radeon", tier: "Various", status: "incompatible", note: "Not compatible — NVIDIA only" },
+  { name: "AMD Radeon RX 5000+", tier: "Modern GPU", status: "compatible", note: "Native support available in V7.0" },
 ];
 
 const cpuData = [
@@ -121,7 +121,7 @@ export default function Compatibility() {
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed">
                 Check your hardware compatibility with our tools.
-                NVIDIA RTX recommended for optimal performance.
+                NVIDIA & AMD supported for optimal performance.
               </p>
             </motion.div>
             <motion.div
@@ -159,7 +159,7 @@ export default function Compatibility() {
               <h2 className="font-display font-bold text-2xl tracking-tight">
                 Supported GPUs (AI Aimbot only)
               </h2>
-              <p className="text-sm text-muted-foreground">NVIDIA RTX required for AI. Other tools work on all GPUs.</p>
+              <p className="text-sm text-muted-foreground">NVIDIA & AMD Native support for AI. Other tools work on all GPUs.</p>
             </div>
           </motion.div>
 
