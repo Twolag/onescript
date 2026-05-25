@@ -69,7 +69,7 @@ const products = [
 
 const stats = [
   { value: "V7.0", unit: "NEW", label: "Architecture" },
-  { value: "NV", unit: "& AMD", label: "Native Support" },
+  { value: "NVIDIA", unit: "& AMD", label: "Native Support" },
   { value: "24/7", unit: "", label: "Support" },
 ];
 
