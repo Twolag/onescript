@@ -164,9 +164,7 @@ export default function Documentation() {
                 <div className="flex items-center gap-2 text-[10px] font-bold text-violet-accent tracking-widest uppercase">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-500" /> Undetected
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-violet-accent tracking-widest uppercase">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500" /> External Only
-                </div>
+
               </div>
             </motion.div>
 
