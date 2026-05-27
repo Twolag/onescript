@@ -31,19 +31,19 @@ const fadeUp = {
 const faqItems = [
   {
     q: "How do I install FUSION AI?",
-    a: "Once your order is placed, you will receive a unique order number by email. You will then need to join our Discord server (https://discord.gg/5btq6znUvN) and open a ticket with this number. Our team will then organize the installation with you within a maximum of 24 hours. The installation process takes about 15-30 minutes.",
+    a: "Once your order is placed, you will receive a unique order number by email. You will then need to join our Discord server (https://discord.gg/5btq6znUvN) and open a ticket with this number. Our team will then organize the installation with you within a maximum of 24 hours. The installation process takes about 15-30 minutes. V7.4 features a 10x more powerful AI Aimbot with exceptional performance on both NVIDIA and AMD platforms.",
   },
   {
     q: "Which GPUs are compatible?",
-    a: "We recommend NVIDIA RTX 3060 GPUs and above for optimal performance. RTX 4070 and RTX 5060+ offer the best results. Check our Compatibility page for more details.",
+    a: "We recommend NVIDIA RTX 3060+ and AMD RX 6600 XT+ for optimal performance. RTX 4070 and RTX 5060+ offer the best NVIDIA results. AMD RX 6700 XT and RX 7000 series offer exceptional V7.4 performance. Check our Compatibility page for more details.",
   },
   {
     q: "Is a subscription required for FUSION AI?",
-    a: "The monthly subscription of €30/month includes regular updates and technical support. The initial €80 license is a one-time payment for installation and configuration.",
+    a: "The monthly subscription of €30/month includes regular updates and technical support. The initial €80 license is a one-time payment for installation and configuration. V7.4 includes all the latest features with 10x more powerful AI Aimbot.",
   },
   {
     q: "What FPS gain can I expect?",
-    a: "The minimum observed gain is 40 to 60 FPS, depending on your hardware configuration. High-end setups (RTX 4070+) generally get the best results.",
+    a: "The minimum observed gain is 40 to 60 FPS, depending on your hardware configuration. High-end setups (RTX 4070+, RX 6700 XT+) generally get the best results. V7.4 provides exceptional performance on both NVIDIA and AMD platforms.",
   },
   {
     q: "Is Windows Optimization safe for my PC?",
@@ -51,10 +51,10 @@ const faqItems = [
   },
   {
     q: "Can I get a refund?",
-    a: "For FUSION AI, refunds are only possible if your GPU is strictly below RTX 3060 (e.g., RTX 3050 or equivalent/inferior) AND the software does not function correctly after full optimization (including a Windows 10 reinstallation if necessary). No refund will be granted if recommended optimizations are refused. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final. ***IMPORTANT:*** No refund will be processed or accepted if the malfunction is due to the customer's PC (hardware, drivers, third-party software, OS, antivirus, etc.) or its components. Refunds are ONLY applicable if the malfunction is proven to be directly and solely caused by the OneScript software itself. For other products, a 14-day refund policy applies if the product has not been used.", },
+    a: "For FUSION AI, refunds are only possible if your GPU is strictly below RTX 3060 for NVIDIA (e.g., RTX 3050) or below RX 6600 XT for AMD AND the software does not function correctly after full optimization (including a Windows 10 reinstallation if necessary). No refund will be granted if recommended optimizations are refused. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final. ***IMPORTANT:*** No refund will be processed or accepted if the malfunction is due to the customer's PC (hardware, drivers, third-party software, OS, antivirus, etc.) or its components. Refunds are ONLY applicable if the malfunction is proven to be directly and solely caused by the OneScript software itself. For other products, a 14-day refund policy applies if the product has not been used.", },
   {
     q: "Which Windows version is recommended for FUSION AI?",
-    a: "Windows 10 is strongly recommended for GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 to ensure optimal FUSION AI performance and stability. This recommendation is distinct from refund conditions."  },
+    a: "Windows 10 is strongly recommended for GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, and AMD RX 6600 XT / 6700 XT to ensure optimal FUSION AI V7.4 performance and stability. This recommendation is distinct from refund conditions."  },
   {
     q: "How does technical support work?",
     a: "Our support is available via the ticket system below. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",
@@ -65,7 +65,7 @@ const faqItems = [
   },
   {
     q: "Which controllers are supported?",
-    a: "We support Xbox controllers, PlayStation 5 controllers, and PlayStation 5 Edge controllers. During checkout, you will be asked to specify which controller you are using. If you have a different controller model, please select 'Other' and contact our support team via Discord for compatibility verification.",
+    a: "We support Xbox controllers, PlayStation 5 controllers, PlayStation 5 Edge controllers, and Gamesir controllers. During checkout, you will be asked to specify which controller you are using. If you have a different controller model, please select 'Other' and contact our support team via Discord for compatibility verification.",
   },
 ];
 

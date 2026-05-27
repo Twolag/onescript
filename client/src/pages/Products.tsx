@@ -221,7 +221,7 @@ export default function Products() {
               <span className="text-violet-tech neon-text">Tools</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Discover our solutions designed to transform your gaming experience. Featuring the brand new **FUSION IA V7.0**.
+              Discover our solutions designed to transform your gaming experience. Featuring the brand new **FUSION IA V7.4**.
             </p>
           </motion.div>
         </div>
@@ -231,12 +231,12 @@ export default function Products() {
       {/* Product 1: FUSION AI */}
       <ProductSection
         id="fusion-ai"
-        title="FUSION IA - V7.0"
+        title="FUSION IA - V7.4"
         subtitle="AI Visual Processing"
-        description="FUSION IA V7.0 is a revolutionary update. Completely redesigned architecture for maximum smoothness. Native NVIDIA & AMD compatibility and ultra-low controller latency. Experience a premium interface with real-time synchronization and a cinematic launch intro. Controller Only Support (PS5, Xbox, Gamesir)."       image={AI_ENGINE}
+        description="FUSION IA V7.4 features an AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Completely redesigned architecture for maximum smoothness. Native NVIDIA & AMD compatibility and ultra-low controller latency. Experience a premium interface with real-time synchronization and a cinematic launch intro. Controller Only Support (PS5, Xbox, Gamesir)."       image={AI_ENGINE}
         icon={Cpu}
         features={[
-          "New V7.0 Redesigned Architecture",
+          "New V7.4 Redesigned Architecture",
           "Native NVIDIA & AMD Compatibility",
           "Ultra-optimized Engine",
           "Ultra-Low Controller Latency ⚡",
@@ -249,7 +249,7 @@ export default function Products() {
         ]}
         compatibility={[
           { label: "NVIDIA GPU", value: "GTX 10 Series / RTX 20 / 30 / 40 / 50+" },
-          { label: "AMD GPU", value: "RX 5000 / 6000 / 7000+ (Native)" },
+          { label: "AMD GPU", value: "RX 6600 XT / 6700+ / 7000+ (Native)" },
           { label: "Recommended CPU", value: "i5 13th Gen / Ryzen 5 5000+" },
           { label: "Platform", value: "STEAM ONLY (Apex)" },
           { label: "OS", value: "Windows 10 / 11" },
