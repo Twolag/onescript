@@ -172,6 +172,7 @@ const pricingPlans = [
 
 export default function Home() {
   return (
+    <>
       {/* ═══════════════ PROMO BANNER ═══════════════ */}
       <motion.div 
         initial={{ opacity: 0, y: -30 }} 
@@ -204,7 +205,7 @@ export default function Home() {
       {/* Spacer to prevent content overlap */}
       <div className="h-16 sm:h-20" />
 
-    <div className="overflow-hidden">
+      <div className="overflow-hidden">
       {/* ═══════════════ HERO SECTION ═══════════════ */}
       <section className="relative min-h-[90vh] flex items-center">
         <div className="absolute inset-0">
@@ -418,5 +419,6 @@ export default function Home() {
         </div>
       </section>
     </div>
+    </>
   );
 }
