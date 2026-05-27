@@ -549,6 +549,11 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                   {/* Client Grade Selection (for Annual & Lifetime promo) */}
                   {isPromoEligible && (
                     <div className="pt-4 border-t border-border/30">
+                      <div className="mb-4 p-3 rounded-lg bg-red-900/20 border border-red-500/30">
+                        <p className="text-xs text-red-200 leading-relaxed">
+                          <strong className="text-red-400">⚠️ Important:</strong> The "Existing Customer" and "VIP Member" discounts are <strong>exclusively for users who already have the corresponding role on our Discord server</strong>. If you select these options without having the required role, you will be required to pay the full price difference as compensation. Please verify your Discord status before proceeding.
+                        </p>
+                      </div>
                       <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Client Status (for promo)</h3>
                       <div className="space-y-2">
                         <label className="flex items-center gap-3 p-3 rounded-lg border border-border/30 cursor-pointer hover:bg-dark-elevated/30 transition-colors" style={{ borderColor: clientGrade === "not-client" ? "rgb(123, 46, 255)" : "" }}>
