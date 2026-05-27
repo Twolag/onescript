@@ -248,7 +248,7 @@ export default function Products() {
           "Regular updates included",
         ]}
         compatibility={[
-          { label: "NVIDIA GPU", value: "GTX 10 Series / RTX 20 / 30 / 40 / 50+" },
+          { label: "NVIDIA GPU", value: "RTX 20 / 30 / 40 / 50+" },
           { label: "AMD GPU", value: "RX 6600 XT / 6700+ / 7000+ (Native)" },
           { label: "Recommended CPU", value: "i5 13th Gen / Ryzen 5 5000+" },
           { label: "Platform", value: "STEAM ONLY (Apex)" },

@@ -99,7 +99,7 @@ export default function Documentation() {
                   </h3>
                   <ul className="space-y-3">
                     <li className="text-sm text-muted-foreground flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> NVIDIA (GTX 10 / RTX 20 / 30 / 40 / 50+)
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> NVIDIA (RTX 20 / 30 / 40 / 50+)
                     </li>
                     <li className="text-sm text-muted-foreground flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> AMD (RX 6600 XT / 6700+ / 7000+)
