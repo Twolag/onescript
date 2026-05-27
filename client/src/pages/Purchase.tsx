@@ -379,8 +379,22 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-display font-bold text-violet-tech text-lg">{option.price}€</p>
-                          {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
+                          {isPromoEligible && (selectedOptionIndex === 2 || selectedOptionIndex === 3) ? (
+                            <div className="flex flex-col items-end gap-1">
+                              <p className="text-xs text-muted-foreground line-through">{option.price}€</p>
+                              <p className="font-display font-bold text-green-400 text-lg">
+                                {PROMO_PRICES[`${productId}-${selectedOptionIndex}-${clientGrade}` as keyof typeof PROMO_PRICES] || option.price}€
+                              </p>
+                              <p className="text-xs text-green-400 font-semibold">
+                                -€{(option.price - (PROMO_PRICES[`${productId}-${selectedOptionIndex}-${clientGrade}` as keyof typeof PROMO_PRICES] || option.price)).toFixed(2)}
+                              </p>
+                            </div>
+                          ) : (
+                            <>
+                              <p className="font-display font-bold text-violet-tech text-lg">{option.price}€</p>
+                              {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
+                            </>
+                          )}
                         </div>
                       </div>
                     </motion.button>
