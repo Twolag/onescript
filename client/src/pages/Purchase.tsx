@@ -62,8 +62,18 @@ const SUMUP_PRICES: { [key: string]: number } = {
   "jitter-script-6": 41.00,
 };
 
-// PROMO prices (Annual & Lifetime with grade discounts, already including 2.5% fee)
+// PROMO prices (Annual & Lifetime with grade discounts for PayPal/Bunq - no fees)
 const PROMO_PRICES: { [key: string]: number } = {
+  "ai-engine-2-not-client": 230,
+  "ai-engine-2-already-client": 210,
+  "ai-engine-2-vip": 190,
+  "ai-engine-3-not-client": 350,
+  "ai-engine-3-already-client": 370,
+  "ai-engine-3-vip": 390,
+};
+
+// PROMO prices for SumUp (with 2.5% fee included)
+const PROMO_PRICES_SUMUP: { [key: string]: number } = {
   "ai-engine-2-not-client": 235.75,
   "ai-engine-2-already-client": 215.25,
   "ai-engine-2-vip": 194.75,
@@ -183,6 +193,13 @@ type ClientGrade = "not-client" | "already-client" | "vip";
   if (isPromoEligible) {
     const promoKey = `${productId}-${selectedOptionIndex}-${clientGrade}`;
     total = PROMO_PRICES[promoKey as keyof typeof PROMO_PRICES] || total;
+  }
+  
+  // SumUp total (with 2.5% fee for promo)
+  let sumupTotal = total;
+  if (isPromoEligible) {
+    const promoKey = `${productId}-${selectedOptionIndex}-${clientGrade}`;
+    sumupTotal = PROMO_PRICES_SUMUP[promoKey as keyof typeof PROMO_PRICES_SUMUP] || total;
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -615,7 +632,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                                 PAY BY CARD (SUMUP)
                               </Button>
                               <p className="text-[10px] text-center text-amber-400/80">
-                                ⚠ 2.5% processing fee included — {(Math.ceil(total * 1.025 * 100) / 100).toFixed(2)}€ charged — EU cards only
+                                ⚠ 2.5% processing fee included — {sumupTotal.toFixed(2)}€ charged — EU cards only
                               </p>
                             </div>
 
