@@ -32,6 +32,18 @@ const SUMUP_LINKS: { [key: string]: string } = {
   "jitter-script-6": "https://pay.sumup.com/b2c/QRLHHGQ2", // 41.00€ — Lifetime
 };
 
+// PROMO SUMUP LINKS (Annual & Lifetime with grade discounts)
+const PROMO_SUMUP_LINKS: { [key: string]: string } = {
+  // Annual (ai-engine-2) with promo
+  "ai-engine-2-not-client": "https://pay.sumup.com/b2c/QG7I32HW",      // 235.75€
+  "ai-engine-2-already-client": "https://pay.sumup.com/b2c/Q8Y6HE6N",  // 215.25€
+  "ai-engine-2-vip": "https://pay.sumup.com/b2c/QDBUS7W7",              // 194.75€
+  // Lifetime (ai-engine-3) with promo
+  "ai-engine-3-not-client": "https://pay.sumup.com/b2c/QSJHZGHR",      // 420.25€
+  "ai-engine-3-already-client": "https://pay.sumup.com/b2c/Q3FCLF69",  // 379.25€
+  "ai-engine-3-vip": "https://pay.sumup.com/b2c/QA8ZGSYH",              // 358.75€
+};
+
 // SumUp prices (with 2.5% fee) for display
 const SUMUP_PRICES: { [key: string]: number } = {
   "ai-engine-0": 51.30,
@@ -48,6 +60,16 @@ const SUMUP_PRICES: { [key: string]: number } = {
   "jitter-script-4": 25.70,
   "jitter-script-5": 30.80,
   "jitter-script-6": 41.00,
+};
+
+// PROMO prices (Annual & Lifetime with grade discounts, already including 2.5% fee)
+const PROMO_PRICES: { [key: string]: number } = {
+  "ai-engine-2-not-client": 235.75,
+  "ai-engine-2-already-client": 215.25,
+  "ai-engine-2-vip": 194.75,
+  "ai-engine-3-not-client": 420.25,
+  "ai-engine-3-already-client": 379.25,
+  "ai-engine-3-vip": 358.75,
 };
 
 // Bank transfer (SEPA) details
@@ -135,6 +157,8 @@ export default function Purchase() {
   });
   const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
   const [hardwareConfirmed, setHardwareConfirmed] = useState(false);
+  const [clientGrade, setClientGrade] = useState<ClientGrade>("not-client");
+  const [showPromoNotice, setShowPromoNotice] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
@@ -148,9 +172,18 @@ export default function Purchase() {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
+type ClientGrade = "not-client" | "already-client" | "vip";
+
   const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
-  const total = selectedItem?.price ?? 0;
+  let total = selectedItem?.price ?? 0;
   const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 0);
+  
+  // Apply promo discount if applicable (Annual or Lifetime)
+  const isPromoEligible = (productId === "ai-engine" && (selectedOptionIndex === 2 || selectedOptionIndex === 3));
+  if (isPromoEligible) {
+    const promoKey = `${productId}-${selectedOptionIndex}-${clientGrade}`;
+    total = PROMO_PRICES[promoKey as keyof typeof PROMO_PRICES] || total;
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -199,10 +232,16 @@ export default function Purchase() {
 
   const handleSumUpPayment = () => {
     if (!orderCreated) return;
-    const sumupKey = `${productId}-${orderCreated.optionIndex}`;
-    const sumupLink = SUMUP_LINKS[sumupKey] || "https://pay.sumup.com/b2c/QLA8WDDD";
+    let sumupLink = SUMUP_LINKS[`${productId}-${orderCreated.optionIndex}`];
+    
+    // Use promo link if applicable
+    if (isPromoEligible) {
+      const promoKey = `${productId}-${orderCreated.optionIndex}-${clientGrade}`;
+      sumupLink = PROMO_SUMUP_LINKS[promoKey as keyof typeof PROMO_SUMUP_LINKS] || sumupLink;
+    }
+    
     sendDiscordAndEmail(orderCreated, "sumup");
-    window.location.href = sumupLink;
+    window.location.href = sumupLink || "https://pay.sumup.com/b2c/QLA8WDDD";
   };
 
   const handleBankTransfer = () => {
@@ -214,7 +253,7 @@ export default function Purchase() {
   const handlePayPalPayment = () => {
     if (!orderCreated) return;
     sendDiscordAndEmail(orderCreated, "paypal");
-    const paypalLink = `${PAYPAL_BASE}/${orderCreated.price}`;
+    const paypalLink = `${PAYPAL_BASE}/${total}`;
     setTimeout(() => { window.open(paypalLink, "_blank"); }, 100);
     toast.success("Redirecting to PayPal... Please use 'Friends & Family' only.");
   };
@@ -258,6 +297,20 @@ export default function Purchase() {
       <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20">
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
+
+          {/* PROMO BANNER */}
+          {showPromoNotice && isPromoEligible && (
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 p-4 rounded-lg bg-green-500/10 border border-green-500/30 flex items-start justify-between">
+              <div className="flex items-start gap-3 flex-1">
+                <div className="w-2 h-2 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                <div>
+                  <h3 className="font-bold text-green-400 mb-1">🎉 PROMO LOCASION - 1 SEMAINE!</h3>
+                  <p className="text-sm text-green-300/90">Réductions spéciales sur les forfaits Annuel et Lifetime selon votre grade client!</p>
+                </div>
+              </div>
+              <button onClick={() => setShowPromoNotice(false)} className="text-green-400 hover:text-green-300 text-xl flex-shrink-0">×</button>
+            </motion.div>
+          )}
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate="visible" className="max-w-2xl">
             <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight mb-4">
               Finalize your <span className="text-violet-tech">purchase</span>
@@ -453,6 +506,37 @@ export default function Purchase() {
                       </label>
                     </div>
                   </div>
+
+
+                  {/* Client Grade Selection (for Annual & Lifetime promo) */}
+                  {isPromoEligible && (
+                    <div className="pt-4 border-t border-border/30">
+                      <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Client Status (for promo)</h3>
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-3 p-3 rounded-lg border border-border/30 cursor-pointer hover:bg-dark-elevated/30 transition-colors" style={{ borderColor: clientGrade === "not-client" ? "rgb(123, 46, 255)" : "" }}>
+                          <input type="radio" name="grade" value="not-client" checked={clientGrade === "not-client"} onChange={(e) => setClientGrade(e.target.value as ClientGrade)} className="w-4 h-4" />
+                          <div>
+                            <p className="font-medium text-foreground">New Customer</p>
+                            <p className="text-xs text-muted-foreground">-20€ (Annual) / -40€ (Lifetime)</p>
+                          </div>
+                        </label>
+                        <label className="flex items-center gap-3 p-3 rounded-lg border border-border/30 cursor-pointer hover:bg-dark-elevated/30 transition-colors" style={{ borderColor: clientGrade === "already-client" ? "rgb(123, 46, 255)" : "" }}>
+                          <input type="radio" name="grade" value="already-client" checked={clientGrade === "already-client"} onChange={(e) => setClientGrade(e.target.value as ClientGrade)} className="w-4 h-4" />
+                          <div>
+                            <p className="font-medium text-foreground">Existing Customer</p>
+                            <p className="text-xs text-muted-foreground">-40€ (Annual) / -80€ (Lifetime)</p>
+                          </div>
+                        </label>
+                        <label className="flex items-center gap-3 p-3 rounded-lg border border-border/30 cursor-pointer hover:bg-dark-elevated/30 transition-colors" style={{ borderColor: clientGrade === "vip" ? "rgb(123, 46, 255)" : "" }}>
+                          <input type="radio" name="grade" value="vip" checked={clientGrade === "vip"} onChange={(e) => setClientGrade(e.target.value as ClientGrade)} className="w-4 h-4" />
+                          <div>
+                            <p className="font-medium text-foreground">VIP Member</p>
+                            <p className="text-xs text-muted-foreground">-60€ (Annual) / -100€ (Lifetime)</p>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                  )}
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? "Processing..." : "Validate my information"}
