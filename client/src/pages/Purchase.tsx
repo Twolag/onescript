@@ -371,7 +371,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2 flex-wrap">
                               <p className="font-semibold text-foreground">{option.label}</p>
-                              {isPromoEligible && (idx === 2 || idx === 3) && (
+                              {(idx === 2 || idx === 3) && (
                                 <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-xs font-bold tracking-wider animate-pulse">
                                   🔥 PROMO
                                 </span>
@@ -386,7 +386,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                           </div>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          {isPromoEligible && (idx === 2 || idx === 3) ? (
+                          {(idx === 2 || idx === 3) ? (
                             <div className="flex flex-col items-end gap-0.5">
                               <p className="text-xs text-muted-foreground line-through">{option.price}€</p>
                               <p className="font-display font-bold text-green-400 text-lg">
