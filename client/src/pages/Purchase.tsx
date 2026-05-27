@@ -363,13 +363,20 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                           : "border-border/50 hover:border-violet-tech/50 bg-dark-elevated/50"
                       }`}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 flex-1">
-                          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${selectedOptionIndex === idx ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0 ${selectedOptionIndex === idx ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
                             {selectedOptionIndex === idx && <Check className="w-3 h-3 text-primary-foreground" />}
                           </div>
-                          <div>
-                            <p className="font-semibold text-foreground">{option.label}</p>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <p className="font-semibold text-foreground">{option.label}</p>
+                              {isPromoEligible && (idx === 2 || idx === 3) && (
+                                <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-xs font-bold tracking-wider animate-pulse">
+                                  🔥 PROMO
+                                </span>
+                              )}
+                            </div>
                             {option.description && <p className="text-xs text-muted-foreground mt-1">{option.description}</p>}
                             {option.duration && (
                               <p className="text-xs text-violet-tech/70 mt-1 flex items-center gap-1">
@@ -378,14 +385,14 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                             )}
                           </div>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right flex-shrink-0">
                           {isPromoEligible && (idx === 2 || idx === 3) ? (
-                            <div className="flex flex-col items-end gap-1">
+                            <div className="flex flex-col items-end gap-0.5">
                               <p className="text-xs text-muted-foreground line-through">{option.price}€</p>
                               <p className="font-display font-bold text-green-400 text-lg">
                                 {PROMO_PRICES[`${productId}-${idx}-${clientGrade}` as keyof typeof PROMO_PRICES] || option.price}€
                               </p>
-                              <p className="text-xs text-green-400 font-semibold">
+                              <p className="text-xs text-red-400 font-bold">
                                 -€{(option.price - (PROMO_PRICES[`${productId}-${idx}-${clientGrade}` as keyof typeof PROMO_PRICES] || option.price)).toFixed(2)}
                               </p>
                             </div>
