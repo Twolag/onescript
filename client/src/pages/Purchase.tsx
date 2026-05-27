@@ -67,9 +67,9 @@ const PROMO_PRICES: { [key: string]: number } = {
   "ai-engine-2-not-client": 230,
   "ai-engine-2-already-client": 210,
   "ai-engine-2-vip": 190,
-  "ai-engine-3-not-client": 350,
+  "ai-engine-3-not-client": 410,
   "ai-engine-3-already-client": 370,
-  "ai-engine-3-vip": 390,
+  "ai-engine-3-vip": 350,
 };
 
 // PROMO prices for SumUp (with 2.5% fee included)
