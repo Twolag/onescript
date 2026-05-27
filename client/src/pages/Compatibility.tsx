@@ -38,6 +38,7 @@ const gpuData = [
   { name: "AMD RX 7600", tier: "Modern GPU", status: "compatible", note: "RDNA 3 — native support in V7.4" },
   { name: "AMD RX 7700 XT", tier: "High End", status: "recommended", note: "RDNA 3 — exceptional V7.4 performance" },
   { name: "AMD RX 7900 XT / XTX", tier: "High End", status: "recommended", note: "RDNA 3 — optimal V7.4 performance" },
+  { name: "AMD RX 8000+ Series", tier: "Latest Gen", status: "recommended", note: "RDNA 4 — next-gen optimal performance" },
 ];
 
 const cpuData = [
