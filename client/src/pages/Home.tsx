@@ -172,6 +172,38 @@ const pricingPlans = [
 
 export default function Home() {
   return (
+      {/* ═══════════════ PROMO BANNER ═══════════════ */}
+      <motion.div 
+        initial={{ opacity: 0, y: -30 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.6 }}
+        className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-green-600/90 via-emerald-600/90 to-green-600/90 backdrop-blur-sm border-b border-green-400/30 shadow-2xl shadow-green-500/20"
+      >
+        <div className="container py-3 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 flex-1">
+            <div className="animate-pulse">
+              <div className="w-2 h-2 rounded-full bg-yellow-300" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-display font-black text-sm sm:text-base text-white tracking-wider">
+                🎉 PROMO LOCASION - LIMITED TIME!
+              </h3>
+              <p className="text-xs sm:text-sm text-green-100 font-medium">
+                -20€ to -100€ OFF on Annual & Lifetime plans • Valid for 1 week only
+              </p>
+            </div>
+          </div>
+          <Link href="/purchase?product=ai-engine" className="flex-shrink-0">
+            <Button className="bg-yellow-400 hover:bg-yellow-300 text-green-900 font-bold text-xs sm:text-sm px-4 py-2 rounded-md transition-all shadow-lg shadow-yellow-500/30">
+              SHOP NOW
+            </Button>
+          </Link>
+        </div>
+      </motion.div>
+
+      {/* Spacer to prevent content overlap */}
+      <div className="h-16 sm:h-20" />
+
     <div className="overflow-hidden">
       {/* ═══════════════ HERO SECTION ═══════════════ */}
       <section className="relative min-h-[90vh] flex items-center">
