@@ -1,6 +1,6 @@
 /**
  * Documentation — Neon Circuit Design
- * Technical guides, hardware requirements, and V7.4 update notes
+ * Technical guides, hardware requirements, and V7.6 update notes
  */
 import { motion } from "framer-motion";
 import { 
@@ -43,7 +43,7 @@ export default function Documentation() {
             Everything you need to <span className="text-violet-tech">know</span>
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Detailed hardware requirements, installation procedures, and what's new in **FUSION IA V7.4** with 10x more powerful AI Aimbot.
+            Detailed hardware requirements, installation procedures, and what's new in **FUSION IA V7.6** with 10x more powerful AI Aimbot.
           </p>
         </motion.div>
 
@@ -51,11 +51,11 @@ export default function Documentation() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
             
-            {/* V7.4 Update Notes */}
+            {/* V7.6 Update Notes */}
             <motion.section variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-xl p-8 border-violet-tech/20">
               <div className="flex items-center gap-3 mb-6">
                 <Zap className="w-6 h-6 text-violet-tech" />
-                <h2 className="font-display font-bold text-2xl tracking-tight">What's New in V7.4</h2>
+                <h2 className="font-display font-bold text-2xl tracking-tight">What's New in V7.6</h2>
               </div>
               <div className="space-y-6">
                 <div className="p-4 rounded-lg bg-violet-tech/5 border border-violet-tech/10">
@@ -137,7 +137,7 @@ export default function Documentation() {
                   { step: "01", title: "Purchase & Discord", desc: "Select your plan and join our Discord for the download link and license key." },
                   { step: "02", title: "Steam Configuration", desc: "Ensure Apex Legends is installed via Steam. Verify game files before first launch." },
                   { step: "03", title: "Windows Prep", desc: "Disable unnecessary overlays (Discord, Steam) and ensure your GPU drivers are up to date." },
-                  { step: "04", title: "Launch V7.4", desc: "Run the software, enjoy the cinematic intro, and experience the 10x more powerful AI Aimbot in real-time." },
+                  { step: "04", title: "Launch V7.6", desc: "Run the software, enjoy the cinematic intro, and experience the 10x more powerful AI Aimbot in real-time." },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-6 p-6 rounded-lg bg-dark-elevated/30 border border-border/30">
                     <span className="font-display font-black text-3xl text-violet-tech/20 leading-none">{item.step}</span>
@@ -158,7 +158,7 @@ export default function Documentation() {
                 <ShieldCheck className="w-4 h-4 text-violet-tech" /> Security First
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                FUSION IA V7.4 features a 10x more powerful AI Aimbot with advanced external visual processing. It does not modify game memory or files, making it 100% undetectable by anti-cheat systems.
+                FUSION IA V7.6 features a 10x more powerful AI Aimbot with advanced external visual processing. It does not modify game memory or files, making it 100% undetectable by anti-cheat systems.
               </p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-[10px] font-bold text-violet-accent tracking-widest uppercase">
