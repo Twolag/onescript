@@ -168,7 +168,16 @@ export default function Documentation() {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeUp} custom={5} initial="hidden" animate="visible" className="glass-card rounded-xl p-6 border-border/40">
+            <motion.div variants={fadeUp} custom={5} initial="hidden" animate="visible" className="glass-card rounded-xl p-6 border-red-500/30 bg-red-900/10">
+              <h3 className="font-display font-bold text-sm mb-4 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-red-400" /> Update Policy
+              </h3>
+              <p className="text-xs text-red-200 leading-relaxed">
+                <strong>Annual & Lifetime plans</strong> are locked to <strong>V7.7</strong>. Future major updates require an additional payment of <strong>€30 per update</strong>. Monthly plans include all updates automatically.
+              </p>
+            </motion.div>
+
+            <motion.div variants={fadeUp} custom={6} initial="hidden" animate="visible" className="glass-card rounded-xl p-6 border-border/40">
               <h3 className="font-display font-bold text-sm mb-4 flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-violet-tech" /> Quick Links
               </h3>
