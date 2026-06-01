@@ -13,7 +13,8 @@ import {
   Layers,
   Zap,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  AlertCircle
 } from "lucide-react";
 
 const fadeUp = {
