@@ -39,8 +39,8 @@ const V7_VIDEO = "https://files.manuscdn.com/user_upload_by_module/session_file/
 
 const products = [
   {
-    title: "FUSION IA - V7.7",
-    desc: "Revolutionary V7.7 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency, and premium interface. The ultimate AI visual processing engine.",
+    title: "FUSION IA - V8",
+    desc: "Revolutionary V8 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency, and premium interface. The ultimate AI visual processing engine.",
     icon: Cpu,
     image: AI_ENGINE,
     price: "50 €",
@@ -68,7 +68,7 @@ const products = [
 ];
 
 const stats = [
-  { value: "V7.7", unit: "NEW", label: "Architecture" },
+  { value: "V8", unit: "NEW", label: "Architecture" },
   { value: "NVIDIA", unit: "& AMD", label: "Native Support" },
   { value: "24/7", unit: "", label: "Support" },
 ];
@@ -89,12 +89,12 @@ const pricingPlans = [
     cta: "CHOOSE THIS PLAN",
   },
   {
-    name: "AI Aimbot - V7.7 - Standard",
+    name: "AI Aimbot - V8 - Standard",
     price: "50",
     period: "1 month license",
     desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY",
     features: [
-      "New V7.7 Redesigned Architecture",
+      "New V8 Redesigned Architecture",
       "Native AMD & NVIDIA Support",
       "Apex Legends: STEAM ONLY",
       "Improved Controller Latency ⚡",
@@ -106,12 +106,12 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - V7.7 - Premium",
+    name: "AI Aimbot - V8 - Premium",
     price: "80",
     period: "1st month + inst.",
     desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY",
     features: [
-      "New V7.7 Redesigned Architecture",
+      "New V8 Redesigned Architecture",
       "Native AMD & NVIDIA Support",
       "Apex Legends: STEAM ONLY",
       "Improved Controller Latency ⚡",
@@ -122,12 +122,12 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - V7.7 - Annual",
+    name: "AI Aimbot - V8 - Annual",
     price: "250",
     period: "per year",
     desc: "Annual subscription - Full access to all features for 12 months | AMD & NVIDIA Support",
     features: [
-      "V7.7 Full Access",
+      "V8 Full Access",
       "Native AMD & NVIDIA Support",
       "Improved Controller Latency ⚡",
       "Zero FPS Drops Guarantee",
@@ -138,12 +138,12 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - V7.7 - Lifetime",
+    name: "AI Aimbot - V8 - Lifetime",
     price: "450",
     period: "one-time",
     desc: "Lifetime access - Permanent license with all future updates included | AMD & NVIDIA Support",
     features: [
-      "V7.7 Full Access",
+      "V8 Full Access",
       "Native AMD & NVIDIA Support",
       "Improved Controller Latency ⚡",
       "Zero FPS Drops Guarantee",
@@ -191,10 +191,10 @@ export default function Home() {
             <div className="max-w-2xl flex-1">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
                 <Zap className="w-3 h-3" />
-                FUSION IA V7.7 IS LIVE
+                FUSION IA V8 IS LIVE
               </motion.div>
               <motion.h1 custom={1} variants={fadeUp} initial="hidden" animate="visible" className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight mb-6">
-                Dominate with{" "}<span className="text-violet-tech neon-text">FUSION IA V7.7</span>
+                Dominate with{" "}<span className="text-violet-tech neon-text">FUSION IA V8</span>
               </motion.h1>
               <motion.p custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
                 The most advanced AI visual engine. Now with **Native NVIDIA & AMD support** and ultra-low controller latency. Experience the future of gaming performance.
@@ -202,7 +202,7 @@ export default function Home() {
               <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-wrap gap-4">
                 <Link href="/purchase?product=ai-engine">
                   <Button size="lg" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                    <Zap className="w-4 h-4" />GET V7.7 NOW<ArrowRight className="w-4 h-4" />
+                    <Zap className="w-4 h-4" />GET V8 NOW<ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Link href="/products">
@@ -229,7 +229,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span className="text-[10px] font-display font-bold text-white tracking-widest uppercase bg-black/50 px-2 py-1 rounded">V7.7 CINEMATIC LAUNCH</span>
+                <span className="text-[10px] font-display font-bold text-white tracking-widest uppercase bg-black/50 px-2 py-1 rounded">V8 CINEMATIC LAUNCH</span>
               </div>
             </motion.div>
           </div>
@@ -266,14 +266,14 @@ export default function Home() {
                 Next-Gen <span className="text-violet-tech">AI Engine</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                FUSION IA V7.7 introduces a revolutionary architecture. By decoupling visual processing from game threads, we guarantee **zero FPS drops** and **instant responsiveness**, regardless of your system configuration.
+                FUSION IA V8 introduces a revolutionary architecture. By decoupling visual processing from game threads, we guarantee **zero FPS drops** and **instant responsiveness**, regardless of your system configuration.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
                   { icon: Layers, title: "NVIDIA & AMD", desc: "Native support for all modern GPUs" },
                   { icon: Clock, title: "Low Latency", desc: "Drastically reduced controller input lag" },
                   { icon: TrendingUp, title: "Optimized Engine", desc: "No hardware monitoring conflicts" },
-                  { icon: Shield, title: "V7.7 Stability", desc: "Completely redesigned for Windows 10/11" },
+                  { icon: Shield, title: "V8 Stability", desc: "Completely redesigned for Windows 10/11" },
                 ].map((item, i) => (
                   <motion.div key={item.title} custom={i + 1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="flex items-start gap-4 p-4 rounded-lg bg-dark-elevated/50 border border-border/30 hover:border-violet-tech/20 transition-colors duration-300">
                     <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
@@ -293,7 +293,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-base/60 to-transparent" />
               </div>
               <div className="absolute -bottom-6 -left-4 sm:left-auto sm:-right-6 glass-card rounded-lg p-4 neon-glow">
-                <div className="font-display font-extrabold text-2xl text-violet-tech">V7.7 LIVE</div>
+                <div className="font-display font-extrabold text-2xl text-violet-tech">V8 LIVE</div>
                 <p className="text-xs text-muted-foreground mt-0.5">Architecture redesigned</p>
               </div>
             </motion.div>

@@ -32,12 +32,12 @@ const gpuData = [
   { name: "RTX 4080 / 4090", tier: "High End", status: "recommended", note: "Optimal performance" },
   { name: "RTX 5060+", tier: "High End", status: "recommended", note: "Latest generation — optimal" },
   { name: "GTX 1660 and below", tier: "Low End", status: "incompatible", note: "Not compatible — GPU too old" },
-  { name: "AMD RX 6600 XT", tier: "Modern GPU", status: "compatible", note: "Native support in V7.7 — minimum AMD requirement" },
-  { name: "AMD RX 6700 XT", tier: "Modern GPU", status: "recommended", note: "Excellent V7.7 performance" },
-  { name: "AMD RX 6800 XT", tier: "High End", status: "recommended", note: "Outstanding V7.7 performance" },
-  { name: "AMD RX 7600", tier: "Modern GPU", status: "compatible", note: "RDNA 3 — native support in V7.7" },
-  { name: "AMD RX 7700 XT", tier: "High End", status: "recommended", note: "RDNA 3 — exceptional V7.7 performance" },
-  { name: "AMD RX 7900 XT / XTX", tier: "High End", status: "recommended", note: "RDNA 3 — optimal V7.7 performance" },
+  { name: "AMD RX 6600 XT", tier: "Modern GPU", status: "compatible", note: "Native support in V8 — minimum AMD requirement" },
+  { name: "AMD RX 6700 XT", tier: "Modern GPU", status: "recommended", note: "Excellent V8 performance" },
+  { name: "AMD RX 6800 XT", tier: "High End", status: "recommended", note: "Outstanding V8 performance" },
+  { name: "AMD RX 7600", tier: "Modern GPU", status: "compatible", note: "RDNA 3 — native support in V8" },
+  { name: "AMD RX 7700 XT", tier: "High End", status: "recommended", note: "RDNA 3 — exceptional V8 performance" },
+  { name: "AMD RX 7900 XT / XTX", tier: "High End", status: "recommended", note: "RDNA 3 — optimal V8 performance" },
   { name: "AMD RX 8000+ Series", tier: "Latest Gen", status: "recommended", note: "RDNA 4 — next-gen optimal performance" },
 ];
 
