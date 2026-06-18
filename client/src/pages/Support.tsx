@@ -1,6 +1,6 @@
 /**
  * Support — Neon Circuit Design
- * Sections: FAQ, Ticket System (Formspree), Documentation
+ * Sections: FAQ, Ticket System (Widget), Documentation
  */
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -9,15 +9,8 @@ import {
   MessageSquare,
   BookOpen,
   ChevronDown,
-  Send,
   Mail,
-  CheckCircle,
-  AlertCircle,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mlgpenar";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -57,7 +50,7 @@ const faqItems = [
     a: "Windows 10 is strongly recommended for GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, and AMD RX 6600 XT / 6700 XT to ensure optimal FUSION AI V8 performance and stability. This recommendation is distinct from refund conditions."  },
   {
     q: "How does technical support work?",
-    a: "Our support is available via the ticket system below. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",
+    a: "Our support is available via the chat widget at the bottom right of your screen. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",
   },
   {
     q: "Are Jitter Script and AI Aimbot compatible with keyboard and mouse?",
@@ -66,33 +59,6 @@ const faqItems = [
   {
     q: "Which controllers are supported?",
     a: "We support Xbox controllers, PlayStation 5 controllers, PlayStation 5 Edge controllers, and Gamesir controllers. During checkout, you will be asked to specify which controller you are using. If you have a different controller model, please select 'Other' and contact our support team via Discord for compatibility verification.",
-  },
-];
-
-const docs = [
-  {
-    title: "Getting Started Guide",
-    desc: "Installation and first configuration of your OneScript tools.",
-    icon: BookOpen,
-    href: "/documentation#fusion-ai-installation",
-  },
-  {
-    title: "Advanced Optimization",
-    desc: "Tutorials to get the most out of your setup.",
-    icon: BookOpen,
-    href: "/documentation#windows-opt-features",
-  },
-  {
-    title: "Troubleshooting",
-    desc: "Solutions to common problems and technical FAQ.",
-    icon: BookOpen,
-    href: "/documentation#fusion-ai-troubleshooting",
-  },
-  {
-    title: "Changelog & Updates",
-    desc: "Version history and new features.",
-    icon: BookOpen,
-    href: "/documentation#changelog",
   },
 ];
 
@@ -129,56 +95,6 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 }
 
 export default function Support() {
-  const [ticketForm, setTicketForm] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
-
-    try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name: ticketForm.name,
-          email: ticketForm.email,
-          subject: ticketForm.subject,
-          message: ticketForm.message,
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitStatus("success");
-        toast.success("Ticket sent successfully!", {
-          description: `Subject: ${ticketForm.subject} — We will respond within 24h.`,
-        });
-        setTicketForm({ name: "", email: "", subject: "", message: "" });
-      } else {
-        const data = await response.json();
-        throw new Error(data?.error ?? "Error while sending");
-      }
-    } catch (err: unknown) {
-      setSubmitStatus("error");
-      const message = err instanceof Error ? err.message : "Unknown error";
-      toast.error("Failed to send ticket", {
-        description: message,
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div>
       {/* Header */}
@@ -200,8 +116,8 @@ export default function Support() {
               <span className="text-violet-tech neon-text">help you</span>?
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              FAQ, ticket system, and full documentation. Our team
-              is available to assist you.
+              FAQ, live chat, and full documentation. Our team
+              is available to assist you via the help bubble.
             </p>
           </motion.div>
         </div>
@@ -240,212 +156,52 @@ export default function Support() {
         </div>
       </section>
 
-      {/* Ticket System */}
+      {/* New Support Section */}
       <section className="py-16 lg:py-24 relative">
         <div className="absolute inset-0 bg-dark-surface/20" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/15 to-transparent" />
         <div className="relative container">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-            <div className="lg:col-span-2">
-              <motion.div
-                variants={fadeUp}
-                custom={0}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-              >
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
-                    <Headphones className="w-5 h-5 text-violet-tech" />
-                  </div>
-                  <div>
-                    <h2 className="font-display font-bold text-2xl tracking-tight">
-                      Create a Ticket
-                    </h2>
-                    <p className="text-sm text-muted-foreground">
-                      Response within 24h
-                    </p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  Describe your issue or question and our technical team
-                  will respond as soon as possible.
-                </p>
-                <div className="glass-card rounded-lg p-5">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Mail className="w-4 h-4 text-violet-tech" />
-                    <span className="text-sm text-foreground">
-                      onescript.fr@proton.me
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    You can also contact us directly by email.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-
+          <div className="max-w-3xl mx-auto text-center">
             <motion.div
               variants={fadeUp}
-              custom={1}
+              custom={0}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
-              className="lg:col-span-3"
             >
-              {/* Success Banner */}
-              {submitStatus === "success" && (
-                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-green-400 mb-1">
-                      Ticket sent successfully!
-                    </h4>
-                    <p className="text-xs text-green-400/80">
-                      Thank you for your message. Our team will respond within 24 hours.
-                    </p>
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-tech/15 border border-violet-tech/20 mb-6">
+                <Headphones className="w-8 h-8 text-violet-tech" />
+              </div>
+              <h2 className="font-display font-bold text-3xl tracking-tight mb-4">
+                Need direct assistance?
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                Our support team is now available directly via the help bubble at the bottom right of your screen. 
+                You can chat with us in real-time or leave a message if we are offline.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+                <div className="glass-card rounded-xl p-6 border border-white/5">
+                  <div className="flex items-center gap-3 mb-3">
+                    <MessageSquare className="w-5 h-5 text-violet-tech" />
+                    <h3 className="font-bold">Live Chat</h3>
                   </div>
+                  <p className="text-sm text-muted-foreground">
+                    Get instant answers for your technical questions or installation help.
+                  </p>
                 </div>
-              )}
-
-              {/* Error Banner */}
-              {submitStatus === "error" && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-red-400 mb-1">
-                      Failed to send ticket
-                    </h4>
-                    <p className="text-xs text-red-400/80">
-                      An error occurred. Please try again or contact us by email.
-                    </p>
+                
+                <div className="glass-card rounded-xl p-6 border border-white/5">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Mail className="w-5 h-5 text-violet-tech" />
+                    <h3 className="font-bold">Email Support</h3>
                   </div>
+                  <p className="text-sm text-muted-foreground">
+                    You can also reach us at <span className="text-violet-tech">onescript.fr@proton.me</span> for any inquiries.
+                  </p>
                 </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={ticketForm.name}
-                      onChange={(e) =>
-                        setTicketForm({ ...ticketForm, name: e.target.value })
-                      }
-                      className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={ticketForm.email}
-                      onChange={(e) =>
-                        setTicketForm({ ...ticketForm, email: e.target.value })
-                      }
-                      className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={ticketForm.subject}
-                    onChange={(e) =>
-                      setTicketForm({ ...ticketForm, subject: e.target.value })
-                    }
-                    className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors"
-                    placeholder="Subject of your request"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Message
-                  </label>
-                  <textarea
-                    required
-                    rows={5}
-                    value={ticketForm.message}
-                    onChange={(e) =>
-                      setTicketForm({ ...ticketForm, message: e.target.value })
-                    }
-                    className="w-full bg-dark-elevated/50 border border-border/30 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-violet-tech/50 transition-colors resize-none"
-                    placeholder="Describe your problem in detail..."
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20"
-                >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 mr-2" />
-                      Send Ticket
-                    </>
-                  )}
-                </Button>
-              </form>
+              </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Documentation Links */}
-      <section className="py-16 lg:py-24">
-        <div className="container">
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="text-center max-w-2xl mx-auto mb-12"
-          >
-            <h2 className="font-display font-bold text-3xl tracking-tight mb-4">
-              Need more info?
-            </h2>
-            <p className="text-muted-foreground">
-              Consult our documentation for detailed guides on each tool.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {docs.map((doc, i) => (
-              <motion.a
-                key={i}
-                href={doc.href}
-                custom={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="glass-card rounded-lg p-6 hover:border-violet-tech/50 transition-all group"
-              >
-                <div className="w-10 h-10 rounded-md bg-violet-tech/10 flex items-center justify-center mb-4 group-hover:bg-violet-tech/20 transition-colors">
-                  <doc.icon className="w-5 h-5 text-violet-tech" />
-                </div>
-                <h4 className="font-bold text-foreground mb-2">{doc.title}</h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {doc.desc}
-                </p>
-              </motion.a>
-            ))}
           </div>
         </div>
       </section>
