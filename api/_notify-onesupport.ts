@@ -3,6 +3,7 @@
 export async function registerOrderOnOneSupport(order: {
   ref: string; customer?: string; email?: string; discord?: string;
   product?: string; option?: string; price?: number | string; payment?: string;
+  confirmUrl?: string; cancelUrl?: string;
 }) {
   try {
     const base = process.env.ONESUPPORT_URL;          // ex: https://onesupport.onrender.com
