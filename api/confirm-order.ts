@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { updateOrderStatusOnOneSupport } from './_notify-onesupport.js';   // AJOUT
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Si c'est une requête GET (clic sur le lien Discord), on affiche une page de confirmation
@@ -111,6 +112,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }),
         });
       }
+
+      // AJOUT : met à jour le statut de la commande dans OneSupport
+      await updateOrderStatusOnOneSupport(order as string, 'confirmed');
 
       return res.status(200).send(`<!DOCTYPE html>
 <html>
