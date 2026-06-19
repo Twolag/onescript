@@ -16,6 +16,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const BASE_URL = process.env.BASE_URL || 'https://onescript.fr';
     // Confirmation link (click = sends email to customer)
     const confirmUrl = `${BASE_URL}/api/confirm-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)}&cpu=${encodeURIComponent(cpu)}&gpu=${encodeURIComponent(gpu)}&os=${encodeURIComponent(os)}`;
+    // AJOUT : URL d'annulation (même contenu que le lien Cancel de l'embed)
+    const cancelUrl = `${BASE_URL}/api/cancel-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)}`;
     const result = await fetch(process.env.DISCORD_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -35,7 +37,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             { name: '🖥️ Hardware', value: `**CPU:** ${cpu}\n**GPU:** ${gpu}\n**OS:** ${os}`, inline: false },
             ...(requestedDate ? [{ name: '📅 Requested Slot', value: `**${requestedDate}** à **${requestedTime || 'N/A'}**`, inline: false }] : []),
             { name: '✅ Confirm Payment', value: `[Click here to send confirmation email](${confirmUrl})`, inline: false },
-            { name: '❌ Cancel Order', value: `[Click here to cancel and notify customer](${BASE_URL}/api/cancel-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)})`, inline: false },
+            { name: '❌ Cancel Order', value: `[Click here to cancel and notify customer](${cancelUrl})`, inline: false },
           ],
           footer: { text: 'OneScript — Pending Payment' },
           timestamp: new Date().toISOString(),
@@ -46,10 +48,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'Discord webhook failed' });
     }
 
-    // AJOUT : enregistre la commande dans OneSupport (pour l'app de bureau)
+    // AJOUT : enregistre la commande dans OneSupport, avec les 2 URLs d'action
     await registerOrderOnOneSupport({
       ref: orderNumber, customer: customerName, email, discord: discordPseudo,
       product: productName, option: optionLabel, price, payment: paymentMethod,
+      confirmUrl, cancelUrl,
     });
 
     return res.status(200).json({ success: true });
