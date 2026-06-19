@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { updateOrderStatusOnOneSupport } from './_notify-onesupport.js';   // AJOUT
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
@@ -112,6 +113,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }),
       });
     }
+
+    // AJOUT : met à jour le statut de la commande dans OneSupport
+    await updateOrderStatusOnOneSupport(order as string, 'cancelled');
 
     return res.status(200).send(`<!DOCTYPE html>
 <html>
