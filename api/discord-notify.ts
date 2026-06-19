@@ -1,26 +1,21 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { registerOrderOnOneSupport } from './_notify-onesupport.js';   // AJOUT
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
   try {
     const { orderNumber, customerName, email, discordPseudo, productName, optionLabel, price, paymentMethod, cpu, gpu, os, requestedDate, requestedTime } = req.body;
-
     if (!process.env.DISCORD_WEBHOOK_URL) {
       return res.status(500).json({ error: 'DISCORD_WEBHOOK_URL not configured' });
     }
-
     const BASE_URL = process.env.BASE_URL || 'https://onescript.fr';
-
     // Confirmation link (click = sends email to customer)
     const confirmUrl = `${BASE_URL}/api/confirm-order?order=${encodeURIComponent(orderNumber)}&customer=${encodeURIComponent(customerName)}&email=${encodeURIComponent(email)}&product=${encodeURIComponent(productName)}&option=${encodeURIComponent(optionLabel)}&price=${price}&discord=${encodeURIComponent(discordPseudo)}&cpu=${encodeURIComponent(cpu)}&gpu=${encodeURIComponent(gpu)}&os=${encodeURIComponent(os)}`;
-
     const result = await fetch(process.env.DISCORD_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -47,10 +42,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }],
       }),
     });
-
     if (!result.ok) {
       return res.status(500).json({ error: 'Discord webhook failed' });
     }
+
+    // AJOUT : enregistre la commande dans OneSupport (pour l'app de bureau)
+    await registerOrderOnOneSupport({
+      ref: orderNumber, customer: customerName, email, discord: discordPseudo,
+      product: productName, option: optionLabel, price, payment: paymentMethod,
+    });
 
     return res.status(200).json({ success: true });
   } catch (error) {
