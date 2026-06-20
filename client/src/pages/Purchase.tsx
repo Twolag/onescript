@@ -16,11 +16,16 @@ const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 // SumUp links by product/option (key = "productId-index")
 const SUMUP_LINKS: { [key: string]: string } = {
-  "ai-engine-0": "https://pay.sumup.com/b2c/Q6A0L1GO",   // 51.30€ — Monthly (License only)
-  "ai-engine-1": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€ — Monthly (License + Inst.)
-  "ai-engine-2": "https://pay.sumup.com/b2c/QJBMR5C5",   // Annual (250€)
-  "ai-engine-3": "https://pay.sumup.com/b2c/QKRIB0L6",   // Lifetime (450€)
-  "ai-engine-4": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
+  // Weekly options (ai-engine)
+  "ai-engine-0": "https://pay.sumup.com/b2c/QNS16Q0E",   // 35€ — 1 Week (Setup + Support + License)
+  "ai-engine-1": "https://pay.sumup.com/b2c/QZV95749",   // 25€ — 1 Week (License Only)
+  "ai-engine-2": "https://pay.sumup.com/b2c/QS0XCP8Q",   // 15€ — Weekly Renewal
+  "ai-engine-3": "https://pay.sumup.com/b2c/Q6A0L1GO",   // 51.30€ — Monthly (License only)
+  "ai-engine-4": "https://pay.sumup.com/b2c/QSVN398S",   // 82.00€ — Monthly (License + Inst.)
+  "ai-engine-5": "https://pay.sumup.com/b2c/QGLYU0B6",   // 30€ — Help Installation (PDF users)
+  "ai-engine-6": "https://pay.sumup.com/b2c/QJBMR5C5",   // Annual (250€)
+  "ai-engine-7": "https://pay.sumup.com/b2c/QKRIB0L6",   // Lifetime (450€)
+  "ai-engine-8": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
   "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.50€  — 1 day (Approx)
@@ -46,11 +51,15 @@ const PROMO_SUMUP_LINKS: { [key: string]: string } = {
 
 // SumUp prices (with 2.5% fee) for display
 const SUMUP_PRICES: { [key: string]: number } = {
-  "ai-engine-0": 51.30,
-  "ai-engine-1": 82.00,
-  "ai-engine-2": 250.00,
-  "ai-engine-3": 450.00,
-  "ai-engine-4": 30.80,
+  "ai-engine-0": 35.00,
+  "ai-engine-1": 25.00,
+  "ai-engine-2": 15.00,
+  "ai-engine-3": 51.30,
+  "ai-engine-4": 82.00,
+  "ai-engine-5": 30.00,
+  "ai-engine-6": 250.00,
+  "ai-engine-7": 450.00,
+  "ai-engine-8": 30.80,
   "windows-opt-0": 20.50,
   "windows-opt-1": 41.00,
   "jitter-script-0": 2.50,
@@ -118,11 +127,15 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
+      { label: "1 Week (Setup + Support + License)", price: 35, description: "Complete setup with AI Aimbot installation included + 7 days of support. Everything done for you.", duration: "~1 hour" },
+      { label: "1 Week (License Only)", price: 25, description: "7 days license. Includes a PDF setup guide. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
+      { label: "Weekly Renewal", price: 15, note: "/ week", description: "Renewal for existing users who completed their first week.", duration: "~5 min" },
       { label: "License Only (Monthly)", price: 50, description: "1 month license. Includes a PDF setup guide. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
       { label: "License + Installation (Monthly)", price: 80, description: "First month + AI Aimbot installation included. We do everything for you. Renewal: 30 EUR/month", duration: "~1 hour" },
-      { label: "Annual Subscription", price: 250, description: "Full access to FUSION AI V8 for 12 months. ⚠️ Locked to V8 - future major updates require +€30 per update. Priority support included.", duration: "~1 hour" },
-      { label: "Lifetime License", price: 450, description: "Permanent access to FUSION AI V8. ⚠️ Locked to V8 - future major updates require +€30 per update. One-time payment.", duration: "~1 hour" },
-      { label: "Monthly Renewal", price: 30, note: "/ month", description: "This price is only for those who already own the AI Aimbot and want to renew their license.", duration: "~30 min" },
+      { label: "Help Installation (PDF users)", price: 30, description: "For users who bought the PDF-only license but need help with installation. Remote assistance included.", duration: "~1 hour" },
+      { label: "Annual Subscription", price: 250, description: "Full access to FUSION AI V7.7 for 12 months. ⚠️ Locked to V7.7 - future major updates require +€30 per update. Priority support included.", duration: "~1 hour" },
+      { label: "Lifetime License", price: 450, description: "Permanent access to FUSION AI V7.7. ⚠️ Locked to V7.7 - future major updates require +€30 per update. One-time payment.", duration: "~1 hour" },
+      { label: "Monthly Renewal", price: 30, note: "/ month", description: "Exclusive to users who have completed 4 consecutive weeks or previously purchased a full month. Renewal only.", duration: "~30 min" },
     ],
   },
   {
@@ -186,10 +199,10 @@ type ClientGrade = "not-client" | "already-client" | "vip";
 
   const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   let total = selectedItem?.price ?? 0;
-  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 0);
+  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 1);
   
   // Apply promo discount if applicable (Annual or Lifetime)
-  const isPromoEligible = (productId === "ai-engine" && (selectedOptionIndex === 2 || selectedOptionIndex === 3));
+  const isPromoEligible = (productId === "ai-engine" && (selectedOptionIndex === 6 || selectedOptionIndex === 7));
   if (isPromoEligible) {
     const promoKey = `${productId}-${selectedOptionIndex}-${clientGrade}`;
     total = PROMO_PRICES[promoKey as keyof typeof PROMO_PRICES] || total;
