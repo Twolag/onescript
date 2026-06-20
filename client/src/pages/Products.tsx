@@ -264,6 +264,113 @@ export default function Products() {
         index={0}
       />
 
+      {/* Advanced AI Weight — Apex Legends */}
+      <section id="apex-weight" className="relative py-20 lg:py-28">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
+        <div className="container">
+          <motion.div
+            custom={0}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="max-w-3xl mx-auto"
+          >
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
+                <Zap className="w-5 h-5 text-violet-tech" />
+              </div>
+              <span className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-tech">
+                Apex Legends — [ STABLE / READY ]
+              </span>
+            </div>
+
+            <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-3">
+              Advanced AI Weight
+            </h2>
+
+            {/* GPU requirement badge */}
+            <div className="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <p className="text-sm font-bold text-amber-300 tracking-wide">
+                Requires high-end GPU: <span className="text-amber-200">NVIDIA RTX 4080 / 5070 minimum</span>
+              </p>
+            </div>
+
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              Unlock the most powerful AI Weight configuration available for Apex Legends. This premium add-on supercharges the targeting precision and AI tracking performance of FUSION IA, leveraging the full computational power of high-end NVIDIA GPUs. Designed exclusively for players who demand the absolute best.
+            </p>
+
+            {/* Features */}
+            <div className="space-y-2.5 mb-8">
+              {[
+                "Apex Legends exclusive — STABLE / READY",
+                "Dramatically enhanced AI targeting precision",
+                "Optimized for NVIDIA RTX 4080 / 5070+",
+                "Seamlessly integrates with FUSION IA V8",
+                "Instant delivery after payment",
+              ].map((f) => (
+                <div key={f} className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-violet-tech flex-shrink-0" />
+                  <span className="text-foreground/80">{f}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Compatibility */}
+            <div className="glass-card rounded-lg p-5 mb-6">
+              <h4 className="font-display text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-3">
+                Compatibility
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-xs text-muted-foreground">Game</p>
+                  <p className="text-sm font-medium text-foreground">Apex Legends (Steam)</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">GPU Required</p>
+                  <p className="text-sm font-medium text-foreground">NVIDIA RTX 4080 / 5070+</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Status</p>
+                  <p className="text-sm font-medium text-green-400">STABLE / READY</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">OS</p>
+                  <p className="text-sm font-medium text-foreground">Windows 10 / 11</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pricing + CTA */}
+            <div className="flex flex-wrap items-end gap-6 mb-6">
+              <div>
+                <p className="text-xs text-muted-foreground mb-0.5">Add-on price</p>
+                <p className="font-display font-extrabold text-3xl text-foreground">
+                  10 €
+                  <span className="text-sm font-normal text-muted-foreground ml-1.5">one-time</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="https://pay.sumup.com/b2c/QSDE2C71"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow transition-colors">
+                  <Zap className="w-4 h-4" />
+                  BUY NOW — 10€
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Product 2: Windows Optimization */}
       <ProductSection
         id="windows-opt"
