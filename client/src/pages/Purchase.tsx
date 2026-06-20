@@ -202,18 +202,10 @@ type ClientGrade = "not-client" | "already-client" | "vip";
   const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 1);
   
   // Apply promo discount if applicable (Annual or Lifetime)
-  const isPromoEligible = (productId === "ai-engine" && (selectedOptionIndex === 6 || selectedOptionIndex === 7));
-  if (isPromoEligible) {
-    const promoKey = `${productId}-${selectedOptionIndex}-${clientGrade}`;
-    total = PROMO_PRICES[promoKey as keyof typeof PROMO_PRICES] || total;
-  }
+  const isPromoEligible = false;
   
   // SumUp total (with 2.5% fee for promo)
   let sumupTotal = total;
-  if (isPromoEligible) {
-    const promoKey = `${productId}-${selectedOptionIndex}-${clientGrade}`;
-    sumupTotal = PROMO_PRICES_SUMUP[promoKey as keyof typeof PROMO_PRICES_SUMUP] || total;
-  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -328,19 +320,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
 
-          {/* PROMO BANNER */}
-          {showPromoNotice && isPromoEligible && (
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 p-4 rounded-lg bg-green-500/10 border border-green-500/30 flex items-start justify-between">
-              <div className="flex items-start gap-3 flex-1">
-                <div className="w-2 h-2 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-bold text-green-400 mb-1">🎉 PROMO LOCASION - 1 SEMAINE!</h3>
-                  <p className="text-sm text-green-300/90">Réductions spéciales sur les forfaits Annuel et Lifetime selon votre grade client!</p>
-                </div>
-              </div>
-              <button onClick={() => setShowPromoNotice(false)} className="text-green-400 hover:text-green-300 text-xl flex-shrink-0">×</button>
-            </motion.div>
-          )}
+
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate="visible" className="max-w-2xl">
             <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight mb-4">
               Finalize your <span className="text-violet-tech">purchase</span>
@@ -401,11 +381,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2 flex-wrap">
                               <p className="font-semibold text-foreground">{option.label}</p>
-                              {(productId === "ai-engine" && (idx === 6 || idx === 7)) && (
-                                <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-xs font-bold tracking-wider animate-pulse">
-                                  🔥 PROMO
-                                </span>
-                              )}
+
                             </div>
                             {option.description && <p className="text-xs text-muted-foreground mt-1">{option.description}</p>}
                             {option.duration && (
@@ -416,22 +392,8 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                           </div>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          {(productId === "ai-engine" && (idx === 6 || idx === 7)) ? (
-                            <div className="flex flex-col items-end gap-0.5">
-                              <p className="text-xs text-muted-foreground line-through">{option.price}€</p>
-                              <p className="font-display font-bold text-green-400 text-lg">
-                                {PROMO_PRICES[`${productId}-${idx}-${clientGrade}` as keyof typeof PROMO_PRICES] || option.price}€
-                              </p>
-                              <p className="text-xs text-red-400 font-bold">
-                                -€{(option.price - (PROMO_PRICES[`${productId}-${idx}-${clientGrade}` as keyof typeof PROMO_PRICES] || option.price)).toFixed(2)}
-                              </p>
-                            </div>
-                          ) : (
-                            <>
-                              <p className="font-display font-bold text-violet-tech text-lg">{option.price}€</p>
-                              {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
-                            </>
-                          )}
+                          <p className="font-display font-bold text-violet-tech text-lg">{option.price}€</p>
+                          {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
                         </div>
                       </div>
                     </motion.button>
@@ -559,40 +521,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                   </div>
 
 
-                  {/* Client Grade Selection (for Annual & Lifetime promo) */}
-                  {isPromoEligible && (
-                    <div className="pt-4 border-t border-border/30">
-                      <div className="mb-4 p-3 rounded-lg bg-red-900/20 border border-red-500/30">
-                        <p className="text-xs text-red-200 leading-relaxed">
-                          <strong className="text-red-400">⚠️ Important:</strong> The "Existing Customer" and "VIP Member" discounts are <strong>exclusively for users who already have the corresponding role on our Discord server</strong>. If you select these options without having the required role, you will be required to pay the full price difference as compensation. Please verify your Discord status before proceeding.
-                        </p>
-                      </div>
-                      <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Client Status (for promo)</h3>
-                      <div className="space-y-2">
-                        <label className="flex items-center gap-3 p-3 rounded-lg border border-border/30 cursor-pointer hover:bg-dark-elevated/30 transition-colors" style={{ borderColor: clientGrade === "not-client" ? "rgb(123, 46, 255)" : "" }}>
-                          <input type="radio" name="grade" value="not-client" checked={clientGrade === "not-client"} onChange={(e) => setClientGrade(e.target.value as ClientGrade)} className="w-4 h-4" />
-                          <div>
-                            <p className="font-medium text-foreground">New Customer</p>
-                            <p className="text-xs text-muted-foreground">-20€ (Annual) / -40€ (Lifetime)</p>
-                          </div>
-                        </label>
-                        <label className="flex items-center gap-3 p-3 rounded-lg border border-border/30 cursor-pointer hover:bg-dark-elevated/30 transition-colors" style={{ borderColor: clientGrade === "already-client" ? "rgb(123, 46, 255)" : "" }}>
-                          <input type="radio" name="grade" value="already-client" checked={clientGrade === "already-client"} onChange={(e) => setClientGrade(e.target.value as ClientGrade)} className="w-4 h-4" />
-                          <div>
-                            <p className="font-medium text-foreground">Existing Customer</p>
-                            <p className="text-xs text-muted-foreground">-40€ (Annual) / -80€ (Lifetime)</p>
-                          </div>
-                        </label>
-                        <label className="flex items-center gap-3 p-3 rounded-lg border border-border/30 cursor-pointer hover:bg-dark-elevated/30 transition-colors" style={{ borderColor: clientGrade === "vip" ? "rgb(123, 46, 255)" : "" }}>
-                          <input type="radio" name="grade" value="vip" checked={clientGrade === "vip"} onChange={(e) => setClientGrade(e.target.value as ClientGrade)} className="w-4 h-4" />
-                          <div>
-                            <p className="font-medium text-foreground">VIP Member</p>
-                            <p className="text-xs text-muted-foreground">-60€ (Annual) / -100€ (Lifetime)</p>
-                          </div>
-                        </label>
-                      </div>
-                    </div>
-                  )}
+
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? "Processing..." : "Validate my information"}
