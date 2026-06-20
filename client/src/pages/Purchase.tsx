@@ -350,7 +350,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                       <h3 className="text-sm font-bold text-red-400 tracking-wider uppercase">Mandatory Requirement</h3>
                     </div>
                     <p className="text-sm text-red-200/80 leading-relaxed">
-                      For Apex Legends, you <span className="text-red-400 font-bold underline">MUST</span> use the <strong>STEAM</strong> version. The EA App (Origin) version is <strong>NOT supported</strong> and will not work with our tools.
+                      For Apex Legends, you <span className="text-red-400 font-bold underline">MUST</span> use the <strong>STEAM</strong> version. Fortnite and other games are also supported. The EA App (Origin) version of Apex is <strong>NOT supported</strong>.
                     </p>
                   </div>
                 )}

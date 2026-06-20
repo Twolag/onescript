@@ -28,6 +28,7 @@ export default function Trial() {
 
   const gameOptions = [
     "Apex Legends",
+    "Fortnite",
     "Call of Duty",
     "Steam (Autres jeux)",
     "Tous les jeux supportés",

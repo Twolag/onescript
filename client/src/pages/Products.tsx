@@ -251,7 +251,7 @@ export default function Products() {
           { label: "NVIDIA GPU", value: "RTX 20 / 30 / 40 / 50+" },
           { label: "AMD GPU", value: "RX 6600 XT / 6700+ / 7000+ (Native)" },
           { label: "Recommended CPU", value: "i5 13th Gen / Ryzen 5 5000+" },
-          { label: "Platform", value: "STEAM ONLY (Apex)" },
+          { label: "Platform", value: "PC (Apex, Fortnite, Warzone)" },
           { label: "OS", value: "Windows 10 / 11" },
         ]}
         pricing={[
@@ -298,8 +298,8 @@ export default function Products() {
       <ProductSection
         id="jitter-script"
         title="Jitter Script"
-        subtitle="Apex Legends & Warzone Anti-Recoil"
-        description="The best Apex Legends and Warzone jitter script on the market. Designed to be undetectable by anti-cheat, it simulates a jitter aim movement to counter your weapons' recoil. Little to no shaking depending on the optics to appear as legitimate as possible, yet very powerful to allow you to destroy your opponents at over 150 meters. Precise shots up to 600 meters depending on settings (strongly discouraged). Unlike other jitter aims on the market, it does not cut aim assist. Perfect for all FPS games."
+        subtitle="Apex, Fortnite & Warzone Anti-Recoil"
+        description="The best anti-recoil jitter script for Apex Legends, Fortnite and Warzone on the market. Designed to be undetectable by anti-cheat, it simulates a jitter aim movement to counter your weapons' recoil. Little to no shaking depending on the optics to appear as legitimate as possible, yet very powerful to allow you to destroy your opponents at over 150 meters. Unlike other jitter aims on the market, it does not cut aim assist. Perfect for all FPS games."
         image={SCRIPT_TOOLS}
         icon={Gamepad2}
         features={[
@@ -315,7 +315,7 @@ export default function Products() {
           { label: "OS", value: "Windows 10 / 11" },
           { label: "GPU / CPU", value: "All models" },
           { label: "Type", value: "Subscription" },
-          { label: "Platform", value: "STEAM ONLY (Apex)" },
+          { label: "Platform", value: "PC (Apex, Fortnite, Warzone)" },
         ]}
         pricing={[
           { label: "1 day", price: "2.50 €" },

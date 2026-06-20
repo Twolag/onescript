@@ -58,7 +58,7 @@ const products = [
   },
   {
     title: "Jitter Script",
-    desc: "The best anti-recoil Apex Legends jitter script on the market. Undetectable, controller only, does not cut aim assist. Perfect for Warzone and all FPS games.",
+    desc: "The best anti-recoil Apex Legends, Fortnite and Warzone jitter script on the market. Undetectable, controller only, does not cut aim assist. Perfect for all FPS games.",
     icon: Gamepad2,
     image: SCRIPT_TOOLS,
     price: "2.50 €",
@@ -157,7 +157,7 @@ const pricingPlans = [
     name: "Jitter Script",
     price: "2.50",
     period: "starting from",
-    desc: "Anti-recoil jitter aim script — Controller Only | Keyboard & Mouse not supported",
+    desc: "Anti-recoil jitter aim script for Apex, Fortnite & Warzone — Controller Only | Keyboard & Mouse not supported",
     features: [
       "Undetectable by anti-cheat",
       "Does not cut aim assist",
