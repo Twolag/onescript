@@ -1,6 +1,6 @@
 /**
- * Products — Grid Card Design (Modern & Clean)
- * All products displayed as elegant cards in a responsive grid
+ * Products — Uniform Grid Card Design
+ * All products displayed as equal-sized elegant cards in a responsive grid
  * Each card: icon, title, description, badges, features, price, CTA
  */
 import { motion } from "framer-motion";
@@ -13,6 +13,7 @@ import {
   Check,
   ArrowRight,
   ChevronRight,
+  AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -37,7 +38,7 @@ interface ProductCard {
   priceNote?: string;
   cta: string;
   ctaHref: string;
-  highlight?: boolean;
+  warning?: string;
 }
 
 const products: ProductCard[] = [
@@ -45,7 +46,7 @@ const products: ProductCard[] = [
     id: "fusion-ai",
     title: "FUSION IA - V8",
     subtitle: "AI Visual Processing",
-    description: "Revolutionary V8 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency, and premium interface.",
+    description: "Revolutionary V8 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
     icon: Cpu,
     badge: { label: "STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
     features: [
@@ -59,26 +60,26 @@ const products: ProductCard[] = [
     priceNote: "starting from",
     cta: "VIEW OPTIONS",
     ctaHref: "/purchase?product=ai-engine",
-    highlight: true,
   },
   {
     id: "apex-weight",
     title: "Advanced AI Weight",
-    subtitle: "Apex Legends Exclusive",
-    description: "Unlock the most powerful AI Weight configuration for Apex Legends. Supercharges targeting precision and AI tracking performance. Requires high-end GPU: NVIDIA RTX 4080 / 5070 minimum.",
+    subtitle: "Apex Legends Add-On",
+    description: "Powerful AI Weight add-on for Apex Legends only. Supercharges targeting precision and AI tracking. ⚠️ **Add-on only** — FUSION IA license required separately. RTX 4080 / 5070+ minimum.",
     icon: Zap,
-    badge: { label: "APEX LEGENDS", color: "bg-amber-500/20 border-amber-500/50 text-amber-400" },
+    badge: { label: "ADD-ON ONLY", color: "bg-amber-500/20 border-amber-500/50 text-amber-400" },
     features: [
       "Apex Legends Exclusive",
       "Enhanced AI Targeting",
       "RTX 4080 / 5070+ Required",
       "Instant Delivery",
-      "Integrates with V8",
+      "Requires FUSION IA License",
     ],
     price: "10 €",
     priceNote: "one-time",
     cta: "BUY NOW",
     ctaHref: "https://pay.sumup.com/b2c/QSDE2C71",
+    warning: "This is an add-on only. The FUSION IA license must be purchased separately.",
   },
   {
     id: "windows-opt",
@@ -120,7 +121,7 @@ const products: ProductCard[] = [
   },
 ];
 
-function ProductCard({
+function ProductCardComponent({
   id,
   title,
   subtitle,
@@ -132,7 +133,7 @@ function ProductCard({
   priceNote,
   cta,
   ctaHref,
-  highlight,
+  warning,
   index,
 }: ProductCard & { index: number }) {
   const isExternal = ctaHref.startsWith("http");
@@ -144,11 +145,7 @@ function ProductCard({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
-      className={`relative group rounded-lg overflow-hidden transition-all duration-300 ${
-        highlight
-          ? "border-2 border-violet-tech/40 ring-1 ring-violet-tech/20 lg:col-span-2"
-          : "border border-border/50 hover:border-violet-tech/30"
-      }`}
+      className="relative group rounded-lg overflow-hidden border border-border/50 hover:border-violet-tech/30 transition-all duration-300 flex flex-col h-full"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-dark-elevated/40 to-dark-base/40" />
@@ -157,13 +154,13 @@ function ProductCard({
       <div className="absolute inset-0 bg-gradient-to-br from-violet-tech/0 via-transparent to-violet-tech/0 group-hover:from-violet-tech/5 group-hover:via-violet-tech/2 group-hover:to-violet-tech/5 transition-all duration-300" />
 
       {/* Content */}
-      <div className="relative p-6 sm:p-8 h-full flex flex-col">
+      <div className="relative p-6 h-full flex flex-col">
         {/* Header: Icon + Badge */}
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-violet-tech/15 border border-violet-tech/20 flex-shrink-0">
             <Icon className="w-6 h-6 text-violet-tech" />
           </div>
-          <div className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase border ${badge.color}`}>
+          <div className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase border whitespace-nowrap ${badge.color}`}>
             {badge.label}
           </div>
         </div>
@@ -173,18 +170,26 @@ function ProductCard({
           <p className="text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-1">
             {subtitle}
           </p>
-          <h3 className="font-display font-extrabold text-xl sm:text-2xl text-foreground">
+          <h3 className="font-display font-extrabold text-xl text-foreground">
             {title}
           </h3>
         </div>
 
         {/* Description */}
-        <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-grow">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
           {description}
         </p>
 
+        {/* Warning for add-on */}
+        {warning && (
+          <div className="mb-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 flex gap-2">
+            <AlertCircle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-amber-200/90">{warning}</p>
+          </div>
+        )}
+
         {/* Features */}
-        <div className="space-y-2 mb-6">
+        <div className="space-y-2 mb-6 flex-grow">
           {features.map((feature) => (
             <div key={feature} className="flex items-center gap-2 text-xs text-foreground/80">
               <Check className="w-3.5 h-3.5 text-violet-tech flex-shrink-0" />
@@ -194,7 +199,7 @@ function ProductCard({
         </div>
 
         {/* Footer: Price + CTA */}
-        <div className="flex items-end justify-between gap-4 pt-4 border-t border-border/20">
+        <div className="flex items-end justify-between gap-4 pt-4 border-t border-border/20 mt-auto">
           <div>
             <p className="text-xs text-muted-foreground mb-1">{priceNote || "Price"}</p>
             <p className="font-display font-extrabold text-2xl text-violet-tech">
@@ -261,9 +266,9 @@ export default function Products() {
       {/* Products Grid */}
       <section className="relative py-16 lg:py-24">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product, idx) => (
-              <ProductCard key={product.id} {...product} index={idx} />
+              <ProductCardComponent key={product.id} {...product} index={idx} />
             ))}
           </div>
         </div>

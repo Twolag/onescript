@@ -256,48 +256,129 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════ PERFORMANCE SECTION ═══════════════ */}
+      {/* ═══════════════ PRODUCTS GRID SECTION ═══════════════ */}
       <section className="relative py-24 lg:py-32">
         <div className="container">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
-              <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">Performance</span>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-6">
-                Next-Gen <span className="text-violet-tech">AI Engine</span>
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                FUSION IA V8 introduces a revolutionary architecture. By decoupling visual processing from game threads, we guarantee **zero FPS drops** and **instant responsiveness**, regardless of your system configuration.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {[
-                  { icon: Layers, title: "NVIDIA & AMD", desc: "Native support for all modern GPUs" },
-                  { icon: Clock, title: "Low Latency", desc: "Drastically reduced controller input lag" },
-                  { icon: TrendingUp, title: "Optimized Engine", desc: "No hardware monitoring conflicts" },
-                  { icon: Shield, title: "V8 Stability", desc: "Completely redesigned for Windows 10/11" },
-                ].map((item, i) => (
-                  <motion.div key={item.title} custom={i + 1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="flex items-start gap-4 p-4 rounded-lg bg-dark-elevated/50 border border-border/30 hover:border-violet-tech/20 transition-colors duration-300">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-md bg-violet-tech/15 border border-violet-tech/20">
-                      <item.icon className="w-5 h-5 text-violet-tech" />
+          <motion.div variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="text-center max-w-2xl mx-auto mb-12">
+            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">Our Products</span>
+            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
+              Performance <span className="text-violet-tech">Tools</span>
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">Everything you need to dominate. From AI aimbots to system optimization.</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                id: "fusion-ai",
+                title: "FUSION IA - V8",
+                subtitle: "AI Visual Processing",
+                description: "Revolutionary V8 update with exceptional AMD support. Native NVIDIA & AMD compatibility. Zero FPS drops.",
+                icon: Cpu,
+                badge: { label: "STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
+                features: ["V8 Architecture", "NVIDIA & AMD Support", "Ultra-Low Latency ⚡", "Zero FPS Drops", "Premium UI"],
+                price: "50 €",
+                priceNote: "starting from",
+                cta: "VIEW",
+                ctaHref: "/purchase?product=ai-engine",
+              },
+              {
+                id: "apex-weight",
+                title: "Advanced AI Weight",
+                subtitle: "Apex Legends Add-On",
+                description: "Powerful AI Weight add-on for Apex Legends. Supercharges targeting precision. ⚠️ Add-on only.",
+                icon: Zap,
+                badge: { label: "ADD-ON ONLY", color: "bg-amber-500/20 border-amber-500/50 text-amber-400" },
+                features: ["Apex Exclusive", "Enhanced Targeting", "RTX 4080/5070+", "Instant Delivery", "Requires FUSION IA"],
+                price: "10 €",
+                priceNote: "one-time",
+                cta: "BUY",
+                ctaHref: "https://pay.sumup.com/b2c/QSDE2C71",
+              },
+              {
+                id: "windows-opt",
+                title: "Windows Optimization",
+                subtitle: "System Optimization",
+                description: "Advanced Windows optimization for gaming performance. Complete cleanup and optimization for 40-60 FPS gain.",
+                icon: Monitor,
+                badge: { label: "PERFORMANCE", color: "bg-blue-500/20 border-blue-500/50 text-blue-400" },
+                features: ["System Cleanup", "Remove Services", "RAM & CPU Opt", "Input Lag Reduction", "40-60 FPS Gain"],
+                price: "20 €",
+                priceNote: "starting from",
+                cta: "VIEW",
+                ctaHref: "/purchase?product=windows-opt",
+              },
+              {
+                id: "jitter-script",
+                title: "Jitter Script",
+                subtitle: "Anti-Recoil for FPS",
+                description: "Best anti-recoil jitter script for Apex, Fortnite and Warzone. Undetectable by anti-cheat. Does not cut aim assist.",
+                icon: Gamepad2,
+                badge: { label: "CONTROLLER ONLY", color: "bg-violet-500/20 border-violet-500/50 text-violet-300" },
+                features: ["Undetectable", "No Aim Assist Cut", "Humanizer", "Adjustable", "All FPS Games"],
+                price: "2.50 €",
+                priceNote: "starting from",
+                cta: "VIEW",
+                ctaHref: "/purchase?product=jitter-script",
+              },
+            ].map((product, i) => (
+              <motion.div key={product.id} custom={i + 1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className="relative group rounded-lg overflow-hidden border border-border/50 hover:border-violet-tech/30 transition-all duration-300 flex flex-col h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-dark-elevated/40 to-dark-base/40" />
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-tech/0 via-transparent to-violet-tech/0 group-hover:from-violet-tech/5 group-hover:via-violet-tech/2 group-hover:to-violet-tech/5 transition-all duration-300" />
+                <div className="relative p-6 h-full flex flex-col">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-violet-tech/15 border border-violet-tech/20 flex-shrink-0">
+                      <product.icon className="w-5 h-5 text-violet-tech" />
                     </div>
+                    <div className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase border whitespace-nowrap ${product.badge.color}`}>
+                      {product.badge.label}
+                    </div>
+                  </div>
+                  <div className="mb-2">
+                    <p className="text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-0.5">{product.subtitle}</p>
+                    <h3 className="font-display font-extrabold text-lg text-foreground">{product.title}</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-4">{product.description}</p>
+                  <div className="space-y-1.5 mb-4 flex-grow">
+                    {product.features.map((f) => (
+                      <div key={f} className="flex items-center gap-2 text-xs text-foreground/80">
+                        <Check className="w-3 h-3 text-violet-tech flex-shrink-0" />
+                        <span>{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-end justify-between gap-3 pt-3 border-t border-border/20 mt-auto">
                     <div>
-                      <h4 className="font-display font-semibold text-sm tracking-wide mb-0.5">{item.title}</h4>
-                      <p className="text-xs text-muted-foreground">{item.desc}</p>
+                      <p className="text-xs text-muted-foreground mb-0.5">{product.priceNote}</p>
+                      <p className="font-display font-extrabold text-xl text-violet-tech">{product.price}</p>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-            <motion.div variants={fadeUp} custom={2} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="relative">
-              <div className="relative rounded-lg overflow-hidden neon-glow">
-                <img src={AI_ENGINE} alt="AI Performance Engine" className="w-full h-auto rounded-lg" />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-base/60 to-transparent" />
-              </div>
-              <div className="absolute -bottom-6 -left-4 sm:left-auto sm:-right-6 glass-card rounded-lg p-4 neon-glow">
-                <div className="font-display font-extrabold text-2xl text-violet-tech">V8 LIVE</div>
-                <p className="text-xs text-muted-foreground mt-0.5">Architecture redesigned</p>
-              </div>
-            </motion.div>
+                    {product.ctaHref.startsWith("http") ? (
+                      <a href={product.ctaHref} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider gap-1">
+                          {product.cta}
+                          <ArrowRight className="w-3 h-3" />
+                        </Button>
+                      </a>
+                    ) : (
+                      <Link href={product.ctaHref}>
+                        <Button size="sm" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider gap-1">
+                          {product.cta}
+                          <ArrowRight className="w-3 h-3" />
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
+          <motion.div variants={fadeUp} custom={5} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className="mt-12 text-center">
+            <Link href="/products">
+              <Button size="lg" variant="outline" className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2">
+                VIEW ALL PRODUCTS
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
       </section>
