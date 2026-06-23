@@ -138,7 +138,7 @@ const products: Product[] = [
       { label: "Annual Subscription", price: 250, description: "Full access to FUSION AI V8 for 12 months. ⚠️ Locked to V8 - future major updates require +€30 per update. Priority support included.", duration: "~1 hour" },
       { label: "Lifetime License", price: 450, description: "Permanent access to FUSION AI V8. ⚠️ Locked to V8 - future major updates require +€30 per update. One-time payment.", duration: "~1 hour" },
       { label: "Monthly Renewal", price: 30, note: "/ month", description: "Exclusive to users who have completed 4 consecutive weeks or previously purchased a full month. Renewal only.", duration: "~30 min" },
-      { label: "Advanced AI Weight — Apex Legends", price: 10, description: "Powerful AI Weight add-on for Apex Legends. Requires a high-end GPU: NVIDIA RTX 4080 / 5070 minimum. Significantly enhances targeting precision and AI tracking performance.", duration: "Instant delivery" },
+      { label: "Advanced AI Weight — Apex Legends", price: 10, description: "Powerful AI Weight add-on for Apex Legends. Requires a high-end GPU: NVIDIA RTX 4080 / 5070 minimum. ONLY available for existing AI Aimbot license holders. Requires NVIDIA RTX 4080/5070+ or AMD RX 9070 XT+. Enhances targeting precision.", duration: "Instant delivery" },
     ],
   },
   {
