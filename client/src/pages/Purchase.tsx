@@ -545,6 +545,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                       <div className="text-sm text-amber-200/90 leading-relaxed">
                         <strong className="text-amber-400 block mb-1">System Recommendation</strong>
                         <p className="mb-2">For GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, <strong>Windows 10</strong> is strongly recommended for optimal AI performance and stability.</p>
+                        <p className="mb-2 text-violet-tech font-bold">Requires Waveshare RP2350A USB Mini Development Board for V8.1 safe operation.</p>
                         <p className="text-amber-300/90 text-xs font-semibold border-t border-amber-500/20 pt-2 mt-2">Issues related to your PC (hardware, drivers, third-party software, OS, antivirus) are not valid refund reasons.</p>
                       </div>
                     </div>
