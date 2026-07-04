@@ -44,13 +44,13 @@ interface ProductCard {
 const products: ProductCard[] = [
   {
     id: "fusion-ai",
-    title: "FUSION IA - V8",
+    title: "FUSION IA - V8.1",
     subtitle: "AI Visual Processing",
-    description: "Revolutionary V8 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
+    description: "Revolutionary V8.1 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Requires Waveshare RP2350A USB Mini Development Board for safe operation. Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
     icon: Cpu,
     badge: { label: "STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
     features: [
-      "V8 Redesigned Architecture",
+      "V8.1 Redesigned Architecture",
       "Native NVIDIA & AMD Support",
       "Ultra-Low Controller Latency ⚡",
       "Zero FPS Drops Guarantee",

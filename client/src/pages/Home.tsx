@@ -270,12 +270,12 @@ export default function Home() {
             {[
               {
                 id: "fusion-ai",
-                title: "FUSION IA - V8",
+                title: "FUSION IA - V8.1",
                 subtitle: "AI Visual Processing",
-                description: "Revolutionary V8 update with exceptional AMD support. Native NVIDIA & AMD compatibility. Zero FPS drops.",
+                description: "Revolutionary V8.1 update with exceptional AMD support. Requires Waveshare RP2350A USB Mini Development Board. Native NVIDIA & AMD compatibility. Zero FPS drops.",
                 icon: Cpu,
                 badge: { label: "STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
-                features: ["V8 Architecture", "NVIDIA & AMD Support", "Ultra-Low Latency ⚡", "Zero FPS Drops", "Premium UI"],
+                features: ["V8.1 Architecture", "NVIDIA & AMD Support", "Waveshare RP2350A Required", "Zero FPS Drops", "Premium UI"],
                 price: "50 €",
                 priceNote: "starting from",
                 cta: "VIEW",
