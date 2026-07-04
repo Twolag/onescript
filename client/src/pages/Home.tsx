@@ -39,7 +39,7 @@ const V7_VIDEO = "https://files.manuscdn.com/user_upload_by_module/session_file/
 
 const products = [
   {
-    title: "FUSION IA - V8",
+    title: "FUSION IA - V8.1",
     desc: "Revolutionary V8 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency, and premium interface. The ultimate AI visual processing engine.",
     icon: Cpu,
     image: AI_ENGINE,
@@ -68,7 +68,7 @@ const products = [
 ];
 
 const stats = [
-  { value: "V8", unit: "NEW", label: "Architecture" },
+  { value: "V8.1", unit: "NEW", label: "Architecture" },
   { value: "NVIDIA", unit: "& AMD", label: "Native Support" },
   { value: "24/7", unit: "", label: "Support" },
 ];
@@ -89,7 +89,7 @@ const pricingPlans = [
     cta: "CHOOSE THIS PLAN",
   },
   {
-    name: "AI Aimbot - V8 - Standard",
+    name: "AI Aimbot - V8.1 - Standard",
     price: "50",
     period: "1 month license",
     desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY",
@@ -106,7 +106,7 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - V8 - Premium",
+    name: "AI Aimbot - V8.1 - Premium",
     price: "80",
     period: "1st month + inst.",
     desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY",
@@ -122,7 +122,7 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - V8 - Annual",
+    name: "AI Aimbot - V8.1 - Annual",
     price: "250",
     period: "per year",
     desc: "Annual subscription - Full access to all features for 12 months | AMD & NVIDIA Support",
@@ -138,7 +138,7 @@ const pricingPlans = [
     cta: "Choose this plan",
   },
   {
-    name: "AI Aimbot - V8 - Lifetime",
+    name: "AI Aimbot - V8.1 - Lifetime",
     price: "450",
     period: "one-time",
     desc: "Lifetime access - Permanent license with all future updates included | AMD & NVIDIA Support",
@@ -191,10 +191,10 @@ export default function Home() {
             <div className="max-w-2xl flex-1">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
                 <Zap className="w-3 h-3" />
-                FUSION IA V8 IS LIVE
+                FUSION IA V8.1 IS LIVE
               </motion.div>
               <motion.h1 custom={1} variants={fadeUp} initial="hidden" animate="visible" className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight mb-6">
-                Dominate with{" "}<span className="text-violet-tech neon-text">FUSION IA V8</span>
+                Dominate with{" "}<span className="text-violet-tech neon-text">FUSION IA V8.1</span>
               </motion.h1>
               <motion.p custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
                 The most advanced AI visual engine. Now with **Native NVIDIA & AMD support** and ultra-low controller latency. Experience the future of gaming performance.
@@ -202,7 +202,7 @@ export default function Home() {
               <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-wrap gap-4">
                 <Link href="/purchase?product=ai-engine">
                   <Button size="lg" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                    <Zap className="w-4 h-4" />GET V8 NOW<ArrowRight className="w-4 h-4" />
+                    <Zap className="w-4 h-4" />GET V8.1 NOW<ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Link href="/products">
@@ -229,7 +229,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span className="text-[10px] font-display font-bold text-white tracking-widest uppercase bg-black/50 px-2 py-1 rounded">V8 CINEMATIC LAUNCH</span>
+                <span className="text-[10px] font-display font-bold text-white tracking-widest uppercase bg-black/50 px-2 py-1 rounded">V8.1 CINEMATIC LAUNCH</span>
               </div>
             </motion.div>
           </div>
