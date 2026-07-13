@@ -173,7 +173,17 @@ const pricingPlans = [
 export default function Home() {
   return (
     <>
-
+      {/* ═══════════════ PROMO BANNER ═══════════════ */}
+      <div className="w-full bg-gradient-to-r from-red-600 via-red-500 to-red-600 py-4 px-4 text-center border-b-4 border-red-700 shadow-lg shadow-red-500/50 animate-pulse">
+        <div className="container mx-auto">
+          <p className="text-white font-display font-extrabold text-2xl sm:text-3xl tracking-wider uppercase">
+            🔥 LIMITED TIME OFFER 🔥
+          </p>
+          <p className="text-red-100 font-semibold text-sm sm:text-base mt-1">
+            Monthly Licenses: <span className="line-through">50€ & 80€</span> → NOW <span className="text-yellow-300 font-bold text-lg">30€ & 50€</span> | 1 WEEK ONLY!
+          </p>
+        </div>
+      </div>
 
       <div className="overflow-hidden">
       {/* ═══════════════ HERO SECTION ═══════════════ */}
@@ -402,7 +412,13 @@ export default function Home() {
                 <h3 className="font-display font-bold text-base tracking-wide mb-2">{plan.name}</h3>
                 <p className="text-sm text-muted-foreground mb-6">{plan.desc}</p>
                 <div className="mb-6">
-                  <span className="font-display font-extrabold text-4xl text-foreground">{plan.price}</span>
+                  {(plan.name.includes('Standard') || plan.name.includes('Premium')) && (
+                    <div className="mb-2">
+                      <span className="text-lg text-red-400 line-through font-semibold">{plan.name.includes('Standard') ? '50€' : '80€'}</span>
+                      <span className="text-red-500 font-bold text-sm ml-2">PROMO</span>
+                    </div>
+                  )}
+                  <span className={`font-display font-extrabold text-4xl ${(plan.name.includes('Standard') || plan.name.includes('Premium')) ? 'text-red-500' : 'text-foreground'}`}>{plan.price}</span>
                   <span className="text-lg text-muted-foreground ml-1">€</span>
                   {plan.period && <span className="block text-sm text-muted-foreground mt-1">{plan.period}</span>}
                 </div>

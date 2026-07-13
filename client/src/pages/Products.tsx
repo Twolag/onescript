@@ -202,7 +202,13 @@ function ProductCardComponent({
         <div className="flex items-end justify-between gap-4 pt-4 border-t border-border/20 mt-auto">
           <div>
             <p className="text-xs text-muted-foreground mb-1">{priceNote || "Price"}</p>
-            <p className="font-display font-extrabold text-2xl text-violet-tech">
+            {id === "fusion-ai" && (
+              <div className="mb-1">
+                <span className="text-sm text-red-400 line-through font-semibold">50€</span>
+                <span className="text-red-500 font-bold text-xs ml-2">PROMO</span>
+              </div>
+            )}
+            <p className={`font-display font-extrabold text-2xl ${id === "fusion-ai" ? "text-red-500" : "text-violet-tech"}`}>
               {price}
             </p>
           </div>
