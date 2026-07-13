@@ -90,9 +90,9 @@ const pricingPlans = [
   },
   {
     name: "AI Aimbot - V8.1 - Standard",
-    price: "50",
+    price: "30",
     period: "1 month license",
-    desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY",
+    desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY | ⚡ PROMO: 30€ (was 50€)",
     features: [
       "New V8 Redesigned Architecture",
       "Native AMD & NVIDIA Support",
@@ -107,9 +107,9 @@ const pricingPlans = [
   },
   {
     name: "AI Aimbot - V8.1 - Premium",
-    price: "80",
+    price: "50",
     period: "1st month + inst.",
-    desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY",
+    desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY | ⚡ PROMO: 50€ (was 80€)",
     features: [
       "New V8 Redesigned Architecture",
       "Native AMD & NVIDIA Support",
