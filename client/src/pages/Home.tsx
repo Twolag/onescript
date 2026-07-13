@@ -180,7 +180,7 @@ export default function Home() {
             🔥 LIMITED TIME OFFER 🔥
           </p>
           <p className="text-red-100 font-semibold text-sm sm:text-base mt-1">
-            Monthly Licenses: <span className="line-through">50€ & 80€</span> → NOW <span className="text-yellow-300 font-bold text-lg">30€ & 50€</span> | 1 WEEK ONLY!
+            Monthly Licenses: <span className="line-through">50€ & 80€</span> → NOW <span className="text-yellow-300 font-bold text-lg">30€ & 50€</span> | LIMITED TIME!
           </p>
         </div>
       </div>
