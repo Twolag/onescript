@@ -35,7 +35,7 @@ const videoDemos: VideoDemo[] = [
     game: "Fortnite",
     product: "FUSION AI V8.1",
     description: "Exclusive look at FUSION AI V8.1 performance in Fortnite. Perfect tracking, zero lag, and total domination.",
-    thumbnail: "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=600&h=400&fit=crop&blend=https://www.pngkey.com/png/full/94-948156_fortnite-logo-png.png&blend-mode=overlay",
+    thumbnail: "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=600&h=400&fit=crop",
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
     icon: Cpu,
     badge: "NEW CLIP",
@@ -173,7 +173,7 @@ export default function Showcase() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-screen pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden">
+      <section className="relative pt-32 pb-4 lg:pt-40 lg:pb-4 overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 bg-dark-base" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
@@ -187,7 +187,7 @@ export default function Showcase() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
-            className="max-w-3xl mx-auto text-center mb-16"
+            className="max-w-3xl mx-auto text-center mb-2"
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-violet-tech/10 border border-violet-tech/30 text-xs font-semibold tracking-widest uppercase text-violet-tech mb-4">
               Product Demonstrations
@@ -203,7 +203,7 @@ export default function Showcase() {
       </section>
 
       {/* Video Grid Section */}
-      <section className="relative py-8 lg:py-12">
+      <section className="relative py-0 lg:py-0">
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
 
