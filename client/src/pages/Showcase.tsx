@@ -35,19 +35,19 @@ const videoDemos: VideoDemo[] = [
     game: "Fortnite",
     product: "FUSION AI V8.1",
     description: "Exclusive look at FUSION AI V8.1 performance in Fortnite. Perfect tracking, zero lag, and total domination.",
-    thumbnail: "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=600&h=400&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1589241062272-c0a000072dfa?w=600&h=400&fit=crop",
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
     icon: Cpu,
     badge: "NEW CLIP",
   },
   {
-    id: "apex-weight-apex",
-    title: "Advanced AI Weight in Action",
+    id: "apex-weight-apex-clip",
+    title: "Advanced AI Weight — Apex Gameplay",
     game: "Apex Legends",
     product: "Advanced AI Weight",
-    description: "Experience surgical precision targeting with our Advanced AI Weight add-on. Watch how the AI tracks enemies with incredible accuracy.",
-    thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Experience surgical precision targeting with our Advanced AI Weight add-on. Optimized for high-end GPUs.",
+    thumbnail: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
     icon: Zap,
     badge: "ADD-ON",
   },
@@ -57,19 +57,18 @@ const videoDemos: VideoDemo[] = [
     game: "Apex Legends",
     product: "FUSION AI V8.1",
     description: "Revolutionary architecture with 10x more processing power. Watch the AI adapt in real-time during intense Apex matches.",
-    thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
     badge: "V8.1",
   },
-
   {
     id: "fusion-ai-warzone",
     title: "FUSION AI V8.1 on Warzone",
     game: "Call of Duty: Warzone",
     product: "FUSION AI V8.1",
     description: "Instant responsiveness in fast-paced Warzone matches. The AI engine adapts to every playstyle seamlessly.",
-    thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1542751110-97427bbecf20?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
     badge: "V8.1",
@@ -80,7 +79,7 @@ const videoDemos: VideoDemo[] = [
     game: "Overwatch 2",
     product: "FUSION AI V8.1",
     description: "High-speed tracking for Overwatch 2. See how FUSION AI handles fast-moving targets with ease.",
-    thumbnail: "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=600&h=400&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
     badge: "V8.1",
@@ -102,27 +101,27 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100]"
           />
 
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-6 lg:p-8"
             onClick={onClose}
           >
             <div
-              className="relative w-full max-w-4xl bg-dark-base rounded-lg overflow-hidden border border-violet-tech/30"
+              className="relative w-full max-w-5xl bg-dark-base rounded-xl overflow-hidden border border-violet-tech/30 shadow-2xl shadow-violet-tech/20"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-dark-elevated/80 hover:bg-dark-elevated border border-violet-tech/30 transition-all duration-300"
+                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 hover:bg-violet-tech/20 border border-white/10 hover:border-violet-tech/50 transition-all duration-300"
               >
-                <X className="w-5 h-5 text-foreground" />
+                <X className="w-6 h-6 text-white" />
               </button>
 
               {/* Video Player */}
@@ -145,11 +144,19 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
               </div>
 
               {/* Info */}
-              <div className="p-6 bg-gradient-to-b from-dark-elevated/50 to-dark-base">
-                <h3 className="font-display font-extrabold text-xl text-foreground mb-2">
+              <div className="p-6 lg:p-8 bg-gradient-to-b from-dark-elevated to-dark-base border-t border-white/5">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-violet-tech/20 text-violet-tech border border-violet-tech/30">
+                    {demo.game}
+                  </span>
+                  <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
+                    {demo.product}
+                  </span>
+                </div>
+                <h3 className="font-display font-extrabold text-2xl text-foreground mb-3">
                   {demo.title}
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed max-w-3xl">
                   {demo.description}
                 </p>
               </div>
@@ -171,42 +178,36 @@ export default function Showcase() {
   };
 
   return (
-    <>
+    <div className="bg-dark-base min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-4 lg:pt-40 lg:pb-4 overflow-hidden">
-        {/* Background elements */}
+      <section className="relative pt-32 pb-8 lg:pt-40 lg:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-dark-base" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-violet-tech/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-tech/5 rounded-full blur-3xl" />
-
+        
         <div className="relative container">
           <motion.div
             variants={fadeUp}
             custom={0}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="max-w-3xl mx-auto text-center mb-2"
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto text-center mb-8"
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-violet-tech/10 border border-violet-tech/30 text-xs font-semibold tracking-widest uppercase text-violet-tech mb-4">
-              Product Demonstrations
+              Showcase
             </span>
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6">
-              See <span className="text-violet-tech">OneScript</span> in Action
+            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
+              See <span className="text-violet-tech text-glow">OneScript</span> in Action
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Watch our products dominate across our supported titles. From Apex Legends to Fortnite, experience the power of FUSION AI V8.1.
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              High-performance demonstrations of FUSION AI V8.1 across our supported competitive titles.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Video Grid Section */}
-      <section className="relative py-0 lg:py-0">
-        <div className="absolute inset-0 bg-dark-surface/30" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
-
+      <section className="relative pb-24 lg:pb-32">
         <div className="relative container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {videoDemos.map((demo, i) => (
@@ -216,71 +217,53 @@ export default function Showcase() {
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                className="group relative rounded-lg overflow-hidden border border-border/50 hover:border-violet-tech/30 transition-all duration-300 flex flex-col h-full cursor-pointer"
+                viewport={{ once: true }}
+                className="group relative rounded-xl overflow-hidden border border-white/5 hover:border-violet-tech/40 transition-all duration-500 flex flex-col h-full cursor-pointer bg-dark-elevated/30 backdrop-blur-sm"
                 onClick={() => handleVideoClick(demo)}
               >
-                {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-dark-elevated/40 to-dark-base/40" />
-
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-tech/0 via-transparent to-violet-tech/0 group-hover:from-violet-tech/5 group-hover:via-violet-tech/2 group-hover:to-violet-tech/5 transition-all duration-300" />
-
-                {/* Content */}
-                <div className="relative flex flex-col h-full">
-                  {/* Thumbnail with play button */}
-                  <div className="relative w-full h-48 overflow-hidden bg-dark-elevated">
-                    <img
-                      src={demo.thumbnail}
-                      alt={demo.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-violet-tech/20 border-2 border-violet-tech flex items-center justify-center group-hover:bg-violet-tech/30 group-hover:scale-110 transition-all duration-300">
-                        <Play className="w-6 h-6 text-violet-tech fill-violet-tech" />
-                      </div>
+                {/* Thumbnail */}
+                <div className="relative w-full aspect-video overflow-hidden">
+                  <img
+                    src={demo.thumbnail}
+                    alt={demo.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" />
+                  
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-violet-tech/20 backdrop-blur-md border border-violet-tech/50 flex items-center justify-center group-hover:bg-violet-tech group-hover:scale-110 transition-all duration-500 shadow-xl shadow-violet-tech/20">
+                      <Play className="w-6 h-6 text-white fill-white ml-1" />
                     </div>
                   </div>
 
-                  {/* Info section */}
-                  <div className="relative p-6 flex flex-col flex-grow">
-                    {/* Badge + Icon */}
-                    <div className="flex items-center justify-between gap-3 mb-3">
-                      <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-violet-tech/15 border border-violet-tech/20 flex-shrink-0">
-                        <demo.icon className="w-5 h-5 text-violet-tech" />
-                      </div>
-                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase border border-violet-tech/30 bg-violet-tech/10 text-violet-tech whitespace-nowrap">
-                        {demo.badge}
-                      </span>
-                    </div>
-
-                    {/* Title & Game */}
-                    <div className="mb-2">
-                      <p className="text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-0.5">
-                        {demo.game}
-                      </p>
-                      <h3 className="font-display font-extrabold text-lg text-foreground">
-                        {demo.title}
-                      </h3>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
-                      {demo.description}
-                    </p>
-
-                    {/* CTA Button */}
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleVideoClick(demo);
-                      }}
-                      className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider gap-2"
-                    >
-                      <Play className="w-4 h-4" />
-                      Watch Demo
-                    </Button>
+                  {/* Top Badges */}
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    <span className="px-2 py-1 rounded bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold tracking-widest uppercase text-white">
+                      {demo.game}
+                    </span>
                   </div>
+                  <div className="absolute top-4 right-4">
+                    <span className="px-2 py-1 rounded bg-violet-tech text-[10px] font-bold tracking-widest uppercase text-white shadow-lg shadow-violet-tech/40">
+                      {demo.badge}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Info */}
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex items-center gap-2 mb-3">
+                    <demo.icon className="w-4 h-4 text-violet-tech" />
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-violet-accent">
+                      {demo.product}
+                    </span>
+                  </div>
+                  <h3 className="font-display font-extrabold text-xl text-foreground mb-3 group-hover:text-violet-tech transition-colors duration-300">
+                    {demo.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
+                    {demo.description}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -289,25 +272,18 @@ export default function Showcase() {
       </section>
 
       {/* Supported Games Section */}
-      <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-dark-surface/30" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
-
+      <section className="relative py-24 lg:py-32 border-t border-white/5">
         <div className="relative container">
           <motion.div
             variants={fadeUp}
-            custom={0}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="max-w-3xl mx-auto text-center mb-12"
+            className="text-center mb-12"
           >
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
               Supported <span className="text-violet-tech">Games</span>
             </h2>
-            <p className="text-muted-foreground text-lg">
-              FUSION AI V8.1 and our premium tools work seamlessly across our supported competitive titles.
-            </p>
+            <div className="h-1 w-20 bg-violet-tech mx-auto rounded-full mb-8" />
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto">
@@ -319,61 +295,25 @@ export default function Showcase() {
             ].map((game, i) => (
               <motion.div
                 key={game.name}
-                custom={i + 1}
+                custom={i}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                className="glass-card rounded-lg p-6 text-center hover:border-violet-tech/30 transition-all duration-300 group"
+                className="glass-card rounded-xl p-8 text-center hover:border-violet-tech/50 transition-all duration-500 group relative overflow-hidden"
               >
-                <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div className="absolute inset-0 bg-gradient-to-b from-violet-tech/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="text-5xl mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 relative z-10">
                   {game.icon}
                 </div>
-                <p className="font-semibold text-foreground">{game.name}</p>
+                <p className="font-display font-bold text-foreground tracking-wide relative z-10">{game.name}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-dark-surface/30" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
-
-        <div className="relative container">
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="max-w-2xl mx-auto text-center"
-          >
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-6">
-              Ready to Dominate?
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              Start your journey with FUSION AI V8.1 today. Choose from weekly, monthly, or lifetime plans.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/purchase?product=ai-engine">
-                <Button size="lg" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow">
-                  Get Started Now
-                </Button>
-              </a>
-              <a href="/products">
-                <Button size="lg" variant="outline" className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider">
-                  View All Products
-                </Button>
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Video Modal */}
       <VideoModal demo={selectedVideo} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-    </>
+    </div>
   );
 }
