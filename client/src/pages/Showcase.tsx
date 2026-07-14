@@ -1,10 +1,11 @@
 /**
  * Showcase — Product Demo Videos
- * Neon Circuit Design with video grid and product demonstrations
+ * Neon Circuit Design with integrated video player modal
  */
-import { motion } from "framer-motion";
-import { Play, Cpu, Zap, Gamepad2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, Cpu, Zap, Gamepad2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -96,7 +97,89 @@ const videoDemos: VideoDemo[] = [
   },
 ];
 
+function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen: boolean; onClose: () => void }) {
+  if (!demo) return null;
+
+  const isYouTube = demo.videoUrl.includes("youtube.com");
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={onClose}
+          >
+            <div
+              className="relative w-full max-w-4xl bg-dark-base rounded-lg overflow-hidden border border-violet-tech/30"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-dark-elevated/80 hover:bg-dark-elevated border border-violet-tech/30 transition-all duration-300"
+              >
+                <X className="w-5 h-5 text-foreground" />
+              </button>
+
+              {/* Video Player */}
+              <div className="relative w-full bg-black aspect-video">
+                {isYouTube ? (
+                  <iframe
+                    src={demo.videoUrl}
+                    className="w-full h-full"
+                    allowFullScreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  />
+                ) : (
+                  <video
+                    src={demo.videoUrl}
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                  />
+                )}
+              </div>
+
+              {/* Info */}
+              <div className="p-6 bg-gradient-to-b from-dark-elevated/50 to-dark-base">
+                <h3 className="font-display font-extrabold text-xl text-foreground mb-2">
+                  {demo.title}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {demo.description}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
 export default function Showcase() {
+  const [selectedVideo, setSelectedVideo] = useState<VideoDemo | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleVideoClick = (demo: VideoDemo) => {
+    setSelectedVideo(demo);
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -144,7 +227,8 @@ export default function Showcase() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-60px" }}
-                className="group relative rounded-lg overflow-hidden border border-border/50 hover:border-violet-tech/30 transition-all duration-300 flex flex-col h-full"
+                className="group relative rounded-lg overflow-hidden border border-border/50 hover:border-violet-tech/30 transition-all duration-300 flex flex-col h-full cursor-pointer"
+                onClick={() => handleVideoClick(demo)}
               >
                 {/* Background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-dark-elevated/40 to-dark-base/40" />
@@ -162,7 +246,7 @@ export default function Showcase() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-violet-tech/20 border-2 border-violet-tech flex items-center justify-center group-hover:bg-violet-tech/30 transition-all duration-300">
+                      <div className="w-16 h-16 rounded-full bg-violet-tech/20 border-2 border-violet-tech flex items-center justify-center group-hover:bg-violet-tech/30 group-hover:scale-110 transition-all duration-300">
                         <Play className="w-6 h-6 text-violet-tech fill-violet-tech" />
                       </div>
                     </div>
@@ -196,17 +280,16 @@ export default function Showcase() {
                     </p>
 
                     {/* CTA Button */}
-                    <a
-                      href={demo.videoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block"
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleVideoClick(demo);
+                      }}
+                      className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider gap-2"
                     >
-                      <Button className="w-full bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider gap-2">
-                        <Play className="w-4 h-4" />
-                        Watch Demo
-                      </Button>
-                    </a>
+                      <Play className="w-4 h-4" />
+                      Watch Demo
+                    </Button>
                   </div>
                 </div>
               </motion.div>
@@ -298,6 +381,9 @@ export default function Showcase() {
           </motion.div>
         </div>
       </section>
+
+      {/* Video Modal */}
+      <VideoModal demo={selectedVideo} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 }
