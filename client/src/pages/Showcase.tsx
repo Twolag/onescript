@@ -30,44 +30,44 @@ interface VideoDemo {
 
 const videoDemos: VideoDemo[] = [
   {
-    id: "fusion-ai-fortnite-clip",
-    title: "FUSION AI V8.1 — Fortnite Gameplay",
-    game: "Fortnite",
+    id: "fusion-ai-clip-new",
+    title: "FUSION AI V8.1 — Official Gameplay",
+    game: "Fortnite / Apex",
     product: "FUSION AI V8.1",
-    description: "Exclusive look at FUSION AI V8.1 performance in Fortnite. Perfect tracking, zero lag, and total domination.",
-    thumbnail: "https://images.unsplash.com/photo-1589241062272-c0a000072dfa?w=600&h=400&fit=crop",
-    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
+    description: "Exclusive look at FUSION AI V8.1 performance. Perfect tracking, zero lag, and total domination.",
+    thumbnail: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
     icon: Cpu,
     badge: "NEW CLIP",
   },
   {
     id: "apex-weight-apex-clip",
-    title: "Advanced AI Weight — Apex Gameplay",
+    title: "Advanced AI Weight — Performance",
     game: "Apex Legends",
     product: "Advanced AI Weight",
     description: "Experience surgical precision targeting with our Advanced AI Weight add-on. Optimized for high-end GPUs.",
-    thumbnail: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
-    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
+    thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
     icon: Zap,
     badge: "ADD-ON",
   },
   {
-    id: "fusion-ai-apex",
-    title: "FUSION AI V8.1 on Apex Legends",
+    id: "fusion-ai-apex-legacy",
+    title: "FUSION AI V8.1 — Apex Legends",
     game: "Apex Legends",
     product: "FUSION AI V8.1",
-    description: "Revolutionary architecture with 10x more processing power. Watch the AI adapt in real-time during intense Apex matches.",
-    thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop",
+    description: "Revolutionary architecture with 10x more processing power. Watch the AI adapt in real-time.",
+    thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
     badge: "V8.1",
   },
   {
     id: "fusion-ai-warzone",
-    title: "FUSION AI V8.1 on Warzone",
+    title: "FUSION AI V8.1 — Warzone",
     game: "Call of Duty: Warzone",
     product: "FUSION AI V8.1",
-    description: "Instant responsiveness in fast-paced Warzone matches. The AI engine adapts to every playstyle seamlessly.",
+    description: "Instant responsiveness in fast-paced Warzone matches. The AI engine adapts to every playstyle.",
     thumbnail: "https://images.unsplash.com/photo-1542751110-97427bbecf20?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
@@ -75,10 +75,10 @@ const videoDemos: VideoDemo[] = [
   },
   {
     id: "fusion-ai-overwatch",
-    title: "FUSION AI V8.1 on Overwatch 2",
+    title: "FUSION AI V8.1 — Overwatch 2",
     game: "Overwatch 2",
     product: "FUSION AI V8.1",
-    description: "High-speed tracking for Overwatch 2. See how FUSION AI handles fast-moving targets with ease.",
+    description: "High-speed tracking for Overwatch 2. See how FUSION AI handles fast-moving targets.",
     thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
@@ -95,7 +95,6 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -104,7 +103,6 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
             className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100]"
           />
 
-          {/* Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -116,7 +114,6 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
               className="relative w-full max-w-5xl bg-dark-base rounded-xl overflow-hidden border border-violet-tech/30 shadow-2xl shadow-violet-tech/20"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close button */}
               <button
                 onClick={onClose}
                 className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 hover:bg-violet-tech/20 border border-white/10 hover:border-violet-tech/50 transition-all duration-300"
@@ -124,7 +121,6 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
                 <X className="w-6 h-6 text-white" />
               </button>
 
-              {/* Video Player */}
               <div className="relative w-full bg-black aspect-video">
                 {isYouTube ? (
                   <iframe
@@ -143,7 +139,6 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
                 )}
               </div>
 
-              {/* Info */}
               <div className="p-6 lg:p-8 bg-gradient-to-b from-dark-elevated to-dark-base border-t border-white/5">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-violet-tech/20 text-violet-tech border border-violet-tech/30">
@@ -180,7 +175,7 @@ export default function Showcase() {
   return (
     <div className="bg-dark-base min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-8 lg:pt-40 lg:pb-12 overflow-hidden">
+      <section className="relative pt-32 pb-4 lg:pt-40 lg:pb-4 overflow-hidden">
         <div className="absolute inset-0 bg-dark-base" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
         
@@ -191,7 +186,7 @@ export default function Showcase() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center mb-8"
+            className="max-w-3xl mx-auto text-center mb-4"
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-violet-tech/10 border border-violet-tech/30 text-xs font-semibold tracking-widest uppercase text-violet-tech mb-4">
               Showcase
@@ -221,8 +216,7 @@ export default function Showcase() {
                 className="group relative rounded-xl overflow-hidden border border-white/5 hover:border-violet-tech/40 transition-all duration-500 flex flex-col h-full cursor-pointer bg-dark-elevated/30 backdrop-blur-sm"
                 onClick={() => handleVideoClick(demo)}
               >
-                {/* Thumbnail */}
-                <div className="relative w-full aspect-video overflow-hidden">
+                <div className="relative w-full aspect-video overflow-hidden bg-dark-elevated">
                   <img
                     src={demo.thumbnail}
                     alt={demo.title}
@@ -230,14 +224,12 @@ export default function Showcase() {
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" />
                   
-                  {/* Play Button Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-16 h-16 rounded-full bg-violet-tech/20 backdrop-blur-md border border-violet-tech/50 flex items-center justify-center group-hover:bg-violet-tech group-hover:scale-110 transition-all duration-500 shadow-xl shadow-violet-tech/20">
                       <Play className="w-6 h-6 text-white fill-white ml-1" />
                     </div>
                   </div>
 
-                  {/* Top Badges */}
                   <div className="absolute top-4 left-4 flex gap-2">
                     <span className="px-2 py-1 rounded bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold tracking-widest uppercase text-white">
                       {demo.game}
@@ -250,7 +242,6 @@ export default function Showcase() {
                   </div>
                 </div>
 
-                {/* Info */}
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex items-center gap-2 mb-3">
                     <demo.icon className="w-4 h-4 text-violet-tech" />
@@ -312,7 +303,6 @@ export default function Showcase() {
         </div>
       </section>
 
-      {/* Video Modal */}
       <VideoModal demo={selectedVideo} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
