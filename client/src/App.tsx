@@ -13,6 +13,7 @@ import Purchase from "./pages/Purchase";
 import Trial from "./pages/Trial";
 import Documentation from "./pages/Documentation";
 import Reviews from "./pages/Reviews";
+import Showcase from "./pages/Showcase";
 import LegalNotice from "./pages/LegalNotice";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
@@ -24,6 +25,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/products" component={Products} />
+        <Route path="/showcase" component={Showcase} />
         <Route path="/compatibility" component={Compatibility} />
         <Route path="/support" component={Support} />
         <Route path="/purchase" component={Purchase} />

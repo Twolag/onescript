@@ -14,6 +14,7 @@ const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNiz
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
+  { href: "/showcase", label: "Showcase" },
   { href: "/compatibility", label: "Compatibility" },
   { href: "/documentation", label: "Documentation" },
   { href: "/reviews", label: "Reviews" },
