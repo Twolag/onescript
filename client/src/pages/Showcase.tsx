@@ -3,8 +3,7 @@
  * Neon Circuit Design with integrated video player modal
  */
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Cpu, Zap, Gamepad2, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Play, Cpu, Zap, X } from "lucide-react";
 import { useState } from "react";
 
 const fadeUp = {
@@ -30,59 +29,59 @@ interface VideoDemo {
 
 const videoDemos: VideoDemo[] = [
   {
-    id: "fusion-ai-clip-new",
-    title: "FUSION AI V8.1 — Official Gameplay",
-    game: "Fortnite / Apex",
+    id: "fusion-ai-fortnite",
+    title: "FUSION AI V8.1 — Fortnite",
+    game: "Fortnite",
     product: "FUSION AI V8.1",
-    description: "Exclusive look at FUSION AI V8.1 performance. Perfect tracking, zero lag, and total domination.",
-    thumbnail: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
-    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
-    icon: Cpu,
-    badge: "NEW CLIP",
-  },
-  {
-    id: "apex-weight-apex-clip",
-    title: "Advanced AI Weight — Performance",
-    game: "Apex Legends",
-    product: "Advanced AI Weight",
-    description: "Experience surgical precision targeting with our Advanced AI Weight add-on. Optimized for high-end GPUs.",
-    thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop",
+    description: "Experience FUSION AI V8.1 dominating in Fortnite. Perfect tracking, zero lag, instant responsiveness.",
+    thumbnail: "https://images.unsplash.com/photo-1589241062272-c0a000072dfa?w=600&h=400&fit=crop",
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
-    icon: Zap,
-    badge: "ADD-ON",
+    icon: Cpu,
+    badge: "FORTNITE",
   },
   {
-    id: "fusion-ai-apex-legacy",
+    id: "fusion-ai-apex",
     title: "FUSION AI V8.1 — Apex Legends",
     game: "Apex Legends",
     product: "FUSION AI V8.1",
-    description: "Revolutionary architecture with 10x more processing power. Watch the AI adapt in real-time.",
-    thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Watch FUSION AI V8.1 in action on Apex Legends. Revolutionary tracking with 10x processing power.",
+    thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
     icon: Cpu,
-    badge: "V8.1",
+    badge: "APEX",
+  },
+  {
+    id: "advanced-weight-apex",
+    title: "Advanced AI Weight — Apex Legends",
+    game: "Apex Legends",
+    product: "Advanced AI Weight",
+    description: "Surgical precision targeting with Advanced AI Weight add-on. High-end GPU performance showcase.",
+    thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
+    icon: Zap,
+    badge: "ADD-ON",
   },
   {
     id: "fusion-ai-warzone",
     title: "FUSION AI V8.1 — Warzone",
     game: "Call of Duty: Warzone",
     product: "FUSION AI V8.1",
-    description: "Instant responsiveness in fast-paced Warzone matches. The AI engine adapts to every playstyle.",
+    description: "Instant responsiveness in fast-paced Warzone matches. The AI engine adapts seamlessly.",
     thumbnail: "https://images.unsplash.com/photo-1542751110-97427bbecf20?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
-    badge: "V8.1",
+    badge: "WARZONE",
   },
   {
     id: "fusion-ai-overwatch",
     title: "FUSION AI V8.1 — Overwatch 2",
     game: "Overwatch 2",
     product: "FUSION AI V8.1",
-    description: "High-speed tracking for Overwatch 2. See how FUSION AI handles fast-moving targets.",
+    description: "High-speed tracking for Overwatch 2. Perfect for fast-moving targets and team fights.",
     thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
-    badge: "V8.1",
+    badge: "OVERWATCH",
   },
 ];
 
@@ -175,7 +174,7 @@ export default function Showcase() {
   return (
     <div className="bg-dark-base min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-4 lg:pt-40 lg:pb-4 overflow-hidden">
+      <section className="relative pt-32 pb-2 lg:pt-40 lg:pb-2 overflow-hidden">
         <div className="absolute inset-0 bg-dark-base" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
         
@@ -186,29 +185,29 @@ export default function Showcase() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center mb-4"
+            className="max-w-3xl mx-auto text-center mb-2"
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-violet-tech/10 border border-violet-tech/30 text-xs font-semibold tracking-widest uppercase text-violet-tech mb-4">
               Showcase
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
-              See <span className="text-violet-tech text-glow">OneScript</span> in Action
+              See <span className="text-violet-tech">OneScript</span> in Action
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              High-performance demonstrations of FUSION AI V8.1 across our supported competitive titles.
+              Watch FUSION AI V8.1 dominate across our supported competitive titles.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Video Grid Section */}
-      <section className="relative pb-24 lg:pb-32">
+      <section className="relative py-2 lg:py-4">
         <div className="relative container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {videoDemos.map((demo, i) => (
               <motion.div
                 key={demo.id}
-                custom={i + 1}
+                custom={i}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
@@ -249,7 +248,7 @@ export default function Showcase() {
                       {demo.product}
                     </span>
                   </div>
-                  <h3 className="font-display font-extrabold text-xl text-foreground mb-3 group-hover:text-violet-tech transition-colors duration-300">
+                  <h3 className="font-display font-extrabold text-lg text-foreground mb-2 group-hover:text-violet-tech transition-colors duration-300">
                     {demo.title}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
@@ -274,7 +273,6 @@ export default function Showcase() {
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
               Supported <span className="text-violet-tech">Games</span>
             </h2>
-            <div className="h-1 w-20 bg-violet-tech mx-auto rounded-full mb-8" />
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto">
@@ -293,7 +291,7 @@ export default function Showcase() {
                 className="glass-card rounded-xl p-8 text-center hover:border-violet-tech/50 transition-all duration-500 group relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-b from-violet-tech/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="text-5xl mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 relative z-10">
+                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-500 relative z-10">
                   {game.icon}
                 </div>
                 <p className="font-display font-bold text-foreground tracking-wide relative z-10">{game.name}</p>
