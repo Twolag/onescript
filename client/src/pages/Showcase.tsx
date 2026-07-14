@@ -30,10 +30,10 @@ interface VideoDemo {
 const videoDemos: VideoDemo[] = [
   {
     id: "fusion-ai-fortnite",
-    title: "FUSION AI V8.1 — Fortnite",
+    title: "FUSION IA V8.1 — Fortnite",
     game: "Fortnite",
-    product: "FUSION AI V8.1",
-    description: "Experience FUSION AI V8.1 dominating in Fortnite. Perfect tracking, zero lag, instant responsiveness.",
+    product: "FUSION IA V8.1",
+    description: "Exclusive demonstration of FUSION IA V8.1 in Fortnite. Ultra-precise tracking and zero input lag.",
     thumbnail: "https://images.unsplash.com/photo-1589241062272-c0a000072dfa?w=600&h=400&fit=crop",
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
     icon: Cpu,
@@ -41,10 +41,10 @@ const videoDemos: VideoDemo[] = [
   },
   {
     id: "fusion-ai-apex",
-    title: "FUSION AI V8.1 — Apex Legends",
+    title: "FUSION IA V8.1 — Apex Legends",
     game: "Apex Legends",
-    product: "FUSION AI V8.1",
-    description: "Watch FUSION AI V8.1 in action on Apex Legends. Revolutionary tracking with 10x processing power.",
+    product: "FUSION IA V8.1",
+    description: "FUSION IA V8.1 performance showcase on Apex Legends. Adaptive AI engine for high-speed combat.",
     thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop",
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
     icon: Cpu,
@@ -55,40 +55,16 @@ const videoDemos: VideoDemo[] = [
     title: "Advanced AI Weight — Apex Legends",
     game: "Apex Legends",
     product: "Advanced AI Weight",
-    description: "Surgical precision targeting with Advanced AI Weight add-on. High-end GPU performance showcase.",
+    description: "Surgical precision targeting with the Advanced AI Weight add-on. Requires high-end GPU (RTX 4070+ / RX 7900+).",
     thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
-    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
     icon: Zap,
     badge: "ADD-ON",
-  },
-  {
-    id: "fusion-ai-warzone",
-    title: "FUSION AI V8.1 — Warzone",
-    game: "Call of Duty: Warzone",
-    product: "FUSION AI V8.1",
-    description: "Instant responsiveness in fast-paced Warzone matches. The AI engine adapts seamlessly.",
-    thumbnail: "https://images.unsplash.com/photo-1542751110-97427bbecf20?w=600&h=400&fit=crop",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    icon: Cpu,
-    badge: "WARZONE",
-  },
-  {
-    id: "fusion-ai-overwatch",
-    title: "FUSION AI V8.1 — Overwatch 2",
-    game: "Overwatch 2",
-    product: "FUSION AI V8.1",
-    description: "High-speed tracking for Overwatch 2. Perfect for fast-moving targets and team fights.",
-    thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&h=400&fit=crop",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    icon: Cpu,
-    badge: "OVERWATCH",
   },
 ];
 
 function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen: boolean; onClose: () => void }) {
   if (!demo) return null;
-
-  const isYouTube = demo.videoUrl.includes("youtube.com");
 
   return (
     <AnimatePresence>
@@ -121,21 +97,12 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
               </button>
 
               <div className="relative w-full bg-black aspect-video">
-                {isYouTube ? (
-                  <iframe
-                    src={demo.videoUrl}
-                    className="w-full h-full"
-                    allowFullScreen
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  />
-                ) : (
-                  <video
-                    src={demo.videoUrl}
-                    controls
-                    autoPlay
-                    className="w-full h-full"
-                  />
-                )}
+                <video
+                  src={demo.videoUrl}
+                  controls
+                  autoPlay
+                  className="w-full h-full"
+                />
               </div>
 
               <div className="p-6 lg:p-8 bg-gradient-to-b from-dark-elevated to-dark-base border-t border-white/5">
@@ -194,7 +161,7 @@ export default function Showcase() {
               See <span className="text-violet-tech">OneScript</span> in Action
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Watch FUSION AI V8.1 dominate across our supported competitive titles.
+              Exclusive gameplay demonstrations of FUSION IA V8.1 and premium add-ons.
             </p>
           </motion.div>
         </div>
@@ -203,7 +170,7 @@ export default function Showcase() {
       {/* Video Grid Section */}
       <section className="relative py-2 lg:py-4">
         <div className="relative container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
             {videoDemos.map((demo, i) => (
               <motion.div
                 key={demo.id}
