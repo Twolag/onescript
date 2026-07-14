@@ -46,7 +46,7 @@ const products: ProductCard[] = [
     id: "fusion-ai",
     title: "FUSION IA - V8.1",
     subtitle: "AI Visual Processing",
-    description: "Revolutionary V8.1 update! AI Aimbot 10x more powerful with exceptional AMD support. Now available on Apex Legends, Fortnite, Warzone, and more. Requires Waveshare RP2350A USB Mini Development Board for safe operation. Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
+    description: "Revolutionary V8.1 update! AI Aimbot 10x more powerful with exceptional AMD support. Available on Apex Legends, Fortnite, Warzone, and Overwatch 2. Requires Waveshare RP2350A USB Mini Development Board for safe operation. Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
     icon: Cpu,
     badge: { label: "PROMO - STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
     features: [

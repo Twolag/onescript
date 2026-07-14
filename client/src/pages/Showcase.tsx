@@ -3,7 +3,7 @@
  * Neon Circuit Design with video grid and product demonstrations
  */
 import { motion } from "framer-motion";
-import { Play, Cpu, Zap, Gamepad2, Monitor } from "lucide-react";
+import { Play, Cpu, Zap, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const fadeUp = {
@@ -29,6 +29,17 @@ interface VideoDemo {
 
 const videoDemos: VideoDemo[] = [
   {
+    id: "fusion-ai-fortnite-clip",
+    title: "FUSION AI V8.1 — Fortnite Gameplay",
+    game: "Fortnite",
+    product: "FUSION AI V8.1",
+    description: "Exclusive look at FUSION AI V8.1 performance in Fortnite. Perfect tracking, zero lag, and total domination.",
+    thumbnail: "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=600&h=400&fit=crop",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
+    icon: Cpu,
+    badge: "NEW CLIP",
+  },
+  {
     id: "apex-weight-apex",
     title: "Advanced AI Weight in Action",
     game: "Apex Legends",
@@ -38,17 +49,6 @@ const videoDemos: VideoDemo[] = [
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Zap,
     badge: "ADD-ON",
-  },
-  {
-    id: "fusion-ai-fortnite",
-    title: "FUSION AI V8.1 on Fortnite",
-    game: "Fortnite",
-    product: "FUSION AI V8.1",
-    description: "Zero FPS drops, ultra-low latency. See how FUSION AI V8.1 dominates in Fortnite with native NVIDIA & AMD support.",
-    thumbnail: "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=600&h=400&fit=crop",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    icon: Cpu,
-    badge: "V8.1",
   },
   {
     id: "fusion-ai-apex",
@@ -73,23 +73,23 @@ const videoDemos: VideoDemo[] = [
     badge: "CONTROLLER",
   },
   {
-    id: "windows-optimization",
-    title: "Windows Optimization — FPS Boost",
-    game: "System-Wide",
-    product: "Windows Optimization",
-    description: "Gain 40-60 FPS with our advanced Windows optimization. Complete cleanup and system tuning for gaming performance.",
-    thumbnail: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    icon: Monitor,
-    badge: "PERFORMANCE",
-  },
-  {
     id: "fusion-ai-warzone",
     title: "FUSION AI V8.1 on Warzone",
     game: "Call of Duty: Warzone",
     product: "FUSION AI V8.1",
     description: "Instant responsiveness in fast-paced Warzone matches. The AI engine adapts to every playstyle seamlessly.",
     thumbnail: "https://images.unsplash.com/photo-1538481143235-5d630e50c6da?w=600&h=400&fit=crop",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    icon: Cpu,
+    badge: "V8.1",
+  },
+  {
+    id: "fusion-ai-overwatch",
+    title: "FUSION AI V8.1 on Overwatch 2",
+    game: "Overwatch 2",
+    product: "FUSION AI V8.1",
+    description: "High-speed tracking for Overwatch 2. See how FUSION AI handles fast-moving targets with ease.",
+    thumbnail: "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=600&h=400&fit=crop",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     icon: Cpu,
     badge: "V8.1",
@@ -123,7 +123,7 @@ export default function Showcase() {
               See <span className="text-violet-tech">OneScript</span> in Action
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Watch our products dominate across multiple games. From Apex Legends to Fortnite, experience the power of FUSION AI V8.1 and our premium tools.
+              Watch our products dominate across our supported titles. From Apex Legends to Fortnite, experience the power of FUSION AI V8.1.
             </p>
           </motion.div>
         </div>
@@ -233,17 +233,16 @@ export default function Showcase() {
               Supported <span className="text-violet-tech">Games</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              FUSION AI V8.1 and our premium tools work seamlessly across the most popular competitive titles.
+              FUSION AI V8.1 and our premium tools work seamlessly across our supported competitive titles.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto">
             {[
               { name: "Apex Legends", icon: "🎮" },
               { name: "Fortnite", icon: "🎯" },
               { name: "Warzone", icon: "🔫" },
-              { name: "Valorant", icon: "⚔️" },
-              { name: "CS:GO", icon: "🎪" },
+              { name: "Overwatch 2", icon: "⚔️" },
             ].map((game, i) => (
               <motion.div
                 key={game.name}
