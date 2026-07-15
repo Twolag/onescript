@@ -104,14 +104,14 @@ export default function Navbar() {
                   className="absolute top-full right-0 mt-2 w-56 bg-dark-elevated border border-violet-tech/30 rounded-lg shadow-lg overflow-hidden z-50"
                 >
                   {purchaseProducts.map((product) => (
-                    <Link
+                    <a
                       key={product.href}
                       href={product.href}
                       onClick={() => setDropdownOpen(false)}
                       className="block px-4 py-3 text-sm font-body text-foreground hover:bg-violet-tech/10 hover:text-violet-tech transition-colors border-b border-border/30 last:border-b-0"
                     >
                       {product.name}
-                    </Link>
+                    </a>
                   ))}
                 </motion.div>
               )}
