@@ -395,13 +395,13 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                           </div>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          {(idx === 3 || idx === 4) && (
+                          {productId === "ai-engine" && (idx === 3 || idx === 4) && (
                             <div className="mb-1">
                               <span className="text-sm text-red-400 line-through font-semibold">{idx === 3 ? '50€' : '80€'}</span>
                               <span className="text-red-500 font-bold text-xs ml-1">PROMO</span>
                             </div>
                           )}
-                          <p className={`font-display font-bold text-lg ${(idx === 3 || idx === 4) ? 'text-red-500' : 'text-violet-tech'}`}>{option.price}€</p>
+                          <p className={`font-display font-bold text-lg ${productId === "ai-engine" && (idx === 3 || idx === 4) ? 'text-red-500' : 'text-violet-tech'}`}>{option.price}€</p>
                           {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
                         </div>
                       </div>
