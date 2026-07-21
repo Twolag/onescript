@@ -55,7 +55,7 @@ const videoDemos: VideoDemo[] = [
     title: "Advanced AI Weight — Apex Legends",
     game: "Apex Legends",
     product: "Advanced AI Weight",
-    description: "Surgical precision targeting with the Advanced AI Weight add-on. Requires high-end GPU (NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+).",
+    description: "Surgical precision targeting with the Advanced AI Weight add-on. Requires high-end GPU (NVIDIA RTX 4070/5060+ or AMD RX 7900/9000+), minimum.",
     thumbnail: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/spMRlfTuNpsOynMw.png",
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
     icon: Zap,

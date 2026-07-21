@@ -90,9 +90,9 @@ const pricingPlans = [
   },
   {
     name: "AI Aimbot - V8.1 - Standard",
-    price: "30",
+    price: "50",
     period: "1 month license",
-    desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY | ⚡ PROMO: 30€ (was 50€)",
+    desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY | 50€",
     features: [
       "New V8 Redesigned Architecture",
       "Native AMD & NVIDIA Support",
@@ -107,9 +107,9 @@ const pricingPlans = [
   },
   {
     name: "AI Aimbot - V8.1 - Premium",
-    price: "50",
+    price: "80",
     period: "1st month + inst.",
-    desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY | ⚡ PROMO: 50€ (was 80€)",
+    desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY | 80€",
     features: [
       "New V8 Redesigned Architecture",
       "Native AMD & NVIDIA Support",
@@ -173,17 +173,7 @@ const pricingPlans = [
 export default function Home() {
   return (
     <>
-      {/* ═══════════════ PROMO BANNER ═══════════════ */}
-      <div className="w-full bg-gradient-to-r from-red-600 via-red-500 to-red-600 py-4 px-4 text-center border-b-4 border-red-700 shadow-lg shadow-red-500/50 animate-pulse">
-        <div className="container mx-auto">
-          <p className="text-white font-display font-extrabold text-2xl sm:text-3xl tracking-wider uppercase">
-            🔥 LIMITED TIME OFFER 🔥
-          </p>
-          <p className="text-red-100 font-semibold text-sm sm:text-base mt-1">
-            Monthly Licenses: <span className="line-through">50€ & 80€</span> → NOW <span className="text-yellow-300 font-bold text-lg">30€ & 50€</span> | LIMITED TIME!
-          </p>
-        </div>
-      </div>
+
 
       <div className="overflow-hidden">
       {/* ═══════════════ HERO SECTION ═══════════════ */}
@@ -295,10 +285,10 @@ export default function Home() {
                 id: "apex-weight",
                 title: "Advanced AI Weight",
                 subtitle: "Apex Legends Add-On",
-                description: "Powerful AI Weight add-on for Apex Legends. Supercharges targeting precision. ⚠️ Add-on only. NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+.",
+                description: "Powerful AI Weight add-on for Apex Legends. Supercharges targeting precision. ⚠️ Add-on only. NVIDIA RTX 4070/5060+ or AMD RX 7900/9000+. minimum.",
                 icon: Zap,
                 badge: { label: "ADD-ON ONLY", color: "bg-amber-500/20 border-amber-500/50 text-amber-400" },
-                features: ["Apex Exclusive", "Enhanced Targeting", "RTX 4070/5060+ or RX 7900/9060+", "Instant Delivery", "Requires FUSION IA"],
+                features: ["Apex Exclusive", "Enhanced Targeting", "RTX 4070/5060+ or RX 7900/9000+", "Instant Delivery", "Requires FUSION IA"],
                 price: "10 €",
                 priceNote: "one-time",
                 cta: "BUY",

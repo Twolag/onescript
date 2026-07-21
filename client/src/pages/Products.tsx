@@ -48,7 +48,7 @@ const products: ProductCard[] = [
     subtitle: "AI Visual Processing",
     description: "Revolutionary V8.1 update! AI Aimbot 10x more powerful with exceptional AMD support. Available on Apex Legends, Fortnite, Warzone, and Overwatch 2. Requires Waveshare RP2350A USB Mini Development Board for safe operation. Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
     icon: Cpu,
-    badge: { label: "PROMO - STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
+    badge: { label: "STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
     features: [
       "V8.1 Redesigned Architecture",
       "Native NVIDIA & AMD Support",
@@ -56,8 +56,8 @@ const products: ProductCard[] = [
       "Zero FPS Drops Guarantee",
       "Premium UI Redesign",
     ],
-    price: "30 €",
-    priceNote: "PROMO from",
+    price: "50 €",
+    priceNote: "starting from",
     cta: "VIEW OPTIONS",
     ctaHref: "/purchase?product=ai-engine",
   },
@@ -65,13 +65,13 @@ const products: ProductCard[] = [
     id: "apex-weight",
     title: "Advanced AI Weight",
     subtitle: "Apex Legends Add-On",
-    description: "Powerful AI Weight add-on for Apex Legends only. Supercharges targeting precision and AI tracking. ⚠️ **Add-on only** — FUSION IA license required separately. NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+ minimum.",
+    description: "Powerful AI Weight add-on for Apex Legends only. Supercharges targeting precision and AI tracking. ⚠️ **Add-on only** — FUSION IA license required separately. NVIDIA RTX 4070/5060+ or AMD RX 7900/9000+ minimum.",
     icon: Zap,
     badge: { label: "ADD-ON ONLY", color: "bg-amber-500/20 border-amber-500/50 text-amber-400" },
     features: [
       "Apex Legends Exclusive",
       "Enhanced AI Targeting",
-      "NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+",
+      "NVIDIA RTX 4070/5060+ or AMD RX 7900/9000+",
       "Instant Delivery",
       "Requires FUSION IA License",
     ],
@@ -79,7 +79,7 @@ const products: ProductCard[] = [
     priceNote: "one-time",
     cta: "BUY NOW",
     ctaHref: "https://pay.sumup.com/b2c/QSDE2C71",
-    warning: "Add-on only. FUSION IA license required. GPU: NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+ minimum.",
+    warning: "Add-on only. FUSION IA license required. GPU: NVIDIA RTX 4070/5060+ or AMD RX 7900/9000+ minimum.",
   },
   {
     id: "windows-opt",
@@ -202,13 +202,7 @@ function ProductCardComponent({
         <div className="flex items-end justify-between gap-4 pt-4 border-t border-border/20 mt-auto">
           <div>
             <p className="text-xs text-muted-foreground mb-1">{priceNote || "Price"}</p>
-            {id === "fusion-ai" && (
-              <div className="mb-1">
-                <span className="text-sm text-red-400 line-through font-semibold">50€</span>
-                <span className="text-red-500 font-bold text-xs ml-2">PROMO</span>
-              </div>
-            )}
-            <p className={`font-display font-extrabold text-2xl ${id === "fusion-ai" ? "text-red-500" : "text-violet-tech"}`}>
+            <p className={`font-display font-extrabold text-2xl text-violet-tech`}>
               {price}
             </p>
           </div>
