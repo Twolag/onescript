@@ -173,18 +173,6 @@ const pricingPlans = [
 export default function Home() {
   return (
     <>
-      {/* ═══════════════ PROMO BANNER ═══════════════ */}
-      <div className="w-full bg-gradient-to-r from-red-600 via-red-500 to-red-600 py-4 px-4 text-center border-b-4 border-red-700 shadow-lg shadow-red-500/50 animate-pulse">
-        <div className="container mx-auto">
-          <p className="text-white font-display font-extrabold text-2xl sm:text-3xl tracking-wider uppercase">
-            🔥 LIMITED TIME OFFER 🔥
-          </p>
-          <p className="text-red-100 font-semibold text-sm sm:text-base mt-1">
-            Monthly Licenses: <span className="line-through">50€ & 80€</span> → NOW <span className="text-yellow-300 font-bold text-lg">30€ & 50€</span> | LIMITED TIME!
-          </p>
-        </div>
-      </div>
-
       <div className="overflow-hidden">
       {/* ═══════════════ HERO SECTION ═══════════════ */}
       <section className="relative min-h-[90vh] flex items-center">
