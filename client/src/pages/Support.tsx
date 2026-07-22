@@ -36,7 +36,7 @@ const faqItems = [
   },
   {
     q: "What FPS gain can I expect?",
-    a: "The minimum observed gain is 40 to 60 FPS, depending on your hardware configuration. High-end setups (RTX 4070+, RX 6700 XT+) generally get the best results. V8 provides exceptional performance on both NVIDIA and AMD platforms.",
+    a: "The minimum observed gain is 40 to 60 FPS, depending on your hardware configuration.",
   },
   {
     q: "Is Windows Optimization safe for my PC?",
