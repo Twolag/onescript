@@ -400,13 +400,7 @@ export default function Home() {
                 <h3 className="font-display font-bold text-base tracking-wide mb-2">{plan.name}</h3>
                 <p className="text-sm text-muted-foreground mb-6">{plan.desc}</p>
                 <div className="mb-6">
-                  {(plan.name.includes('Standard') || plan.name.includes('Premium')) && (
-                    <div className="mb-2">
-                      <span className="text-lg text-red-400 line-through font-semibold">{plan.name.includes('Standard') ? '50€' : '80€'}</span>
-                      <span className="text-red-500 font-bold text-sm ml-2">PROMO</span>
-                    </div>
-                  )}
-                  <span className={`font-display font-extrabold text-4xl ${(plan.name.includes('Standard') || plan.name.includes('Premium')) ? 'text-red-500' : 'text-foreground'}`}>{plan.price}</span>
+                  <span className={`font-display font-extrabold text-4xl text-foreground`}>{plan.price}</span>
                   <span className="text-lg text-muted-foreground ml-1">€</span>
                   {plan.period && <span className="block text-sm text-muted-foreground mt-1">{plan.period}</span>}
                 </div>
