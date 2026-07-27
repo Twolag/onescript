@@ -62,6 +62,7 @@ const gamingPlatformsData = [
   { name: "Apex Legends", status: "recommended", note: "Available now — full support" },
   { name: "Fortnite", status: "recommended", note: "Available now — full support" },
   { name: "Call of Duty", status: "recommended", note: "Available now — full support" },
+  { name: "The Finals", status: "recommended", note: "Available now — full support" },
   { name: "Other platforms", status: "limited", note: "Under development — coming soon" },
 ];
 
