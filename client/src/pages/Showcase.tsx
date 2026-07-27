@@ -248,6 +248,7 @@ export default function Showcase() {
               { name: "Fortnite", icon: "🎯" },
               { name: "Warzone", icon: "🔫" },
               { name: "Overwatch 2", icon: "⚔️" },
+              { name: "The Finals", icon: "🏆" },
             ].map((game, i) => (
               <motion.div
                 key={game.name}
