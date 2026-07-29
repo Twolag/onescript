@@ -61,6 +61,17 @@ const videoDemos: VideoDemo[] = [
     icon: Zap,
     badge: "ADD-ON",
   },
+  {
+    id: "advanced-weight-fortnite",
+    title: "Advanced AI Weight — Fortnite",
+    game: "Fortnite",
+    product: "Advanced AI Weight",
+    description: "Advanced AI Weight performance on Fortnite. Experience next-level precision and tracking. Requires high-end GPU (NVIDIA RTX 4070/5060+ or AMD RX 7900/9000+), minimum.",
+    thumbnail: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/LbQIMyJSKwpOhWSA.jpg",
+    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/vmTTDTSBoGUuraRB.mp4",
+    icon: Zap,
+    badge: "ADD-ON",
+  },
 ];
 
 function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen: boolean; onClose: () => void }) {
