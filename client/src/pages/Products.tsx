@@ -56,7 +56,7 @@ const products: ProductCard[] = [
       "Zero FPS Drops Guarantee",
       "Premium UI Redesign",
     ],
-    price: "50 €",
+    price: "15 €",
     priceNote: "from",
     cta: "VIEW OPTIONS",
     ctaHref: "/purchase?product=ai-engine",
