@@ -176,7 +176,7 @@ export default function Purchase() {
       }
       setSelectedOptionIndex(index);
     }
-  }, [productId, aiDuration, aiSupport, aiRenewalType]);
+  }, [productId, aiDuration, aiSupport, aiRenewalType, aiAddonType]);
 
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
