@@ -27,6 +27,7 @@ const SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-7": "https://pay.sumup.com/b2c/QQVC1R0U",   // Lifetime (250€)
   "ai-engine-8": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
   "ai-engine-9": "https://pay.sumup.com/b2c/QSDE2C71",   // 10€ — Advanced AI Weight (Apex Legends)
+  "ai-engine-10": "https://pay.sumup.com/b2c/QSDE2C71",  // 10€ — Advanced AI Weight (Fortnite)
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
   "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.50€  — 1 day (Approx)
@@ -96,6 +97,7 @@ const products: Product[] = [
       { label: "Lifetime License", price: 250, description: "Permanent access to FUSION AI V8.1. Requires Waveshare RP2350A USB Mini Development Board. ⚠️ Locked to V8.1 - future major updates require +€30 per update. One-time payment.", duration: "~1 hour" },
       { label: "Monthly Renewal", price: 30, note: "/ month", description: "Exclusive to users who have completed 4 consecutive weeks or previously purchased a full month. Renewal only.", duration: "~30 min" },
       { label: "Advanced AI Weight — Apex Legends", price: 10, description: "Powerful AI Weight add-on for Apex Legends. Requires a high-end GPU: NVIDIA RTX 4070 / 5060 minimum. ONLY available for existing AI Aimbot license holders. Requires NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+. Enhances targeting precision.", duration: "Instant delivery" },
+      { label: "Advanced AI Weight — Fortnite", price: 10, description: "Powerful AI Weight add-on for Fortnite. Requires a high-end GPU: NVIDIA RTX 4070 / 5060 minimum. ONLY available for existing AI Aimbot license holders. Requires NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+. Enhances targeting precision.", duration: "Instant delivery" },
     ],
   },
   {
@@ -151,6 +153,7 @@ export default function Purchase() {
   const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, year, lifetime, renewal, addon
   const [aiSupport, setAiSupport] = useState<boolean>(true); // true = with support, false = license only
   const [aiRenewalType, setAiRenewalType] = useState<string>("week"); // week, month
+  const [aiAddonType, setAiAddonType] = useState<string>("apex"); // apex, fortnite
 
   // Effect to sync simplified AI selection with option index
   useEffect(() => {
@@ -167,7 +170,7 @@ export default function Purchase() {
       } else if (aiDuration === "renewal") {
         index = aiRenewalType === "week" ? 2 : 8;
       } else if (aiDuration === "addon") {
-        index = 9;
+        index = aiAddonType === "apex" ? 9 : 10;
       } else if (aiDuration === "help") {
         index = 5;
       }
@@ -463,6 +466,40 @@ export default function Purchase() {
                                 {aiRenewalType === "month" && <Check className="w-4 h-4 text-white" />}
                               </div>
                               <span className="font-bold text-foreground">Monthly Renewal</span>
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {aiDuration === "addon" && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                        >
+                          <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">2. Select Game for Add-on</label>
+                          <div className="grid sm:grid-cols-2 gap-4">
+                            <button
+                              onClick={() => setAiAddonType("apex")}
+                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                                aiAddonType === "apex" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              }`}
+                            >
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiAddonType === "apex" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiAddonType === "apex" && <Check className="w-4 h-4 text-white" />}
+                              </div>
+                              <span className="font-bold text-foreground">Apex Legends</span>
+                            </button>
+                            <button
+                              onClick={() => setAiAddonType("fortnite")}
+                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                                aiAddonType === "fortnite" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              }`}
+                            >
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiAddonType === "fortnite" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiAddonType === "fortnite" && <Check className="w-4 h-4 text-white" />}
+                              </div>
+                              <span className="font-bold text-foreground">Fortnite</span>
                             </button>
                           </div>
                         </motion.div>
