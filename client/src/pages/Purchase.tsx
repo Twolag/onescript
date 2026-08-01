@@ -2,11 +2,11 @@
  * Purchase — Neon Circuit Design
  * Product selection, summary, PayPal + SumUp + Bunq
  */
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock,
+  MessageCircle, CreditCard, Clock, Zap, Layers, LifeBuoy, RefreshCw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -48,49 +48,6 @@ const PROMO_SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-3-not-client": "https://pay.sumup.com/b2c/QSJHZGHR",      // 420.25€
   "ai-engine-3-already-client": "https://pay.sumup.com/b2c/Q3FCLF69",  // 379.25€
   "ai-engine-3-vip": "https://pay.sumup.com/b2c/QA8ZGSYH",              // 358.75€
-};
-
-// SumUp prices (with 2.5% fee) for display
-const SUMUP_PRICES: { [key: string]: number } = {
-  "ai-engine-0": 25.00,
-  "ai-engine-1": 15.00,
-  "ai-engine-2": 10.00,
-  "ai-engine-3": 40.00,
-  "ai-engine-4": 60.00,
-  "ai-engine-5": 30.00,
-  "ai-engine-6": 150.00,
-  "ai-engine-7": 250.00,
-  "ai-engine-8": 30.80,
-  "ai-engine-9": 10.00,
-  "windows-opt-0": 20.50,
-  "windows-opt-1": 41.00,
-  "jitter-script-0": 2.50,
-  "jitter-script-1": 5.20,
-  "jitter-script-2": 15.50,
-  "jitter-script-3": 20.50,
-  "jitter-script-4": 25.70,
-  "jitter-script-5": 30.80,
-  "jitter-script-6": 41.00,
-};
-
-// PROMO prices (Annual & Lifetime with grade discounts for PayPal/Bunq - no fees)
-const PROMO_PRICES: { [key: string]: number } = {
-  "ai-engine-2-not-client": 230,
-  "ai-engine-2-already-client": 210,
-  "ai-engine-2-vip": 190,
-  "ai-engine-3-not-client": 410,
-  "ai-engine-3-already-client": 370,
-  "ai-engine-3-vip": 350,
-};
-
-// PROMO prices for SumUp (with 2.5% fee included)
-const PROMO_PRICES_SUMUP: { [key: string]: number } = {
-  "ai-engine-2-not-client": 235.75,
-  "ai-engine-2-already-client": 215.25,
-  "ai-engine-2-vip": 194.75,
-  "ai-engine-3-not-client": 420.25,
-  "ai-engine-3-already-client": 379.25,
-  "ai-engine-3-vip": 358.75,
 };
 
 // Bank transfer (SEPA) details
@@ -183,8 +140,6 @@ export default function Purchase() {
   });
   const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
   const [hardwareConfirmed, setHardwareConfirmed] = useState(false);
-  const [clientGrade, setClientGrade] = useState<ClientGrade>("not-client");
-  const [showPromoNotice, setShowPromoNotice] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
@@ -192,24 +147,44 @@ export default function Purchase() {
   const [showBankTransfer, setShowBankTransfer] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
+  // ── New simplified AI Engine state ──
+  const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, year, lifetime, renewal, addon
+  const [aiSupport, setAiSupport] = useState<boolean>(true); // true = with support, false = license only
+  const [aiRenewalType, setAiRenewalType] = useState<string>("week"); // week, month
+
+  // Effect to sync simplified AI selection with option index
+  useEffect(() => {
+    if (productId === "ai-engine") {
+      let index = 0;
+      if (aiDuration === "week") {
+        index = aiSupport ? 0 : 1;
+      } else if (aiDuration === "month") {
+        index = aiSupport ? 4 : 3;
+      } else if (aiDuration === "year") {
+        index = 6;
+      } else if (aiDuration === "lifetime") {
+        index = 7;
+      } else if (aiDuration === "renewal") {
+        index = aiRenewalType === "week" ? 2 : 8;
+      } else if (aiDuration === "addon") {
+        index = 9;
+      } else if (aiDuration === "help") {
+        index = 5;
+      }
+      setSelectedOptionIndex(index);
+    }
+  }, [productId, aiDuration, aiSupport, aiRenewalType]);
+
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-type ClientGrade = "not-client" | "already-client" | "vip";
-
   const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   let total = selectedItem?.price ?? 0;
-  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 1);
+  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 1 || selectedOptionIndex === 3);
   
-  // Apply promo discount if applicable (Annual or Lifetime)
-  const isPromoEligible = false;
-  
-  // SumUp total (with 2.5% fee for promo)
-  let sumupTotal = total;
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -258,20 +233,13 @@ type ClientGrade = "not-client" | "already-client" | "vip";
   const handleSumUpPayment = () => {
     if (!orderCreated) return;
     let sumupLink = SUMUP_LINKS[`${productId}-${orderCreated.optionIndex}`];
-    
-    // Use promo link if applicable
-    if (isPromoEligible) {
-      const promoKey = `${productId}-${orderCreated.optionIndex}-${clientGrade}`;
-      sumupLink = PROMO_SUMUP_LINKS[promoKey as keyof typeof PROMO_SUMUP_LINKS] || sumupLink;
-    }
-    
     sendDiscordAndEmail(orderCreated, "sumup");
     window.location.href = sumupLink || "https://pay.sumup.com/b2c/QLA8WDDD";
   };
 
   const handleBankTransfer = () => {
     if (!orderCreated) return;
-    sendDiscordAndEmail(orderCreated, "bank_transfer" as "sumup");
+    sendDiscordAndEmail(orderCreated, "bank_transfer");
     setShowBankTransfer(true);
   };
 
@@ -319,17 +287,15 @@ type ClientGrade = "not-client" | "already-client" | "vip";
   return (
     <div>
       {/* Header */}
-      <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20">
+      <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
-
-
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate="visible" className="max-w-2xl">
             <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight mb-4">
               Finalize your <span className="text-violet-tech">purchase</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Select your product and complete the form to access your purchase.
+              Secure your access to OneScript tools and dominate the game.
             </p>
           </motion.div>
         </div>
@@ -344,6 +310,38 @@ type ClientGrade = "not-client" | "already-client" | "vip";
             {/* Left: Product + Form */}
             <div className="lg:col-span-2 space-y-8">
 
+              {/* AI Engine Interface Showcase */}
+              {productId === "ai-engine" && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8 }}
+                  className="relative group"
+                >
+                  <div className="absolute -inset-1 bg-gradient-to-r from-violet-tech to-violet-accent rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                  <div className="relative glass-card rounded-xl overflow-hidden border border-violet-tech/20 shadow-2xl">
+                    <motion.img 
+                      src="/images/fusion-interface.png" 
+                      alt="Fusion AI Interface" 
+                      className="w-full h-auto"
+                      animate={{ 
+                        y: [0, -5, 0],
+                      }}
+                      transition={{ 
+                        duration: 4, 
+                        repeat: Infinity, 
+                        ease: "easeInOut" 
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-base/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-6">
+                      <h3 className="text-xl font-display font-bold text-white neon-text">FUSION AI V8.2</h3>
+                      <p className="text-xs text-violet-accent font-semibold tracking-widest uppercase">Visual Processing Engine</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               {/* Product Selection */}
               <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
                 {(productId === "ai-engine" || productId === "jitter-script") && (
@@ -357,51 +355,176 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                     </p>
                   </div>
                 )}
+                
                 <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
                   <product.icon className="w-6 h-6 text-violet-tech" />
-                  {product.name}
+                  {product.name} - Select Plan
                 </h2>
-                <div className="space-y-3">
-                  {product.options.map((option, idx) => (
-                    <motion.button
-                      key={idx}
-                      onClick={() => {
-                        setSelectedOptionIndex(idx);
-                        setSelfSetupConfirmed(false);
-                      }}
-                      whileHover={{ scale: 1.02 }}
-                      className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                        selectedOptionIndex === idx
-                          ? "border-violet-tech bg-violet-tech/10"
-                          : "border-border/50 hover:border-violet-tech/50 bg-dark-elevated/50"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0 ${selectedOptionIndex === idx ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                            {selectedOptionIndex === idx && <Check className="w-3 h-3 text-primary-foreground" />}
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <p className="font-semibold text-foreground">{option.label}</p>
 
-                            </div>
-                            {option.description && <p className="text-xs text-muted-foreground mt-1">{option.description}</p>}
-                            {option.duration && (
-                              <p className="text-xs text-violet-tech/70 mt-1 flex items-center gap-1">
-                                <Clock className="w-3 h-3" />{option.duration}
-                              </p>
-                            )}
+                {productId === "ai-engine" ? (
+                  /* SIMPLIFIED AI ENGINE SELECTOR */
+                  <div className="space-y-8">
+                    {/* 1. Duration Selection */}
+                    <div>
+                      <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">1. Select Duration</label>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {[
+                          { id: "week", label: "Weekly", icon: Clock },
+                          { id: "month", label: "Monthly", icon: Zap },
+                          { id: "year", label: "Annual", icon: Layers },
+                          { id: "lifetime", label: "Lifetime", icon: Shield },
+                          { id: "renewal", label: "Renewal", icon: RefreshCw },
+                          { id: "addon", label: "Add-on", icon: Cpu },
+                        ].map((d) => (
+                          <button
+                            key={d.id}
+                            onClick={() => setAiDuration(d.id)}
+                            className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all ${
+                              aiDuration === d.id ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                            }`}
+                          >
+                            <d.icon className={`w-5 h-5 mb-2 ${aiDuration === d.id ? "text-violet-tech" : "text-muted-foreground"}`} />
+                            <span className={`text-sm font-bold ${aiDuration === d.id ? "text-foreground" : "text-muted-foreground"}`}>{d.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* 2. Support / Options Selection */}
+                    <AnimatePresence mode="wait">
+                      {(aiDuration === "week" || aiDuration === "month") && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                        >
+                          <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">2. Select Support Level</label>
+                          <div className="grid sm:grid-cols-2 gap-4">
+                            <button
+                              onClick={() => setAiSupport(true)}
+                              className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                                aiSupport ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              }`}
+                            >
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiSupport ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiSupport && <Check className="w-4 h-4 text-white" />}
+                              </div>
+                              <div>
+                                <p className="font-bold text-foreground">With Support + Setup</p>
+                                <p className="text-xs text-muted-foreground mt-1">Complete installation by staff + priority support included.</p>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => setAiSupport(false)}
+                              className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                                !aiSupport ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              }`}
+                            >
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${!aiSupport ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {!aiSupport && <Check className="w-4 h-4 text-white" />}
+                              </div>
+                              <div>
+                                <p className="font-bold text-foreground">License Only (No Support)</p>
+                                <p className="text-xs text-muted-foreground mt-1">PDF guide only. You handle the installation yourself.</p>
+                              </div>
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {aiDuration === "renewal" && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                        >
+                          <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">2. Select Renewal Type</label>
+                          <div className="grid sm:grid-cols-2 gap-4">
+                            <button
+                              onClick={() => setAiRenewalType("week")}
+                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                                aiRenewalType === "week" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              }`}
+                            >
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiRenewalType === "week" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiRenewalType === "week" && <Check className="w-4 h-4 text-white" />}
+                              </div>
+                              <span className="font-bold text-foreground">Weekly Renewal</span>
+                            </button>
+                            <button
+                              onClick={() => setAiRenewalType("month")}
+                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                                aiRenewalType === "month" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              }`}
+                            >
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiRenewalType === "month" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiRenewalType === "month" && <Check className="w-4 h-4 text-white" />}
+                              </div>
+                              <span className="font-bold text-foreground">Monthly Renewal</span>
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Display Selected Option Details */}
+                    {selectedItem && (
+                      <motion.div 
+                        key={selectedOptionIndex}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="p-5 rounded-lg bg-violet-tech/5 border border-violet-tech/20"
+                      >
+                        <div className="flex justify-between items-start gap-4 mb-2">
+                          <h4 className="font-bold text-lg text-foreground">{selectedItem.label}</h4>
+                          <div className="text-right">
+                            <p className="text-2xl font-display font-bold text-violet-tech">{selectedItem.price}€</p>
+                            {selectedItem.note && <p className="text-xs text-muted-foreground">{selectedItem.note}</p>}
                           </div>
                         </div>
-                        <div className="text-right flex-shrink-0">
-                          <p className="font-display font-bold text-lg text-violet-tech">{option.price}€</p>
-                          {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
+                        <p className="text-sm text-muted-foreground leading-relaxed">{selectedItem.description}</p>
+                        {selectedItem.duration && (
+                          <div className="mt-3 flex items-center gap-2 text-xs text-violet-accent font-semibold">
+                            <Clock className="w-3.5 h-3.5" />
+                            Delivery: {selectedItem.duration}
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                  </div>
+                ) : (
+                  /* DEFAULT SELECTOR FOR OTHER PRODUCTS */
+                  <div className="space-y-3">
+                    {product.options.map((option, idx) => (
+                      <motion.button
+                        key={idx}
+                        onClick={() => setSelectedOptionIndex(idx)}
+                        whileHover={{ scale: 1.01 }}
+                        className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                          selectedOptionIndex === idx
+                            ? "border-violet-tech bg-violet-tech/10"
+                            : "border-border/50 hover:border-violet-tech/50 bg-dark-elevated/50"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0 ${selectedOptionIndex === idx ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                              {selectedOptionIndex === idx && <Check className="w-3 h-3 text-primary-foreground" />}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className="font-semibold text-foreground">{option.label}</p>
+                              {option.description && <p className="text-xs text-muted-foreground mt-1">{option.description}</p>}
+                            </div>
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            <p className="font-display font-bold text-lg text-violet-tech">{option.price}€</p>
+                            {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
+                          </div>
                         </div>
-                      </div>
-                    </motion.button>
-                  ))}
-                </div>
+                      </motion.button>
+                    ))}
+                  </div>
+                )}
               </motion.div>
 
               {/* Information Form */}
@@ -523,9 +646,6 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                     </div>
                   </div>
 
-
-
-
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? "Processing..." : "Validate my information"}
                   </Button>
@@ -539,17 +659,6 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                 <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="glass-card rounded-lg p-6 border-t-4 border-violet-tech">
                   <h2 className="text-xl font-display font-bold mb-6">Order Summary</h2>
 
-                  {productId === "ai-engine" && (
-                    <div className="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 flex gap-3">
-                      <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <div className="text-sm text-amber-200/90 leading-relaxed">
-                        <strong className="text-amber-400 block mb-1">System Recommendation</strong>
-                        <p className="mb-2">For GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, <strong>Windows 10</strong> is strongly recommended for optimal AI performance and stability.</p>
-                        <p className="mb-2 text-red-500 font-bold">Requires Waveshare RP2350A USB Mini Development Board for V8.1 safe operation.</p>
-                        <p className="text-amber-300/90 text-xs font-semibold border-t border-amber-500/20 pt-2 mt-2">Issues related to your PC (hardware, drivers, third-party software, OS, antivirus) are not valid refund reasons.</p>
-                      </div>
-                    </div>
-                  )}
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Product</span>
@@ -583,7 +692,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                                 PAY BY CARD (SUMUP)
                               </Button>
                               <p className="text-[10px] text-center text-amber-400/80">
-                                ⚠ 2.5% processing fee included — {sumupTotal.toFixed(2)}€ charged — EU cards only
+                                ⚠ 2.5% processing fee included — EU cards only
                               </p>
                             </div>
 
@@ -602,7 +711,7 @@ type ClientGrade = "not-client" | "already-client" | "vip";
                                 <CreditCard className="w-4 h-4" />
                                 PAY BY CARD (BUNQ)
                               </Button>
-                              <p className="text-[10px] text-center text-cyan-400/80">✓ Card payment, no fees — all cards accepted (incl. non-EU) — {total.toFixed(2)}€ charged</p>
+                              <p className="text-[10px] text-center text-cyan-400/80">✓ Card payment, no fees — all cards accepted (incl. non-EU)</p>
                             </div>
 
                             <Button type="button" onClick={handleBankTransfer} variant="outline" className="w-full border-border/50 text-muted-foreground hover:text-foreground font-bold py-4">
