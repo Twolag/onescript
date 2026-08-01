@@ -351,7 +351,9 @@ export default function Purchase() {
                       <h3 className="text-sm font-bold text-red-400 tracking-wider uppercase">Mandatory Requirement</h3>
                     </div>
                     <p className="text-sm text-red-200/80 leading-relaxed">
-                      For Apex Legends, you <span className="text-red-400 font-bold underline">MUST</span> use the <strong>STEAM</strong> version. Fortnite and other games are also supported. The EA App (Origin) version of Apex is <strong>NOT supported</strong>.
+                      For Apex Legends, you <span className="text-red-400 font-bold underline">MUST</span> use the <strong>STEAM</strong> version. Fortnite and other games are also supported. The EA App (Origin) version of Apex is <strong>NOT supported</strong>. 
+                      <br /><br />
+                      <strong className="text-red-400 underline">IMPORTANT:</strong> The <strong>Waveshare RP2350A USB Mini Development Board</strong> is strictly <strong>MANDATORY</strong> to use Fusion IA.
                     </p>
                   </div>
                 )}
