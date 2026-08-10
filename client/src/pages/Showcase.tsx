@@ -207,7 +207,7 @@ export default function Showcase() {
       name: "CS:GO",
       href: "/purchase?product=ai-engine&game=csgo",
       icon: Crosshair,
-      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+      tags: ["Keyboard / Mouse", "Undetectable", "Optimized"],
     },
     {
       name: "Marvel Rivals",

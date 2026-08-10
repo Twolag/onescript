@@ -137,7 +137,7 @@ const games: GameCard[] = [
     logo: "/images/games/csgo.svg",
     accent: "from-amber-500/30 via-transparent to-violet-tech/25",
     logoText: "CS:GO",
-    tags: [...FULL_INPUT_TAGS],
+    tags: [...KEYBOARD_ONLY_TAGS],
   },
   {
     id: "marvel-rivals",
