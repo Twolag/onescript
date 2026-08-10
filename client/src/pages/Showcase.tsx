@@ -241,7 +241,7 @@ export default function Showcase() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="group relative rounded-xl overflow-hidden border border-white/5 hover:border-violet-tech/40 transition-all duration-500 flex flex-col h-full cursor-pointer bg-dark-elevated/30 backdrop-blur-sm"
+                className="group relative rounded-xl overflow-hidden border border-violet-tech/20 hover:border-violet-tech/40 transition-all duration-500 flex flex-col h-full cursor-pointer bg-dark-elevated/40 backdrop-blur-sm"
                 onClick={() => handleVideoClick(demo)}
               >
                 <div className="relative w-full aspect-video overflow-hidden bg-dark-elevated">
