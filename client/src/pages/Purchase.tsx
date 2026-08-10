@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock, Zap, Layers, LifeBuoy, RefreshCw
+  MessageCircle, CreditCard, Clock, Zap, Layers, RefreshCw, Keyboard
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -30,7 +30,7 @@ const SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-10": "https://pay.sumup.com/b2c/QSDE2C71",  // 10€ — Advanced AI Weight (Fortnite)
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
-  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.50€  — 1 day (Approx)
+  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 1€ — 1 day
   "jitter-script-1": "https://pay.sumup.com/b2c/QLKSKZZV", // 5.20€  — 1 week
   "jitter-script-2": "https://pay.sumup.com/b2c/Q8GDNO7G", // 15.50€ — 1 month
   "jitter-script-3": "https://pay.sumup.com/b2c/QVOOAVWS", // 20.50€ — 3 months
@@ -114,7 +114,7 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "1 day", price: 2.5 },
+      { label: "1 day", price: 1 },
       { label: "1 week", price: 5 },
       { label: "1 month", price: 15 },
       { label: "3 months", price: 20 },
@@ -125,6 +125,15 @@ const products: Product[] = [
   },
 ];
 
+const GAME_LABELS: Record<string, string> = {
+  fortnite: "Fortnite",
+  apex: "Apex Legends",
+  overwatch: "Overwatch",
+  warzone: "Warzone",
+  "the-finals": "The Finals",
+  splitgate: "Splitgate",
+};
+
 export default function Purchase() {
   const searchParams = new URLSearchParams(window.location.search);
   const rawProductId = searchParams.get("product") || "ai-engine";
@@ -133,6 +142,11 @@ export default function Purchase() {
     : rawProductId === "jitter" ? "jitter-script"
     : rawProductId;
   const product = products.find((p) => p.id === productId) || products[0];
+  const rawGame = (searchParams.get("game") || "").toLowerCase();
+  const selectedGame = GAME_LABELS[rawGame] || null;
+  const displayProductName = selectedGame && productId === "ai-engine"
+    ? `${selectedGame} — AI Aimbot`
+    : product.name;
 
   // ── Form state ──
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
@@ -153,7 +167,9 @@ export default function Purchase() {
   const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, year, lifetime, renewal, addon
   const [aiSupport, setAiSupport] = useState<boolean>(true); // true = with support, false = license only
   const [aiRenewalType, setAiRenewalType] = useState<string>("week"); // week, month
-  const [aiAddonType, setAiAddonType] = useState<string>("apex"); // apex, fortnite
+  const [aiAddonType, setAiAddonType] = useState<string>(
+    rawGame === "fortnite" ? "fortnite" : "apex"
+  ); // apex, fortnite
 
   // Effect to sync simplified AI selection with option index
   useEffect(() => {
@@ -203,10 +219,6 @@ export default function Purchase() {
       toast.error("Please select an option");
       return;
     }
-    if ((productId === "jitter-script" || productId === "ai-engine") && !formData.controller) {
-      toast.error("Please select your controller type");
-      return;
-    }
     if (isSelfSetupOption && !selfSetupConfirmed) {
       toast.error("You must confirm that you will handle the installation yourself");
       return;
@@ -221,7 +233,7 @@ export default function Purchase() {
       const orderNumber = generateOrderNumber();
       setOrderCreated({
         orderNumber,
-        productName: `${product.name} — ${selectedItem!.label}`,
+        productName: `${displayProductName} — ${selectedItem!.label}`,
         price: selectedItem!.price,
         optionIndex: selectedOptionIndex,
       });
@@ -266,9 +278,10 @@ export default function Purchase() {
         to: formData.email,
         props: {
           orderNumber: order.orderNumber, customerName, customerEmail: formData.email,
-          productName: product.name, productOption: selectedItem!.label,
+          productName: displayProductName, productOption: selectedItem!.label,
           discordPseudo: formData.discordPseudo, price: order.price,
           cpu: formData.cpu, gpu: formData.gpu, os: formData.os,
+          inputMethod: formData.controller || "N/A",
         },
       }),
     }).catch(console.error);
@@ -279,9 +292,10 @@ export default function Purchase() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         orderNumber: order.orderNumber, customerName, email: formData.email,
-        discordPseudo: formData.discordPseudo, productName: product.name,
+        discordPseudo: formData.discordPseudo, productName: displayProductName,
         optionLabel: selectedItem!.label, price: order.price, paymentMethod,
         cpu: formData.cpu, gpu: formData.gpu, os: formData.os,
+        inputMethod: formData.controller || "N/A",
         selfSetupConfirmed: isSelfSetupOption ? "YES (Confirmed)" : "N/A",
       }),
     }).catch(console.error);
@@ -294,11 +308,26 @@ export default function Purchase() {
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate="visible" className="max-w-2xl">
+            {selectedGame && productId === "ai-engine" && (
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
+                <Gamepad2 className="w-3.5 h-3.5" />
+                {selectedGame} — AI Aimbot
+              </div>
+            )}
             <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight mb-4">
-              Finalize your <span className="text-violet-tech">purchase</span>
+              {selectedGame && productId === "ai-engine" ? (
+                <>
+                  <span className="text-violet-tech">{selectedGame}</span> — AI Aimbot
+                </>
+              ) : (
+                <>
+                  Finalize your <span className="text-violet-tech">purchase</span>
+                </>
+              )}
             </h1>
             <p className="text-lg text-muted-foreground">
-              Secure your access to OneScript tools and dominate the game.
+              Secure your access to OneScript tools. Plans from <span className="text-violet-accent font-semibold">1 €</span>.
+              Full Keyboard/Mouse &amp; Controller compatibility via RP2350A.
             </p>
           </motion.div>
         </div>
@@ -363,7 +392,7 @@ export default function Purchase() {
                 
                 <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
                   <product.icon className="w-6 h-6 text-violet-tech" />
-                  {product.name} - Select Plan
+                  {displayProductName} — Select Plan
                 </h2>
 
                 {productId === "ai-engine" ? (
@@ -616,23 +645,22 @@ export default function Purchase() {
                     </div>
                   </div>
 
-                  {/* Controller Selection */}
+                  {/* Input Compatibility — Keyboard/Mouse + Controller via RP2350A */}
                   {(productId === "jitter-script" || productId === "ai-engine") && (
                     <div className="pt-4 border-t border-border/30">
-                      <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Controller Type</h3>
-                      <div className="p-4 rounded-lg bg-blue-900/20 border border-blue-500/30 mb-4">
-                        <p className="text-sm text-blue-200/90"><strong className="text-blue-400">⚠️ Important:</strong> OneScript supports <strong>controllers only</strong> (PS5, Xbox, Gamesir, etc.). Keyboard and Mouse are <strong>not supported</strong>.</p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-2">Select Your Input Method</label>
-                        <select name="controller" value={formData.controller || ""} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none appearance-none">
-                          <option value="">Choose your input method...</option>
-                          <option value="Xbox">Xbox Controller</option>
-                          <option value="PS5">PlayStation 5 Controller</option>
-                          <option value="PS5 Edge">PlayStation 5 Edge Controller</option>
-                          <option value="Gamesir">Gamesir Controller</option>
-                          <option value="Other">Other Controller</option>
-                        </select>
+                      <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Input Compatibility</h3>
+                      <div className="p-4 rounded-lg bg-emerald-900/20 border border-emerald-500/30">
+                        <div className="flex items-start gap-3">
+                          <div className="flex items-center gap-2 shrink-0 mt-0.5">
+                            <Keyboard className="w-4 h-4 text-emerald-400" />
+                            <Gamepad2 className="w-4 h-4 text-emerald-400" />
+                          </div>
+                          <p className="text-sm text-emerald-100/90 leading-relaxed">
+                            <strong className="text-emerald-400">Full compatibility confirmed:</strong> Fusion AI now supports{" "}
+                            <strong>Keyboard &amp; Mouse</strong> and <strong>Controller</strong> (Xbox, PS5, Gamesir, etc.)
+                            thanks to the <strong>Waveshare RP2350A</strong>. Choose whichever input you prefer — both are fully supported.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -699,10 +727,16 @@ export default function Purchase() {
                   <h2 className="text-xl font-display font-bold mb-6">Order Summary</h2>
 
                   <div className="space-y-4 mb-6">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Product</span>
-                      <span className="text-foreground font-medium">{product.name}</span>
+                    <div className="flex justify-between text-sm gap-4">
+                      <span className="text-muted-foreground shrink-0">Product</span>
+                      <span className="text-foreground font-medium text-right">{displayProductName}</span>
                     </div>
+                    {selectedGame && productId === "ai-engine" && (
+                      <div className="flex justify-between text-sm gap-4">
+                        <span className="text-muted-foreground shrink-0">Game</span>
+                        <span className="text-violet-accent font-medium text-right">{selectedGame}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Option</span>
                       <span className="text-foreground font-medium">{selectedItem?.label || "Not selected"}</span>
