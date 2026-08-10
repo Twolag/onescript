@@ -24,9 +24,6 @@ const fadeUp = {
   }),
 };
 
-const HERO_BG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/hero-bg-Bq3mdtincwx5DgcV2mHARK.webp";
-
 /** Advanced AI Weight demo clips (autoplay loops on game cards) */
 const ADVANCED_WEIGHT_VIDEOS = {
   fortnite:
@@ -101,20 +98,6 @@ export default function Home() {
     <div className="overflow-hidden">
       {/* ═══════════════ GAMES FIRST — Dominate with Fusion IA ═══════════════ */}
       <section className="relative pt-10 pb-16 lg:pt-14 lg:pb-20">
-        <div className="absolute inset-0">
-          <img src={HERO_BG} alt="" className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/55 to-background" />
-        </div>
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <div
-            className="w-full h-full"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(123,46,255,0.03) 2px, rgba(123,46,255,0.03) 4px)",
-            }}
-          />
-        </div>
-
         <div className="relative container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -238,7 +221,6 @@ export default function Home() {
 
       {/* ═══════════════ SUPPORT CTA ═══════════════ */}
       <section className="relative py-20 lg:py-28">
-        <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
             <motion.div
