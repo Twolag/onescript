@@ -10,6 +10,5 @@
     </filter>
   </defs>
   <rect width="480" height="200" fill="none"/>
-  <text x="240" y="88" text-anchor="middle" font-family="Orbitron, Arial Black, sans-serif" font-size="44" font-weight="800" letter-spacing="6" fill="url(#g)" filter="url(#glow)">R6 SIEGE</text>
-  <text x="240" y="130" text-anchor="middle" font-family="Exo 2, Arial, sans-serif" font-size="16" font-weight="600" letter-spacing="4" fill="#F5C518" opacity="0.75">RAINBOW SIX</text>
+  <text x="240" y="115" text-anchor="middle" font-family="Orbitron, Arial Black, sans-serif" font-size="44" font-weight="800" letter-spacing="6" fill="url(#g)" filter="url(#glow)">R6 SIEGE</text>
 </svg>
