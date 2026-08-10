@@ -13,8 +13,8 @@ type Particle = {
   hue: number; // 200–280 (cyan → violet)
 };
 
-const LINK_DIST = 140;
-const SPEED = 0.28;
+const LINK_DIST = 160;
+const SPEED = 0.32;
 
 function particleCount(width: number, height: number) {
   const area = width * height;
