@@ -40,7 +40,24 @@ interface GameCard {
   logo?: string;
   accent: string;
   logoText: string;
+  /** Input + feature tags shown under the card */
+  tags: string[];
 }
+
+const FULL_INPUT_TAGS = [
+  "From 15 €",
+  "Keyboard / Mouse",
+  "Controller",
+  "Undetectable",
+  "Optimized",
+] as const;
+
+const KEYBOARD_ONLY_TAGS = [
+  "From 15 €",
+  "Keyboard / Mouse",
+  "Undetectable",
+  "Optimized",
+] as const;
 
 const games: GameCard[] = [
   {
@@ -50,6 +67,7 @@ const games: GameCard[] = [
     video: ADVANCED_WEIGHT_VIDEOS.fortnite,
     accent: "from-violet-tech/40 via-transparent to-cyan-500/20",
     logoText: "FORTNITE",
+    tags: [...FULL_INPUT_TAGS],
   },
   {
     id: "apex",
@@ -58,6 +76,7 @@ const games: GameCard[] = [
     video: ADVANCED_WEIGHT_VIDEOS.apex,
     accent: "from-red-500/30 via-transparent to-violet-tech/30",
     logoText: "APEX",
+    tags: [...FULL_INPUT_TAGS],
   },
   {
     id: "overwatch",
@@ -66,6 +85,7 @@ const games: GameCard[] = [
     logo: "/images/games/overwatch.svg",
     accent: "from-orange-500/25 via-transparent to-violet-tech/25",
     logoText: "OVERWATCH",
+    tags: [...KEYBOARD_ONLY_TAGS],
   },
   {
     id: "warzone",
@@ -74,6 +94,7 @@ const games: GameCard[] = [
     logo: "/images/games/warzone.svg",
     accent: "from-amber-500/25 via-transparent to-violet-tech/25",
     logoText: "WARZONE",
+    tags: [...FULL_INPUT_TAGS],
   },
   {
     id: "the-finals",
@@ -82,6 +103,7 @@ const games: GameCard[] = [
     logo: "/images/games/the-finals.svg",
     accent: "from-yellow-400/20 via-transparent to-violet-tech/25",
     logoText: "THE FINALS",
+    tags: [...FULL_INPUT_TAGS],
   },
   {
     id: "splitgate",
@@ -90,6 +112,25 @@ const games: GameCard[] = [
     logo: "/images/games/splitgate.svg",
     accent: "from-sky-400/25 via-transparent to-violet-tech/25",
     logoText: "SPLITGATE",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "csgo",
+    name: "CS:GO",
+    href: "/purchase?product=ai-engine&game=csgo",
+    logo: "/images/games/csgo.svg",
+    accent: "from-amber-500/30 via-transparent to-violet-tech/25",
+    logoText: "CS:GO",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "marvel-rivals",
+    name: "Marvel Rivals",
+    href: "/purchase?product=ai-engine&game=marvel-rivals",
+    logo: "/images/games/marvel-rivals.svg",
+    accent: "from-red-500/30 via-transparent to-violet-tech/30",
+    logoText: "MARVEL RIVALS",
+    tags: [...FULL_INPUT_TAGS],
   },
 ];
 
@@ -107,7 +148,7 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
               <Zap className="w-3 h-3" />
-              FUSION AI V8.1 — KEYBOARD, MOUSE &amp; CONTROLLER
+              FUSION AI V8.1 — MULTI-GAME SUPPORT
             </div>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
               Dominate with <span className="text-violet-tech neon-text">Fusion IA</span>
@@ -173,7 +214,7 @@ export default function Home() {
                   </div>
 
                   <div className="relative p-5 bg-dark-elevated/90 border-t border-violet-tech/20">
-                    <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center justify-between gap-3 mb-3">
                       <div>
                         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
                           AI Aimbot
@@ -187,9 +228,16 @@ export default function Home() {
                         <ChevronRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
-                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                      From 15 € · Keyboard / Mouse &amp; Controller · Undetectable · Optimized
-                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {game.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-display font-semibold tracking-wide text-violet-accent border border-violet-tech/45 bg-violet-tech/15 shadow-[0_0_12px_rgba(123,46,255,0.18)]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </Link>
               </motion.div>

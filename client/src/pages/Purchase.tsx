@@ -132,6 +132,8 @@ const GAME_LABELS: Record<string, string> = {
   warzone: "Warzone",
   "the-finals": "The Finals",
   splitgate: "Splitgate",
+  csgo: "CS:GO",
+  "marvel-rivals": "Marvel Rivals",
 };
 
 export default function Purchase() {
