@@ -3,8 +3,9 @@
  * Neon Circuit Design with integrated video player modal
  */
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Cpu, Zap, X } from "lucide-react";
+import { Play, Cpu, Zap, X, Gamepad2, Keyboard, Crosshair, Target, Trophy, Swords } from "lucide-react";
 import { useState } from "react";
+import { Link } from "wouter";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -149,11 +150,61 @@ export default function Showcase() {
     setIsModalOpen(true);
   };
 
+  const supportedGames = [
+    {
+      name: "Fortnite",
+      href: "/purchase?product=ai-engine&game=fortnite",
+      icon: Target,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Apex Legends",
+      href: "/purchase?product=ai-engine&game=apex",
+      icon: Gamepad2,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Overwatch",
+      href: "/purchase?product=ai-engine&game=overwatch",
+      icon: Swords,
+      tags: ["Keyboard / Mouse", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Warzone",
+      href: "/purchase?product=ai-engine&game=warzone",
+      icon: Crosshair,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "The Finals",
+      href: "/purchase?product=ai-engine&game=the-finals",
+      icon: Trophy,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Splitgate",
+      href: "/purchase?product=ai-engine&game=splitgate",
+      icon: Zap,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "CS:GO",
+      href: "/purchase?product=ai-engine&game=csgo",
+      icon: Crosshair,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Marvel Rivals",
+      href: "/purchase?product=ai-engine&game=marvel-rivals",
+      icon: Keyboard,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+  ];
+
   return (
-    <div className="bg-dark-base min-h-screen">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-2 lg:pt-40 lg:pb-2 overflow-hidden">
-        <div className="absolute inset-0 bg-dark-base" />
+      <section className="relative pt-20 pb-6 lg:pt-28 lg:pb-8 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
         
         <div className="relative container">
@@ -240,7 +291,7 @@ export default function Showcase() {
       </section>
 
       {/* Supported Games Section */}
-      <section className="relative py-24 lg:py-32 border-t border-white/5">
+      <section className="relative py-20 lg:py-28 border-t border-violet-tech/15">
         <div className="relative container">
           <motion.div
             variants={fadeUp}
@@ -251,29 +302,45 @@ export default function Showcase() {
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
               Supported <span className="text-violet-tech">Games</span>
             </h2>
+            <p className="text-muted-foreground text-base sm:text-lg">
+              Same titles as on the homepage — plans from 15 €.
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto">
-            {[
-              { name: "Apex Legends", icon: "🎮" },
-              { name: "Fortnite", icon: "🎯" },
-              { name: "Warzone", icon: "🔫" },
-              { name: "Overwatch 2", icon: "⚔️" },
-              { name: "The Finals", icon: "🏆" },
-            ].map((game, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 max-w-6xl mx-auto">
+            {supportedGames.map((game, i) => (
               <motion.div
                 key={game.name}
                 custom={i}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                className="glass-card rounded-xl p-8 text-center hover:border-violet-tech/50 transition-all duration-500 group relative overflow-hidden"
+                viewport={{ once: true }}
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-violet-tech/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-500 relative z-10">
-                  {game.icon}
-                </div>
-                <p className="font-display font-bold text-foreground tracking-wide relative z-10">{game.name}</p>
+                <Link
+                  href={game.href}
+                  className="glass-card rounded-xl p-6 h-full flex flex-col hover:border-violet-tech/50 transition-all duration-500 group relative overflow-hidden block"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-b from-violet-tech/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-lg border border-violet-tech/40 bg-violet-tech/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                      <game.icon className="w-6 h-6 text-violet-tech" />
+                    </div>
+                    <p className="font-display font-bold text-foreground tracking-wide text-center mb-4">
+                      {game.name}
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-1.5 mt-auto">
+                      {game.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-display font-semibold tracking-wide text-violet-accent border border-violet-tech/45 bg-violet-tech/15"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
