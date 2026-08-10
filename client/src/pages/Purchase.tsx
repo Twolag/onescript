@@ -383,7 +383,7 @@ export default function Purchase() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark-base/80 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-4 left-6">
-                      <h3 className="text-xl font-display font-bold text-white neon-text">FUSION AI V8.2</h3>
+                      <h3 className="text-xl font-display font-bold text-white neon-text">FUSION IA V8.3</h3>
                       <p className="text-xs text-violet-accent font-semibold tracking-widest uppercase">Visual Processing Engine</p>
                     </div>
                   </div>
@@ -417,6 +417,7 @@ export default function Purchase() {
                       </div>
                       <p className="text-sm text-amber-100/85 leading-relaxed">
                         The <strong>Waveshare RP2350A USB Mini Development Board</strong> is required to use Fusion AI.
+                        {" "}A <strong>1080p monitor</strong> is strongly recommended for good performance.
                         {(!selectedGame || selectedGame === "Apex Legends") && (
                           <>
                             {" "}For Apex Legends, use the <strong>Steam</strong> version only — the EA App (Origin) version is not supported.
@@ -750,13 +751,13 @@ export default function Purchase() {
                   >
                     <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-violet-tech via-cyan-400/40 to-violet-accent opacity-60 blur-[1px] group-hover:opacity-100 transition-opacity" />
                     <div className="relative rounded-xl border border-violet-tech/50 bg-dark-base shadow-[0_0_40px_rgba(123,46,255,0.25)] overflow-hidden">
-                      <div className="px-5 pt-5 pb-2 bg-dark-base">
+                      <div className="bg-white">
                         <img
                           src="/images/rp2350a-board.webp"
                           alt="Waveshare RP2350A USB Mini Development Board — required"
-                          className="w-full h-auto object-contain block drop-shadow-[0_0_28px_rgba(123,46,255,0.35)]"
-                          width={1004}
-                          height={943}
+                          className="w-full h-auto object-contain block"
+                          width={994}
+                          height={932}
                           loading="eager"
                           decoding="async"
                         />
