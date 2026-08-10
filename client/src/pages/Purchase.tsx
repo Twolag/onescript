@@ -724,9 +724,43 @@ export default function Purchase() {
               </motion.div>
             </div>
 
-            {/* Right: Summary */}
+            {/* Right: RP2350A + Summary */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
+                {(productId === "ai-engine" || productId === "jitter-script") && (
+                  <motion.div
+                    variants={fadeUp}
+                    custom={2.5}
+                    initial="hidden"
+                    animate="visible"
+                    className="relative group"
+                  >
+                    <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-violet-tech via-cyan-400/50 to-violet-accent opacity-70 blur-[1px] group-hover:opacity-100 transition-opacity" />
+                    <div className="relative rounded-xl overflow-hidden border border-violet-tech/50 bg-dark-base/90 shadow-[0_0_40px_rgba(123,46,255,0.25)]">
+                      <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-violet-tech/80 z-10" />
+                      <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-violet-tech/80 z-10" />
+                      <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-violet-tech/80 z-10" />
+                      <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-violet-tech/80 z-10" />
+                      <img
+                        src="/images/rp2350a-board.webp"
+                        alt="Waveshare RP2350A USB Mini Development Board — required"
+                        className="w-full h-auto object-contain p-4"
+                      />
+                      <div className="px-4 pb-4 -mt-1">
+                        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
+                          Required Hardware
+                        </p>
+                        <p className="font-display font-bold text-sm text-foreground">
+                          Waveshare RP2350A
+                        </p>
+                        <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                          Mandatory for Keyboard / Mouse &amp; Controller support.
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
                 <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="glass-card rounded-lg p-6 border-t-4 border-violet-tech">
                   <h2 className="text-xl font-display font-bold mb-6">Order Summary</h2>
 
