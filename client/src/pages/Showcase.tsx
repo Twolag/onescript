@@ -162,6 +162,12 @@ export default function Showcase() {
 
   const supportedGames = [
     {
+      name: "Universal",
+      href: "/purchase?product=ai-engine&game=universal",
+      icon: Zap,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "All Games"],
+    },
+    {
       name: "Fortnite",
       href: "/purchase?product=ai-engine&game=fortnite",
       icon: Target,
