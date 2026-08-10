@@ -18,6 +18,7 @@ import {
   Play,
   X,
   Globe,
+  Maximize2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -309,10 +310,11 @@ export default function Home() {
                     />
 
                     {game.video && (
-                      <div className="absolute inset-0 flex items-center justify-center opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <div className="w-12 h-12 rounded-lg border border-violet-tech/50 bg-violet-tech/30 backdrop-blur-sm flex items-center justify-center">
-                          <Play className="w-5 h-5 text-white fill-white ml-0.5" />
-                        </div>
+                      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] font-display font-bold tracking-wider text-white border border-violet-tech/60 bg-violet-tech/80 backdrop-blur-sm shadow-[0_0_16px_rgba(123,46,255,0.45)]">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          FULLSCREEN
+                        </span>
                       </div>
                     )}
 
