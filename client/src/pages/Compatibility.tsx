@@ -68,6 +68,8 @@ const gamingPlatformsData = [
   { name: "Arc Raiders", status: "recommended", note: "Available now — full support" },
   { name: "Destiny", status: "recommended", note: "Available now — full support" },
   { name: "Delta Force", status: "recommended", note: "Available now — full support" },
+  { name: "PUBG", status: "recommended", note: "Available now — full support" },
+  { name: "Battlefield", status: "recommended", note: "Available now — full support" },
   { name: "Other platforms", status: "limited", note: "Under development — coming soon" },
 ];
 

@@ -245,6 +245,18 @@ export default function Showcase() {
       icon: Gamepad2,
       tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
     },
+    {
+      name: "PUBG",
+      href: "/purchase?product=ai-engine&game=pubg",
+      icon: Target,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Battlefield",
+      href: "/purchase?product=ai-engine&game=battlefield",
+      icon: Swords,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
   ];
 
   return (

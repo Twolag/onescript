@@ -143,6 +143,9 @@ const GAME_LABELS: Record<string, string> = {
   destiny: "Destiny",
   "destiny-2": "Destiny",
   "delta-force": "Delta Force",
+  pubg: "PUBG",
+  battlefield: "Battlefield",
+  bf: "Battlefield",
   universal: "Universal",
 };
 

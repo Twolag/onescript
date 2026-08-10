@@ -194,6 +194,24 @@ const games: GameCard[] = [
     logoText: "DELTA FORCE",
     tags: [...FULL_INPUT_TAGS],
   },
+  {
+    id: "pubg",
+    name: "PUBG",
+    href: "/purchase?product=ai-engine&game=pubg",
+    logo: "/images/games/pubg.svg",
+    accent: "from-amber-400/30 via-transparent to-violet-tech/25",
+    logoText: "PUBG",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "battlefield",
+    name: "Battlefield",
+    href: "/purchase?product=ai-engine&game=battlefield",
+    logo: "/images/games/battlefield.svg",
+    accent: "from-orange-500/30 via-transparent to-violet-tech/30",
+    logoText: "BATTLEFIELD",
+    tags: [...FULL_INPUT_TAGS],
+  },
 ];
 
 export default function Home() {

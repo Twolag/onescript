@@ -35,6 +35,8 @@ export default function Trial() {
     "Arc Raiders",
     "Destiny",
     "Delta Force",
+    "PUBG",
+    "Battlefield",
     "Steam (Autres jeux)",
     "Tous les jeux supportés",
   ];
