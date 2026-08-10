@@ -28,7 +28,7 @@ const fadeUp = {
 
 const HERO_BG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/hero-bg-Bq3mdtincwx5DgcV2mHARK.webp";
-const RP2350A_IMG = "/images/rp2350a-waveshare.png";
+const RP2350A_IMG = "/images/rp2350a-waveshare.webp";
 
 /** Advanced AI Weight demo clips (autoplay loops on game cards) */
 const ADVANCED_WEIGHT_VIDEOS = {
