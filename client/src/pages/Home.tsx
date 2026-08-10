@@ -149,6 +149,15 @@ const games: GameCard[] = [
     logoText: "MARVEL RIVALS",
     tags: [...FULL_INPUT_TAGS],
   },
+  {
+    id: "rainbow-six",
+    name: "Rainbow Six Siege",
+    href: "/purchase?product=ai-engine&game=rainbow-six",
+    logo: "/images/games/rainbow-six.svg",
+    accent: "from-yellow-400/25 via-transparent to-violet-tech/30",
+    logoText: "R6 SIEGE",
+    tags: [...FULL_INPUT_TAGS],
+  },
 ];
 
 export default function Home() {

@@ -134,6 +134,9 @@ const GAME_LABELS: Record<string, string> = {
   splitgate: "Splitgate",
   csgo: "CS:GO",
   "marvel-rivals": "Marvel Rivals",
+  "rainbow-six": "Rainbow Six Siege",
+  r6: "Rainbow Six Siege",
+  siege: "Rainbow Six Siege",
   universal: "Universal",
 };
 

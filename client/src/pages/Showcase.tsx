@@ -215,6 +215,12 @@ export default function Showcase() {
       icon: Keyboard,
       tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
     },
+    {
+      name: "Rainbow Six Siege",
+      href: "/purchase?product=ai-engine&game=rainbow-six",
+      icon: Crosshair,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
   ];
 
   return (

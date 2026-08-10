@@ -30,6 +30,7 @@ export default function Trial() {
     "Apex Legends",
     "Fortnite",
     "Call of Duty",
+    "Rainbow Six Siege",
     "Steam (Autres jeux)",
     "Tous les jeux supportés",
   ];
