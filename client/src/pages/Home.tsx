@@ -205,7 +205,7 @@ export default function Home() {
                       </span>
                     </div>
                     <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                      From 15 € · Clavier / Souris &amp; Manette · Indétectable · Optimisé
+                      From 15 € · Keyboard / Mouse &amp; Controller · Undetectable · Optimized
                     </p>
                   </div>
                 </Link>
