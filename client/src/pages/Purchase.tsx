@@ -30,7 +30,7 @@ const SUMUP_LINKS: { [key: string]: string } = {
   "ai-engine-10": "https://pay.sumup.com/b2c/QSDE2C71",  // 10€ — Advanced AI Weight (Fortnite)
   "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
   "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
-  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 1€ — 1 day
+  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.50€ — 1 day
   "jitter-script-1": "https://pay.sumup.com/b2c/QLKSKZZV", // 5.20€  — 1 week
   "jitter-script-2": "https://pay.sumup.com/b2c/Q8GDNO7G", // 15.50€ — 1 month
   "jitter-script-3": "https://pay.sumup.com/b2c/QVOOAVWS", // 20.50€ — 3 months
@@ -114,7 +114,7 @@ const products: Product[] = [
     name: "Jitter Script",
     icon: Gamepad2,
     options: [
-      { label: "1 day", price: 1 },
+      { label: "1 day", price: 2.5 },
       { label: "1 week", price: 5 },
       { label: "1 month", price: 15 },
       { label: "3 months", price: 20 },
@@ -326,7 +326,8 @@ export default function Purchase() {
               )}
             </h1>
             <p className="text-lg text-muted-foreground">
-              Secure your access to OneScript tools. Plans from <span className="text-violet-accent font-semibold">1 €</span>.
+              Secure your access to OneScript tools. Fusion AI plans from{" "}
+              <span className="text-violet-accent font-semibold">15 €</span>.
               Full Keyboard/Mouse &amp; Controller compatibility via RP2350A.
             </p>
           </motion.div>

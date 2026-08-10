@@ -114,7 +114,7 @@ const products: ProductCard[] = [
       "Keyboard/Mouse & Controller",
       "Works with All FPS Games",
     ],
-    price: "1 €",
+    price: "2.50 €",
     priceNote: "starting from",
     cta: "VIEW OPTIONS",
     ctaHref: "/purchase?product=jitter-script",
