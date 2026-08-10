@@ -15,7 +15,6 @@ import {
   TrendingUp,
   Keyboard,
   Gamepad2,
-  Play,
   X,
   Globe,
   Maximize2,
