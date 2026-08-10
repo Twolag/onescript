@@ -26,6 +26,8 @@ interface VideoDemo {
   videoUrl: string;
   icon: React.ElementType;
   badge: string;
+  accent: string;
+  tags: string[];
 }
 
 const videoDemos: VideoDemo[] = [
@@ -39,6 +41,8 @@ const videoDemos: VideoDemo[] = [
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/AhZMvZeQVblifwgY.mp4",
     icon: Cpu,
     badge: "FORTNITE",
+    accent: "from-violet-tech/40 via-transparent to-cyan-500/20",
+    tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
   },
   {
     id: "fusion-ai-apex",
@@ -50,6 +54,8 @@ const videoDemos: VideoDemo[] = [
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
     icon: Cpu,
     badge: "APEX",
+    accent: "from-red-500/30 via-transparent to-violet-tech/30",
+    tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
   },
   {
     id: "advanced-weight-apex",
@@ -61,6 +67,8 @@ const videoDemos: VideoDemo[] = [
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
     icon: Zap,
     badge: "ADD-ON",
+    accent: "from-amber-500/30 via-transparent to-violet-tech/25",
+    tags: ["Add-on", "High-end GPU", "Undetectable", "Optimized"],
   },
   {
     id: "advanced-weight-fortnite",
@@ -72,6 +80,8 @@ const videoDemos: VideoDemo[] = [
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/vmTTDTSBoGUuraRB.mp4",
     icon: Zap,
     badge: "ADD-ON",
+    accent: "from-violet-tech/40 via-transparent to-cyan-500/20",
+    tags: ["Add-on", "High-end GPU", "Undetectable", "Optimized"],
   },
 ];
 
@@ -229,10 +239,10 @@ export default function Showcase() {
         </div>
       </section>
 
-      {/* Video Grid Section */}
-      <section className="relative py-2 lg:py-4">
+      {/* Video Grid Section — homepage-style cards */}
+      <section className="relative py-6 lg:py-10">
         <div className="relative container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 max-w-6xl mx-auto">
             {videoDemos.map((demo, i) => (
               <motion.div
                 key={demo.id}
@@ -241,49 +251,66 @@ export default function Showcase() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="group relative rounded-xl overflow-hidden border border-violet-tech/20 hover:border-violet-tech/40 transition-all duration-500 flex flex-col h-full cursor-pointer bg-dark-elevated/40 backdrop-blur-sm"
-                onClick={() => handleVideoClick(demo)}
               >
-                <div className="relative w-full aspect-video overflow-hidden bg-dark-elevated">
-                  <img
-                    src={demo.thumbnail}
-                    alt={demo.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" />
-                  
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-violet-tech/20 backdrop-blur-md border border-violet-tech/50 flex items-center justify-center group-hover:bg-violet-tech group-hover:scale-110 transition-all duration-500 shadow-xl shadow-violet-tech/20">
-                      <Play className="w-6 h-6 text-white fill-white ml-1" />
+                <button
+                  type="button"
+                  onClick={() => handleVideoClick(demo)}
+                  className="group relative w-full text-left rounded-xl overflow-hidden border border-violet-tech/25 hover:border-violet-tech/70 transition-all duration-300 hover:shadow-[0_0_40px_rgba(123,46,255,0.25)]"
+                >
+                  <div className="relative aspect-[16/10] bg-dark-base">
+                    <video
+                      src={demo.videoUrl}
+                      poster={demo.thumbnail}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${demo.accent} opacity-40 group-hover:opacity-60 transition-opacity`}
+                    />
+
+                    <div className="absolute inset-0 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
+                      <div className="w-12 h-12 rounded-lg border border-violet-tech/50 bg-violet-tech/25 backdrop-blur-sm flex items-center justify-center group-hover:bg-violet-tech/50 transition-colors">
+                        <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                      </div>
+                    </div>
+
+                    <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
+                  </div>
+
+                  <div className="relative p-5 bg-dark-elevated/90 border-t border-violet-tech/20">
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <div>
+                        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
+                          {demo.product}
+                        </p>
+                        <h3 className="font-display font-extrabold text-lg text-foreground group-hover:text-violet-accent transition-colors">
+                          {demo.game}
+                        </h3>
+                      </div>
+                      <span className="inline-flex items-center gap-1 text-xs font-display font-semibold tracking-wider text-violet-tech group-hover:translate-x-0.5 transition-transform">
+                        WATCH
+                        <Play className="w-3.5 h-3.5 fill-current" />
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {demo.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-display font-semibold tracking-wide text-violet-accent border border-violet-tech/45 bg-violet-tech/15 shadow-[0_0_12px_rgba(123,46,255,0.18)]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
-
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="px-2 py-1 rounded bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold tracking-widest uppercase text-white">
-                      {demo.game}
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <span className="px-2 py-1 rounded bg-violet-tech text-[10px] font-bold tracking-widest uppercase text-white shadow-lg shadow-violet-tech/40">
-                      {demo.badge}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-2 mb-3">
-                    <demo.icon className="w-4 h-4 text-violet-tech" />
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-violet-accent">
-                      {demo.product}
-                    </span>
-                  </div>
-                  <h3 className="font-display font-extrabold text-lg text-foreground mb-2 group-hover:text-violet-tech transition-colors duration-300">
-                    {demo.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
-                    {demo.description}
-                  </p>
-                </div>
+                </button>
               </motion.div>
             ))}
           </div>
