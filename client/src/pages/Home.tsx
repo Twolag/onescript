@@ -139,6 +139,21 @@ const games: GameCard[] = [
 export default function Home() {
   return (
     <div className="overflow-hidden">
+      {/* Fixed neon scroll hint */}
+      <a
+        href="#support"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1 px-4 py-3 rounded-xl border border-violet-tech/60 bg-dark-base/80 backdrop-blur-md shadow-[0_0_30px_rgba(123,46,255,0.45)] hover:border-violet-tech hover:shadow-[0_0_40px_rgba(123,46,255,0.7)] transition-all"
+        aria-label="Scroll down"
+      >
+        <span className="text-[10px] font-display font-bold tracking-[0.22em] uppercase text-violet-accent">
+          Scroll
+        </span>
+        <span className="flex flex-col items-center -space-y-3 text-violet-tech">
+          <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,1)]" />
+          <ChevronDown className="w-8 h-8 opacity-50 animate-neon-bounce [animation-delay:160ms]" />
+        </span>
+      </a>
+
       {/* ═══════════════ GAMES FIRST — Dominate with Fusion IA ═══════════════ */}
       <section className="relative pt-10 pb-16 lg:pt-14 lg:pb-20">
         <div className="relative container">
@@ -155,21 +170,21 @@ export default function Home() {
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
               Dominate with <span className="text-violet-tech neon-text">Fusion IA</span>
             </h1>
-            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8">
               AI Aimbot for every title — one checkout, plans from 15 €.
             </p>
 
             <a
               href="#games-grid"
-              className="mt-8 inline-flex flex-col items-center gap-1 text-violet-accent hover:text-violet-tech transition-colors group"
+              className="inline-flex flex-col items-center gap-2 px-5 py-3 rounded-xl border border-violet-tech/50 bg-violet-tech/10 text-violet-accent hover:bg-violet-tech/20 hover:border-violet-tech hover:text-violet-tech transition-all shadow-[0_0_20px_rgba(123,46,255,0.25)]"
               aria-label="Scroll to games"
             >
-              <span className="text-[10px] font-display font-semibold tracking-[0.25em] uppercase opacity-80">
+              <span className="text-xs font-display font-bold tracking-[0.22em] uppercase">
                 Explore games
               </span>
-              <span className="relative flex flex-col items-center -space-y-2">
-                <ChevronDown className="w-6 h-6 animate-neon-bounce drop-shadow-[0_0_8px_rgba(123,46,255,0.8)]" />
-                <ChevronDown className="w-6 h-6 opacity-50 animate-neon-bounce [animation-delay:150ms] drop-shadow-[0_0_8px_rgba(123,46,255,0.5)]" />
+              <span className="flex flex-col items-center -space-y-3">
+                <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,0.95)]" />
+                <ChevronDown className="w-8 h-8 opacity-55 animate-neon-bounce [animation-delay:150ms]" />
               </span>
             </a>
           </motion.div>
@@ -283,15 +298,15 @@ export default function Home() {
 
             <a
               href="#support"
-              className="inline-flex flex-col items-center gap-1 text-violet-accent hover:text-violet-tech transition-colors"
+              className="inline-flex flex-col items-center gap-2 px-5 py-3 rounded-xl border border-violet-tech/50 bg-violet-tech/10 text-violet-accent hover:bg-violet-tech/20 hover:border-violet-tech transition-all shadow-[0_0_20px_rgba(123,46,255,0.25)]"
               aria-label="Scroll to support"
             >
-              <span className="text-[10px] font-display font-semibold tracking-[0.25em] uppercase opacity-80">
+              <span className="text-xs font-display font-bold tracking-[0.22em] uppercase">
                 Scroll down
               </span>
-              <span className="relative flex flex-col items-center -space-y-2">
-                <ChevronDown className="w-7 h-7 animate-neon-bounce drop-shadow-[0_0_10px_rgba(123,46,255,0.9)]" />
-                <ChevronDown className="w-7 h-7 opacity-45 animate-neon-bounce [animation-delay:180ms] drop-shadow-[0_0_8px_rgba(80,180,255,0.6)]" />
+              <span className="flex flex-col items-center -space-y-3">
+                <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,0.95)]" />
+                <ChevronDown className="w-8 h-8 opacity-55 animate-neon-bounce [animation-delay:180ms]" />
               </span>
             </a>
           </motion.div>
