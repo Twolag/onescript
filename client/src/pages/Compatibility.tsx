@@ -64,6 +64,10 @@ const gamingPlatformsData = [
   { name: "Call of Duty", status: "recommended", note: "Available now — full support" },
   { name: "The Finals", status: "recommended", note: "Available now — full support" },
   { name: "Rainbow Six Siege", status: "recommended", note: "Available now — full support" },
+  { name: "Rust", status: "recommended", note: "Available now — full support" },
+  { name: "Arc Raiders", status: "recommended", note: "Available now — full support" },
+  { name: "Destiny", status: "recommended", note: "Available now — full support" },
+  { name: "Delta Force", status: "recommended", note: "Available now — full support" },
   { name: "Other platforms", status: "limited", note: "Under development — coming soon" },
 ];
 

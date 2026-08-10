@@ -137,6 +137,12 @@ const GAME_LABELS: Record<string, string> = {
   "rainbow-six": "Rainbow Six Siege",
   r6: "Rainbow Six Siege",
   siege: "Rainbow Six Siege",
+  rust: "Rust",
+  "arc-raiders": "Arc Raiders",
+  "arc-raider": "Arc Raiders",
+  destiny: "Destiny",
+  "destiny-2": "Destiny",
+  "delta-force": "Delta Force",
   universal: "Universal",
 };
 

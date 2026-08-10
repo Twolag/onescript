@@ -158,6 +158,42 @@ const games: GameCard[] = [
     logoText: "R6 SIEGE",
     tags: [...FULL_INPUT_TAGS],
   },
+  {
+    id: "rust",
+    name: "Rust",
+    href: "/purchase?product=ai-engine&game=rust",
+    logo: "/images/games/rust.svg",
+    accent: "from-orange-600/30 via-transparent to-violet-tech/25",
+    logoText: "RUST",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "arc-raiders",
+    name: "Arc Raiders",
+    href: "/purchase?product=ai-engine&game=arc-raiders",
+    logo: "/images/games/arc-raiders.svg",
+    accent: "from-sky-400/30 via-transparent to-violet-tech/30",
+    logoText: "ARC RAIDERS",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "destiny",
+    name: "Destiny",
+    href: "/purchase?product=ai-engine&game=destiny",
+    logo: "/images/games/destiny.svg",
+    accent: "from-blue-400/30 via-transparent to-violet-tech/30",
+    logoText: "DESTINY",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "delta-force",
+    name: "Delta Force",
+    href: "/purchase?product=ai-engine&game=delta-force",
+    logo: "/images/games/delta-force.svg",
+    accent: "from-emerald-400/25 via-transparent to-violet-tech/30",
+    logoText: "DELTA FORCE",
+    tags: [...FULL_INPUT_TAGS],
+  },
 ];
 
 export default function Home() {

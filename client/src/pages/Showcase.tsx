@@ -221,6 +221,30 @@ export default function Showcase() {
       icon: Crosshair,
       tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
     },
+    {
+      name: "Rust",
+      href: "/purchase?product=ai-engine&game=rust",
+      icon: Target,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Arc Raiders",
+      href: "/purchase?product=ai-engine&game=arc-raiders",
+      icon: Zap,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Destiny",
+      href: "/purchase?product=ai-engine&game=destiny",
+      icon: Crosshair,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
+    {
+      name: "Delta Force",
+      href: "/purchase?product=ai-engine&game=delta-force",
+      icon: Gamepad2,
+      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    },
   ];
 
   return (
