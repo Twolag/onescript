@@ -383,7 +383,7 @@ export default function Purchase() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark-base/80 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-4 left-6">
-                      <h3 className="text-xl font-display font-bold text-white neon-text">FUSION IA V8.3</h3>
+                      <h3 className="text-xl font-display font-bold text-white neon-text">FUSION IA</h3>
                       <p className="text-xs text-violet-accent font-semibold tracking-widest uppercase">Visual Processing Engine</p>
                     </div>
                   </div>
