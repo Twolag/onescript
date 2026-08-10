@@ -83,13 +83,13 @@ export default function NetworkBackground() {
           const dist = Math.hypot(dx, dy);
           if (dist > LINK_DIST) continue;
 
-          const alpha = (1 - dist / LINK_DIST) * 0.45;
+          const alpha = (1 - dist / LINK_DIST) * 0.7;
           const hue = (a.hue + b.hue) / 2;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `hsla(${hue}, 90%, 65%, ${alpha})`;
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = `hsla(${hue}, 95%, 68%, ${alpha})`;
+          ctx.lineWidth = 1.15;
           ctx.stroke();
         }
       }
