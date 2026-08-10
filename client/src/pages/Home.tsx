@@ -81,6 +81,15 @@ const games: GameCard[] = [
     tags: [...FULL_INPUT_TAGS],
   },
   {
+    id: "splitgate",
+    name: "Splitgate",
+    href: "/purchase?product=ai-engine&game=splitgate",
+    video: GAME_VIDEOS.splitgate,
+    accent: "from-sky-400/25 via-transparent to-violet-tech/25",
+    logoText: "SPLITGATE",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
     id: "overwatch",
     name: "Overwatch",
     href: "/purchase?product=ai-engine&game=overwatch",
@@ -105,15 +114,6 @@ const games: GameCard[] = [
     logo: "/images/games/the-finals.svg",
     accent: "from-yellow-400/20 via-transparent to-violet-tech/25",
     logoText: "THE FINALS",
-    tags: [...FULL_INPUT_TAGS],
-  },
-  {
-    id: "splitgate",
-    name: "Splitgate",
-    href: "/purchase?product=ai-engine&game=splitgate",
-    video: GAME_VIDEOS.splitgate,
-    accent: "from-sky-400/25 via-transparent to-violet-tech/25",
-    logoText: "SPLITGATE",
     tags: [...FULL_INPUT_TAGS],
   },
   {
