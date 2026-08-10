@@ -204,8 +204,8 @@ export default function Home() {
                         <ChevronRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
-                    <p className="mt-2 text-xs text-muted-foreground">
-                      From 15 € · Keyboard/Mouse &amp; Controller
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                      From 15 € · Clavier / Souris &amp; Manette · Indétectable · Optimisé
                     </p>
                   </div>
                 </Link>
