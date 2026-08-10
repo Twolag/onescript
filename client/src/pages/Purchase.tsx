@@ -377,16 +377,37 @@ export default function Purchase() {
               {/* Product Selection */}
               <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
                 {(productId === "ai-engine" || productId === "jitter-script") && (
-                  <div className="mb-8 p-5 rounded-lg bg-red-500/10 border border-red-500/30">
-                    <div className="flex items-center gap-3 mb-2">
-                      <AlertCircle className="w-5 h-5 text-red-500" />
-                      <h3 className="text-sm font-bold text-red-400 tracking-wider uppercase">Mandatory Requirement</h3>
+                  <div className="mb-8 space-y-4">
+                    <div className="p-5 rounded-lg bg-emerald-900/20 border border-emerald-500/35">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Keyboard className="w-5 h-5 text-emerald-400" />
+                        <Gamepad2 className="w-5 h-5 text-emerald-400" />
+                        <h3 className="text-sm font-bold text-emerald-400 tracking-wider uppercase">
+                          Full Input Compatibility
+                        </h3>
+                      </div>
+                      <p className="text-sm text-emerald-100/90 leading-relaxed">
+                        Fusion AI is now fully compatible with <strong>Keyboard &amp; Mouse</strong> and{" "}
+                        <strong>Controller</strong> (Xbox, PS5, Gamesir, etc.) thanks to the{" "}
+                        <strong>Waveshare RP2350A</strong>.
+                      </p>
                     </div>
-                    <p className="text-sm text-red-200/80 leading-relaxed">
-                      For Apex Legends, you <span className="text-red-400 font-bold underline">MUST</span> use the <strong>STEAM</strong> version. Fortnite and other games are also supported. The EA App (Origin) version of Apex is <strong>NOT supported</strong>. 
-                      <br /><br />
-                      <strong className="text-red-400 underline">IMPORTANT:</strong> The <strong>Waveshare RP2350A USB Mini Development Board</strong> is strictly <strong>MANDATORY</strong> to use Fusion IA.
-                    </p>
+                    <div className="p-5 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                      <div className="flex items-center gap-3 mb-2">
+                        <AlertCircle className="w-5 h-5 text-amber-400" />
+                        <h3 className="text-sm font-bold text-amber-400 tracking-wider uppercase">
+                          Hardware &amp; Platform Notes
+                        </h3>
+                      </div>
+                      <p className="text-sm text-amber-100/85 leading-relaxed">
+                        The <strong>Waveshare RP2350A USB Mini Development Board</strong> is required to use Fusion AI.
+                        {(!selectedGame || selectedGame === "Apex Legends") && (
+                          <>
+                            {" "}For Apex Legends, use the <strong>Steam</strong> version only — the EA App (Origin) version is not supported.
+                          </>
+                        )}
+                      </p>
+                    </div>
                   </div>
                 )}
                 
@@ -645,26 +666,6 @@ export default function Purchase() {
                     </div>
                   </div>
 
-                  {/* Input Compatibility — Keyboard/Mouse + Controller via RP2350A */}
-                  {(productId === "jitter-script" || productId === "ai-engine") && (
-                    <div className="pt-4 border-t border-border/30">
-                      <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">Input Compatibility</h3>
-                      <div className="p-4 rounded-lg bg-emerald-900/20 border border-emerald-500/30">
-                        <div className="flex items-start gap-3">
-                          <div className="flex items-center gap-2 shrink-0 mt-0.5">
-                            <Keyboard className="w-4 h-4 text-emerald-400" />
-                            <Gamepad2 className="w-4 h-4 text-emerald-400" />
-                          </div>
-                          <p className="text-sm text-emerald-100/90 leading-relaxed">
-                            <strong className="text-emerald-400">Full compatibility confirmed:</strong> Fusion AI now supports{" "}
-                            <strong>Keyboard &amp; Mouse</strong> and <strong>Controller</strong> (Xbox, PS5, Gamesir, etc.)
-                            thanks to the <strong>Waveshare RP2350A</strong>. Choose whichever input you prefer — both are fully supported.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
                   {/* Self-Setup Confirmation Checkbox */}
                   {isSelfSetupOption && (
                     <div className="pt-4 border-t border-border/30">
@@ -708,7 +709,7 @@ export default function Purchase() {
                         />
                       </div>
                       <label htmlFor="hardware-check" className="text-sm text-amber-100 font-medium leading-relaxed cursor-pointer select-none">
-                        I confirm that my PC meets all the <strong>hardware requirements</strong> (NVIDIA RTX GPU, etc.) and that I have <strong>Steam</strong> installed for Apex Legends. I understand that no refunds will be issued for hardware incompatibility.
+                        I confirm that my PC meets all the <strong>hardware requirements</strong> (NVIDIA / AMD GPU, Waveshare RP2350A) and, if playing Apex Legends, that I use the <strong>Steam</strong> version. I understand that no refunds will be issued for hardware incompatibility.
                       </label>
                     </div>
                   </div>
