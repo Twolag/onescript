@@ -32,10 +32,11 @@ const fadeUp = {
 
 /** Game card demo clips (autoplay loops) */
 const GAME_VIDEOS = {
-  fortnite: "/videos/fortnite-clip.mp4",
+  fortnite: "/videos/fortnite-clip-2.mp4",
   apex:
     "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
   splitgate: "/videos/splitgate-clip.mp4",
+  overwatch: "/videos/overwatch-clip.mp4",
 } as const;
 
 interface GameCard {
@@ -107,6 +108,7 @@ const games: GameCard[] = [
     id: "overwatch",
     name: "Overwatch",
     href: "/purchase?product=ai-engine&game=overwatch",
+    video: GAME_VIDEOS.overwatch,
     logo: "/images/games/overwatch.svg",
     accent: "from-orange-500/25 via-transparent to-violet-tech/25",
     logoText: "OVERWATCH",
@@ -284,7 +286,7 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
               <Zap className="w-3 h-3" />
-              FUSION AI V8.1 — MULTI-GAME SUPPORT
+              FUSION AI — MULTI-GAME SUPPORT
             </div>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
               Dominate with <span className="text-violet-tech neon-text">Fusion IA</span>

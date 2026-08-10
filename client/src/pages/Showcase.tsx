@@ -33,12 +33,12 @@ interface VideoDemo {
 const videoDemos: VideoDemo[] = [
   {
     id: "fusion-ai-fortnite",
-    title: "FUSION IA V8.1 — Fortnite",
+    title: "FUSION IA — Fortnite",
     game: "Fortnite",
-    product: "FUSION IA V8.1",
-    description: "Exclusive demonstration of FUSION IA V8.1 in Fortnite. Ultra-precise tracking and zero input lag.",
-    thumbnail: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/LbQIMyJSKwpOhWSA.jpg",
-    videoUrl: "/videos/fortnite-clip.mp4",
+    product: "FUSION IA",
+    description: "Exclusive demonstration of FUSION IA in Fortnite. Ultra-precise tracking and zero input lag.",
+    thumbnail: "/images/fortnite-thumb.jpg",
+    videoUrl: "/videos/fortnite-clip-2.mp4",
     icon: Cpu,
     badge: "FORTNITE",
     accent: "from-violet-tech/40 via-transparent to-cyan-500/20",
@@ -46,15 +46,41 @@ const videoDemos: VideoDemo[] = [
   },
   {
     id: "fusion-ai-apex",
-    title: "FUSION IA V8.1 — Apex Legends",
+    title: "FUSION IA — Apex Legends",
     game: "Apex Legends",
-    product: "FUSION IA V8.1",
-    description: "FUSION IA V8.1 performance showcase on Apex Legends. Adaptive AI engine for high-speed combat.",
+    product: "FUSION IA",
+    description: "FUSION IA performance showcase on Apex Legends. Adaptive AI engine for high-speed combat.",
     thumbnail: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/spMRlfTuNpsOynMw.png",
     videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
     icon: Cpu,
     badge: "APEX",
     accent: "from-red-500/30 via-transparent to-violet-tech/30",
+    tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+  },
+  {
+    id: "fusion-ai-overwatch",
+    title: "FUSION IA — Overwatch",
+    game: "Overwatch",
+    product: "FUSION IA",
+    description: "FUSION IA on Overwatch — keyboard & mouse optimized tracking for competitive play.",
+    thumbnail: "/images/overwatch-thumb.jpg",
+    videoUrl: "/videos/overwatch-clip.mp4",
+    icon: Swords,
+    badge: "OVERWATCH",
+    accent: "from-orange-500/25 via-transparent to-violet-tech/25",
+    tags: ["Keyboard / Mouse", "Undetectable", "Optimized"],
+  },
+  {
+    id: "fusion-ai-splitgate",
+    title: "FUSION IA — Splitgate",
+    game: "Splitgate",
+    product: "FUSION IA",
+    description: "Portal-paced combat with FUSION IA on Splitgate. Smooth tracking through high-mobility fights.",
+    thumbnail: "/images/splitgate-thumb.jpg",
+    videoUrl: "/videos/splitgate-clip.mp4",
+    icon: Zap,
+    badge: "SPLITGATE",
+    accent: "from-sky-400/25 via-transparent to-violet-tech/25",
     tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
   },
   {
@@ -281,7 +307,7 @@ export default function Showcase() {
               See <span className="text-violet-tech">OneScript</span> in Action
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Exclusive gameplay demonstrations of FUSION IA V8.1 and premium add-ons.
+              Exclusive gameplay demonstrations of FUSION IA and premium add-ons.
             </p>
           </motion.div>
         </div>
