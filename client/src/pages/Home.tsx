@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import {
   Zap,
   ChevronRight,
+  ChevronDown,
   Shield,
   Headphones,
   TrendingUp,
@@ -24,12 +25,13 @@ const fadeUp = {
   }),
 };
 
-/** Advanced AI Weight demo clips (autoplay loops on game cards) */
-const ADVANCED_WEIGHT_VIDEOS = {
+/** Game card demo clips (autoplay loops) */
+const GAME_VIDEOS = {
   fortnite:
     "https://files.manuscdn.com/user_upload_by_module/session_file/310519663409660372/vmTTDTSBoGUuraRB.mp4",
   apex:
     "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
+  splitgate: "/videos/splitgate-clip.mp4",
 } as const;
 
 interface GameCard {
@@ -64,7 +66,7 @@ const games: GameCard[] = [
     id: "fortnite",
     name: "Fortnite",
     href: "/purchase?product=ai-engine&game=fortnite",
-    video: ADVANCED_WEIGHT_VIDEOS.fortnite,
+    video: GAME_VIDEOS.fortnite,
     accent: "from-violet-tech/40 via-transparent to-cyan-500/20",
     logoText: "FORTNITE",
     tags: [...FULL_INPUT_TAGS],
@@ -73,7 +75,7 @@ const games: GameCard[] = [
     id: "apex",
     name: "Apex Legends",
     href: "/purchase?product=ai-engine&game=apex",
-    video: ADVANCED_WEIGHT_VIDEOS.apex,
+    video: GAME_VIDEOS.apex,
     accent: "from-red-500/30 via-transparent to-violet-tech/30",
     logoText: "APEX",
     tags: [...FULL_INPUT_TAGS],
@@ -109,7 +111,7 @@ const games: GameCard[] = [
     id: "splitgate",
     name: "Splitgate",
     href: "/purchase?product=ai-engine&game=splitgate",
-    logo: "/images/games/splitgate.svg",
+    video: GAME_VIDEOS.splitgate,
     accent: "from-sky-400/25 via-transparent to-violet-tech/25",
     logoText: "SPLITGATE",
     tags: [...FULL_INPUT_TAGS],
@@ -156,9 +158,23 @@ export default function Home() {
             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
               AI Aimbot for every title — one checkout, plans from 15 €.
             </p>
+
+            <a
+              href="#games-grid"
+              className="mt-8 inline-flex flex-col items-center gap-1 text-violet-accent hover:text-violet-tech transition-colors group"
+              aria-label="Scroll to games"
+            >
+              <span className="text-[10px] font-display font-semibold tracking-[0.25em] uppercase opacity-80">
+                Explore games
+              </span>
+              <span className="relative flex flex-col items-center -space-y-2">
+                <ChevronDown className="w-6 h-6 animate-neon-bounce drop-shadow-[0_0_8px_rgba(123,46,255,0.8)]" />
+                <ChevronDown className="w-6 h-6 opacity-50 animate-neon-bounce [animation-delay:150ms] drop-shadow-[0_0_8px_rgba(123,46,255,0.5)]" />
+              </span>
+            </a>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+          <div id="games-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 scroll-mt-24">
             {games.map((game, i) => (
               <motion.div
                 key={game.id}
@@ -248,27 +264,43 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
+            className="mt-10 flex flex-col items-center gap-6"
           >
-            <span className="inline-flex items-center gap-2">
-              <Keyboard className="w-4 h-4 text-violet-tech" />
-              Keyboard &amp; Mouse
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <Gamepad2 className="w-4 h-4 text-violet-tech" />
-              Controller
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <Zap className="w-4 h-4 text-violet-tech" />
-              Waveshare RP2350A
-            </span>
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-2">
+                <Keyboard className="w-4 h-4 text-violet-tech" />
+                Keyboard &amp; Mouse
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Gamepad2 className="w-4 h-4 text-violet-tech" />
+                Controller
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Zap className="w-4 h-4 text-violet-tech" />
+                Waveshare RP2350A
+              </span>
+            </div>
+
+            <a
+              href="#support"
+              className="inline-flex flex-col items-center gap-1 text-violet-accent hover:text-violet-tech transition-colors"
+              aria-label="Scroll to support"
+            >
+              <span className="text-[10px] font-display font-semibold tracking-[0.25em] uppercase opacity-80">
+                Scroll down
+              </span>
+              <span className="relative flex flex-col items-center -space-y-2">
+                <ChevronDown className="w-7 h-7 animate-neon-bounce drop-shadow-[0_0_10px_rgba(123,46,255,0.9)]" />
+                <ChevronDown className="w-7 h-7 opacity-45 animate-neon-bounce [animation-delay:180ms] drop-shadow-[0_0_8px_rgba(80,180,255,0.6)]" />
+              </span>
+            </a>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/30 to-transparent" />
       </section>
 
       {/* ═══════════════ SUPPORT CTA ═══════════════ */}
-      <section className="relative py-20 lg:py-28">
+      <section id="support" className="relative py-20 lg:py-28 scroll-mt-20">
         <div className="relative container">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
             <motion.div

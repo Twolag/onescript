@@ -262,4 +262,18 @@
   .font-body {
     font-family: var(--font-body);
   }
+  .animate-neon-bounce {
+    animation: neon-bounce 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes neon-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
 }
