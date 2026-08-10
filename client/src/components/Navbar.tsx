@@ -184,6 +184,16 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+              <a
+                href={DISCORD_INVITE}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-sm font-body font-medium tracking-wide rounded-md text-[#5865F2] hover:bg-[#5865F2]/10 transition-colors"
+              >
+                <DiscordIcon className="w-5 h-5" />
+                Join Discord
+              </a>
               <div className="px-4 py-3 text-sm font-display font-semibold tracking-wider text-violet-tech">
                 BUY NOW
               </div>
