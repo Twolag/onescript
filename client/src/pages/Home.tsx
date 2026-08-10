@@ -2,17 +2,22 @@
  * Home — Neon Circuit Design
  * First viewport: Dominate with Fusion IA + games grid
  */
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
+import { useEffect, useState } from "react";
 import {
   Zap,
   ChevronRight,
   ChevronDown,
+  ChevronUp,
   Shield,
   Headphones,
   TrendingUp,
   Keyboard,
   Gamepad2,
+  Play,
+  X,
+  Globe,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -42,8 +47,8 @@ interface GameCard {
   logo?: string;
   accent: string;
   logoText: string;
-  /** Input + feature tags shown under the card */
   tags: string[];
+  featured?: boolean;
 }
 
 const FULL_INPUT_TAGS = [
@@ -62,6 +67,16 @@ const KEYBOARD_ONLY_TAGS = [
 ] as const;
 
 const games: GameCard[] = [
+  {
+    id: "universal",
+    name: "Universal",
+    href: "/purchase?product=ai-engine&game=universal",
+    logo: "/images/games/universal.svg",
+    accent: "from-cyan-400/30 via-violet-tech/20 to-violet-accent/30",
+    logoText: "UNIVERSAL",
+    tags: [...FULL_INPUT_TAGS, "All Games"],
+    featured: true,
+  },
   {
     id: "fortnite",
     name: "Fortnite",
@@ -137,25 +152,67 @@ const games: GameCard[] = [
 ];
 
 export default function Home() {
+  const [atBottom, setAtBottom] = useState(false);
+  const [preview, setPreview] = useState<GameCard | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrolled = window.scrollY + window.innerHeight;
+      const threshold = document.documentElement.scrollHeight - 180;
+      setAtBottom(scrolled >= threshold);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!preview) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreview(null);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [preview]);
+
   return (
     <div className="overflow-hidden">
-      {/* Fixed neon scroll hint */}
+      {/* Fixed neon scroll hint — flips to Scroll Up near bottom */}
       <a
-        href="#support"
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1 px-4 py-3 rounded-xl border border-violet-tech/60 bg-dark-base/80 backdrop-blur-md shadow-[0_0_30px_rgba(123,46,255,0.45)] hover:border-violet-tech hover:shadow-[0_0_40px_rgba(123,46,255,0.7)] transition-all"
-        aria-label="Scroll down"
+        href={atBottom ? "#top" : "#support"}
+        onClick={(e) => {
+          if (atBottom) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1 px-4 py-3 rounded-xl border border-violet-tech/60 bg-dark-base/85 backdrop-blur-md shadow-[0_0_30px_rgba(123,46,255,0.45)] hover:border-violet-tech hover:shadow-[0_0_40px_rgba(123,46,255,0.7)] transition-all"
+        aria-label={atBottom ? "Scroll up" : "Scroll down"}
       >
         <span className="text-[10px] font-display font-bold tracking-[0.22em] uppercase text-violet-accent">
-          Scroll
+          {atBottom ? "Scroll up" : "Scroll down"}
         </span>
         <span className="flex flex-col items-center -space-y-3 text-violet-tech">
-          <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,1)]" />
-          <ChevronDown className="w-8 h-8 opacity-50 animate-neon-bounce [animation-delay:160ms]" />
+          {atBottom ? (
+            <>
+              <ChevronUp className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,1)]" />
+              <ChevronUp className="w-8 h-8 opacity-50 animate-neon-bounce [animation-delay:160ms]" />
+            </>
+          ) : (
+            <>
+              <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,1)]" />
+              <ChevronDown className="w-8 h-8 opacity-50 animate-neon-bounce [animation-delay:160ms]" />
+            </>
+          )}
         </span>
       </a>
 
       {/* ═══════════════ GAMES FIRST — Dominate with Fusion IA ═══════════════ */}
-      <section className="relative pt-10 pb-16 lg:pt-14 lg:pb-20">
+      <section id="top" className="relative pt-10 pb-16 lg:pt-14 lg:pb-20">
         <div className="relative container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -198,11 +255,21 @@ export default function Home() {
                 initial="hidden"
                 animate="visible"
               >
-                <Link
-                  href={game.href}
-                  className="group relative block rounded-xl overflow-hidden border border-violet-tech/25 hover:border-violet-tech/70 transition-all duration-300 hover:shadow-[0_0_40px_rgba(123,46,255,0.25)]"
+                <div
+                  className={`group relative block rounded-xl overflow-hidden border transition-all duration-300 hover:shadow-[0_0_40px_rgba(123,46,255,0.25)] ${
+                    game.featured
+                      ? "border-cyan-400/50 hover:border-cyan-300/80 shadow-[0_0_28px_rgba(34,211,238,0.2)]"
+                      : "border-violet-tech/25 hover:border-violet-tech/70"
+                  }`}
                 >
-                  <div className="relative aspect-[16/10] bg-dark-base">
+                  <button
+                    type="button"
+                    className="relative aspect-[16/10] bg-dark-base w-full text-left cursor-pointer"
+                    onClick={() => {
+                      if (game.video) setPreview(game);
+                    }}
+                    aria-label={game.video ? `Watch ${game.name} clip` : game.name}
+                  >
                     {game.video ? (
                       <video
                         src={game.video}
@@ -210,7 +277,7 @@ export default function Home() {
                         loop
                         muted
                         playsInline
-                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-dark-elevated to-dark-base">
@@ -218,6 +285,9 @@ export default function Home() {
                           className={`absolute inset-0 bg-gradient-to-br ${game.accent}`}
                         />
                         <div className="relative z-10 w-full px-6 flex flex-col items-center justify-center">
+                          {game.featured && (
+                            <Globe className="w-8 h-8 text-cyan-300 mb-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+                          )}
                           {game.logo ? (
                             <img
                               src={game.logo}
@@ -233,31 +303,41 @@ export default function Home() {
                       </div>
                     )}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent pointer-events-none" />
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${game.accent} opacity-40 group-hover:opacity-60 transition-opacity`}
+                      className={`absolute inset-0 bg-gradient-to-br ${game.accent} opacity-40 group-hover:opacity-60 transition-opacity pointer-events-none`}
                     />
 
-                    <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
-                  </div>
+                    {game.video && (
+                      <div className="absolute inset-0 flex items-center justify-center opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none">
+                        <div className="w-12 h-12 rounded-lg border border-violet-tech/50 bg-violet-tech/30 backdrop-blur-sm flex items-center justify-center">
+                          <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  </button>
 
                   <div className="relative p-5 bg-dark-elevated/90 border-t border-violet-tech/20">
                     <div className="flex items-center justify-between gap-3 mb-3">
                       <div>
                         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
-                          AI Aimbot
+                          {game.featured ? "Works on almost all games" : "AI Aimbot"}
                         </p>
                         <h2 className="font-display font-extrabold text-lg text-foreground group-hover:text-violet-accent transition-colors">
                           {game.name}
                         </h2>
                       </div>
-                      <span className="inline-flex items-center gap-1 text-xs font-display font-semibold tracking-wider text-violet-tech group-hover:translate-x-0.5 transition-transform">
-                        BUY
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </span>
+                      <Link href={game.href}>
+                        <span className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-md text-sm font-display font-bold tracking-wider text-white bg-cyan-500/90 border border-cyan-300/60 shadow-[0_0_18px_rgba(34,211,238,0.45)] hover:bg-cyan-400 hover:shadow-[0_0_28px_rgba(34,211,238,0.7)] transition-all">
+                          BUY
+                          <ChevronRight className="w-4 h-4" />
+                        </span>
+                      </Link>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {game.tags.map((tag) => (
@@ -270,7 +350,7 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -295,20 +375,6 @@ export default function Home() {
                 Waveshare RP2350A
               </span>
             </div>
-
-            <a
-              href="#support"
-              className="inline-flex flex-col items-center gap-2 px-5 py-3 rounded-xl border border-violet-tech/50 bg-violet-tech/10 text-violet-accent hover:bg-violet-tech/20 hover:border-violet-tech transition-all shadow-[0_0_20px_rgba(123,46,255,0.25)]"
-              aria-label="Scroll to support"
-            >
-              <span className="text-xs font-display font-bold tracking-[0.22em] uppercase">
-                Scroll down
-              </span>
-              <span className="flex flex-col items-center -space-y-3">
-                <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,0.95)]" />
-                <ChevronDown className="w-8 h-8 opacity-55 animate-neon-bounce [animation-delay:180ms]" />
-              </span>
-            </a>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/30 to-transparent" />
@@ -387,6 +453,66 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Fullscreen clip preview */}
+      <AnimatePresence>
+        {preview?.video && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md"
+              onClick={() => setPreview(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 16 }}
+              className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-8"
+              onClick={() => setPreview(null)}
+            >
+              <div
+                className="relative w-full max-w-5xl rounded-xl overflow-hidden border border-violet-tech/40 bg-dark-base shadow-[0_0_50px_rgba(123,46,255,0.35)]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => setPreview(null)}
+                  className="absolute top-3 right-3 z-20 p-2 rounded-lg border border-violet-tech/40 bg-black/60 hover:bg-violet-tech/30 transition-colors"
+                  aria-label="Close preview"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+                <div className="relative w-full aspect-video bg-black">
+                  <video
+                    src={preview.video}
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                  />
+                </div>
+                <div className="p-5 border-t border-violet-tech/20 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
+                      AI Aimbot
+                    </p>
+                    <h3 className="font-display font-extrabold text-xl text-foreground">
+                      {preview.name}
+                    </h3>
+                  </div>
+                  <Link href={preview.href}>
+                    <span className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-sm font-display font-bold tracking-wider text-white bg-cyan-500/90 border border-cyan-300/60 shadow-[0_0_18px_rgba(34,211,238,0.45)] hover:bg-cyan-400 transition-all">
+                      BUY
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="200" viewBox="0 0 480 200">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#7B2EFF" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#A78BFA" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="480" height="200" fill="none"/>
+  <text x="240" y="115" text-anchor="middle" font-family="Orbitron, Arial Black, sans-serif" font-size="42" font-weight="800" letter-spacing="8" fill="url(#g)" filter="url(#glow)">UNIVERSAL</text>
+</svg>
