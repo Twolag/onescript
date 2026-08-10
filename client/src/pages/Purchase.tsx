@@ -738,13 +738,13 @@ export default function Purchase() {
                   >
                     <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-violet-tech via-cyan-400/40 to-violet-accent opacity-60 blur-[1px] group-hover:opacity-100 transition-opacity" />
                     <div className="relative rounded-xl border border-violet-tech/50 bg-dark-base shadow-[0_0_40px_rgba(123,46,255,0.25)] overflow-hidden">
-                      <div className="bg-white">
+                      <div className="px-5 pt-5 pb-2 bg-dark-base">
                         <img
                           src="/images/rp2350a-board.webp"
                           alt="Waveshare RP2350A USB Mini Development Board — required"
-                          className="w-full h-auto object-contain block"
-                          width={994}
-                          height={932}
+                          className="w-full h-auto object-contain block drop-shadow-[0_0_28px_rgba(123,46,255,0.35)]"
+                          width={1004}
+                          height={943}
                           loading="eager"
                           decoding="async"
                         />
