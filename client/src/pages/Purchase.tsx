@@ -736,18 +736,20 @@ export default function Purchase() {
                     animate="visible"
                     className="relative group"
                   >
-                    <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-violet-tech via-cyan-400/50 to-violet-accent opacity-70 blur-[1px] group-hover:opacity-100 transition-opacity" />
-                    <div className="relative rounded-xl overflow-hidden border border-violet-tech/50 bg-dark-base/90 shadow-[0_0_40px_rgba(123,46,255,0.25)]">
-                      <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-violet-tech/80 z-10" />
-                      <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-violet-tech/80 z-10" />
-                      <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-violet-tech/80 z-10" />
-                      <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-violet-tech/80 z-10" />
-                      <img
-                        src="/images/rp2350a-board.webp"
-                        alt="Waveshare RP2350A USB Mini Development Board — required"
-                        className="w-full h-auto object-contain p-4"
-                      />
-                      <div className="px-4 pb-4 -mt-1">
+                    <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-violet-tech via-cyan-400/40 to-violet-accent opacity-60 blur-[1px] group-hover:opacity-100 transition-opacity" />
+                    <div className="relative rounded-xl border border-violet-tech/50 bg-dark-base shadow-[0_0_40px_rgba(123,46,255,0.25)] overflow-hidden">
+                      <div className="bg-white">
+                        <img
+                          src="/images/rp2350a-board.webp"
+                          alt="Waveshare RP2350A USB Mini Development Board — required"
+                          className="w-full h-auto object-contain block"
+                          width={994}
+                          height={932}
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="px-5 py-4 border-t border-violet-tech/30">
                         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
                           Required Hardware
                         </p>
