@@ -99,13 +99,17 @@ export default function Navbar() {
             rel="noopener noreferrer"
             aria-label="Join our Discord"
             title="Join Discord"
-            className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#5865F2] text-white shadow-[0_0_18px_rgba(88,101,242,0.45)] hover:bg-[#4752C4] transition-colors"
-            animate={{ y: [0, -3, 0], rotate: [0, -4, 4, 0] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={{ scale: 1.12 }}
-            whileTap={{ scale: 0.92 }}
+            className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#5865F2] text-white shadow-[0_0_20px_rgba(88,101,242,0.55)] hover:bg-[#4752C4] transition-colors"
+            animate={{
+              y: [0, -5, 0, -2, 0],
+              rotate: [0, -6, 6, -3, 0],
+              scale: [1, 1.06, 1, 1.03, 1],
+            }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            whileHover={{ scale: 1.15, rotate: 0 }}
+            whileTap={{ scale: 0.9 }}
           >
-            <span className="absolute inset-0 rounded-full bg-[#5865F2]/40 animate-ping opacity-30" />
+            <span className="pointer-events-none absolute inset-0 rounded-full bg-[#5865F2] animate-ping opacity-25" />
             <DiscordIcon className="relative w-5 h-5" />
           </motion.a>
 
