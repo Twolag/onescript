@@ -37,7 +37,7 @@ const videoDemos: VideoDemo[] = [
     game: "Fortnite",
     product: "FUSION IA",
     description: "Exclusive demonstration of FUSION IA in Fortnite. Ultra-precise tracking and zero input lag.",
-    thumbnail: "/images/fortnite-thumb.jpg",
+    thumbnail: "/images/fortnite-thumb-old.jpg",
     videoUrl: "/videos/fortnite-clip.mp4",
     icon: Cpu,
     badge: "FORTNITE",
