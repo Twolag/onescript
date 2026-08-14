@@ -66,6 +66,15 @@ const KEYBOARD_ONLY_TAGS = [
   "Optimized",
 ] as const;
 
+/** Warzone / Splitgate: controller works without RP2350 */
+const CONTROLLER_NO_RP_TAGS = [
+  "From 15 €",
+  "Keyboard / Mouse",
+  "Controller — no RP needed",
+  "Undetectable",
+  "Optimized",
+] as const;
+
 const games: GameCard[] = [
   {
     id: "universal",
@@ -102,7 +111,7 @@ const games: GameCard[] = [
     video: GAME_VIDEOS.splitgate,
     accent: "from-sky-400/25 via-transparent to-violet-tech/25",
     logoText: "SPLITGATE",
-    tags: [...FULL_INPUT_TAGS],
+    tags: [...CONTROLLER_NO_RP_TAGS],
   },
   {
     id: "overwatch",
@@ -121,7 +130,7 @@ const games: GameCard[] = [
     logo: "/images/games/warzone.svg",
     accent: "from-amber-500/25 via-transparent to-violet-tech/25",
     logoText: "WARZONE",
-    tags: [...FULL_INPUT_TAGS],
+    tags: [...CONTROLLER_NO_RP_TAGS],
   },
   {
     id: "the-finals",

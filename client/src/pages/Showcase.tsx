@@ -81,7 +81,7 @@ const videoDemos: VideoDemo[] = [
     icon: Zap,
     badge: "SPLITGATE",
     accent: "from-sky-400/25 via-transparent to-violet-tech/25",
-    tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+    tags: ["Keyboard / Mouse", "Controller — no RP needed", "Undetectable", "Optimized"],
   },
   {
     id: "advanced-weight-apex",
@@ -215,7 +215,7 @@ export default function Showcase() {
       name: "Warzone",
       href: "/purchase?product=ai-engine&game=warzone",
       icon: Crosshair,
-      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+      tags: ["Keyboard / Mouse", "Controller — no RP needed", "Undetectable", "Optimized"],
     },
     {
       name: "The Finals",
@@ -227,7 +227,7 @@ export default function Showcase() {
       name: "Splitgate",
       href: "/purchase?product=ai-engine&game=splitgate",
       icon: Zap,
-      tags: ["Keyboard / Mouse", "Controller", "Undetectable", "Optimized"],
+      tags: ["Keyboard / Mouse", "Controller — no RP needed", "Undetectable", "Optimized"],
     },
     {
       name: "CS:GO",
