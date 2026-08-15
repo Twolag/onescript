@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock, Zap, Layers, RefreshCw, Keyboard
+  CreditCard, Clock, Zap, Layers, RefreshCw, Keyboard
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -263,39 +263,6 @@ export default function Purchase() {
       toast.error(e instanceof Error ? e.message : t("purchase.errorGeneric"));
       setStripeLoading(false);
     }
-  };
-
-  const sendDiscordAndEmail = (order: typeof orderCreated, paymentMethod: string) => {
-    if (!order) return;
-    const customerName = `${formData.firstName} ${formData.lastName}`;
-
-    fetch("/api/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        to: formData.email,
-        props: {
-          orderNumber: order.orderNumber, customerName, customerEmail: formData.email,
-          productName: displayProductName, productOption: selectedItem!.label,
-          discordPseudo: formData.discordPseudo, price: order.price,
-          cpu: formData.cpu, gpu: formData.gpu, os: formData.os,
-          inputMethod: formData.controller || "N/A",
-        },
-      }),
-    }).catch(console.error);
-
-    fetch("/api/discord-notify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        orderNumber: order.orderNumber, customerName, email: formData.email,
-        discordPseudo: formData.discordPseudo, productName: displayProductName,
-        optionLabel: selectedItem!.label, price: order.price, paymentMethod,
-        cpu: formData.cpu, gpu: formData.gpu, os: formData.os,
-        inputMethod: formData.controller || "N/A",
-        selfSetupConfirmed: isSelfSetupOption ? "YES (Confirmed)" : "N/A",
-      }),
-    }).catch(console.error);
   };
 
   return (
