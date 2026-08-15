@@ -4,6 +4,7 @@
  */
 import { motion } from "framer-motion";
 import { Star, User, Calendar } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -331,9 +332,109 @@ const reviews: Review[] = [
     content: "First game on (AMD 9070 xt sc) — Amazing performance on the new setup.",
     product: "FUSION AI",
   },
+  {
+    id: "44",
+    author: "SwirL.-_",
+    date: "20/06/2026",
+    rating: 5,
+    title: "Champions — 35 kills, 7343 damage",
+    content: "très bon script et bonne suivie sur l'aim très bien dev je recommandes — Champions avec 35 kills / 2 assists / 44 KO et 7343 damage.",
+    product: "FUSION AI",
+  },
+  {
+    id: "45",
+    author: "NDonFire",
+    date: "21/06/2026",
+    rating: 5,
+    title: "What are you waiting for to try this?",
+    content: "What are you waiting for to try this? — Campeones: 30 kills / 4 assists / 34 KO, 7090 damage.",
+    product: "FUSION AI",
+  },
+  {
+    id: "46",
+    author: "Gyzmou",
+    date: "22/06/2026",
+    rating: 5,
+    title: "random game with best product",
+    content: "random game with best product — 33/6/35 (6999 dmg) et 29/1/34 (7091 dmg) en Apex.",
+    product: "FUSION AI",
+  },
+  {
+    id: "47",
+    author: "rlmaster12344",
+    date: "26/06/2026",
+    rating: 5,
+    title: "best ai on the market",
+    content: "best ai on the market u wont find a better one its insanely strong",
+    product: "FUSION AI",
+  },
+  {
+    id: "48",
+    author: "rlmaster12344",
+    date: "11/07/2026",
+    rating: 5,
+    title: "+rep ai titan weight — better than titan",
+    content: "+rep ai titan weight your gonna save 500+ $ if u dont buy titan this is better then titan and its only 10 euro litterly insane",
+    product: "FUSION AI",
+  },
+  {
+    id: "49",
+    author: "Kuba.Network",
+    date: "17/07/2026",
+    rating: 5,
+    title: "Plat 4 to D4 — 20 kills, 5k damage",
+    content: "the boost took like 6 games he won every game 20 kills 5k damage from plat 4 to d4",
+    product: "FUSION AI",
+  },
+  {
+    id: "50",
+    author: "xivkyn",
+    date: "25/07/2026",
+    rating: 5,
+    title: "incroyable tout simplement en profil legit",
+    content: "incroyable tout simplement en profil legit je fqit des dinguerie jai qcheter plusieur fois et sa a toujours etait un service de qualiter 👍",
+    product: "FUSION AI",
+  },
+  {
+    id: "51",
+    author: "xivkyn",
+    date: "31/07/2026",
+    rating: 5,
+    title: "Marche nickel sur The Finals",
+    content: "Marche nickel sur the final les gars 👌🔥",
+    product: "FUSION AI",
+  },
+  {
+    id: "52",
+    author: "SiKaRiOElMeNoL",
+    date: "01/08/2026",
+    rating: 5,
+    title: "Best ai in the market — 100/10",
+    content: "Best ai in the market guaranteed UI is amazing everything is simple and works like a charm 100/10",
+    product: "FUSION AI",
+  },
+  {
+    id: "53",
+    author: "owblock",
+    date: "07/08/2026",
+    rating: 5,
+    title: "Best ai by far — customer service is insane",
+    content: "Best ai by far, I've used like three ai cheats and this is the best one by far, thank you @TwoLag for helping me set it up too, customer service is insane.",
+    product: "FUSION AI",
+  },
+  {
+    id: "54",
+    author: "xivkyn",
+    date: "09/08/2026",
+    rating: 5,
+    title: "Parfait — service de qualité",
+    content: "Parfait mrc pour le service de qualité et la rapidité de la commande et top 👌",
+    product: "FUSION AI",
+  },
 ];
 
 export default function Reviews() {
+  const { t } = useLanguage();
   return (
     <div>
       {/* Page header */}
@@ -348,13 +449,15 @@ export default function Reviews() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Customer Reviews
+              {t("reviews.eyebrow")}
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              What our <span className="text-violet-tech neon-text">users</span> say
+              {t("reviews.title")}{" "}
+              <span className="text-violet-tech neon-text">{t("reviews.titleAccent")}</span>
+              {t("reviews.titleEnd") ? ` ${t("reviews.titleEnd")}` : ""}
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Discover testimonials and feedback from our satisfied customers.
+              {t("reviews.subtitle")}
             </p>
           </motion.div>
         </div>

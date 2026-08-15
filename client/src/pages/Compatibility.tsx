@@ -12,6 +12,7 @@ import {
   X,
   Minus,
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const COMPAT_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/compatibility-9tPSGgesBF5S5hA6Qermho.webp";
 
@@ -63,6 +64,13 @@ const gamingPlatformsData = [
   { name: "Fortnite", status: "recommended", note: "Available now — full support" },
   { name: "Call of Duty", status: "recommended", note: "Available now — full support" },
   { name: "The Finals", status: "recommended", note: "Available now — full support" },
+  { name: "Rainbow Six Siege", status: "recommended", note: "Available now — full support" },
+  { name: "Rust", status: "recommended", note: "Available now — full support" },
+  { name: "Arc Raiders", status: "recommended", note: "Available now — full support" },
+  { name: "Destiny", status: "recommended", note: "Available now — full support" },
+  { name: "Delta Force", status: "recommended", note: "Available now — full support" },
+  { name: "PUBG", status: "recommended", note: "Available now — full support" },
+  { name: "Battlefield", status: "recommended", note: "Available now — full support" },
   { name: "Other platforms", status: "limited", note: "Under development — coming soon" },
 ];
 
@@ -107,6 +115,7 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default function Compatibility() {
+  const { t } = useLanguage();
   return (
     <div>
       {/* Header */}
@@ -121,15 +130,14 @@ export default function Compatibility() {
               animate="visible"
             >
               <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-                Compatibility
+                {t("compatibility.eyebrow")}
               </span>
               <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-                Is your PC{" "}
-                <span className="text-violet-tech neon-text">ready</span>?
+                {t("compatibility.title")}{" "}
+                <span className="text-violet-tech neon-text">{t("compatibility.titleAccent")}</span>
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Check your hardware compatibility with our tools.
-                NVIDIA & AMD supported for optimal performance.
+                {t("compatibility.subtitle")}
               </p>
             </motion.div>
             <motion.div

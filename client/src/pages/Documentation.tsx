@@ -16,6 +16,7 @@ import {
   AlertTriangle,
   AlertCircle
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -27,6 +28,7 @@ const fadeUp = {
 };
 
 export default function Documentation() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen pt-12 pb-24">
       <div className="container">
@@ -38,13 +40,13 @@ export default function Documentation() {
         >
           <div className="flex items-center gap-3 mb-4">
             <BookOpen className="w-6 h-6 text-violet-tech" />
-            <span className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-tech">Technical Docs</span>
+            <span className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-tech">{t("documentation.eyebrow")}</span>
           </div>
           <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-6">
-            Everything you need to <span className="text-violet-tech">know</span>
+            {t("documentation.title")} <span className="text-violet-tech">{t("documentation.titleAccent")}</span>
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Detailed hardware requirements, installation procedures, and what's new in **FUSION IA V8** with 10x more powerful AI Aimbot.
+            {t("documentation.subtitle")}
           </p>
         </motion.div>
 

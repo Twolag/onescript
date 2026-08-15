@@ -1,26 +1,27 @@
 /**
- * Home — Neon Circuit Design (Industrial Cyberpunk)
- * Sections: Hero, Products, Performance, Pricing, Support
- * Asymmetric layout, circuit lines, neon violet accents
+ * Home — Neon Circuit Design
+ * First viewport: Dominate with Fusion IA + games grid
  */
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
+import { useEffect, useState } from "react";
 import {
   Zap,
-  Cpu,
-  Monitor,
-  Gamepad2,
-  ArrowRight,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   Shield,
-  Clock,
-  TrendingUp,
   Headphones,
-  Check,
-  MessageCircle,
-  Layers,
+  TrendingUp,
+  Keyboard,
+  Gamepad2,
+  X,
+  Globe,
+  Maximize2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -31,435 +32,497 @@ const fadeUp = {
   }),
 };
 
-const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/hero-bg-Bq3mdtincwx5DgcV2mHARK.webp";
-const AI_ENGINE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/ai-engine-6SKTfecoMvNZP2zUzG7RJC.webp";
-const WINDOWS_OPT = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/windows-opt-hbtfPZHCAfaAwuw4Ngcm4n.webp";
-const SCRIPT_TOOLS = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/script-tools-9s4442CUnpqxX9XkT96GRA.webp";
-const V7_VIDEO = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663410292855/EkUnSGkfbgRkUXzg.mp4";
+/** Game card demo clips (autoplay loops) */
+const GAME_VIDEOS = {
+  fortnite: "/videos/fortnite-clip.mp4",
+  apex:
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
+  splitgate: "/videos/splitgate-clip.mp4",
+  overwatch: "/videos/overwatch-clip.mp4",
+} as const;
 
-const products = [
-  {
-    title: "FUSION IA - V8.1",
-    desc: "Revolutionary V8 update! AI Aimbot 10x more powerful with exceptional AMD support (RX 6600 XT+). Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency, and premium interface. The ultimate AI visual processing engine.",
-    icon: Cpu,
-    image: AI_ENGINE,
-    price: "50 €",
-    priceLabel: "license only (PDF guide)",
-    href: "/products",
-  },
-  {
-    title: "Windows Optimization",
-    desc: "System cleanup, removal of unnecessary services, RAM/CPU optimization. Minimum gain: 40-60 FPS. Essential for maximum smoothness with FUSION IA.",
-    icon: Monitor,
-    image: WINDOWS_OPT,
-    price: "20 €",
-    priceLabel: "starting from",
-    href: "/products",
-  },
-  {
-    title: "Jitter Script",
-    desc: "The best anti-recoil Apex Legends, Fortnite and Warzone jitter script on the market. Undetectable, controller only, does not cut aim assist. Perfect for all FPS games.",
-    icon: Gamepad2,
-    image: SCRIPT_TOOLS,
-    price: "2.50 €",
-    priceLabel: "starting from",
-    href: "/products",
-  },
+interface GameCard {
+  id: string;
+  name: string;
+  href: string;
+  video?: string;
+  logo?: string;
+  accent: string;
+  logoText: string;
+  tags: TranslationKey[];
+  featured?: boolean;
+}
+
+const FULL_INPUT_TAGS: TranslationKey[] = [
+  "tags.from15",
+  "tags.keyboardMouse",
+  "tags.controller",
+  "tags.undetectable",
+  "tags.optimized",
 ];
 
-const stats = [
-  { value: "V8.1", unit: "NEW", label: "Architecture" },
-  { value: "NVIDIA", unit: "& AMD", label: "Native Support" },
-  { value: "24/7", unit: "", label: "Support" },
+const KEYBOARD_ONLY_TAGS: TranslationKey[] = [
+  "tags.from15",
+  "tags.keyboardMouse",
+  "tags.undetectable",
+  "tags.optimized",
 ];
 
-const pricingPlans = [
+/** Warzone / Splitgate: controller works without RP2350 */
+const CONTROLLER_NO_RP_TAGS: TranslationKey[] = [
+  "tags.from15",
+  "tags.keyboardMouse",
+  "tags.controllerNoRp",
+  "tags.undetectable",
+  "tags.optimized",
+];
+
+
+const games: GameCard[] = [
   {
-    name: "Windows Optimization",
-    price: "20",
-    period: "starting from",
-    desc: "Simple Windows optimization",
-    features: [
-      "Complete system cleanup",
-      "Removal of unnecessary services",
-      "RAM & CPU optimization",
-      "Input lag reduction",
-    ],
-    popular: false,
-    cta: "CHOOSE THIS PLAN",
+    id: "universal",
+    name: "Universal",
+    href: "/purchase?product=ai-engine&game=universal",
+    logo: "/images/games/universal.svg",
+    accent: "from-cyan-400/30 via-violet-tech/20 to-violet-accent/30",
+    logoText: "UNIVERSAL",
+    tags: [...FULL_INPUT_TAGS, "tags.allGames"],
+    featured: true,
   },
   {
-    name: "AI Aimbot - V8.1 - Standard",
-    price: "50",
-    period: "1 month license",
-    desc: "PDF Installation Guide included - No remote installation support | AMD & NVIDIA Support | STEAM ONLY",
-    features: [
-      "New V8 Redesigned Architecture",
-      "Native AMD & NVIDIA Support",
-      "Apex Legends: STEAM ONLY",
-      "Improved Controller Latency ⚡",
-      "Zero FPS Drops Guarantee",
-      "PDF Setup Guide included",
-      "No installation assistance",
-    ],
-    popular: false,
-    cta: "Choose this plan",
+    id: "fortnite",
+    name: "Fortnite",
+    href: "/purchase?product=ai-engine&game=fortnite",
+    video: GAME_VIDEOS.fortnite,
+    accent: "from-violet-tech/40 via-transparent to-cyan-500/20",
+    logoText: "FORTNITE",
+    tags: [...FULL_INPUT_TAGS],
   },
   {
-    name: "AI Aimbot - V8.1 - Premium",
-    price: "80",
-    period: "1st month + inst.",
-    desc: "Complete remote installation by our team + 1st month included | AMD & NVIDIA Support | STEAM ONLY",
-    features: [
-      "New V8 Redesigned Architecture",
-      "Native AMD & NVIDIA Support",
-      "Apex Legends: STEAM ONLY",
-      "Improved Controller Latency ⚡",
-      "Full Remote Installation",
-      "Renewal: 30 € / month",
-    ],
-    popular: true,
-    cta: "Choose this plan",
+    id: "apex",
+    name: "Apex Legends",
+    href: "/purchase?product=ai-engine&game=apex",
+    video: GAME_VIDEOS.apex,
+    accent: "from-red-500/30 via-transparent to-violet-tech/30",
+    logoText: "APEX",
+    tags: [...FULL_INPUT_TAGS],
   },
   {
-    name: "AI Aimbot - V8.1 - Annual",
-    price: "250",
-    period: "per year",
-    desc: "Annual subscription - Full access to all features for 12 months | AMD & NVIDIA Support",
-    features: [
-      "V8 Full Access",
-      "Native AMD & NVIDIA Support",
-      "Improved Controller Latency ⚡",
-      "Zero FPS Drops Guarantee",
-      "12 months of updates & support",
-      "Priority support",
-    ],
-    popular: true,
-    cta: "Choose this plan",
+    id: "splitgate",
+    name: "Splitgate",
+    href: "/purchase?product=ai-engine&game=splitgate",
+    video: GAME_VIDEOS.splitgate,
+    accent: "from-sky-400/25 via-transparent to-violet-tech/25",
+    logoText: "SPLITGATE",
+    tags: [...CONTROLLER_NO_RP_TAGS],
   },
   {
-    name: "AI Aimbot - V8.1 - Lifetime",
-    price: "450",
-    period: "one-time",
-    desc: "Lifetime access - Permanent license with all future updates included | AMD & NVIDIA Support",
-    features: [
-      "V8 Full Access",
-      "Native AMD & NVIDIA Support",
-      "Improved Controller Latency ⚡",
-      "Zero FPS Drops Guarantee",
-      "Lifetime updates & support",
-      "Priority support",
-    ],
-    popular: false,
-    cta: "Choose this plan",
+    id: "overwatch",
+    name: "Overwatch",
+    href: "/purchase?product=ai-engine&game=overwatch",
+    video: GAME_VIDEOS.overwatch,
+    logo: "/images/games/overwatch.svg",
+    accent: "from-orange-500/25 via-transparent to-violet-tech/25",
+    logoText: "OVERWATCH",
+    tags: [...KEYBOARD_ONLY_TAGS],
   },
   {
-    name: "Jitter Script",
-    price: "2.50",
-    period: "starting from",
-    desc: "Anti-recoil jitter aim script for Apex, Fortnite & Warzone — Controller Only | Keyboard & Mouse not supported",
-    features: [
-      "Undetectable by anti-cheat",
-      "Does not cut aim assist",
-      "Integrated Humanizer function",
-      "Adjustable from the interface",
-      "Controller only",
-    ],
-    popular: false,
-    cta: "CHOOSE THIS PLAN",
+    id: "warzone",
+    name: "Warzone",
+    href: "/purchase?product=ai-engine&game=warzone",
+    logo: "/images/games/warzone.svg",
+    accent: "from-amber-500/25 via-transparent to-violet-tech/25",
+    logoText: "WARZONE",
+    tags: [...CONTROLLER_NO_RP_TAGS],
+  },
+  {
+    id: "the-finals",
+    name: "The Finals",
+    href: "/purchase?product=ai-engine&game=the-finals",
+    logo: "/images/games/the-finals.svg",
+    accent: "from-yellow-400/20 via-transparent to-violet-tech/25",
+    logoText: "THE FINALS",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "csgo",
+    name: "CS:GO",
+    href: "/purchase?product=ai-engine&game=csgo",
+    logo: "/images/games/csgo.svg",
+    accent: "from-amber-500/30 via-transparent to-violet-tech/25",
+    logoText: "CS:GO",
+    tags: [...KEYBOARD_ONLY_TAGS],
+  },
+  {
+    id: "marvel-rivals",
+    name: "Marvel Rivals",
+    href: "/purchase?product=ai-engine&game=marvel-rivals",
+    logo: "/images/games/marvel-rivals.svg",
+    accent: "from-red-500/30 via-transparent to-violet-tech/30",
+    logoText: "MARVEL RIVALS",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "rainbow-six",
+    name: "Rainbow Six Siege",
+    href: "/purchase?product=ai-engine&game=rainbow-six",
+    logo: "/images/games/rainbow-six.svg",
+    accent: "from-yellow-400/25 via-transparent to-violet-tech/30",
+    logoText: "R6 SIEGE",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "rust",
+    name: "Rust",
+    href: "/purchase?product=ai-engine&game=rust",
+    logo: "/images/games/rust.svg",
+    accent: "from-orange-600/30 via-transparent to-violet-tech/25",
+    logoText: "RUST",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "arc-raiders",
+    name: "Arc Raiders",
+    href: "/purchase?product=ai-engine&game=arc-raiders",
+    logo: "/images/games/arc-raiders.svg",
+    accent: "from-sky-400/30 via-transparent to-violet-tech/30",
+    logoText: "ARC RAIDERS",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "destiny",
+    name: "Destiny",
+    href: "/purchase?product=ai-engine&game=destiny",
+    logo: "/images/games/destiny.svg",
+    accent: "from-blue-400/30 via-transparent to-violet-tech/30",
+    logoText: "DESTINY",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "delta-force",
+    name: "Delta Force",
+    href: "/purchase?product=ai-engine&game=delta-force",
+    logo: "/images/games/delta-force.svg",
+    accent: "from-emerald-400/25 via-transparent to-violet-tech/30",
+    logoText: "DELTA FORCE",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "pubg",
+    name: "PUBG",
+    href: "/purchase?product=ai-engine&game=pubg",
+    logo: "/images/games/pubg.svg",
+    accent: "from-amber-400/30 via-transparent to-violet-tech/25",
+    logoText: "PUBG",
+    tags: [...FULL_INPUT_TAGS],
+  },
+  {
+    id: "battlefield",
+    name: "Battlefield",
+    href: "/purchase?product=ai-engine&game=battlefield",
+    logo: "/images/games/battlefield.svg",
+    accent: "from-orange-500/30 via-transparent to-violet-tech/30",
+    logoText: "BATTLEFIELD",
+    tags: [...FULL_INPUT_TAGS],
   },
 ];
 
 export default function Home() {
+  const { t } = useLanguage();
+  const [atBottom, setAtBottom] = useState(false);
+  const [preview, setPreview] = useState<GameCard | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrolled = window.scrollY + window.innerHeight;
+      const threshold = document.documentElement.scrollHeight - 180;
+      setAtBottom(scrolled >= threshold);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!preview) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreview(null);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [preview]);
+
   return (
-    <>
-      <div className="overflow-hidden">
-      {/* ═══════════════ HERO SECTION ═══════════════ */}
-      <section className="relative min-h-[90vh] flex items-center">
-        <div className="absolute inset-0">
-          <img src={HERO_BG} alt="" className="w-full h-full object-cover opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background/80" />
-        </div>
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <div className="w-full h-full" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(123,46,255,0.03) 2px, rgba(123,46,255,0.03) 4px)" }} />
-        </div>
+    <div className="overflow-hidden">
+      {/* Fixed neon scroll hint — flips to Scroll Up near bottom */}
+      <a
+        href={atBottom ? "#top" : "#support"}
+        onClick={(e) => {
+          if (atBottom) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1 px-4 py-3 rounded-xl border border-violet-tech/60 bg-dark-base/85 backdrop-blur-md shadow-[0_0_30px_rgba(123,46,255,0.45)] hover:border-violet-tech hover:shadow-[0_0_40px_rgba(123,46,255,0.7)] transition-all"
+        aria-label={atBottom ? "Scroll up" : "Scroll down"}
+      >
+        <span className="text-[10px] font-display font-bold tracking-[0.22em] uppercase text-violet-accent">
+          {atBottom ? t("home.scrollUp") : t("home.scrollDown")}
+        </span>
+        <span className="flex flex-col items-center -space-y-3 text-violet-tech">
+          {atBottom ? (
+            <>
+              <ChevronUp className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,1)]" />
+              <ChevronUp className="w-8 h-8 opacity-50 animate-neon-bounce [animation-delay:160ms]" />
+            </>
+          ) : (
+            <>
+              <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,1)]" />
+              <ChevronDown className="w-8 h-8 opacity-50 animate-neon-bounce [animation-delay:160ms]" />
+            </>
+          )}
+        </span>
+      </a>
+
+      {/* ═══════════════ GAMES FIRST — Dominate with Fusion IA ═══════════════ */}
+      <section id="top" className="relative pt-10 pb-16 lg:pt-14 lg:pb-20">
         <div className="relative container">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div className="max-w-2xl flex-1">
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
-                <Zap className="w-3 h-3" />
-                FUSION IA V8.1 IS LIVE
-              </motion.div>
-              <motion.h1 custom={1} variants={fadeUp} initial="hidden" animate="visible" className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight mb-6">
-                Dominate with{" "}<span className="text-violet-tech neon-text">FUSION IA V8.1</span>
-              </motion.h1>
-              <motion.p custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
-                The most advanced AI visual engine. Now with **Native NVIDIA & AMD support** and ultra-low controller latency. Experience the future of gaming performance.
-              </motion.p>
-              <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-wrap gap-4">
-                <Link href="/purchase?product=ai-engine">
-                  <Button size="lg" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                    <Zap className="w-4 h-4" />GET V8.1 NOW<ArrowRight className="w-4 h-4" />
-                  </Button>
-                </Link>
-                <Link href="/products">
-                  <Button size="lg" variant="outline" className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2">
-                    VIEW PRODUCTS<ChevronRight className="w-4 h-4" />
-                  </Button>
-                </Link>
-                <a href="https://discord.gg/5btq6znUvN" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" variant="outline" className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2">
-                    <MessageCircle className="w-4 h-4" />DISCORD
-                  </Button>
-                </a>
-              </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            className="text-center max-w-3xl mx-auto mb-10 lg:mb-12"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
+              <Zap className="w-3 h-3" />
+              {t("home.badge")}
             </div>
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.3 }} className="w-full lg:w-[700px] aspect-video relative rounded-xl overflow-hidden border border-violet-tech/30 shadow-[0_0_50px_rgba(123,46,255,0.2)]">
-              <video 
-                src={V7_VIDEO} 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span className="text-[10px] font-display font-bold text-white tracking-widest uppercase bg-black/50 px-2 py-1 rounded">V8.1 CINEMATIC LAUNCH</span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0">
-          <div className="h-px bg-gradient-to-r from-transparent via-violet-tech/30 to-transparent" />
-        </div>
-      </section>
+            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
+              {t("home.dominate")} <span className="text-violet-tech neon-text">Fusion IA</span>
+            </h1>
+            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8">
+              {t("home.subtitle")}
+            </p>
 
-      {/* ═══════════════ STATS BAR ═══════════════ */}
-      <section className="relative py-12 border-y border-border/30">
-        <div className="absolute inset-0 bg-dark-surface/50" />
-        <div className="relative container">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {stats.map((stat, i) => (
-              <motion.div key={stat.label} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="text-center lg:text-left">
-                <div className="font-display font-extrabold text-3xl sm:text-4xl text-violet-tech neon-text">
-                  {stat.value}<span className="text-violet-accent text-xl ml-0.5">{stat.unit}</span>
-                </div>
-                <p className="text-sm text-muted-foreground mt-1 font-body">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ PRODUCTS GRID SECTION ═══════════════ */}
-      <section className="relative py-24 lg:py-32">
-        <div className="container">
-          <motion.div variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="text-center max-w-2xl mx-auto mb-12">
-            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">Our Products</span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              Performance <span className="text-violet-tech">Tools</span>
-            </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">Everything you need to dominate. From AI aimbots to system optimization.</p>
+            <a
+              href="#games-grid"
+              className="inline-flex flex-col items-center gap-2 px-5 py-3 rounded-xl border border-violet-tech/50 bg-violet-tech/10 text-violet-accent hover:bg-violet-tech/20 hover:border-violet-tech hover:text-violet-tech transition-all shadow-[0_0_20px_rgba(123,46,255,0.25)]"
+              aria-label={t("home.exploreGames")}
+            >
+              <span className="text-xs font-display font-bold tracking-[0.22em] uppercase">
+                {t("home.exploreGames")}
+              </span>
+              <span className="flex flex-col items-center -space-y-3">
+                <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,0.95)]" />
+                <ChevronDown className="w-8 h-8 opacity-55 animate-neon-bounce [animation-delay:150ms]" />
+              </span>
+            </a>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                id: "fusion-ai",
-                title: "FUSION IA - V8.1",
-                subtitle: "AI Visual Processing",
-                description: "Revolutionary V8.1 update with exceptional AMD support. Available on Apex Legends, Fortnite, Warzone, Overwatch 2, and The Finals. Requires Waveshare RP2350A USB Mini Development Board. Native NVIDIA & AMD compatibility. Zero FPS drops.",
-                icon: Cpu,
-                badge: { label: "STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
-                features: ["V8.1 Architecture", "NVIDIA & AMD Support", "Waveshare RP2350A Required", "Zero FPS Drops", "Premium UI"],
-                price: "50 €",
-                priceNote: "starting from",
-                cta: "VIEW",
-                ctaHref: "/purchase?product=ai-engine",
-              },
-              {
-                id: "apex-weight",
-                title: "Advanced AI Weight",
-                subtitle: "Apex Legends Add-On",
-                description: "Powerful AI Weight add-on for Apex Legends. Supercharges targeting precision. ⚠️ Add-on only. NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+.",
-                icon: Zap,
-                badge: { label: "ADD-ON ONLY", color: "bg-amber-500/20 border-amber-500/50 text-amber-400" },
-                features: ["Apex Exclusive", "Enhanced Targeting", "RTX 4070/5060+ or RX 7900/9060+", "Instant Delivery", "Requires FUSION IA"],
-                price: "10 €",
-                priceNote: "one-time",
-                cta: "BUY",
-                ctaHref: "https://pay.sumup.com/b2c/QSDE2C71",
-              },
-              {
-                id: "windows-opt",
-                title: "Windows Optimization",
-                subtitle: "System Optimization",
-                description: "Advanced Windows optimization for gaming performance. Complete cleanup and optimization for 40-60 FPS gain.",
-                icon: Monitor,
-                badge: { label: "PERFORMANCE", color: "bg-blue-500/20 border-blue-500/50 text-blue-400" },
-                features: ["System Cleanup", "Remove Services", "RAM & CPU Opt", "Input Lag Reduction", "40-60 FPS Gain"],
-                price: "20 €",
-                priceNote: "starting from",
-                cta: "VIEW",
-                ctaHref: "/purchase?product=windows-opt",
-              },
-              {
-                id: "jitter-script",
-                title: "Jitter Script",
-                subtitle: "Anti-Recoil for FPS",
-                description: "Best anti-recoil jitter script for Apex, Fortnite and Warzone. Undetectable by anti-cheat. Does not cut aim assist.",
-                icon: Gamepad2,
-                badge: { label: "CONTROLLER ONLY", color: "bg-violet-500/20 border-violet-500/50 text-violet-300" },
-                features: ["Undetectable", "No Aim Assist Cut", "Humanizer", "Adjustable", "All FPS Games"],
-                price: "2.50 €",
-                priceNote: "starting from",
-                cta: "VIEW",
-                ctaHref: "/purchase?product=jitter-script",
-              },
-            ].map((product, i) => (
-              <motion.div key={product.id} custom={i + 1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className="relative group rounded-lg overflow-hidden border border-border/50 hover:border-violet-tech/30 transition-all duration-300 flex flex-col h-full">
-                <div className="absolute inset-0 bg-gradient-to-br from-dark-elevated/40 to-dark-base/40" />
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-tech/0 via-transparent to-violet-tech/0 group-hover:from-violet-tech/5 group-hover:via-violet-tech/2 group-hover:to-violet-tech/5 transition-all duration-300" />
-                <div className="relative p-6 h-full flex flex-col">
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-violet-tech/15 border border-violet-tech/20 flex-shrink-0">
-                      <product.icon className="w-5 h-5 text-violet-tech" />
-                    </div>
-                    <div className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase border whitespace-nowrap ${product.badge.color}`}>
-                      {product.badge.label}
-                    </div>
-                  </div>
-                  <div className="mb-2">
-                    <p className="text-xs font-semibold tracking-[0.15em] uppercase text-violet-accent mb-0.5">{product.subtitle}</p>
-                    <h3 className="font-display font-extrabold text-lg text-foreground">{product.title}</h3>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-4">{product.description}</p>
-                  <div className="space-y-1.5 mb-4 flex-grow">
-                    {product.features.map((f) => (
-                      <div key={f} className="flex items-center gap-2 text-xs text-foreground/80">
-                        <Check className="w-3 h-3 text-violet-tech flex-shrink-0" />
-                        <span>{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-end justify-between gap-3 pt-3 border-t border-border/20 mt-auto">
-                    <div>
-                      <p className="text-xs text-muted-foreground mb-0.5">{product.priceNote}</p>
-                      <p className="font-display font-extrabold text-xl text-violet-tech">{product.price}</p>
-                    </div>
-                    {product.ctaHref.startsWith("http") ? (
-                      <a href={product.ctaHref} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider gap-1">
-                          {product.cta}
-                          <ArrowRight className="w-3 h-3" />
-                        </Button>
-                      </a>
+
+          <div id="games-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 scroll-mt-24">
+            {games.map((game, i) => (
+              <motion.div
+                key={game.id}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+              >
+                <div
+                  className={`group relative block rounded-xl overflow-hidden border transition-all duration-300 hover:shadow-[0_0_40px_rgba(123,46,255,0.25)] ${
+                    game.featured
+                      ? "border-cyan-400/50 hover:border-cyan-300/80 shadow-[0_0_28px_rgba(34,211,238,0.2)]"
+                      : "border-violet-tech/25 hover:border-violet-tech/70"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    className="relative aspect-[16/10] bg-dark-base w-full text-left cursor-pointer"
+                    onClick={() => {
+                      if (game.video) setPreview(game);
+                    }}
+                    aria-label={game.video ? `Watch ${game.name} clip` : game.name}
+                  >
+                    {game.video ? (
+                      <video
+                        src={game.video}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      />
                     ) : (
-                      <Link href={product.ctaHref}>
-                        <Button size="sm" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider gap-1">
-                          {product.cta}
-                          <ArrowRight className="w-3 h-3" />
-                        </Button>
-                      </Link>
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-dark-elevated to-dark-base">
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-br ${game.accent}`}
+                        />
+                        <div className="relative z-10 w-full px-6 flex flex-col items-center justify-center">
+                          {game.featured && (
+                            <Globe className="w-8 h-8 text-cyan-300 mb-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+                          )}
+                          {game.logo ? (
+                            <img
+                              src={game.logo}
+                              alt={`${game.name} logo`}
+                              className="w-full max-w-[280px] h-auto opacity-95 group-hover:opacity-100 transition-opacity"
+                            />
+                          ) : (
+                            <p className="font-display font-extrabold text-2xl sm:text-3xl tracking-[0.15em] text-foreground neon-text">
+                              {game.logoText}
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     )}
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent pointer-events-none" />
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${game.accent} opacity-40 group-hover:opacity-60 transition-opacity pointer-events-none`}
+                    />
+
+                    {game.video && (
+                      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] font-display font-bold tracking-wider text-white border border-violet-tech/60 bg-violet-tech/80 backdrop-blur-sm shadow-[0_0_16px_rgba(123,46,255,0.45)]">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          {t("home.fullscreen")}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  </button>
+
+                  <div className="relative p-5 bg-dark-elevated/90 border-t border-violet-tech/20">
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <div>
+                        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
+                          {game.featured ? t("home.worksAlmostAll") : t("home.aiAimbot")}
+                        </p>
+                        <h2 className="font-display font-extrabold text-lg text-foreground group-hover:text-violet-accent transition-colors">
+                          {game.name}
+                        </h2>
+                      </div>
+                      <Link href={game.href}>
+                        <span className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-md text-sm font-display font-bold tracking-wider text-white bg-cyan-500/90 border border-cyan-300/60 shadow-[0_0_18px_rgba(34,211,238,0.45)] hover:bg-cyan-400 hover:shadow-[0_0_28px_rgba(34,211,238,0.7)] transition-all">
+                          {t("home.buy")}
+                          <ChevronRight className="w-4 h-4" />
+                        </span>
+                      </Link>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {game.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-display font-semibold tracking-wide text-violet-accent border border-violet-tech/45 bg-violet-tech/15 shadow-[0_0_12px_rgba(123,46,255,0.18)]"
+                        >
+                          {t(tag)}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
-          <motion.div variants={fadeUp} custom={5} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className="mt-12 text-center">
-            <Link href="/products">
-              <Button size="lg" variant="outline" className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider gap-2">
-                VIEW ALL PRODUCTS
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            </Link>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="mt-10 flex flex-col items-center gap-6"
+          >
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-2">
+                <Keyboard className="w-4 h-4 text-violet-tech" />
+                {t("home.keyboardMouse")}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Gamepad2 className="w-4 h-4 text-violet-tech" />
+                {t("home.controller")}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Zap className="w-4 h-4 text-violet-tech" />
+                Waveshare RP2350A
+              </span>
+            </div>
           </motion.div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/30 to-transparent" />
       </section>
 
-      {/* ═══════════════ PRICING SECTION ═══════════════ */}
-      <section className="relative py-24 lg:py-32">
-        <div className="container">
-          <motion.div variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="text-center max-w-2xl mx-auto mb-16">
-            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">Pricing</span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              Choose your <span className="text-violet-tech">plan</span>
-            </h2>
-            <p className="text-muted-foreground text-lg">Solutions adapted to every need and every budget.</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {pricingPlans.map((plan, i) => (
-              <motion.div key={plan.name} custom={i + 1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className={`relative glass-card rounded-lg p-8 ${plan.popular ? "border-violet-tech/40 ring-1 ring-violet-tech/20" : ""}`}>
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-violet-tech text-xs font-display font-bold text-white tracking-wider">RECOMMENDED</div>
-                )}
-                <h3 className="font-display font-bold text-base tracking-wide mb-2">{plan.name}</h3>
-                <p className="text-sm text-muted-foreground mb-6">{plan.desc}</p>
-                <div className="mb-6">
-                  <span className={`font-display font-extrabold text-4xl text-foreground`}>{plan.price}</span>
-                  <span className="text-lg text-muted-foreground ml-1">€</span>
-                  {plan.period && <span className="block text-sm text-muted-foreground mt-1">{plan.period}</span>}
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                      <Check className="w-4 h-4 text-violet-tech flex-shrink-0" />{feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link href={`/purchase?product=${plan.name.includes('AI Aimbot') ? 'ai-engine' : plan.name === 'Windows Optimization' ? 'windows-opt' : 'jitter-script'}`}>
-                  <Button className={`w-full font-display font-semibold tracking-wider ${plan.popular ? "bg-violet-tech hover:bg-violet-secondary text-primary-foreground neon-glow" : "bg-dark-elevated hover:bg-dark-elevated/80 text-foreground border border-border/50"}`}>
-                    {plan.cta}
-                  </Button>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ SUPPORT CTA SECTION ═══════════════ */}
-      <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-dark-surface/30" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
+      {/* ═══════════════ SUPPORT CTA ═══════════════ */}
+      <section id="support" className="relative py-20 lg:py-28 scroll-mt-20">
         <div className="relative container">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-            <motion.div variants={fadeUp} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="lg:col-span-3">
-              <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">Support</span>
+            <motion.div
+              variants={fadeUp}
+              custom={0}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              className="lg:col-span-3"
+            >
+              <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
+                {t("home.supportEyebrow")}
+              </span>
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-                Need help? <span className="text-violet-tech">We're here.</span>
+                {t("home.supportTitle")} <span className="text-violet-tech">{t("home.supportTitleAccent")}</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl">
-                Our support team is available to assist you. Ticket system, complete FAQ, and detailed documentation.
+                {t("home.supportDesc")}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/support">
-                  <Button size="lg" className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2">
-                    <Headphones className="w-4 h-4" />CONTACT SUPPORT
+                  <Button
+                    size="lg"
+                    className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
+                  >
+                    <Headphones className="w-4 h-4" />
+                    {t("home.contactSupport")}
                   </Button>
                 </Link>
-                <Link href="/support">
-                  <Button size="lg" variant="outline" className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider">
-                    VIEW FAQ
+                <Link href="/products">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider"
+                  >
+                    {t("home.allProducts")}
                   </Button>
                 </Link>
               </div>
             </motion.div>
-            <motion.div variants={fadeUp} custom={2} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="lg:col-span-2">
+            <motion.div
+              variants={fadeUp}
+              custom={2}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              className="lg:col-span-2"
+            >
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Headphones, label: "24/7 Support" },
-                  { icon: Shield, label: "Secure Payment" },
-                  { icon: Zap, label: "Fast Installation" },
-                  { icon: TrendingUp, label: "Updates" },
+                  { icon: Headphones, labelKey: "home.support247" as TranslationKey },
+                  { icon: Shield, labelKey: "home.securePayment" as TranslationKey },
+                  { icon: Zap, labelKey: "home.fastInstall" as TranslationKey },
+                  { icon: TrendingUp, labelKey: "home.updates" as TranslationKey },
                 ].map((item) => (
-                  <div key={item.label} className="glass-card rounded-lg p-5 text-center hover:border-violet-tech/30 transition-colors duration-300">
+                  <div
+                    key={item.labelKey}
+                    className="glass-card rounded-lg p-5 text-center hover:border-violet-tech/30 transition-colors duration-300"
+                  >
                     <item.icon className="w-6 h-6 text-violet-tech mx-auto mb-2" />
-                    <p className="text-xs font-body font-medium text-muted-foreground">{item.label}</p>
+                    <p className="text-xs font-body font-medium text-muted-foreground">
+                      {t(item.labelKey)}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -467,7 +530,66 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Fullscreen clip preview */}
+      <AnimatePresence>
+        {preview?.video && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md"
+              onClick={() => setPreview(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 16 }}
+              className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-8"
+              onClick={() => setPreview(null)}
+            >
+              <div
+                className="relative w-full max-w-5xl rounded-xl overflow-hidden border border-violet-tech/40 bg-dark-base shadow-[0_0_50px_rgba(123,46,255,0.35)]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => setPreview(null)}
+                  className="absolute top-3 right-3 z-20 p-2 rounded-lg border border-violet-tech/40 bg-black/60 hover:bg-violet-tech/30 transition-colors"
+                  aria-label="Close preview"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+                <div className="relative w-full aspect-video bg-black">
+                  <video
+                    src={preview.video}
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                  />
+                </div>
+                <div className="p-5 border-t border-violet-tech/20 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
+                      AI Aimbot
+                    </p>
+                    <h3 className="font-display font-extrabold text-xl text-foreground">
+                      {preview.name}
+                    </h3>
+                  </div>
+                  <Link href={preview.href}>
+                    <span className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-sm font-display font-bold tracking-wider text-white bg-cyan-500/90 border border-cyan-300/60 shadow-[0_0_18px_rgba(34,211,238,0.45)] hover:bg-cyan-400 transition-all">
+                      BUY
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
-    </>
   );
 }

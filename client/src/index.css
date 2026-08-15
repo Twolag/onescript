@@ -249,7 +249,7 @@
 
   /* Glass card */
   .glass-card {
-    background: oklch(0.12 0.02 285 / 60%);
+    background: oklch(0.12 0.02 285 / 70%);
     backdrop-filter: blur(12px);
     border: 1px solid oklch(0.45 0.28 285 / 15%);
   }
@@ -261,5 +261,19 @@
   }
   .font-body {
     font-family: var(--font-body);
+  }
+  .animate-neon-bounce {
+    animation: neon-bounce 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes neon-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
   }
 }

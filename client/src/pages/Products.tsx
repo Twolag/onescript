@@ -16,6 +16,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -52,7 +53,7 @@ const products: ProductCard[] = [
     features: [
       "V8.1 Redesigned Architecture",
       "Native NVIDIA & AMD Support",
-      "Ultra-Low Controller Latency ⚡",
+      "Keyboard/Mouse & Controller (RP2350A)",
       "Zero FPS Drops Guarantee",
       "Premium UI Redesign",
     ],
@@ -106,12 +107,12 @@ const products: ProductCard[] = [
     subtitle: "Anti-Recoil for FPS Games",
     description: "The best anti-recoil jitter script for Apex Legends, Fortnite and Warzone. Undetectable by anti-cheat, does not cut aim assist. Precise shots up to 150m+ with minimal shaking.",
     icon: Gamepad2,
-    badge: { label: "CONTROLLER ONLY", color: "bg-violet-500/20 border-violet-500/50 text-violet-300" },
+    badge: { label: "KM + CONTROLLER", color: "bg-violet-500/20 border-violet-500/50 text-violet-300" },
     features: [
       "Undetectable by Anti-Cheat",
       "Does Not Cut Aim Assist",
       "Integrated Humanizer",
-      "Adjustable Settings",
+      "Keyboard/Mouse & Controller",
       "Works with All FPS Games",
     ],
     price: "2.50 €",
@@ -235,6 +236,7 @@ function ProductCardComponent({
 }
 
 export default function Products() {
+  const { t } = useLanguage();
   return (
     <div>
       {/* Page header */}
@@ -249,14 +251,14 @@ export default function Products() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Our Products
+              {t("products.eyebrow")}
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              Performance{" "}
-              <span className="text-violet-tech neon-text">Tools</span>
+              {t("products.title")}{" "}
+              <span className="text-violet-tech neon-text">{t("products.titleAccent")}</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Discover our solutions designed to transform your gaming experience. Featuring the brand new **FUSION IA V8** and exclusive add-ons.
+              {t("products.subtitle")}
             </p>
           </motion.div>
         </div>
@@ -288,10 +290,10 @@ export default function Products() {
             className="max-w-2xl mx-auto text-center"
           >
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-              Ready to <span className="text-violet-tech">level up</span>?
+              {t("products.ctaTitle")}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Choose your product and start your journey to gaming excellence. All purchases include 24/7 support and regular updates.
+              {t("products.ctaSubtitle")}
             </p>
             <Link href="/purchase">
               <Button
@@ -299,7 +301,7 @@ export default function Products() {
                 className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
               >
                 <Zap className="w-4 h-4" />
-                START SHOPPING
+                {t("products.buyNow")}
                 <ChevronRight className="w-4 h-4" />
               </Button>
             </Link>
