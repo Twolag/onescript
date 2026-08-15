@@ -694,7 +694,7 @@ export default function Purchase() {
 
                   {/* Hardware Configuration */}
                   <div className="pt-4 border-t border-border/30">
-                    <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">{t("purchase.requiredHardware")}</h3>
+                    <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">{t("purchase.hardwareConfig")}</h3>
                     <div className="grid sm:grid-cols-3 gap-4">
                       <div>
                         <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.cpu")}</label>
@@ -729,7 +729,7 @@ export default function Purchase() {
                             />
                           </div>
                           <label htmlFor="self-setup-check" className="text-sm text-foreground font-medium leading-relaxed cursor-pointer select-none">
-                            I understand that I will receive a <strong>PDF guide</strong> and that I must perform the installation <strong>myself</strong>. I confirm that OneScript staff will <strong>not intervene</strong> in the installation process for this specific plan.
+                            {t("purchase.selfSetupConfirm")}
                           </label>
                         </div>
                       </div>
@@ -741,8 +741,8 @@ export default function Purchase() {
                     <div className="flex gap-3 mb-4">
                       <span className="text-xl flex-shrink-0">⚠️</span>
                       <div className="text-sm text-amber-200/90 leading-relaxed">
-                        <strong className="text-amber-400 block mb-1">Important Reminder</strong>
-                        <p>By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. Purchases with non-compliant configurations are considered final. <strong>Note:</strong> Malfunctions caused by the customer's PC (hardware, drivers, OS, etc.) are not eligible for refunds.</p>
+                        <strong className="text-amber-400 block mb-1">{t("purchase.importantReminder")}</strong>
+                        <p>{t("purchase.importantReminderBody")}</p>
                       </div>
                     </div>
                     
@@ -757,7 +757,7 @@ export default function Purchase() {
                         />
                       </div>
                       <label htmlFor="hardware-check" className="text-sm text-amber-100 font-medium leading-relaxed cursor-pointer select-none">
-                        I confirm that my PC meets all the <strong>hardware requirements</strong> (NVIDIA / AMD GPU, Waveshare RP2350A) and, if playing Apex Legends, that I use the <strong>Steam</strong> version. I understand that no refunds will be issued for hardware incompatibility.
+                        {t("purchase.hardwareConfirm")}
                       </label>
                     </div>
                   </div>
@@ -801,7 +801,7 @@ export default function Purchase() {
                           Waveshare RP2350A
                         </p>
                         <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
-                          Mandatory for Keyboard / Mouse &amp; Controller support.
+                          {t("purchase.rpMandatory")}
                         </p>
                       </div>
                     </div>
@@ -813,18 +813,18 @@ export default function Purchase() {
 
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-sm gap-4">
-                      <span className="text-muted-foreground shrink-0">Product</span>
+                      <span className="text-muted-foreground shrink-0">{t("purchase.product")}</span>
                       <span className="text-foreground font-medium text-right">{displayProductName}</span>
                     </div>
                     {selectedGame && productId === "ai-engine" && (
                       <div className="flex justify-between text-sm gap-4">
-                        <span className="text-muted-foreground shrink-0">Game</span>
+                        <span className="text-muted-foreground shrink-0">{t("purchase.game")}</span>
                         <span className="text-violet-accent font-medium text-right">{selectedGame}</span>
                       </div>
                     )}
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Option</span>
-                      <span className="text-foreground font-medium">{selectedItem?.label || "Not selected"}</span>
+                      <span className="text-muted-foreground">{t("purchase.option")}</span>
+                      <span className="text-foreground font-medium">{selectedItem?.label || t("purchase.notSelected")}</span>
                     </div>
                     <div className="h-px bg-border/30" />
                     <div className="flex justify-between items-center">
@@ -836,13 +836,13 @@ export default function Purchase() {
                   {orderCreated ? (
                     <div className="space-y-4">
                       <div className="p-4 bg-violet-tech/10 border border-violet-tech/20 rounded-lg">
-                        <p className="text-xs text-violet-tech font-bold uppercase tracking-wider mb-1">Order Number</p>
+                        <p className="text-xs text-violet-tech font-bold uppercase tracking-wider mb-1">{t("purchase.orderNumber")}</p>
                         <p className="text-sm font-mono font-bold text-foreground">{orderCreated.orderNumber}</p>
                       </div>
                       {!showBankTransfer ? (
                         <>
                           <div className="space-y-3">
-                            <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
+                            <p className="text-xs text-muted-foreground text-center mb-2">{t("purchase.choosePayment")}</p>
 
                             <div className="space-y-1">
                               <Button
@@ -852,43 +852,43 @@ export default function Purchase() {
                                 className="w-full bg-[#635BFF] hover:bg-[#5851e0] text-white font-bold py-4 flex items-center justify-center gap-2"
                               >
                                 <CreditCard className="w-4 h-4" />
-                                {stripeLoading ? "Redirecting…" : "PAY WITH STRIPE (CARD)"}
+                                {stripeLoading ? t("purchase.redirecting") : t("purchase.payStripe")}
                               </Button>
                               <p className="text-[10px] text-center text-violet-accent/90">
-                                Secure card payment via Stripe Checkout
+                                {t("purchase.payStripeHint")}
                               </p>
                             </div>
 
                             <div className="space-y-1">
                               <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
                                 <CreditCard className="w-4 h-4" />
-                                PAY BY CARD (SUMUP)
+                                {t("purchase.paySumup")}
                               </Button>
                               <p className="text-[10px] text-center text-amber-400/80">
-                                ⚠ 2.5% processing fee included — EU cards only
+                                {t("purchase.paySumupHint")}
                               </p>
                             </div>
 
                             <div className="space-y-1">
                               <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
                                 <MessageCircle className="w-4 h-4" />
-                                PAY BY PAYPAL
+                                {t("purchase.payPaypal")}
                               </Button>
                               <p className="text-[10px] text-center text-blue-400/80 font-bold uppercase tracking-widest">
-                                ⚠️ Friends & Family payment only
+                                {t("purchase.payPaypalHint")}
                               </p>
                             </div>
 
                             <div className="space-y-1">
                               <Button type="button" onClick={() => { sendDiscordAndEmail(orderCreated!, "bunq"); window.open(`https://bunq.me/NoamFranckGeorgesRobert/${total.toFixed(2)}/OneScript%20Order%20${orderCreated!.orderNumber}`, "_blank"); }} className="w-full bg-[#00b9e8] hover:bg-[#009dc7] text-white font-bold py-4 flex items-center justify-center gap-2">
                                 <CreditCard className="w-4 h-4" />
-                                PAY BY CARD (BUNQ)
+                                {t("purchase.payBunq")}
                               </Button>
-                              <p className="text-[10px] text-center text-cyan-400/80">✓ Card payment, no fees — all cards accepted (incl. non-EU)</p>
+                              <p className="text-[10px] text-center text-cyan-400/80">{t("purchase.payBunqHint")}</p>
                             </div>
 
                             <Button type="button" onClick={handleBankTransfer} variant="outline" className="w-full border-border/50 text-muted-foreground hover:text-foreground font-bold py-4">
-                              BANK TRANSFER (SEPA)
+                              {t("purchase.payBank")}
                             </Button>
                           </div>
                         </>
@@ -896,40 +896,40 @@ export default function Purchase() {
                         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-6 bg-dark-elevated rounded-lg border border-violet-tech/30 space-y-4">
                           <div className="flex items-center gap-2 text-violet-tech mb-2">
                             <Shield className="w-5 h-5" />
-                            <h3 className="font-bold">Bank Transfer Details</h3>
+                            <h3 className="font-bold">{t("purchase.bankDetails")}</h3>
                           </div>
                           <div className="space-y-3">
                             <div>
-                              <p className="text-[10px] text-muted-foreground uppercase">Account Holder</p>
+                              <p className="text-[10px] text-muted-foreground uppercase">{t("purchase.accountHolder")}</p>
                               <div className="flex items-center justify-between">
                                 <p className="text-sm font-medium">{BANK_TRANSFER.holder}</p>
-                                <button onClick={() => copyToClipboard(BANK_TRANSFER.holder, "holder")} className="text-violet-tech text-xs hover:underline">{copiedField === "holder" ? "Copied!" : "Copy"}</button>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.holder, "holder")} className="text-violet-tech text-xs hover:underline">{copiedField === "holder" ? t("purchase.copied") : t("purchase.copy")}</button>
                               </div>
                             </div>
                             <div>
                               <p className="text-[10px] text-muted-foreground uppercase">IBAN</p>
                               <div className="flex items-center justify-between">
                                 <p className="text-sm font-mono">{BANK_TRANSFER.iban}</p>
-                                <button onClick={() => copyToClipboard(BANK_TRANSFER.iban, "iban")} className="text-violet-tech text-xs hover:underline">{copiedField === "iban" ? "Copied!" : "Copy"}</button>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.iban, "iban")} className="text-violet-tech text-xs hover:underline">{copiedField === "iban" ? t("purchase.copied") : t("purchase.copy")}</button>
                               </div>
                             </div>
                             <div>
                               <p className="text-[10px] text-muted-foreground uppercase">BIC / SWIFT</p>
                               <div className="flex items-center justify-between">
                                 <p className="text-sm font-mono">{BANK_TRANSFER.bic}</p>
-                                <button onClick={() => copyToClipboard(BANK_TRANSFER.bic, "bic")} className="text-violet-tech text-xs hover:underline">{copiedField === "bic" ? "Copied!" : "Copy"}</button>
+                                <button onClick={() => copyToClipboard(BANK_TRANSFER.bic, "bic")} className="text-violet-tech text-xs hover:underline">{copiedField === "bic" ? t("purchase.copied") : t("purchase.copy")}</button>
                               </div>
                             </div>
                             <div className="pt-2 border-t border-border/30">
-                              <p className="text-[10px] text-muted-foreground uppercase">Reference (Required)</p>
+                              <p className="text-[10px] text-muted-foreground uppercase">{t("purchase.reference")}</p>
                               <div className="flex items-center justify-between">
                                 <p className="text-sm font-bold text-violet-tech">{orderCreated.orderNumber}</p>
-                                <button onClick={() => copyToClipboard(orderCreated.orderNumber, "ref")} className="text-violet-tech text-xs hover:underline">{copiedField === "ref" ? "Copied!" : "Copy"}</button>
+                                <button onClick={() => copyToClipboard(orderCreated.orderNumber, "ref")} className="text-violet-tech text-xs hover:underline">{copiedField === "ref" ? t("purchase.copied") : t("purchase.copy")}</button>
                               </div>
                             </div>
                           </div>
                           <Button onClick={() => setShowBankTransfer(false)} variant="ghost" className="w-full text-xs text-muted-foreground hover:text-foreground">
-                            Go back to payment methods
+                            {t("purchase.goBackPayments")}
                           </Button>
                         </motion.div>
                       )}
@@ -938,7 +938,12 @@ export default function Purchase() {
                         <div className="flex gap-3">
                           <Lock className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                           <p className="text-[11px] text-muted-foreground leading-relaxed">
-                            Payments are secure. After payment, send your order number <strong>{orderCreated.orderNumber}</strong> on our <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-violet-tech hover:underline">Discord server</a> to receive your access.
+                            {t("purchase.paymentSecureBefore")}{" "}
+                            <strong>{orderCreated.orderNumber}</strong>{" "}
+                            {t("purchase.paymentSecureAfter")}{" "}
+                            <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-violet-tech hover:underline">
+                              Discord
+                            </a>
                           </p>
                         </div>
                       </div>
@@ -946,7 +951,7 @@ export default function Purchase() {
                   ) : (
                     <div className="text-center p-8 border-2 border-dashed border-border/30 rounded-lg">
                       <AlertCircle className="w-8 h-8 text-muted-foreground/30 mx-auto mb-3" />
-                      <p className="text-sm text-muted-foreground">Complete the form to see payment options</p>
+                      <p className="text-sm text-muted-foreground">{t("purchase.completeForm")}</p>
                     </div>
                   )}
                 </motion.div>
@@ -954,20 +959,20 @@ export default function Purchase() {
                 <div className="glass-card rounded-lg p-6">
                   <h3 className="text-sm font-bold mb-4 flex items-center gap-2">
                     <Shield className="w-4 h-4 text-violet-tech" />
-                    Secure Purchase
+                    {t("purchase.securePurchase")}
                   </h3>
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Check className="w-3 h-3 text-green-500" />
-                      Instant notification after validation
+                      {t("purchase.instantNotif")}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Check className="w-3 h-3 text-green-500" />
-                      Dedicated Discord support
+                      {t("purchase.discordSupport")}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Check className="w-3 h-3 text-green-500" />
-                      Regular updates included
+                      {t("purchase.updatesIncluded")}
                     </div>
                   </div>
                 </div>
