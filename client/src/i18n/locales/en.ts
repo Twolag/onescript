@@ -153,7 +153,7 @@ export const en = {
     paySumup: "PAY BY CARD (SUMUP)",
     paySumupHint: "⚠ 2.5% processing fee included — EU cards only",
     payPaypal: "PAY BY PAYPAL",
-    payPaypalHint: "Via Stripe Checkout — Discord only after confirmed payment",
+    payPaypalHint: "⚠ Friends & Family payment only",
     payBunq: "PAY BY CARD (BUNQ)",
     payBunqHint: "✓ Card payment, no fees — all cards accepted (incl. non-EU)",
     payBank: "BANK TRANSFER (SEPA)",

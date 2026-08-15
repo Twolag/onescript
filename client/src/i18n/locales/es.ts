@@ -156,7 +156,7 @@ export const es: Dictionary = {
     paySumup: "PAGAR CON TARJETA (SUMUP)",
     paySumupHint: "⚠ Comisión 2,5 % incluida — solo tarjetas UE",
     payPaypal: "PAGAR CON PAYPAL",
-    payPaypalHint: "Vía Stripe Checkout — Discord solo tras pago confirmado",
+    payPaypalHint: "⚠ Solo pago Friends & Family",
     payBunq: "PAGAR CON TARJETA (BUNQ)",
     payBunqHint: "✓ Tarjeta sin comisiones — todas las tarjetas (incl. fuera UE)",
     payBank: "TRANSFERENCIA BANCARIA (SEPA)",

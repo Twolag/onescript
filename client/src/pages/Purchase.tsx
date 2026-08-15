@@ -1,17 +1,18 @@
 /*
  * Purchase — Neon Circuit Design
- * Product selection, summary, Stripe (card + PayPal)
+ * Product selection, summary — Stripe (card) + PayPal.me
  */
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  CreditCard, Clock, Zap, Layers, RefreshCw, Keyboard
+  MessageCircle, CreditCard, Clock, Zap, Layers, RefreshCw, Keyboard
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useLanguage, type TranslationKey } from "@/i18n/LanguageContext";
 
+const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
 const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 function generateOrderNumber(): string {
@@ -263,6 +264,62 @@ export default function Purchase() {
       toast.error(e instanceof Error ? e.message : t("purchase.errorGeneric"));
       setStripeLoading(false);
     }
+  };
+
+  const notifyPendingOrder = (paymentMethod: string) => {
+    if (!orderCreated || !selectedItem) return;
+    const customerName = `${formData.firstName} ${formData.lastName}`;
+
+    fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: formData.email,
+        props: {
+          orderNumber: orderCreated.orderNumber,
+          customerName,
+          customerEmail: formData.email,
+          productName: displayProductName,
+          productOption: selectedItem.label,
+          discordPseudo: formData.discordPseudo,
+          price: orderCreated.price,
+          cpu: formData.cpu,
+          gpu: formData.gpu,
+          os: formData.os,
+          inputMethod: formData.controller || "N/A",
+        },
+      }),
+    }).catch(console.error);
+
+    fetch("/api/discord-notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        orderNumber: orderCreated.orderNumber,
+        customerName,
+        email: formData.email,
+        discordPseudo: formData.discordPseudo,
+        productName: displayProductName,
+        optionLabel: selectedItem.label,
+        price: orderCreated.price,
+        paymentMethod,
+        cpu: formData.cpu,
+        gpu: formData.gpu,
+        os: formData.os,
+        inputMethod: formData.controller || "N/A",
+        selfSetupConfirmed: isSelfSetupOption ? "YES (Confirmed)" : "N/A",
+      }),
+    }).catch(console.error);
+  };
+
+  const handlePayPalPayment = () => {
+    if (!orderCreated) return;
+    notifyPendingOrder("paypal");
+    const paypalLink = `${PAYPAL_BASE}/${total}`;
+    setTimeout(() => {
+      window.open(paypalLink, "_blank");
+    }, 100);
+    toast.success(t("purchase.payPaypalHint"));
   };
 
   return (
@@ -769,6 +826,20 @@ export default function Purchase() {
                           </Button>
                           <p className="text-[10px] text-center text-violet-accent/90">
                             {t("purchase.payStripeHint")}
+                          </p>
+                        </div>
+
+                        <div className="space-y-1">
+                          <Button
+                            type="button"
+                            onClick={handlePayPalPayment}
+                            className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2"
+                          >
+                            <MessageCircle className="w-4 h-4" />
+                            {t("purchase.payPaypal")}
+                          </Button>
+                          <p className="text-[10px] text-center text-blue-400/80 font-bold uppercase tracking-widest">
+                            {t("purchase.payPaypalHint")}
                           </p>
                         </div>
                       </div>

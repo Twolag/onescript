@@ -156,7 +156,7 @@ export const ru: Dictionary = {
     paySumup: "ОПЛАТА КАРТОЙ (SUMUP)",
     paySumupHint: "⚠ Комиссия 2,5 % включена — только карты ЕС",
     payPaypal: "ОПЛАТА PAYPAL",
-    payPaypalHint: "Через Stripe Checkout — Discord только после подтверждённой оплаты",
+    payPaypalHint: "⚠ Только Friends & Family",
     payBunq: "ОПЛАТА КАРТОЙ (BUNQ)",
     payBunqHint: "✓ Карта без комиссии — все карты (в т.ч. вне ЕС)",
     payBank: "БАНКОВСКИЙ ПЕРЕВОД (SEPA)",

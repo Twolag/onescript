@@ -156,7 +156,7 @@ export const fr: Dictionary = {
     paySumup: "PAYER PAR CARTE (SUMUP)",
     paySumupHint: "⚠ Frais 2,5 % inclus — cartes UE uniquement",
     payPaypal: "PAYER PAR PAYPAL",
-    payPaypalHint: "Via Stripe Checkout — Discord uniquement après paiement confirmé",
+    payPaypalHint: "⚠ Paiement Friends & Family uniquement",
     payBunq: "PAYER PAR CARTE (BUNQ)",
     payBunqHint: "✓ Carte sans frais — toutes cartes (y compris hors UE)",
     payBank: "VIREMENT BANCAIRE (SEPA)",
