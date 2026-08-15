@@ -102,7 +102,7 @@ export const ru: Dictionary = {
     selectDuration: "1. Выберите срок",
     selectSupport: "2. Уровень поддержки",
     selectRenewal: "2. Тип продления",
-    selectAddonGame: "2. Игра для аддона",
+    selectAddonGame: "2. Игра для Advanced Weight",
     weekly: "Неделя",
     monthly: "Месяц",
     annual: "Год",

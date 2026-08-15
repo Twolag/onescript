@@ -98,7 +98,7 @@ export const en = {
     selectDuration: "1. Select Duration",
     selectSupport: "2. Select Support Level",
     selectRenewal: "2. Select Renewal Type",
-    selectAddonGame: "2. Select Game for Add-on",
+    selectAddonGame: "2. Select Game for Advanced Weight",
     weekly: "Weekly",
     monthly: "Monthly",
     annual: "Annual",
