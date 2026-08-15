@@ -126,9 +126,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const displayName = game ? `${game} — ${product.name}` : product.name;
     const baseUrl = (process.env.BASE_URL || "https://onescript.fr").replace(/\/$/, "");
 
+    // Card + PayPal via Stripe Checkout — Discord only after real payment (fulfill / webhook).
+    // PayPal must be enabled in Stripe Dashboard → Settings → Payment methods.
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer_email: customerEmail,
+      payment_method_types: ["card", "paypal"],
       line_items: [
         {
           quantity: 1,

@@ -10,9 +10,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useLanguage } from "@/i18n/LanguageContext";
+import { useLanguage, type TranslationKey } from "@/i18n/LanguageContext";
 
-const PAYPAL_BASE = "https://www.paypal.me/OneLagTT";
 const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 // SumUp links by product/option (key = "productId-index")
@@ -74,8 +73,6 @@ const fadeUp = {
     transition: { delay: i * 0.1, duration: 0.6 },
   }),
 };
-
-import type { TranslationKey } from "@/i18n/LanguageContext";
 
 interface ProductOption {
   labelKey: TranslationKey;
@@ -300,14 +297,6 @@ export default function Purchase() {
     setShowBankTransfer(true);
   };
 
-  const handlePayPalPayment = () => {
-    if (!orderCreated) return;
-    sendDiscordAndEmail(orderCreated, "paypal");
-    const paypalLink = `${PAYPAL_BASE}/${total}`;
-    setTimeout(() => { window.open(paypalLink, "_blank"); }, 100);
-    toast.success("Redirecting to PayPal... Please use 'Friends & Family' only.");
-  };
-
   const handleStripePayment = async () => {
     if (!orderCreated || selectedOptionIndex === null) return;
     setStripeLoading(true);
@@ -340,6 +329,11 @@ export default function Purchase() {
       toast.error(e instanceof Error ? e.message : "Erreur Stripe");
       setStripeLoading(false);
     }
+  };
+
+  /** Same Stripe Checkout — customer picks PayPal there. No Discord until paid. */
+  const handlePayPalPayment = () => {
+    void handleStripePayment();
   };
 
   const sendDiscordAndEmail = (order: typeof orderCreated, paymentMethod: string) => {
@@ -897,11 +891,16 @@ export default function Purchase() {
                             </div>
 
                             <div className="space-y-1">
-                              <Button type="button" onClick={handlePayPalPayment} className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2">
+                              <Button
+                                type="button"
+                                onClick={handlePayPalPayment}
+                                disabled={stripeLoading}
+                                className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2"
+                              >
                                 <MessageCircle className="w-4 h-4" />
-                                {t("purchase.payPaypal")}
+                                {stripeLoading ? t("purchase.redirecting") : t("purchase.payPaypal")}
                               </Button>
-                              <p className="text-[10px] text-center text-blue-400/80 font-bold uppercase tracking-widest">
+                              <p className="text-[10px] text-center text-blue-400/80">
                                 {t("purchase.payPaypalHint")}
                               </p>
                             </div>
