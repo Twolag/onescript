@@ -1,6 +1,6 @@
 /*
  * Purchase — Neon Circuit Design
- * Product selection, summary, PayPal + SumUp + Bunq
+ * Product selection, summary, Stripe (card + PayPal) + bank transfer
  */
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -13,43 +13,6 @@ import { toast } from "sonner";
 import { useLanguage, type TranslationKey } from "@/i18n/LanguageContext";
 
 const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
-
-// SumUp links by product/option (key = "productId-index")
-const SUMUP_LINKS: { [key: string]: string } = {
-  // Weekly options (ai-engine)
-  "ai-engine-0": "https://pay.sumup.com/b2c/QIRQ5PGQ",   // 25€ — 1 Week (Setup + Support + License)
-  "ai-engine-1": "https://pay.sumup.com/b2c/QGABTUR4",   // 15€ — 1 Week (License Only)
-  "ai-engine-2": "https://pay.sumup.com/b2c/QE6ELXGY",   // 10€ — Weekly Renewal
-  "ai-engine-3": "https://pay.sumup.com/b2c/QB47RTCH",   // 40€ — Monthly (License only)
-  "ai-engine-4": "https://pay.sumup.com/b2c/QHGCYM41",   // 60€ — Monthly (License + Inst.)
-  "ai-engine-5": "https://pay.sumup.com/b2c/QGLYU0B6",   // 30€ — Help Installation (PDF users)
-  "ai-engine-6": "https://pay.sumup.com/b2c/QLFZP85D",   // Annual (150€)
-  "ai-engine-7": "https://pay.sumup.com/b2c/QQVC1R0U",   // Lifetime (250€)
-  "ai-engine-8": "https://pay.sumup.com/b2c/QZKAONRN",   // 30.80€ — Monthly Renewal
-  "ai-engine-9": "https://pay.sumup.com/b2c/QSDE2C71",   // 10€ — Advanced AI Weight (Apex Legends)
-  "ai-engine-10": "https://pay.sumup.com/b2c/QSDE2C71",  // 10€ — Advanced AI Weight (Fortnite)
-  "windows-opt-0": "https://pay.sumup.com/b2c/QYOO0CVP", // 20.50€
-  "windows-opt-1": "https://pay.sumup.com/b2c/QEVOX3BQ", // 41.00€
-  "jitter-script-0": "https://pay.sumup.com/b2c/QONAKRTU", // 2.50€ — 1 day
-  "jitter-script-1": "https://pay.sumup.com/b2c/QLKSKZZV", // 5.20€  — 1 week
-  "jitter-script-2": "https://pay.sumup.com/b2c/Q8GDNO7G", // 15.50€ — 1 month
-  "jitter-script-3": "https://pay.sumup.com/b2c/QVOOAVWS", // 20.50€ — 3 months
-  "jitter-script-4": "https://pay.sumup.com/b2c/QEXQZ0WH", // 25.70€ — 6 months
-  "jitter-script-5": "https://pay.sumup.com/b2c/QB46JT9F", // 30.80€ — 1 year
-  "jitter-script-6": "https://pay.sumup.com/b2c/QRLHHGQ2", // 41.00€ — Lifetime
-};
-
-// PROMO SUMUP LINKS (Annual & Lifetime with grade discounts)
-const PROMO_SUMUP_LINKS: { [key: string]: string } = {
-  // Annual (ai-engine-2) with promo
-  "ai-engine-2-not-client": "https://pay.sumup.com/b2c/QG7I32HW",      // 235.75€
-  "ai-engine-2-already-client": "https://pay.sumup.com/b2c/Q8Y6HE6N",  // 215.25€
-  "ai-engine-2-vip": "https://pay.sumup.com/b2c/QDBUS7W7",              // 194.75€
-  // Lifetime (ai-engine-3) with promo
-  "ai-engine-3-not-client": "https://pay.sumup.com/b2c/QSJHZGHR",      // 420.25€
-  "ai-engine-3-already-client": "https://pay.sumup.com/b2c/Q3FCLF69",  // 379.25€
-  "ai-engine-3-vip": "https://pay.sumup.com/b2c/QA8ZGSYH",              // 358.75€
-};
 
 // Bank transfer (SEPA) details
 const BANK_TRANSFER = {
@@ -282,13 +245,6 @@ export default function Purchase() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleSumUpPayment = () => {
-    if (!orderCreated) return;
-    let sumupLink = SUMUP_LINKS[`${productId}-${orderCreated.optionIndex}`];
-    sendDiscordAndEmail(orderCreated, "sumup");
-    window.location.href = sumupLink || "https://pay.sumup.com/b2c/QLA8WDDD";
   };
 
   const handleBankTransfer = () => {
@@ -881,16 +837,6 @@ export default function Purchase() {
                             </div>
 
                             <div className="space-y-1">
-                              <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">
-                                <CreditCard className="w-4 h-4" />
-                                {t("purchase.paySumup")}
-                              </Button>
-                              <p className="text-[10px] text-center text-amber-400/80">
-                                {t("purchase.paySumupHint")}
-                              </p>
-                            </div>
-
-                            <div className="space-y-1">
                               <Button
                                 type="button"
                                 onClick={handlePayPalPayment}
@@ -903,14 +849,6 @@ export default function Purchase() {
                               <p className="text-[10px] text-center text-blue-400/80">
                                 {t("purchase.payPaypalHint")}
                               </p>
-                            </div>
-
-                            <div className="space-y-1">
-                              <Button type="button" onClick={() => { sendDiscordAndEmail(orderCreated!, "bunq"); window.open(`https://bunq.me/NoamFranckGeorgesRobert/${total.toFixed(2)}/OneScript%20Order%20${orderCreated!.orderNumber}`, "_blank"); }} className="w-full bg-[#00b9e8] hover:bg-[#009dc7] text-white font-bold py-4 flex items-center justify-center gap-2">
-                                <CreditCard className="w-4 h-4" />
-                                {t("purchase.payBunq")}
-                              </Button>
-                              <p className="text-[10px] text-center text-cyan-400/80">{t("purchase.payBunqHint")}</p>
                             </div>
 
                             <Button type="button" onClick={handleBankTransfer} variant="outline" className="w-full border-border/50 text-muted-foreground hover:text-foreground font-bold py-4">
