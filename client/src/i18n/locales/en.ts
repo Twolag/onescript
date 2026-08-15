@@ -104,7 +104,7 @@ export const en = {
     annual: "Annual",
     lifetime: "Lifetime",
     renewal: "Renewal",
-    addon: "Add-on",
+    addon: "Advanced Weight",
     withSupport: "With Support + Setup",
     withSupportDesc: "Complete installation by staff + priority support included.",
     licenseOnly: "License Only (No Support)",

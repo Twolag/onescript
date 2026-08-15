@@ -108,7 +108,7 @@ export const ru: Dictionary = {
     annual: "Год",
     lifetime: "Навсегда",
     renewal: "Продление",
-    addon: "Аддон",
+    addon: "Advanced Weight",
     withSupport: "С поддержкой + установкой",
     withSupportDesc: "Полная установка сотрудниками + приоритетная поддержка.",
     licenseOnly: "Только лицензия (без поддержки)",

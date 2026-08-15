@@ -108,7 +108,7 @@ export const es: Dictionary = {
     annual: "Anual",
     lifetime: "De por vida",
     renewal: "Renovación",
-    addon: "Add-on",
+    addon: "Advanced Weight",
     withSupport: "Con soporte + instalación",
     withSupportDesc: "Instalación completa por el equipo + soporte prioritario incluido.",
     licenseOnly: "Solo licencia (sin soporte)",
