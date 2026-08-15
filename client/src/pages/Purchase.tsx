@@ -75,11 +75,23 @@ const fadeUp = {
   }),
 };
 
+import type { TranslationKey } from "@/i18n/LanguageContext";
+
+interface ProductOption {
+  labelKey: TranslationKey;
+  descKey?: TranslationKey;
+  noteKey?: TranslationKey;
+  durationKey?: TranslationKey;
+  price: number;
+}
+
 interface Product {
   id: string;
+  nameKey?: TranslationKey;
+  /** Brand / untranslated fallback name */
   name: string;
   icon: React.ElementType;
-  options: { label: string; price: number; note?: string; description?: string; duration?: string }[];
+  options: ProductOption[];
 }
 
 const products: Product[] = [
@@ -88,40 +100,42 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
-      { label: "1 Week (Setup + Support + License)", price: 25, description: "Complete setup with AI Aimbot V8.1 installation included + 7 days of support. Requires Waveshare RP2350A USB Mini Development Board. Everything done for you.", duration: "~1 hour" },
-      { label: "1 Week (License Only)", price: 15, description: "7 days license for V8.1. Includes a PDF setup guide. Requires Waveshare RP2350A USB Mini Development Board. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
-      { label: "Weekly Renewal", price: 10, note: "/ week", description: "Renewal for existing users who completed their first week.", duration: "~5 min" },
-      { label: "License Only (Monthly)", price: 40, description: "1 month license for V8.1. Includes a PDF setup guide. Requires Waveshare RP2350A USB Mini Development Board. NO remote installation support. You must set it up yourself.", duration: "N/A (Self-setup)" },
-      { label: "1 Month (Setup + Support + License)", price: 60, description: "Complete setup with AI Aimbot V8.1 installation included + 30 days of support. Requires Waveshare RP2350A USB Mini Development Board. Everything done for you. Renewal: 10 EUR/week or 30 EUR/month.", duration: "~1 hour" },
-      { label: "Help Installation (PDF users)", price: 30, description: "For users who bought the PDF-only license but need help with installation. Remote assistance included.", duration: "~1 hour" },
-      { label: "Annual Subscription", price: 150, description: "Full access to FUSION AI V8.1 for 12 months. Requires Waveshare RP2350A USB Mini Development Board. ⚠️ Locked to V8.1 - future major updates require +€30 per update. Priority support included.", duration: "~1 hour" },
-      { label: "Lifetime License", price: 250, description: "Permanent access to FUSION AI V8.1. Requires Waveshare RP2350A USB Mini Development Board. ⚠️ Locked to V8.1 - future major updates require +€30 per update. One-time payment.", duration: "~1 hour" },
-      { label: "Monthly Renewal", price: 30, note: "/ month", description: "Exclusive to users who have completed 4 consecutive weeks or previously purchased a full month. Renewal only.", duration: "~30 min" },
-      { label: "Advanced AI Weight — Apex Legends", price: 10, description: "Powerful AI Weight add-on for Apex Legends. Requires a high-end GPU: NVIDIA RTX 4070 / 5060 minimum. ONLY available for existing AI Aimbot license holders. Requires NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+. Enhances targeting precision.", duration: "Instant delivery" },
-      { label: "Advanced AI Weight — Fortnite", price: 10, description: "Powerful AI Weight add-on for Fortnite. Requires a high-end GPU: NVIDIA RTX 4070 / 5060 minimum. ONLY available for existing AI Aimbot license holders. Requires NVIDIA RTX 4070/5060+ or AMD RX 7900/9060+. Enhances targeting precision.", duration: "Instant delivery" },
+      { labelKey: "plans.weekSetup", price: 25, descKey: "plans.weekSetupDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.weekLicense", price: 15, descKey: "plans.weekLicenseDesc", durationKey: "plans.durSelf" },
+      { labelKey: "plans.weeklyRenewal", price: 10, noteKey: "plans.perWeek", descKey: "plans.weeklyRenewalDesc", durationKey: "plans.dur5m" },
+      { labelKey: "plans.monthLicense", price: 40, descKey: "plans.monthLicenseDesc", durationKey: "plans.durSelf" },
+      { labelKey: "plans.monthSetup", price: 60, descKey: "plans.monthSetupDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.helpInstall", price: 30, descKey: "plans.helpInstallDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.annual", price: 150, descKey: "plans.annualDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.lifetime", price: 250, descKey: "plans.lifetimeDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.monthlyRenewal", price: 30, noteKey: "plans.perMonth", descKey: "plans.monthlyRenewalDesc", durationKey: "plans.dur30m" },
+      { labelKey: "plans.addonApex", price: 10, descKey: "plans.addonApexDesc", durationKey: "plans.durInstant" },
+      { labelKey: "plans.addonFortnite", price: 10, descKey: "plans.addonFortniteDesc", durationKey: "plans.durInstant" },
     ],
   },
   {
     id: "windows-opt",
     name: "Windows Optimization",
+    nameKey: "plans.windowsOptName",
     icon: Monitor,
     options: [
-      { label: "Simple Optimization", price: 20, description: "Full system optimization for maximum performance.", duration: "~30 min" },
-      { label: "Optimization + Windows Reinstall", price: 40, description: "Complete Windows reinstallation + full optimization. (Requires a USB drive of at least 8GB)", duration: "~2 hours" },
+      { labelKey: "plans.winSimple", price: 20, descKey: "plans.winSimpleDesc", durationKey: "plans.dur30m" },
+      { labelKey: "plans.winFull", price: 40, descKey: "plans.winFullDesc", durationKey: "plans.dur2h" },
     ],
   },
   {
     id: "jitter-script",
     name: "Jitter Script",
+    nameKey: "nav.jitterScript",
     icon: Gamepad2,
     options: [
-      { label: "1 day", price: 2.5 },
-      { label: "1 week", price: 5 },
-      { label: "1 month", price: 15 },
-      { label: "3 months", price: 20 },
-      { label: "6 months", price: 25 },
-      { label: "1 year", price: 30 },
-      { label: "Lifetime", price: 40 },
+      { labelKey: "plans.jitter1d", price: 2.5 },
+      { labelKey: "plans.jitter1w", price: 5 },
+      { labelKey: "plans.jitter1m", price: 15 },
+      { labelKey: "plans.jitter3m", price: 20 },
+      { labelKey: "plans.jitter6m", price: 25 },
+      { labelKey: "plans.jitter1y", price: 30 },
+      { labelKey: "plans.jitterLife", price: 40 },
     ],
   },
 ];
@@ -161,9 +175,18 @@ export default function Purchase() {
   const product = products.find((p) => p.id === productId) || products[0];
   const rawGame = (searchParams.get("game") || "").toLowerCase();
   const selectedGame = GAME_LABELS[rawGame] || null;
+  const productDisplayName = product.nameKey ? t(product.nameKey) : product.name;
   const displayProductName = selectedGame && productId === "ai-engine"
-    ? `${selectedGame} — AI Aimbot`
-    : product.name;
+    ? `${selectedGame} — ${t("home.aiAimbot")}`
+    : productDisplayName;
+
+  const resolveOption = (option: ProductOption) => ({
+    label: t(option.labelKey),
+    description: option.descKey ? t(option.descKey) : undefined,
+    note: option.noteKey ? t(option.noteKey) : undefined,
+    duration: option.durationKey ? t(option.durationKey) : undefined,
+    price: option.price,
+  });
 
   // ── Form state ──
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
@@ -218,7 +241,8 @@ export default function Purchase() {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  const selectedItem = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
+  const selectedOption = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
+  const selectedItem = selectedOption ? resolveOption(selectedOption) : null;
   let total = selectedItem?.price ?? 0;
   const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 1 || selectedOptionIndex === 3);
   
@@ -632,7 +656,9 @@ export default function Purchase() {
                 ) : (
                   /* DEFAULT SELECTOR FOR OTHER PRODUCTS */
                   <div className="space-y-3">
-                    {product.options.map((option, idx) => (
+                    {product.options.map((option, idx) => {
+                      const resolved = resolveOption(option);
+                      return (
                       <motion.button
                         key={idx}
                         onClick={() => setSelectedOptionIndex(idx)}
@@ -649,17 +675,18 @@ export default function Purchase() {
                               {selectedOptionIndex === idx && <Check className="w-3 h-3 text-primary-foreground" />}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <p className="font-semibold text-foreground">{option.label}</p>
-                              {option.description && <p className="text-xs text-muted-foreground mt-1">{option.description}</p>}
+                              <p className="font-semibold text-foreground">{resolved.label}</p>
+                              {resolved.description && <p className="text-xs text-muted-foreground mt-1">{resolved.description}</p>}
                             </div>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            <p className="font-display font-bold text-lg text-violet-tech">{option.price}€</p>
-                            {option.note && <p className="text-xs text-muted-foreground">{option.note}</p>}
+                            <p className="font-display font-bold text-lg text-violet-tech">{resolved.price}€</p>
+                            {resolved.note && <p className="text-xs text-muted-foreground">{resolved.note}</p>}
                           </div>
                         </div>
                       </motion.button>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </motion.div>

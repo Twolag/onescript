@@ -12,7 +12,7 @@ import {
   X,
   Minus,
 } from "lucide-react";
-import { useLanguage } from "@/i18n/LanguageContext";
+import { useLanguage, type TranslationKey } from "@/i18n/LanguageContext";
 
 const COMPAT_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/compatibility-9tPSGgesBF5S5hA6Qermho.webp";
 
@@ -25,56 +25,59 @@ const fadeUp = {
   }),
 };
 
-const gpuData = [
-  { name: "RTX 3060", tier: "Mid Range", status: "compatible", note: "Stable operation, solid CPU required" },
-  { name: "RTX 3070", tier: "Mid Range", status: "compatible", note: "Stable operation, solid CPU required" },
-  { name: "RTX 4060", tier: "Mid Range", status: "compatible", note: "Stable operation" },
-  { name: "RTX 4070", tier: "High End", status: "recommended", note: "Recommended — maximum performance" },
-  { name: "RTX 4080 / 4090", tier: "High End", status: "recommended", note: "Optimal performance" },
-  { name: "RTX 5060+", tier: "High End", status: "recommended", note: "Latest generation — optimal" },
-  { name: "GTX 1660 and below", tier: "Low End", status: "incompatible", note: "Not compatible — GPU too old" },
-  { name: "AMD RX 6600 XT", tier: "Modern GPU", status: "compatible", note: "Native support in V8 — minimum AMD requirement" },
-  { name: "AMD RX 6700 XT", tier: "Modern GPU", status: "recommended", note: "Excellent V8 performance" },
-  { name: "AMD RX 6800 XT", tier: "High End", status: "recommended", note: "Outstanding V8 performance" },
-  { name: "AMD RX 7600", tier: "Modern GPU", status: "compatible", note: "RDNA 3 — native support in V8" },
-  { name: "AMD RX 7700 XT", tier: "High End", status: "recommended", note: "RDNA 3 — exceptional V8 performance" },
-  { name: "AMD RX 7900 XT / XTX", tier: "High End", status: "recommended", note: "RDNA 3 — optimal V8 performance" },
-  { name: "AMD RX 9000+ Series", tier: "Latest Gen", status: "recommended", note: "RDNA 4 — next-gen optimal performance" },
+const gpuData: { name: string; tierKey: TranslationKey; status: string; noteKey: TranslationKey }[] = [
+  { name: "RTX 3060", tierKey: "compatibility.tierMid", status: "compatible", noteKey: "compatibility.noteStableCpu" },
+  { name: "RTX 3070", tierKey: "compatibility.tierMid", status: "compatible", noteKey: "compatibility.noteStableCpu" },
+  { name: "RTX 4060", tierKey: "compatibility.tierMid", status: "compatible", noteKey: "compatibility.noteStable" },
+  { name: "RTX 4070", tierKey: "compatibility.tierHigh", status: "recommended", noteKey: "compatibility.noteMaxPerf" },
+  { name: "RTX 4080 / 4090", tierKey: "compatibility.tierHigh", status: "recommended", noteKey: "compatibility.noteOptimal" },
+  { name: "RTX 5060+", tierKey: "compatibility.tierHigh", status: "recommended", noteKey: "compatibility.noteLatest" },
+  { name: "GTX 1660 and below", tierKey: "compatibility.tierLow", status: "incompatible", noteKey: "compatibility.noteTooOld" },
+  { name: "AMD RX 6600 XT", tierKey: "compatibility.tierModern", status: "compatible", noteKey: "compatibility.noteAmdMin" },
+  { name: "AMD RX 6700 XT", tierKey: "compatibility.tierModern", status: "recommended", noteKey: "compatibility.noteAmdExcel" },
+  { name: "AMD RX 6800 XT", tierKey: "compatibility.tierHigh", status: "recommended", noteKey: "compatibility.noteAmdOut" },
+  { name: "AMD RX 7600", tierKey: "compatibility.tierModern", status: "compatible", noteKey: "compatibility.noteRdna3Native" },
+  { name: "AMD RX 7700 XT", tierKey: "compatibility.tierHigh", status: "recommended", noteKey: "compatibility.noteRdna3Exc" },
+  { name: "AMD RX 7900 XT / XTX", tierKey: "compatibility.tierHigh", status: "recommended", noteKey: "compatibility.noteRdna3Opt" },
+  { name: "AMD RX 9000+ Series", tierKey: "compatibility.tierLatest", status: "recommended", noteKey: "compatibility.noteRdna4" },
 ];
 
-const cpuData = [
-  { name: "Intel i5 13600K", tier: "Recommended", status: "recommended" },
-  { name: "Intel i7 13700K+", tier: "Optimal", status: "recommended" },
-  { name: "AMD Ryzen 5 5600X", tier: "Compatible", status: "compatible" },
-  { name: "AMD Ryzen 7 5800X+", tier: "Recommended", status: "recommended" },
-  { name: "Intel i5 12400", tier: "Compatible", status: "compatible" },
-  { name: "Intel i3 / Ryzen 3", tier: "Not compatible", status: "incompatible" },
+const cpuData: { name: string; tierKey: TranslationKey; status: string }[] = [
+  { name: "Intel i5 13600K", tierKey: "compatibility.tierRecommended", status: "recommended" },
+  { name: "Intel i7 13700K+", tierKey: "compatibility.tierOptimal", status: "recommended" },
+  { name: "AMD Ryzen 5 5600X", tierKey: "compatibility.tierCompatible", status: "compatible" },
+  { name: "AMD Ryzen 7 5800X+", tierKey: "compatibility.tierRecommended", status: "recommended" },
+  { name: "Intel i5 12400", tierKey: "compatibility.tierCompatible", status: "compatible" },
+  { name: "Intel i3 / Ryzen 3", tierKey: "compatibility.tierIncompatible", status: "incompatible" },
 ];
 
-const osData = [
-  { name: "Windows 10 (22H2)", status: "recommended", note: "Recommended — full support" },
-  { name: "Windows 11 (23H2+)", status: "compatible", note: "Compatible — full support" },
-  { name: "Windows 10 (older versions)", status: "limited", note: "Update recommended" },
-  { name: "macOS / Linux", status: "incompatible", note: "Not supported" },
+const osData: { name: string; status: string; noteKey: TranslationKey }[] = [
+  { name: "Windows 10 (22H2)", status: "recommended", noteKey: "compatibility.noteOsRec" },
+  { name: "Windows 11 (23H2+)", status: "compatible", noteKey: "compatibility.noteOsCompat" },
+  { name: "Windows 10 (older versions)", status: "limited", noteKey: "compatibility.noteOsUpdate" },
+  { name: "macOS / Linux", status: "incompatible", noteKey: "compatibility.noteOsNo" },
 ];
 
-const gamingPlatformsData = [
-  { name: "Steam", status: "recommended", note: "Available now — full support" },
-  { name: "Apex Legends", status: "recommended", note: "Available now — full support" },
-  { name: "Fortnite", status: "recommended", note: "Available now — full support" },
-  { name: "Call of Duty", status: "recommended", note: "Available now — full support" },
-  { name: "The Finals", status: "recommended", note: "Available now — full support" },
-  { name: "Rainbow Six Siege", status: "recommended", note: "Available now — full support" },
-  { name: "Rust", status: "recommended", note: "Available now — full support" },
-  { name: "Arc Raiders", status: "recommended", note: "Available now — full support" },
-  { name: "Destiny", status: "recommended", note: "Available now — full support" },
-  { name: "Delta Force", status: "recommended", note: "Available now — full support" },
-  { name: "PUBG", status: "recommended", note: "Available now — full support" },
-  { name: "Battlefield", status: "recommended", note: "Available now — full support" },
-  { name: "Other platforms", status: "limited", note: "Under development — coming soon" },
+const gamingPlatformsData: {
+  name?: string;
+  nameKey?: TranslationKey;
+  status: string;
+  noteKey: TranslationKey;
+}[] = [
+  { name: "Steam", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Apex Legends", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Fortnite", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Call of Duty", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "The Finals", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Rainbow Six Siege", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Rust", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Arc Raiders", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Destiny", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Delta Force", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "PUBG", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { name: "Battlefield", status: "recommended", noteKey: "compatibility.noteGameAvail" },
+  { nameKey: "compatibility.otherPlatforms", status: "limited", noteKey: "compatibility.noteGameSoon" },
 ];
-
-const aiAimbotNote = "Gaming platform compatibility is directly linked to FUSION AI's AI Aimbot. The games listed above are currently supported. Others will be added regularly.";
 
 function StatusIcon({ status }: { status: string }) {
   switch (status) {
@@ -92,24 +95,25 @@ function StatusIcon({ status }: { status: string }) {
 }
 
 function StatusBadge({ status }: { status: string }) {
+  const { t } = useLanguage();
   const styles: Record<string, string> = {
     recommended: "bg-green-400/10 text-green-400 border-green-400/20",
     compatible: "bg-violet-tech/10 text-violet-tech border-violet-tech/20",
     limited: "bg-yellow-400/10 text-yellow-400 border-yellow-400/20",
     incompatible: "bg-red-400/10 text-red-400 border-red-400/20",
   };
-  const labels: Record<string, string> = {
-    recommended: "Recommended",
-    compatible: "Compatible",
-    limited: "Limited",
-    incompatible: "Not supported",
+  const labels: Record<string, TranslationKey> = {
+    recommended: "compatibility.statusRecommended",
+    compatible: "compatibility.statusCompatible",
+    limited: "compatibility.statusLimited",
+    incompatible: "compatibility.statusUnsupported",
   };
   return (
     <span
       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${styles[status] || ""}`}
     >
       <StatusIcon status={status} />
-      {labels[status]}
+      {labels[status] ? t(labels[status]) : status}
     </span>
   );
 }
@@ -172,10 +176,10 @@ export default function Compatibility() {
               <HardDrive className="w-5 h-5 text-violet-tech" />
             </div>
             <div>
-                  <h2 className="font-display font-bold text-2xl tracking-tight">
-                Supported GPUs (AI Aimbot only)
+              <h2 className="font-display font-bold text-2xl tracking-tight">
+                {t("compatibility.gpuTitle")}
               </h2>
-              <p className="text-sm text-muted-foreground">NVIDIA & AMD Native support for AI (AMD minimum: RX 6600 XT). Other tools work on all GPUs.</p>
+              <p className="text-sm text-muted-foreground">{t("compatibility.gpuSubtitle")}</p>
             </div>
           </motion.div>
 
@@ -192,16 +196,16 @@ export default function Compatibility() {
                 <thead>
                   <tr className="border-b border-border/30">
                     <th className="text-left px-6 py-4 font-display text-xs font-semibold tracking-wider uppercase text-violet-accent">
-                      GPU
+                      {t("compatibility.colGpu")}
                     </th>
                     <th className="text-left px-6 py-4 font-display text-xs font-semibold tracking-wider uppercase text-violet-accent">
-                      Category
+                      {t("compatibility.colCategory")}
                     </th>
                     <th className="text-left px-6 py-4 font-display text-xs font-semibold tracking-wider uppercase text-violet-accent">
-                      Status
+                      {t("compatibility.colStatus")}
                     </th>
                     <th className="text-left px-6 py-4 font-display text-xs font-semibold tracking-wider uppercase text-violet-accent hidden sm:table-cell">
-                      Note
+                      {t("compatibility.colNote")}
                     </th>
                   </tr>
                 </thead>
@@ -215,13 +219,13 @@ export default function Compatibility() {
                         {gpu.name}
                       </td>
                       <td className="px-6 py-3.5 text-muted-foreground">
-                        {gpu.tier}
+                        {t(gpu.tierKey)}
                       </td>
                       <td className="px-6 py-3.5">
                         <StatusBadge status={gpu.status} />
                       </td>
                       <td className="px-6 py-3.5 text-muted-foreground hidden sm:table-cell">
-                        {gpu.note}
+                        {t(gpu.noteKey)}
                       </td>
                     </tr>
                   ))}
@@ -250,9 +254,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Recommended CPUs (AI Aimbot only)
+                {t("compatibility.cpuTitle")}
               </h2>
-              <p className="text-sm text-muted-foreground">Recommendations for AI processing. Other tools work on all CPUs.</p>
+              <p className="text-sm text-muted-foreground">{t("compatibility.cpuSubtitle")}</p>
             </div>
           </motion.div>
 
@@ -271,7 +275,7 @@ export default function Compatibility() {
                   <h4 className="font-medium text-foreground">{cpu.name}</h4>
                   <StatusBadge status={cpu.status} />
                 </div>
-                <p className="text-xs text-muted-foreground">{cpu.tier}</p>
+                <p className="text-xs text-muted-foreground">{t(cpu.tierKey)}</p>
               </motion.div>
             ))}
           </div>
@@ -295,9 +299,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Game Compatibility (AI Aimbot)
+                {t("compatibility.gamesTitle")}
               </h2>
-              <p className="text-sm text-muted-foreground">Platforms supported by FUSION AI</p>
+              <p className="text-sm text-muted-foreground">{t("compatibility.gamesSubtitle")}</p>
             </div>
           </motion.div>
 
@@ -309,13 +313,13 @@ export default function Compatibility() {
             viewport={{ once: true, margin: "-60px" }}
             className="glass-card rounded-lg p-5 mb-6 border-l-2 border-violet-tech"
           >
-            <p className="text-sm text-muted-foreground">{aiAimbotNote}</p>
+            <p className="text-sm text-muted-foreground">{t("compatibility.gamesNote")}</p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {gamingPlatformsData.map((platform, i) => (
               <motion.div
-                key={platform.name}
+                key={platform.nameKey || platform.name}
                 custom={i}
                 variants={fadeUp}
                 initial="hidden"
@@ -324,10 +328,12 @@ export default function Compatibility() {
                 className="glass-card rounded-lg p-5 hover:border-violet-tech/30 transition-colors duration-300"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-foreground">{platform.name}</h4>
+                  <h4 className="font-medium text-foreground">
+                    {platform.nameKey ? t(platform.nameKey) : platform.name}
+                  </h4>
                   <StatusBadge status={platform.status} />
                 </div>
-                <p className="text-xs text-muted-foreground">{platform.note}</p>
+                <p className="text-xs text-muted-foreground">{t(platform.noteKey)}</p>
               </motion.div>
             ))}
           </div>
@@ -350,9 +356,9 @@ export default function Compatibility() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Operating Systems
+                {t("compatibility.osTitle")}
               </h2>
-              <p className="text-sm text-muted-foreground">Windows only</p>
+              <p className="text-sm text-muted-foreground">{t("compatibility.osSubtitle")}</p>
             </div>
           </motion.div>
 
@@ -371,7 +377,7 @@ export default function Compatibility() {
                   <h4 className="font-medium text-foreground">{os.name}</h4>
                   <StatusBadge status={os.status} />
                 </div>
-                <p className="text-xs text-muted-foreground">{os.note}</p>
+                <p className="text-xs text-muted-foreground">{t(os.noteKey)}</p>
               </motion.div>
             ))}
           </div>
