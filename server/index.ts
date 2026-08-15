@@ -1,8 +1,10 @@
+import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
 import checkoutRouter from "./routes/checkout.js";
+import stripeWebhookRouter from "./routes/stripeWebhook.js";
 import ordersRouter from "./routes/orders.js";
 import sumupRouter from "./routes/sumup.js";
 
@@ -13,22 +15,24 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
-  // Middleware
+  // Stripe webhook needs raw body for signature verification
+  app.use(
+    "/api/checkout/webhook",
+    express.raw({ type: "application/json" }),
+    stripeWebhookRouter,
+  );
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // API Routes (AVANT les fichiers statiques)
   app.use("/api/checkout", checkoutRouter);
   app.use("/api/orders", ordersRouter);
   app.use("/api/sumup", sumupRouter);
-  
-  // Route de test
-  app.post("/api/test", (req, res) => {
-    console.log("[Test] Route de test appelée");
+
+  app.post("/api/test", (_req, res) => {
     res.json({ success: true, message: "Test route works" });
   });
 
-  // Serve static files from dist/public in production
   const staticPath =
     process.env.NODE_ENV === "production"
       ? path.resolve(__dirname, "public")
@@ -36,28 +40,16 @@ async function startServer() {
 
   app.use(express.static(staticPath));
 
-  // Handle client-side routing - serve index.html for all routes (APRÈS les API routes)
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
   });
 
-  // Error handling middleware (APRÈS tout le reste)
-  app.use((err: any, _req: any, res: any, _next: any) => {
-    console.error("Error:", err);
-    res.status(500).json({ error: "Internal server error" });
-  });
-
   const port = process.env.PORT || 3000;
-
   server.listen(port, () => {
-    console.log(`[Server] Démarré sur http://localhost:${port}/`);
-    console.log(`[Server] Routes API disponibles:`);
-    console.log(`  - POST /api/checkout`);
-    console.log(`  - POST /api/orders/send-emails`);
+    console.log(`Server running on http://localhost:${port}/`);
+    console.log(`  - POST /api/checkout/create-checkout-session`);
+    console.log(`  - POST /api/checkout/webhook`);
   });
 }
 
-startServer().catch((err) => {
-  console.error("[Server] Erreur au démarrage:", err);
-  process.exit(1);
-});
+startServer().catch(console.error);

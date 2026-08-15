@@ -11,6 +11,7 @@ import Products from "./pages/Products";
 import Compatibility from "./pages/Compatibility";
 import Support from "./pages/Support";
 import Purchase from "./pages/Purchase";
+import Success from "./pages/Success";
 import Trial from "./pages/Trial";
 import Documentation from "./pages/Documentation";
 import Reviews from "./pages/Reviews";
@@ -30,6 +31,7 @@ function Router() {
         <Route path="/compatibility" component={Compatibility} />
         <Route path="/support" component={Support} />
         <Route path="/purchase" component={Purchase} />
+        <Route path="/success" component={Success} />
         <Route path="/booking" component={Booking} />
         <Route path="/trial" component={Trial} />
         <Route path="/documentation" component={Documentation} />

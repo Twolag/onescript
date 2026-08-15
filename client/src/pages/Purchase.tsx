@@ -179,6 +179,7 @@ export default function Purchase() {
   } | null>(null);
   const [showBankTransfer, setShowBankTransfer] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [stripeLoading, setStripeLoading] = useState(false);
 
   // ── New simplified AI Engine state ──
   const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, year, lifetime, renewal, addon
@@ -281,6 +282,40 @@ export default function Purchase() {
     const paypalLink = `${PAYPAL_BASE}/${total}`;
     setTimeout(() => { window.open(paypalLink, "_blank"); }, 100);
     toast.success("Redirecting to PayPal... Please use 'Friends & Family' only.");
+  };
+
+  const handleStripePayment = async () => {
+    if (!orderCreated || selectedOptionIndex === null) return;
+    setStripeLoading(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId,
+          optionIndex: selectedOptionIndex,
+          customerEmail: formData.email,
+          customerName: `${formData.firstName} ${formData.lastName}`,
+          discordPseudo: formData.discordPseudo,
+          orderNumber: orderCreated.orderNumber,
+          game: selectedGame || "",
+          cpu: formData.cpu,
+          gpu: formData.gpu,
+          os: formData.os,
+          inputMethod: formData.controller || "N/A",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Impossible de créer la session Stripe");
+      }
+      sendDiscordAndEmail(orderCreated, "stripe");
+      window.location.href = data.url;
+    } catch (e) {
+      console.error(e);
+      toast.error(e instanceof Error ? e.message : "Erreur Stripe");
+      setStripeLoading(false);
+    }
   };
 
   const sendDiscordAndEmail = (order: typeof orderCreated, paymentMethod: string) => {
@@ -808,6 +843,21 @@ export default function Purchase() {
                         <>
                           <div className="space-y-3">
                             <p className="text-xs text-muted-foreground text-center mb-2">Choose your payment method:</p>
+
+                            <div className="space-y-1">
+                              <Button
+                                type="button"
+                                onClick={handleStripePayment}
+                                disabled={stripeLoading}
+                                className="w-full bg-[#635BFF] hover:bg-[#5851e0] text-white font-bold py-4 flex items-center justify-center gap-2"
+                              >
+                                <CreditCard className="w-4 h-4" />
+                                {stripeLoading ? "Redirecting…" : "PAY WITH STRIPE (CARD)"}
+                              </Button>
+                              <p className="text-[10px] text-center text-violet-accent/90">
+                                Secure card payment via Stripe Checkout
+                              </p>
+                            </div>
 
                             <div className="space-y-1">
                               <Button type="button" onClick={handleSumUpPayment} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 flex items-center justify-center gap-2">

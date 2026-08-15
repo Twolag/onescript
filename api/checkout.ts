@@ -1,28 +1,52 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
 
-// Initialiser Stripe avec la clé secrète
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2024-04-10",
-});
+const STRIPE_CATALOG: Record<
+  string,
+  { name: string; options: { label: string; priceCents: number; description: string }[] }
+> = {
+  "ai-engine": {
+    name: "FUSION AI",
+    options: [
+      { label: "1 Week (Setup + Support + License)", priceCents: 2500, description: "Complete setup + 7 days support." },
+      { label: "1 Week (License Only)", priceCents: 1500, description: "7 days license + PDF guide." },
+      { label: "Weekly Renewal", priceCents: 1000, description: "Renewal for existing users." },
+      { label: "License Only (Monthly)", priceCents: 4000, description: "1 month license + PDF guide." },
+      { label: "1 Month (Setup + Support + License)", priceCents: 6000, description: "Complete setup + 30 days support." },
+      { label: "Help Installation (PDF users)", priceCents: 3000, description: "Remote installation help." },
+      { label: "Annual Subscription", priceCents: 15000, description: "12 months access." },
+      { label: "Lifetime License", priceCents: 25000, description: "Permanent access." },
+      { label: "Monthly Renewal", priceCents: 3000, description: "Monthly renewal." },
+      { label: "Advanced AI Weight — Apex Legends", priceCents: 1000, description: "AI Weight add-on Apex." },
+      { label: "Advanced AI Weight — Fortnite", priceCents: 1000, description: "AI Weight add-on Fortnite." },
+    ],
+  },
+  "windows-opt": {
+    name: "Windows Optimization",
+    options: [
+      { label: "Simple Optimization", priceCents: 2000, description: "Full system optimization." },
+      { label: "Optimization + Windows Reinstall", priceCents: 4000, description: "Reinstall + optimization." },
+    ],
+  },
+  "jitter-script": {
+    name: "Jitter Script",
+    options: [
+      { label: "1 day", priceCents: 250, description: "1 day" },
+      { label: "1 week", priceCents: 500, description: "1 week" },
+      { label: "1 month", priceCents: 1500, description: "1 month" },
+      { label: "3 months", priceCents: 2000, description: "3 months" },
+      { label: "6 months", priceCents: 2500, description: "6 months" },
+      { label: "1 year", priceCents: 3000, description: "1 year" },
+      { label: "Lifetime", priceCents: 4000, description: "Lifetime" },
+    ],
+  },
+};
 
-const BASE_URL = process.env.BASE_URL || "https://onescript-five.vercel.app";
-
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  // Activer CORS
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-  );
+  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") {
     res.status(200).end();
@@ -34,58 +58,79 @@ export default async function handler(
   }
 
   try {
-    const { items, customerEmail, customerName } = req.body;
-
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ error: "Pas d'articles dans la commande" });
-    }
-
-    if (!process.env.STRIPE_SECRET_KEY) {
-      console.error("STRIPE_SECRET_KEY is not set");
+    const secret = process.env.STRIPE_SECRET_KEY;
+    if (!secret) {
       return res.status(500).json({ error: "Configuration Stripe manquante" });
     }
 
-    // Préparer les line items pour Stripe
-    const lineItems = items.map((item: any) => ({
-      price_data: {
-        currency: "eur",
-        product_data: {
-          name: item.name,
-          description: item.description || "",
-        },
-        unit_amount: Math.round(item.price), // en cents
-      },
-      quantity: 1,
-    }));
+    const stripe = new Stripe(secret);
+    const {
+      productId,
+      optionIndex,
+      customerEmail,
+      customerName,
+      discordPseudo,
+      orderNumber,
+      game,
+      cpu,
+      gpu,
+      os,
+      inputMethod,
+    } = req.body || {};
 
-    console.log("Creating Stripe session with items:", lineItems);
+    const product = STRIPE_CATALOG[productId];
+    const option = product?.options?.[Number(optionIndex)];
+    if (!product || !option) {
+      return res.status(400).json({ error: "Produit / option invalide" });
+    }
+    if (!customerEmail || !customerName || !orderNumber) {
+      return res.status(400).json({ error: "Données client manquantes" });
+    }
 
-    // Créer la session de paiement
+    const displayName = game ? `${game} — ${product.name}` : product.name;
+    const baseUrl = (process.env.BASE_URL || "https://onescript.fr").replace(/\/$/, "");
+
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: lineItems,
       mode: "payment",
       customer_email: customerEmail,
-      success_url: `${BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${BASE_URL}/purchase`,
+      line_items: [
+        {
+          quantity: 1,
+          price_data: {
+            currency: "eur",
+            unit_amount: option.priceCents,
+            product_data: {
+              name: `${displayName} — ${option.label}`,
+              description: option.description,
+            },
+          },
+        },
+      ],
+      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/purchase?canceled=1`,
       metadata: {
-        customerName: customerName,
-        customerEmail: customerEmail,
+        orderNumber: String(orderNumber),
+        productId: String(productId),
+        optionIndex: String(optionIndex),
+        optionLabel: option.label,
+        productName: displayName,
+        customerName: String(customerName),
+        customerEmail: String(customerEmail),
+        discordPseudo: String(discordPseudo || ""),
+        game: String(game || ""),
+        cpu: String(cpu || ""),
+        gpu: String(gpu || ""),
+        os: String(os || ""),
+        inputMethod: String(inputMethod || ""),
+        priceCents: String(option.priceCents),
       },
       billing_address_collection: "auto",
     });
 
-    console.log("Session created successfully:", session.id);
-    console.log("Redirect URL:", session.url);
-
-    return res.status(200).json({
-      sessionId: session.id,
-      url: session.url,
-    });
-  } catch (error: any) {
+    return res.status(200).json({ sessionId: session.id, url: session.url });
+  } catch (error: unknown) {
     console.error("Stripe error:", error);
-    return res.status(500).json({
-      error: error.message || "Erreur lors de la création de la session de paiement",
-    });
+    const message = error instanceof Error ? error.message : "Erreur Stripe";
+    return res.status(500).json({ error: message });
   }
 }
