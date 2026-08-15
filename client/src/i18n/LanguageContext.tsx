@@ -3,8 +3,9 @@ import { DEFAULT_LOCALE, LOCALE_STORAGE_KEY, type Dictionary, type Locale } from
 import { en } from "./locales/en";
 import { fr } from "./locales/fr";
 import { es } from "./locales/es";
+import { ru } from "./locales/ru";
 
-const dictionaries: Record<Locale, Dictionary> = { en, fr, es };
+const dictionaries: Record<Locale, Dictionary> = { en, fr, es, ru };
 
 type NestedKeyOf<T> = T extends object
   ? {
@@ -37,7 +38,7 @@ function detectLocale(): Locale {
     /* ignore */
   }
   const nav = typeof navigator !== "undefined" ? navigator.language.slice(0, 2).toLowerCase() : "en";
-  if (nav === "fr" || nav === "es") return nav;
+  if (nav === "fr" || nav === "es" || nav === "ru") return nav;
   return DEFAULT_LOCALE;
 }
 

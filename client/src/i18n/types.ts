@@ -1,9 +1,10 @@
-export type Locale = "en" | "fr" | "es";
+export type Locale = "en" | "fr" | "es" | "ru";
 
 export const LOCALES: { code: Locale; label: string; native: string }[] = [
   { code: "en", label: "English", native: "EN" },
   { code: "fr", label: "Français", native: "FR" },
   { code: "es", label: "Español", native: "ES" },
+  { code: "ru", label: "Русский", native: "RU" },
 ];
 
 export const DEFAULT_LOCALE: Locale = "en";
