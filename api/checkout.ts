@@ -18,8 +18,8 @@ const STRIPE_CATALOG: Record<
       { label: "Annual Subscription", priceCents: 15000, description: "12 months access." },
       { label: "Lifetime License", priceCents: 25000, description: "Permanent access." },
       { label: "Monthly Renewal", priceCents: 3000, description: "Monthly renewal." },
-      { label: "Advanced AI Weight — Apex Legends", priceCents: 1000, description: "AI Weight add-on Apex." },
-      { label: "Advanced AI Weight — Fortnite", priceCents: 1000, description: "AI Weight add-on Fortnite." },
+      { label: "Advanced Weight — Apex Legends", priceCents: 1000, description: "Advanced Weight Apex." },
+      { label: "Advanced Weight — Fortnite", priceCents: 1000, description: "Advanced Weight Fortnite." },
     ],
   },
   "windows-opt": {
@@ -126,8 +126,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const displayName = game ? `${game} — ${product.name}` : product.name;
     const baseUrl = (process.env.BASE_URL || "https://onescript.fr").replace(/\/$/, "");
 
-    // Card only — PayPal via Stripe must be enabled in Dashboard first
-    // (Settings → Payment methods). Forcing "paypal" breaks all checkouts if not activated.
+    // Card via Stripe Checkout — Discord only after real payment (fulfill / webhook).
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer_email: customerEmail,
