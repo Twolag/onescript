@@ -446,7 +446,7 @@ export default function Purchase() {
                           { id: "year", label: t("purchase.annual"), icon: Layers },
                           { id: "lifetime", label: t("purchase.lifetime"), icon: Shield },
                           { id: "renewal", label: t("purchase.renewal"), icon: RefreshCw },
-                          { id: "addon", label: t("purchase.addon"), icon: Cpu },
+                          { id: "addon", label: "Advanced Weight", icon: Cpu },
                         ].map((d) => (
                           <button
                             key={d.id}
