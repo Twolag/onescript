@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
+import { fulfillStripeSession } from "./_stripePaid.js";
 
 const STRIPE_CATALOG: Record<
   string,
@@ -42,6 +43,12 @@ const STRIPE_CATALOG: Record<
   },
 };
 
+/**
+ * Consolidated Stripe API (counts as 1 Serverless Function on Hobby plan):
+ * - POST { action: "fulfill", sessionId } → verify paid + Discord
+ * - POST { productId, optionIndex, ... } → create Checkout session
+ * - GET  ?session_id=... → retrieve session status
+ */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -53,17 +60,45 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  const secret = process.env.STRIPE_SECRET_KEY;
+  if (!secret) {
+    return res.status(500).json({ error: "Configuration Stripe manquante" });
   }
 
   try {
-    const secret = process.env.STRIPE_SECRET_KEY;
-    if (!secret) {
-      return res.status(500).json({ error: "Configuration Stripe manquante" });
+    // GET session status
+    if (req.method === "GET") {
+      const sessionId = (req.query.session_id || req.query.id) as string | undefined;
+      if (!sessionId) {
+        return res.status(400).json({ error: "session_id requis" });
+      }
+      const stripe = new Stripe(secret);
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      return res.status(200).json({
+        status: session.payment_status,
+        customer_email: session.customer_email,
+        total: session.amount_total,
+        metadata: session.metadata,
+      });
     }
 
-    const stripe = new Stripe(secret);
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    const body = req.body || {};
+
+    // Fulfill after payment (from /success)
+    if (body.action === "fulfill" || (body.sessionId && !body.productId)) {
+      const sessionId = body.sessionId as string;
+      if (!sessionId) {
+        return res.status(400).json({ error: "sessionId requis" });
+      }
+      const result = await fulfillStripeSession(sessionId);
+      return res.status(200).json(result);
+    }
+
+    // Create Checkout session
     const {
       productId,
       optionIndex,
@@ -76,7 +111,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       gpu,
       os,
       inputMethod,
-    } = req.body || {};
+    } = body;
 
     const product = STRIPE_CATALOG[productId];
     const option = product?.options?.[Number(optionIndex)];
@@ -87,6 +122,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: "Données client manquantes" });
     }
 
+    const stripe = new Stripe(secret);
     const displayName = game ? `${game} — ${product.name}` : product.name;
     const baseUrl = (process.env.BASE_URL || "https://onescript.fr").replace(/\/$/, "");
 

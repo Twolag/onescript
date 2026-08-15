@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
+import { fulfillStripeSession } from "./_stripePaid.js";
 
 export const config = {
   api: {
@@ -16,9 +17,8 @@ async function readRawBody(req: VercelRequest): Promise<Buffer> {
 }
 
 /**
- * Optional Stripe webhook (Vercel).
+ * Stripe webhook — Hobby-friendly (1 function).
  * URL: https://onescript.fr/api/stripe-webhook
- * Events: checkout.session.completed, checkout.session.async_payment_succeeded
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -60,12 +60,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ) {
       const session = event.data.object as Stripe.Checkout.Session;
       if (session.payment_status !== "unpaid") {
-        const origin = process.env.BASE_URL || "https://onescript.fr";
-        await fetch(`${origin}/api/stripe-fulfill`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sessionId: session.id }),
-        });
+        await fulfillStripeSession(session.id);
       }
     }
     return res.status(200).json({ received: true });

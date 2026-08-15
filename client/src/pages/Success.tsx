@@ -36,10 +36,10 @@ export default function Success() {
     (async () => {
       try {
         // Fulfill + Discord notify only if Stripe says paid
-        const fulfillRes = await fetch("/api/stripe-fulfill", {
+        const fulfillRes = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sessionId }),
+          body: JSON.stringify({ action: "fulfill", sessionId }),
         });
         const fulfillData = await fulfillRes.json();
         if (!fulfillRes.ok) {

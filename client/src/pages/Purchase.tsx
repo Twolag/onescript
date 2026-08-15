@@ -309,7 +309,7 @@ export default function Purchase() {
       if (!res.ok || !data.url) {
         throw new Error(data.error || "Impossible de créer la session Stripe");
       }
-      // Discord only after real payment (see /success → /api/stripe-fulfill)
+      // Discord only after real payment (see /success → /api/checkout action=fulfill)
       window.location.href = data.url;
     } catch (e) {
       console.error(e);
