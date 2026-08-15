@@ -1,6 +1,6 @@
 /*
  * Purchase — Neon Circuit Design
- * Product selection, summary, Stripe (card + PayPal) + bank transfer
+ * Product selection, summary, Stripe (card + PayPal)
  */
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -13,14 +13,6 @@ import { toast } from "sonner";
 import { useLanguage, type TranslationKey } from "@/i18n/LanguageContext";
 
 const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
-
-// Bank transfer (SEPA) details
-const BANK_TRANSFER = {
-  holder: "Noam Huruguen",
-  bank: "SumUp Limited",
-  iban: "IE79SUMU99036511881898",
-  bic: "SUMUIE22XXX",
-};
 
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -160,8 +152,6 @@ export default function Purchase() {
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
   } | null>(null);
-  const [showBankTransfer, setShowBankTransfer] = useState(false);
-  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [stripeLoading, setStripeLoading] = useState(false);
 
   // ── New simplified AI Engine state ──
@@ -194,12 +184,6 @@ export default function Purchase() {
       setSelectedOptionIndex(index);
     }
   }, [productId, aiDuration, aiSupport, aiRenewalType, aiAddonType]);
-
-  const copyToClipboard = (text: string, field: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
-  };
 
   const selectedOption = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   const selectedItem = selectedOption ? resolveOption(selectedOption) : null;
@@ -247,12 +231,6 @@ export default function Purchase() {
     }
   };
 
-  const handleBankTransfer = () => {
-    if (!orderCreated) return;
-    sendDiscordAndEmail(orderCreated, "bank_transfer");
-    setShowBankTransfer(true);
-  };
-
   const handleStripePayment = async () => {
     if (!orderCreated || selectedOptionIndex === null) return;
     setStripeLoading(true);
@@ -276,27 +254,21 @@ export default function Purchase() {
       });
       const data = await res.json();
       if (!res.ok || !data.url) {
-        throw new Error(data.error || "Impossible de créer la session Stripe");
+        throw new Error(data.error || t("purchase.errorGeneric"));
       }
       // Discord only after real payment (see /success → /api/checkout action=fulfill)
       window.location.href = data.url;
     } catch (e) {
       console.error(e);
-      toast.error(e instanceof Error ? e.message : "Erreur Stripe");
+      toast.error(e instanceof Error ? e.message : t("purchase.errorGeneric"));
       setStripeLoading(false);
     }
-  };
-
-  /** Same Stripe Checkout — customer picks PayPal there. No Discord until paid. */
-  const handlePayPalPayment = () => {
-    void handleStripePayment();
   };
 
   const sendDiscordAndEmail = (order: typeof orderCreated, paymentMethod: string) => {
     if (!order) return;
     const customerName = `${formData.firstName} ${formData.lastName}`;
 
-    // Customer email
     fetch("/api/send-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -312,7 +284,6 @@ export default function Purchase() {
       }),
     }).catch(console.error);
 
-    // Discord notification
     fetch("/api/discord-notify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -816,87 +787,24 @@ export default function Purchase() {
                         <p className="text-xs text-violet-tech font-bold uppercase tracking-wider mb-1">{t("purchase.orderNumber")}</p>
                         <p className="text-sm font-mono font-bold text-foreground">{orderCreated.orderNumber}</p>
                       </div>
-                      {!showBankTransfer ? (
-                        <>
-                          <div className="space-y-3">
-                            <p className="text-xs text-muted-foreground text-center mb-2">{t("purchase.choosePayment")}</p>
+                      <div className="space-y-3">
+                        <p className="text-xs text-muted-foreground text-center mb-2">{t("purchase.choosePayment")}</p>
 
-                            <div className="space-y-1">
-                              <Button
-                                type="button"
-                                onClick={handleStripePayment}
-                                disabled={stripeLoading}
-                                className="w-full bg-[#635BFF] hover:bg-[#5851e0] text-white font-bold py-4 flex items-center justify-center gap-2"
-                              >
-                                <CreditCard className="w-4 h-4" />
-                                {stripeLoading ? t("purchase.redirecting") : t("purchase.payStripe")}
-                              </Button>
-                              <p className="text-[10px] text-center text-violet-accent/90">
-                                {t("purchase.payStripeHint")}
-                              </p>
-                            </div>
-
-                            <div className="space-y-1">
-                              <Button
-                                type="button"
-                                onClick={handlePayPalPayment}
-                                disabled={stripeLoading}
-                                className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 flex items-center justify-center gap-2"
-                              >
-                                <MessageCircle className="w-4 h-4" />
-                                {stripeLoading ? t("purchase.redirecting") : t("purchase.payPaypal")}
-                              </Button>
-                              <p className="text-[10px] text-center text-blue-400/80">
-                                {t("purchase.payPaypalHint")}
-                              </p>
-                            </div>
-
-                            <Button type="button" onClick={handleBankTransfer} variant="outline" className="w-full border-border/50 text-muted-foreground hover:text-foreground font-bold py-4">
-                              {t("purchase.payBank")}
-                            </Button>
-                          </div>
-                        </>
-                      ) : (
-                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-6 bg-dark-elevated rounded-lg border border-violet-tech/30 space-y-4">
-                          <div className="flex items-center gap-2 text-violet-tech mb-2">
-                            <Shield className="w-5 h-5" />
-                            <h3 className="font-bold">{t("purchase.bankDetails")}</h3>
-                          </div>
-                          <div className="space-y-3">
-                            <div>
-                              <p className="text-[10px] text-muted-foreground uppercase">{t("purchase.accountHolder")}</p>
-                              <div className="flex items-center justify-between">
-                                <p className="text-sm font-medium">{BANK_TRANSFER.holder}</p>
-                                <button onClick={() => copyToClipboard(BANK_TRANSFER.holder, "holder")} className="text-violet-tech text-xs hover:underline">{copiedField === "holder" ? t("purchase.copied") : t("purchase.copy")}</button>
-                              </div>
-                            </div>
-                            <div>
-                              <p className="text-[10px] text-muted-foreground uppercase">IBAN</p>
-                              <div className="flex items-center justify-between">
-                                <p className="text-sm font-mono">{BANK_TRANSFER.iban}</p>
-                                <button onClick={() => copyToClipboard(BANK_TRANSFER.iban, "iban")} className="text-violet-tech text-xs hover:underline">{copiedField === "iban" ? t("purchase.copied") : t("purchase.copy")}</button>
-                              </div>
-                            </div>
-                            <div>
-                              <p className="text-[10px] text-muted-foreground uppercase">BIC / SWIFT</p>
-                              <div className="flex items-center justify-between">
-                                <p className="text-sm font-mono">{BANK_TRANSFER.bic}</p>
-                                <button onClick={() => copyToClipboard(BANK_TRANSFER.bic, "bic")} className="text-violet-tech text-xs hover:underline">{copiedField === "bic" ? t("purchase.copied") : t("purchase.copy")}</button>
-                              </div>
-                            </div>
-                            <div className="pt-2 border-t border-border/30">
-                              <p className="text-[10px] text-muted-foreground uppercase">{t("purchase.reference")}</p>
-                              <div className="flex items-center justify-between">
-                                <p className="text-sm font-bold text-violet-tech">{orderCreated.orderNumber}</p>
-                                <button onClick={() => copyToClipboard(orderCreated.orderNumber, "ref")} className="text-violet-tech text-xs hover:underline">{copiedField === "ref" ? t("purchase.copied") : t("purchase.copy")}</button>
-                              </div>
-                            </div>
-                          </div>
-                          <Button onClick={() => setShowBankTransfer(false)} variant="ghost" className="w-full text-xs text-muted-foreground hover:text-foreground">
-                            {t("purchase.goBackPayments")}
+                        <div className="space-y-1">
+                          <Button
+                            type="button"
+                            onClick={handleStripePayment}
+                            disabled={stripeLoading}
+                            className="w-full bg-[#635BFF] hover:bg-[#5851e0] text-white font-bold py-4 flex items-center justify-center gap-2"
+                          >
+                            <CreditCard className="w-4 h-4" />
+                            {stripeLoading ? t("purchase.redirecting") : t("purchase.payStripe")}
                           </Button>
-                        </motion.div>
-                      )}
+                          <p className="text-[10px] text-center text-violet-accent/90">
+                            {t("purchase.payStripeHint")}
+                          </p>
+                        </div>
+                      </div>
 
                       <div className="p-4 bg-dark-elevated/50 rounded-lg border border-border/30">
                         <div className="flex gap-3">
