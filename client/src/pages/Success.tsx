@@ -1,5 +1,6 @@
 /**
  * Success — after Stripe Checkout
+ * Notifies Discord only once payment is confirmed by Stripe.
  */
 import { useEffect, useState } from "react";
 import { Link, useSearch } from "wouter";
@@ -10,8 +11,9 @@ import { Button } from "@/components/ui/button";
 const DISCORD_LINK = "https://discord.gg/5btq6znUvN";
 
 type SessionInfo = {
+  paid?: boolean;
   status?: string;
-  customer_email?: string | null;
+  orderNumber?: string;
   total?: number | null;
   metadata?: Record<string, string>;
 };
@@ -33,13 +35,22 @@ export default function Success() {
 
     (async () => {
       try {
-        let res = await fetch(`/api/checkout-session?session_id=${encodeURIComponent(sessionId)}`);
-        if (!res.ok) {
-          res = await fetch(`/api/checkout/checkout-session/${encodeURIComponent(sessionId)}`);
+        // Fulfill + Discord notify only if Stripe says paid
+        const fulfillRes = await fetch("/api/stripe-fulfill", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId }),
+        });
+        const fulfillData = await fulfillRes.json();
+        if (!fulfillRes.ok) {
+          throw new Error(fulfillData.error || "Erreur vérification paiement");
         }
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Erreur");
-        setInfo(data);
+        if (!fulfillData.paid) {
+          setError("Paiement non confirmé");
+          setInfo(fulfillData);
+          return;
+        }
+        setInfo(fulfillData);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Erreur");
       } finally {
@@ -48,8 +59,8 @@ export default function Success() {
     })();
   }, [sessionId]);
 
-  const orderNumber = info?.metadata?.orderNumber;
-  const paid = info?.status === "paid" || info?.status === "no_payment_required";
+  const orderNumber = info?.orderNumber || info?.metadata?.orderNumber;
+  const paid = info?.paid === true || info?.status === "paid";
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-6 py-20">
@@ -63,7 +74,7 @@ export default function Success() {
             <Loader2 className="w-10 h-10 text-violet-tech animate-spin mx-auto mb-4" />
             <p className="text-muted-foreground">Vérification du paiement…</p>
           </>
-        ) : error ? (
+        ) : error && !paid ? (
           <>
             <p className="text-amber-400 font-semibold mb-2">Paiement reçu ?</p>
             <p className="text-sm text-muted-foreground mb-6">
@@ -93,7 +104,10 @@ export default function Success() {
             )}
             {typeof info?.total === "number" && (
               <p className="text-sm text-muted-foreground mb-6">
-                Montant : <span className="text-violet-accent font-semibold">{(info.total / 100).toFixed(2)} €</span>
+                Montant :{" "}
+                <span className="text-violet-accent font-semibold">
+                  {(info.total / 100).toFixed(2)} €
+                </span>
               </p>
             )}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
