@@ -16,6 +16,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -235,6 +236,7 @@ function ProductCardComponent({
 }
 
 export default function Products() {
+  const { t } = useLanguage();
   return (
     <div>
       {/* Page header */}
@@ -249,14 +251,14 @@ export default function Products() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Our Products
+              {t("products.eyebrow")}
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              Performance{" "}
-              <span className="text-violet-tech neon-text">Tools</span>
+              {t("products.title")}{" "}
+              <span className="text-violet-tech neon-text">{t("products.titleAccent")}</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Discover our solutions designed to transform your gaming experience. Featuring the brand new **FUSION IA V8** and exclusive add-ons.
+              {t("products.subtitle")}
             </p>
           </motion.div>
         </div>
@@ -288,10 +290,10 @@ export default function Products() {
             className="max-w-2xl mx-auto text-center"
           >
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-              Ready to <span className="text-violet-tech">level up</span>?
+              {t("products.ctaTitle")}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Choose your product and start your journey to gaming excellence. All purchases include 24/7 support and regular updates.
+              {t("products.ctaSubtitle")}
             </p>
             <Link href="/purchase">
               <Button
@@ -299,7 +301,7 @@ export default function Products() {
                 className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
               >
                 <Zap className="w-4 h-4" />
-                START SHOPPING
+                {t("products.buyNow")}
                 <ChevronRight className="w-4 h-4" />
               </Button>
             </Link>

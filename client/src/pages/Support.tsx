@@ -11,6 +11,7 @@ import {
   ChevronDown,
   Mail,
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -95,6 +96,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 }
 
 export default function Support() {
+  const { t } = useLanguage();
   return (
     <div>
       {/* Header */}
@@ -109,15 +111,14 @@ export default function Support() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Support
+              {t("support.eyebrow")}
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              How can we{" "}
-              <span className="text-violet-tech neon-text">help you</span>?
+              {t("support.title")}{" "}
+              <span className="text-violet-tech neon-text">{t("support.titleAccent")}</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              FAQ, live chat, and full documentation. Our team
-              is available to assist you via the help bubble.
+              {t("support.subtitle")}
             </p>
           </motion.div>
         </div>
@@ -140,10 +141,10 @@ export default function Support() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Frequently Asked Questions
+                {t("support.faqTitle")}
               </h2>
               <p className="text-sm text-muted-foreground">
-                Answers to the most common questions
+                {t("support.ticketDesc")}
               </p>
             </div>
           </motion.div>

@@ -4,6 +4,7 @@
  */
 import { motion } from "framer-motion";
 import { Star, User, Calendar } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -433,6 +434,7 @@ const reviews: Review[] = [
 ];
 
 export default function Reviews() {
+  const { t } = useLanguage();
   return (
     <div>
       {/* Page header */}
@@ -447,13 +449,15 @@ export default function Reviews() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Customer Reviews
+              {t("reviews.eyebrow")}
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              What our <span className="text-violet-tech neon-text">users</span> say
+              {t("reviews.title")}{" "}
+              <span className="text-violet-tech neon-text">{t("reviews.titleAccent")}</span>
+              {t("reviews.titleEnd") ? ` ${t("reviews.titleEnd")}` : ""}
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Discover testimonials and feedback from our satisfied customers.
+              {t("reviews.subtitle")}
             </p>
           </motion.div>
         </div>

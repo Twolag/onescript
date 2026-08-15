@@ -20,6 +20,8 @@ import {
   Maximize2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -47,33 +49,34 @@ interface GameCard {
   logo?: string;
   accent: string;
   logoText: string;
-  tags: string[];
+  tags: TranslationKey[];
   featured?: boolean;
 }
 
-const FULL_INPUT_TAGS = [
-  "From 15 €",
-  "Keyboard / Mouse",
-  "Controller",
-  "Undetectable",
-  "Optimized",
-] as const;
+const FULL_INPUT_TAGS: TranslationKey[] = [
+  "tags.from15",
+  "tags.keyboardMouse",
+  "tags.controller",
+  "tags.undetectable",
+  "tags.optimized",
+];
 
-const KEYBOARD_ONLY_TAGS = [
-  "From 15 €",
-  "Keyboard / Mouse",
-  "Undetectable",
-  "Optimized",
-] as const;
+const KEYBOARD_ONLY_TAGS: TranslationKey[] = [
+  "tags.from15",
+  "tags.keyboardMouse",
+  "tags.undetectable",
+  "tags.optimized",
+];
 
 /** Warzone / Splitgate: controller works without RP2350 */
-const CONTROLLER_NO_RP_TAGS = [
-  "From 15 €",
-  "Keyboard / Mouse",
-  "Controller — no RP needed",
-  "Undetectable",
-  "Optimized",
-] as const;
+const CONTROLLER_NO_RP_TAGS: TranslationKey[] = [
+  "tags.from15",
+  "tags.keyboardMouse",
+  "tags.controllerNoRp",
+  "tags.undetectable",
+  "tags.optimized",
+];
+
 
 const games: GameCard[] = [
   {
@@ -83,7 +86,7 @@ const games: GameCard[] = [
     logo: "/images/games/universal.svg",
     accent: "from-cyan-400/30 via-violet-tech/20 to-violet-accent/30",
     logoText: "UNIVERSAL",
-    tags: [...FULL_INPUT_TAGS, "All Games"],
+    tags: [...FULL_INPUT_TAGS, "tags.allGames"],
     featured: true,
   },
   {
@@ -225,6 +228,7 @@ const games: GameCard[] = [
 ];
 
 export default function Home() {
+  const { t } = useLanguage();
   const [atBottom, setAtBottom] = useState(false);
   const [preview, setPreview] = useState<GameCard | null>(null);
 
@@ -267,7 +271,7 @@ export default function Home() {
         aria-label={atBottom ? "Scroll up" : "Scroll down"}
       >
         <span className="text-[10px] font-display font-bold tracking-[0.22em] uppercase text-violet-accent">
-          {atBottom ? "Scroll up" : "Scroll down"}
+          {atBottom ? t("home.scrollUp") : t("home.scrollDown")}
         </span>
         <span className="flex flex-col items-center -space-y-3 text-violet-tech">
           {atBottom ? (
@@ -295,22 +299,22 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 rounded-full border border-violet-tech/30 bg-violet-tech/10 text-xs font-body font-medium text-violet-accent tracking-wide">
               <Zap className="w-3 h-3" />
-              FUSION AI — MULTI-GAME SUPPORT
+              {t("home.badge")}
             </div>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
-              Dominate with <span className="text-violet-tech neon-text">Fusion IA</span>
+              {t("home.dominate")} <span className="text-violet-tech neon-text">Fusion IA</span>
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8">
-              AI Aimbot for every title — one checkout, plans from 15 €.
+              {t("home.subtitle")}
             </p>
 
             <a
               href="#games-grid"
               className="inline-flex flex-col items-center gap-2 px-5 py-3 rounded-xl border border-violet-tech/50 bg-violet-tech/10 text-violet-accent hover:bg-violet-tech/20 hover:border-violet-tech hover:text-violet-tech transition-all shadow-[0_0_20px_rgba(123,46,255,0.25)]"
-              aria-label="Scroll to games"
+              aria-label={t("home.exploreGames")}
             >
               <span className="text-xs font-display font-bold tracking-[0.22em] uppercase">
-                Explore games
+                {t("home.exploreGames")}
               </span>
               <span className="flex flex-col items-center -space-y-3">
                 <ChevronDown className="w-8 h-8 animate-neon-bounce drop-shadow-[0_0_12px_rgba(123,46,255,0.95)]" />
@@ -385,7 +389,7 @@ export default function Home() {
                       <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] font-display font-bold tracking-wider text-white border border-violet-tech/60 bg-violet-tech/80 backdrop-blur-sm shadow-[0_0_16px_rgba(123,46,255,0.45)]">
                           <Maximize2 className="w-3.5 h-3.5" />
-                          FULLSCREEN
+                          {t("home.fullscreen")}
                         </span>
                       </div>
                     )}
@@ -400,7 +404,7 @@ export default function Home() {
                     <div className="flex items-center justify-between gap-3 mb-3">
                       <div>
                         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
-                          {game.featured ? "Works on almost all games" : "AI Aimbot"}
+                          {game.featured ? t("home.worksAlmostAll") : t("home.aiAimbot")}
                         </p>
                         <h2 className="font-display font-extrabold text-lg text-foreground group-hover:text-violet-accent transition-colors">
                           {game.name}
@@ -408,7 +412,7 @@ export default function Home() {
                       </div>
                       <Link href={game.href}>
                         <span className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-md text-sm font-display font-bold tracking-wider text-white bg-cyan-500/90 border border-cyan-300/60 shadow-[0_0_18px_rgba(34,211,238,0.45)] hover:bg-cyan-400 hover:shadow-[0_0_28px_rgba(34,211,238,0.7)] transition-all">
-                          BUY
+                          {t("home.buy")}
                           <ChevronRight className="w-4 h-4" />
                         </span>
                       </Link>
@@ -419,7 +423,7 @@ export default function Home() {
                           key={tag}
                           className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-display font-semibold tracking-wide text-violet-accent border border-violet-tech/45 bg-violet-tech/15 shadow-[0_0_12px_rgba(123,46,255,0.18)]"
                         >
-                          {tag}
+                          {t(tag)}
                         </span>
                       ))}
                     </div>
@@ -438,11 +442,11 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-2">
                 <Keyboard className="w-4 h-4 text-violet-tech" />
-                Keyboard &amp; Mouse
+                {t("home.keyboardMouse")}
               </span>
               <span className="inline-flex items-center gap-2">
                 <Gamepad2 className="w-4 h-4 text-violet-tech" />
-                Controller
+                {t("home.controller")}
               </span>
               <span className="inline-flex items-center gap-2">
                 <Zap className="w-4 h-4 text-violet-tech" />
@@ -467,14 +471,13 @@ export default function Home() {
               className="lg:col-span-3"
             >
               <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-                Support
+                {t("home.supportEyebrow")}
               </span>
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-4">
-                Need help? <span className="text-violet-tech">We&apos;re here.</span>
+                {t("home.supportTitle")} <span className="text-violet-tech">{t("home.supportTitleAccent")}</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl">
-                Our support team is available to assist you. Ticket system, complete FAQ, and
-                detailed documentation.
+                {t("home.supportDesc")}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/support">
@@ -483,7 +486,7 @@ export default function Home() {
                     className="bg-violet-tech hover:bg-violet-secondary text-primary-foreground font-display font-semibold tracking-wider neon-glow gap-2"
                   >
                     <Headphones className="w-4 h-4" />
-                    CONTACT SUPPORT
+                    {t("home.contactSupport")}
                   </Button>
                 </Link>
                 <Link href="/products">
@@ -492,7 +495,7 @@ export default function Home() {
                     variant="outline"
                     className="border-violet-tech/30 text-foreground hover:bg-violet-tech/10 hover:border-violet-tech/50 font-display tracking-wider"
                   >
-                    ALL PRODUCTS
+                    {t("home.allProducts")}
                   </Button>
                 </Link>
               </div>
@@ -507,18 +510,18 @@ export default function Home() {
             >
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Headphones, label: "24/7 Support" },
-                  { icon: Shield, label: "Secure Payment" },
-                  { icon: Zap, label: "Fast Installation" },
-                  { icon: TrendingUp, label: "Updates" },
+                  { icon: Headphones, labelKey: "home.support247" as TranslationKey },
+                  { icon: Shield, labelKey: "home.securePayment" as TranslationKey },
+                  { icon: Zap, labelKey: "home.fastInstall" as TranslationKey },
+                  { icon: TrendingUp, labelKey: "home.updates" as TranslationKey },
                 ].map((item) => (
                   <div
-                    key={item.label}
+                    key={item.labelKey}
                     className="glass-card rounded-lg p-5 text-center hover:border-violet-tech/30 transition-colors duration-300"
                   >
                     <item.icon className="w-6 h-6 text-violet-tech mx-auto mb-2" />
                     <p className="text-xs font-body font-medium text-muted-foreground">
-                      {item.label}
+                      {t(item.labelKey)}
                     </p>
                   </div>
                 ))}

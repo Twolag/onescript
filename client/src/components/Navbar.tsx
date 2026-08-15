@@ -7,25 +7,27 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Zap, Menu, X, ChevronDown } from "lucide-react";
-
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/LanguageContext";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/onescript-logo-full_647bb391.png";
 const DISCORD_INVITE = "https://discord.gg/hyT8UCHHHk";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/products", label: "Products" },
-  { href: "/showcase", label: "Showcase" },
-  { href: "/compatibility", label: "Compatibility" },
-  { href: "/documentation", label: "Documentation" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/support", label: "Support" },
+const navLinks: { href: string; labelKey: TranslationKey }[] = [
+  { href: "/", labelKey: "nav.home" },
+  { href: "/products", labelKey: "nav.products" },
+  { href: "/showcase", labelKey: "nav.showcase" },
+  { href: "/compatibility", labelKey: "nav.compatibility" },
+  { href: "/documentation", labelKey: "nav.documentation" },
+  { href: "/reviews", labelKey: "nav.reviews" },
+  { href: "/support", labelKey: "nav.support" },
 ];
 
-const purchaseProducts = [
-  { name: "AI Aimbot (FUSION AI)", href: "/purchase?product=ai-engine" },
-  { name: "Windows Optimization", href: "/purchase?product=windows-opt" },
-  { name: "Jitter Script", href: "/purchase?product=jitter-script" },
+const purchaseProducts: { nameKey: TranslationKey; href: string }[] = [
+  { nameKey: "nav.aiAimbot", href: "/purchase?product=ai-engine" },
+  { nameKey: "nav.windowsOpt", href: "/purchase?product=windows-opt" },
+  { nameKey: "nav.jitterScript", href: "/purchase?product=jitter-script" },
 ];
 
 function DiscordIcon({ className }: { className?: string }) {
@@ -40,17 +42,14 @@ export default function Navbar() {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const { t } = useLanguage();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      {/* Glass background */}
       <div className="absolute inset-0 bg-dark-base/80 backdrop-blur-xl" />
-      {/* Bottom circuit line */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech to-transparent opacity-60" />
 
       <div className="relative container flex items-center justify-between h-16 lg:h-18">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <img
             src={LOGO_URL}
@@ -63,7 +62,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => {
             const isActive = location === link.href;
@@ -77,7 +75,7 @@ export default function Navbar() {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {link.label}
+                {t(link.labelKey)}
                 {isActive && (
                   <motion.div
                     layoutId="nav-indicator"
@@ -91,14 +89,15 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* CTA + Mobile toggle */}
         <div className="flex items-center gap-2 sm:gap-3">
+          <LanguageSwitcher />
+
           <motion.a
             href={DISCORD_INVITE}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Join our Discord"
-            title="Join Discord"
+            aria-label={t("nav.joinDiscord")}
+            title={t("nav.joinDiscord")}
             className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#5865F2] text-white shadow-[0_0_20px_rgba(88,101,242,0.55)] hover:bg-[#4752C4] transition-colors"
             animate={{
               y: [0, -5, 0, -2, 0],
@@ -113,15 +112,14 @@ export default function Navbar() {
             <DiscordIcon className="relative w-5 h-5" />
           </motion.a>
 
-          {/* Desktop dropdown */}
           <div className="hidden sm:relative sm:inline-flex">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="inline-flex items-center gap-2 px-5 py-2 text-sm font-display font-semibold tracking-wider text-primary-foreground bg-violet-tech rounded-md hover:bg-violet-secondary transition-colors duration-200 neon-glow"
             >
               <Zap className="w-3.5 h-3.5" />
-              BUY NOW
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+              {t("nav.buyNow")}
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
             </button>
             <AnimatePresence>
               {dropdownOpen && (
@@ -139,7 +137,7 @@ export default function Navbar() {
                       onClick={() => setDropdownOpen(false)}
                       className="block px-4 py-3 text-sm font-body text-foreground hover:bg-violet-tech/10 hover:text-violet-tech transition-colors border-b border-border/30 last:border-b-0"
                     >
-                      {product.name}
+                      {t(product.nameKey)}
                     </a>
                   ))}
                 </motion.div>
@@ -147,19 +145,16 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-
-
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Menu"
+            aria-label={t("nav.menu")}
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -184,7 +179,7 @@ export default function Navbar() {
                         : "text-muted-foreground hover:text-foreground hover:bg-dark-elevated"
                     }`}
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 );
               })}
@@ -196,10 +191,10 @@ export default function Navbar() {
                 className="flex items-center gap-3 px-4 py-3 text-sm font-body font-medium tracking-wide rounded-md text-[#5865F2] hover:bg-[#5865F2]/10 transition-colors"
               >
                 <DiscordIcon className="w-5 h-5" />
-                Join Discord
+                {t("nav.joinDiscord")}
               </a>
               <div className="px-4 py-3 text-sm font-display font-semibold tracking-wider text-violet-tech">
-                BUY NOW
+                {t("nav.buyNow")}
               </div>
               {purchaseProducts.map((product) => (
                 <Link
@@ -208,7 +203,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-8 py-2 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-dark-elevated transition-colors"
                 >
-                  {product.name}
+                  {t(product.nameKey)}
                 </Link>
               ))}
             </div>

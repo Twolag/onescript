@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Play, Cpu, Zap, X, Gamepad2, Keyboard, Crosshair, Target, Trophy, Swords } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -178,7 +179,24 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
 }
 
 export default function Showcase() {
+  const { t } = useLanguage();
   const [selectedVideo, setSelectedVideo] = useState<VideoDemo | null>(null);
+
+  const translateTag = (tag: string) => {
+    const map: Record<string, string> = {
+      "Keyboard / Mouse": t("tags.keyboardMouse"),
+      Controller: t("tags.controller"),
+      "Controller — no RP needed": t("tags.controllerNoRp"),
+      Undetectable: t("tags.undetectable"),
+      Optimized: t("tags.optimized"),
+      "All Games": t("tags.allGames"),
+      "Add-on": t("tags.addon"),
+      "High-end GPU": t("tags.highEndGpu"),
+      "From 15€": t("tags.from15"),
+      "From 15 €": t("tags.from15"),
+    };
+    return map[tag] ?? tag;
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleVideoClick = (demo: VideoDemo) => {
@@ -301,13 +319,13 @@ export default function Showcase() {
             className="max-w-3xl mx-auto text-center mb-2"
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-violet-tech/10 border border-violet-tech/30 text-xs font-semibold tracking-widest uppercase text-violet-tech mb-4">
-              Showcase
+              {t("showcase.eyebrow")}
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4">
-              See <span className="text-violet-tech">OneScript</span> in Action
+              {t("showcase.title")} <span className="text-violet-tech">{t("showcase.titleAccent")}</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Exclusive gameplay demonstrations of FUSION IA and premium add-ons.
+              {t("showcase.subtitle")}
             </p>
           </motion.div>
         </div>
@@ -369,7 +387,7 @@ export default function Showcase() {
                         </h3>
                       </div>
                       <span className="inline-flex items-center gap-1 text-xs font-display font-semibold tracking-wider text-violet-tech group-hover:translate-x-0.5 transition-transform">
-                        WATCH
+                        {t("showcase.watch")}
                         <Play className="w-3.5 h-3.5 fill-current" />
                       </span>
                     </div>
@@ -379,7 +397,7 @@ export default function Showcase() {
                           key={tag}
                           className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-display font-semibold tracking-wide text-violet-accent border border-violet-tech/45 bg-violet-tech/15 shadow-[0_0_12px_rgba(123,46,255,0.18)]"
                         >
-                          {tag}
+                          {translateTag(tag)}
                         </span>
                       ))}
                     </div>
@@ -401,10 +419,10 @@ export default function Showcase() {
             className="text-center mb-12"
           >
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              Supported <span className="text-violet-tech">Games</span>
+              {t("showcase.supportedGames")}
             </h2>
             <p className="text-muted-foreground text-base sm:text-lg">
-              Same titles as on the homepage — plans from 15 €.
+              {t("showcase.supportedSubtitle")}
             </p>
           </motion.div>
 
@@ -436,7 +454,7 @@ export default function Showcase() {
                           key={tag}
                           className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-display font-semibold tracking-wide text-violet-accent border border-violet-tech/45 bg-violet-tech/15"
                         >
-                          {tag}
+                          {translateTag(tag)}
                         </span>
                       ))}
                     </div>
