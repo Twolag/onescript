@@ -73,7 +73,14 @@ export const es: Dictionary = {
     title: "Lo que dicen",
     titleAccent: "nuestros usuarios",
     titleEnd: "",
-    subtitle: "Descubre testimonios y opiniones de nuestros clientes satisfechos.",
+    subtitle: "Opiniones auténticas sincronizadas desde Discord — foto de perfil, usuario y mensaje original.",
+    discordNote:
+      "Cada reseña se publica solo tras validación (reacción ✅ del equipo) en Discord y luego se sincroniza aquí.",
+    verifiedDiscord: "Reseña verificada en Discord",
+    viewOnDiscord: "Ver en Discord",
+    loading: "Cargando reseñas…",
+    empty: "Aún no hay reseñas publicadas. Las validadas en Discord aparecerán aquí.",
+    joinDiscord: "Unirse a Discord",
   },
   showcase: {
     eyebrow: "Demos",

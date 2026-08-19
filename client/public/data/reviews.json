@@ -1,0 +1,17 @@
+{
+  "updatedAt": "2026-03-19T00:00:00.000Z",
+  "reviews": [
+    {
+      "id": "demo-husla",
+      "messageId": "demo-husla",
+      "authorName": "AaE HuslA",
+      "authorAvatar": null,
+      "content": "Best services and ai aimbot 100% recommend very professional",
+      "createdAt": "2026-04-18T12:00:00.000Z",
+      "approvedAt": "2026-04-18T12:00:00.000Z",
+      "discordUrl": "https://discord.gg/5btq6znUvN",
+      "imageUrl": "/reviews/husla_review.png",
+      "display": "attachment"
+    }
+  ]
+}
