@@ -9,7 +9,8 @@
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "sync-reviews": "tsx scripts/sync-discord-reviews.ts"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -42,6 +43,7 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@stripe/stripe-js": "^8.9.0",
+    "@vercel/blob": "^2.8.0",
     "@vercel/node": "^5.10.1",
     "axios": "^1.12.0",
     "class-variance-authority": "^0.7.1",

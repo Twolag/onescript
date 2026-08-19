@@ -1,443 +1,63 @@
 /*
- * Reviews — Neon Circuit Design
- * Customer reviews
+ * Reviews — Discord-verified customer reviews (screenshots / message cards)
  */
 import { motion } from "framer-motion";
-import { Star, User, Calendar } from "lucide-react";
+import { MessageCircle, RefreshCw } from "lucide-react";
+import { useEffect, useState } from "react";
+import DiscordReviewCard from "@/components/DiscordReviewCard";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
+import type { DiscordReview, ReviewsManifest } from "@shared/reviews";
+import { REVIEWS_MANIFEST_PATH } from "@shared/reviews";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6 },
+    transition: { delay: Math.min(i * 0.05, 0.4), duration: 0.5 },
   }),
 };
 
-interface Review {
-  id: string;
-  author: string;
-  date: string;
-  rating: number;
-  title: string;
-  content: string;
-  product: "FUSION AI" | "Windows Optimization" | "Jitter Script";
-}
+async function loadReviews(): Promise<DiscordReview[]> {
+  const sources = ["/api/reviews", `/${REVIEWS_MANIFEST_PATH}`];
 
-const reviews: Review[] = [
-  {
-    id: "1",
-    author: "Raïjan",
-    date: "02/27/2026",
-    rating: 5,
-    title: "Honestly, congratulations, great job",
-    content: "You can be proud of yourself. I'll spread the word.",
-    product: "FUSION AI",
-  },
-  {
-    id: "2",
-    author: "Apex Player",
-    date: "March 2026",
-    rating: 5,
-    title: "30 kills, 5383 damage - Incredible performance",
-    content: "The results speak for themselves. With FUSION AI, I've reached stats never seen before. Precision and responsiveness are exceptional.",
-    product: "FUSION AI",
-  },
-  {
-    id: "7",
-    author: "Pro Player",
-    date: "February 2026",
-    rating: 5,
-    title: "Windows Optimization - +60 FPS in gaming",
-    content: "Quick and easy installation. Highly recommended for all gamers who want to optimize their PC.",
-    product: "Windows Optimization",
-  },
-  {
-    id: "8",
-    author: "CompetitivePlayer",
-    date: "January 2026",
-    rating: 5,
-    title: "Jitter Script - The best on the market",
-    content: "I've tested several jitter aims, this one is undoubtedly the best. Very discreet, very powerful, and the interface is simple to use.",
-    product: "Jitter Script",
-  },
-  {
-    id: "9",
-    author: "Apex Pro Player",
-    date: "February 2026",
-    rating: 5,
-    title: "40 kills, 7000 damage - Exceptional results",
-    content: "Performance with FUSION AI is incredible. 40 kills and 7000 damage in a single match. It's a game-changer for competitive players.",
-    product: "FUSION AI",
-  },
-  {
-    id: "12",
-    author: "ZAI FRR",
-    date: "03/17/2026",
-    rating: 5,
-    title: "Magnifiquement magnifique",
-    content: "Magnifiquement magnifique — client Discord reaction after installation.",
-    product: "FUSION AI",
-  },
-  {
-    id: "14",
-    author: "MrEgooos",
-    date: "03/25/2026",
-    rating: 5,
-    title: "The best!! Always good to work through issues!!",
-    content: "The best!! Always good to work through issues!! — verified Discord review.",
-    product: "FUSION AI",
-  },
-  {
-    id: "16",
-    author: "imnotcheatingair",
-    date: "March 2026",
-    rating: 5,
-    title: "Champions #1 — 10/3/17 — 3483 damage",
-    content: "Squad Champions #1 in ranked. 10 kills, 3 assists, 17 knockdowns, 3483 damage in 14 minutes. FUSION AI delivers.",
-    product: "FUSION AI",
-  },
-  {
-    id: "17",
-    author: "Veltouze",
-    date: "04/06/2026",
-    rating: 5,
-    title: "Detailed review — Master rank with optimized setup",
-    content: "Comprehensive review from a competitive player. Discusses Pred/Master rank gameplay, hardware optimization, and FUSION AI performance.",
-    product: "FUSION AI",
-  },
-  {
-    id: "19",
-    author: "NDonFire",
-    date: "04/06/2026",
-    rating: 5,
-    title: "You have to try it, it's crazy",
-    content: "Quick testimonial from NDonFire. Verified Discord review expressing enthusiasm about FUSION AI performance.",
-    product: "FUSION AI",
-  },
-  {
-    id: "20",
-    author: "Etienne ALG",
-    date: "17/04/2026",
-    rating: 5,
-    title: "Very fast and kind people",
-    content: "Excellent customer service and support team. OneScript interface is intuitive and responsive. Professional setup and installation process.",
-    product: "FUSION AI",
-  },
-  {
-    id: "21",
-    author: "AaE HuslA",
-    date: "18/04/2026",
-    rating: 5,
-    title: "Best services and ai aimbot 100% recommend very professional",
-    content: "Outstanding service quality and professional support. FUSION AI performance is incredible with perfect configuration.",
-    product: "FUSION AI",
-  },
-  {
-    id: "22",
-    author: "whyme5483",
-    date: "04/28/2026",
-    rating: 5,
-    title: "AI Aimbot legit and fast",
-    content: "AI Aimbot legit and fast and easy to understand. Dropped this first game 🔥",
-    product: "FUSION AI",
-  },
-  {
-    id: "23",
-    author: "Zeyrox",
-    date: "05/08/2026",
-    rating: 5,
-    title: "Le jitter marche tellement bien",
-    content: "Le jitter marche tellement bien, ça tire droit, ça louche pas, installation 20sec top chrono. Merci @OneLag_ @TwoLag_",
-    product: "Jitter Script",
-  },
-  {
-    id: "24",
-    author: "Life",
-    date: "05/09/2026",
-    rating: 5,
-    title: "goated the jitter aim script is insane",
-    content: "goated the jitter aim script is insane",
-    product: "Jitter Script",
-  },
-  {
-    id: "25",
-    author: "suarefyx",
-    date: "05/10/2026",
-    rating: 5,
-    title: "Giveaway incroyable",
-    content: "Merci pour le script le giveaway étais incroyable merci les gars vous êtes les goat 🫡",
-    product: "Jitter Script",
-  },
-  {
-    id: "26",
-    author: "Tom",
-    date: "05/12/2026",
-    rating: 5,
-    title: "Best cheese ive ever bought",
-    content: "bought a month of FusionAI and i was skeptical at first, but is the best cheese ive ever bought worth every penny get up it",
-    product: "FUSION AI",
-  },
-  {
-    id: "27",
-    author: "Bxsti03",
-    date: "05/12/2026",
-    rating: 5,
-    title: "Highly recommend AI Fusion",
-    content: "I bought AI Fusion today, and while I was unsure at first, after just the first few hours of gameplay, it has already paid for itself. I can highly recommend it to everyone else. 🥳",
-    product: "FUSION AI",
-  },
-  {
-    id: "28",
-    author: "Azra",
-    date: "05/13/2026",
-    rating: 5,
-    title: "working very fine nice owners",
-    content: "working very fine nice owners very very good",
-    product: "FUSION AI",
-  },
-  {
-    id: "29",
-    author: "Slovi",
-    date: "04/20/2026",
-    rating: 5,
-    title: "Awesome <3",
-    content: "Awesome <3 — client showing their OneScript interface configuration.",
-    product: "Jitter Script",
-  },
-  {
-    id: "30",
-    author: "xswayn",
-    date: "04/25/2026",
-    rating: 5,
-    title: "Works flawlessly ❤️ W sellers too",
-    content: "Works flawlessly ❤️ W sellers too — gameplay proof with OneScript interface.",
-    product: "FUSION AI",
-  },
-  {
-    id: "31",
-    author: "ukvor",
-    date: "05/13/2026",
-    rating: 5,
-    title: "Very quick and helpful",
-    content: "Bought ai fusion today and they were very quick and helpful on my order, 10/10 will buy again.",
-    product: "FUSION AI",
-  },
-  {
-    id: "32",
-    author: "Azra",
-    date: "05/14/2026",
-    rating: 5,
-    title: "Jitter aim made me so happy",
-    content: "Jitter aim made me so happy after 24H trial i needed to buy again very good",
-    product: "Jitter Script",
-  },
-  {
-    id: "33",
-    author: "TH Big D",
-    date: "05/16/2026",
-    rating: 5,
-    title: "Can only recommend FusionAI",
-    content: "Can only recommend FusionAI very easy to use and good help from the Team 👍",
-    product: "FUSION AI",
-  },
-  {
-    id: "34",
-    author: "Desm slayer",
-    date: "05/16/2026",
-    rating: 5,
-    title: "Super produit et assistance au top",
-    content: "Super produit et assistance au top rien a dire",
-    product: "FUSION AI",
-  },
-  {
-    id: "35",
-    author: "Zorayyu",
-    date: "05/17/2026",
-    rating: 5,
-    title: "Im absolutely happy with the AI Aimbot",
-    content: "Im absolutely happy with the AI Aimbot, working perfectly fine & Support is fast/great ❤️ Testing already a week now",
-    product: "FUSION AI",
-  },
-  {
-    id: "36",
-    author: "XC",
-    date: "05/17/2026",
-    rating: 5,
-    title: "+rep abérant lvdmm",
-    content: "+rep abérant lvdmm",
-    product: "FUSION AI",
-  },
-  {
-    id: "37",
-    author: "Cust",
-    date: "05/22/2026",
-    rating: 5,
-    title: "tt est carrer merci la team",
-    content: "tt est carrer merci la team",
-    product: "FUSION AI",
-  },
-  {
-    id: "38",
-    author: "クロヌス",
-    date: "05/25/2026",
-    rating: 5,
-    title: "Rapide et carré",
-    content: "Pour les 24h c'est du rapide et du carré Merce la team 👌",
-    product: "FUSION AI",
-  },
-  {
-    id: "39",
-    author: "Bruo1988",
-    date: "05/27/2026",
-    rating: 5,
-    title: "Son los mejores del mundo",
-    content: "Son los meilleurs du monde grâce à mes amis, je suis très heureux 😀",
-    product: "FUSION AI",
-  },
-  {
-    id: "40",
-    author: "Ayu'",
-    date: "05/28/2026",
-    rating: 5,
-    title: "L'ia marche a fond",
-    content: "Bon.. les mots sont moins parlant qu'une image donc voila voila, ils sont top et l'ia marche a fond",
-    product: "FUSION AI",
-  },
-  {
-    id: "41",
-    author: "🍀",
-    date: "05/28/2026",
-    rating: 5,
-    title: "10/10 LEGIT!",
-    content: "10/10 LEGIT!🥰",
-    product: "FUSION AI",
-  },
-  {
-    id: "42",
-    author: "Pour100tage",
-    date: "05/28/2026",
-    rating: 5,
-    title: "Tres rapide et simple",
-    content: "tres rapide et simple merci beaucoup les reufs 🧡",
-    product: "FUSION AI",
-  },
-  {
-    id: "43",
-    author: "PRKenjiiPR",
-    date: "05/29/2026",
-    rating: 5,
-    title: "First game on (AMD 9070 xt sc)",
-    content: "First game on (AMD 9070 xt sc) — Amazing performance on the new setup.",
-    product: "FUSION AI",
-  },
-  {
-    id: "44",
-    author: "SwirL.-_",
-    date: "20/06/2026",
-    rating: 5,
-    title: "Champions — 35 kills, 7343 damage",
-    content: "très bon script et bonne suivie sur l'aim très bien dev je recommandes — Champions avec 35 kills / 2 assists / 44 KO et 7343 damage.",
-    product: "FUSION AI",
-  },
-  {
-    id: "45",
-    author: "NDonFire",
-    date: "21/06/2026",
-    rating: 5,
-    title: "What are you waiting for to try this?",
-    content: "What are you waiting for to try this? — Campeones: 30 kills / 4 assists / 34 KO, 7090 damage.",
-    product: "FUSION AI",
-  },
-  {
-    id: "46",
-    author: "Gyzmou",
-    date: "22/06/2026",
-    rating: 5,
-    title: "random game with best product",
-    content: "random game with best product — 33/6/35 (6999 dmg) et 29/1/34 (7091 dmg) en Apex.",
-    product: "FUSION AI",
-  },
-  {
-    id: "47",
-    author: "rlmaster12344",
-    date: "26/06/2026",
-    rating: 5,
-    title: "best ai on the market",
-    content: "best ai on the market u wont find a better one its insanely strong",
-    product: "FUSION AI",
-  },
-  {
-    id: "48",
-    author: "rlmaster12344",
-    date: "11/07/2026",
-    rating: 5,
-    title: "+rep ai titan weight — better than titan",
-    content: "+rep ai titan weight your gonna save 500+ $ if u dont buy titan this is better then titan and its only 10 euro litterly insane",
-    product: "FUSION AI",
-  },
-  {
-    id: "49",
-    author: "Kuba.Network",
-    date: "17/07/2026",
-    rating: 5,
-    title: "Plat 4 to D4 — 20 kills, 5k damage",
-    content: "the boost took like 6 games he won every game 20 kills 5k damage from plat 4 to d4",
-    product: "FUSION AI",
-  },
-  {
-    id: "50",
-    author: "xivkyn",
-    date: "25/07/2026",
-    rating: 5,
-    title: "incroyable tout simplement en profil legit",
-    content: "incroyable tout simplement en profil legit je fqit des dinguerie jai qcheter plusieur fois et sa a toujours etait un service de qualiter 👍",
-    product: "FUSION AI",
-  },
-  {
-    id: "51",
-    author: "xivkyn",
-    date: "31/07/2026",
-    rating: 5,
-    title: "Marche nickel sur The Finals",
-    content: "Marche nickel sur the final les gars 👌🔥",
-    product: "FUSION AI",
-  },
-  {
-    id: "52",
-    author: "SiKaRiOElMeNoL",
-    date: "01/08/2026",
-    rating: 5,
-    title: "Best ai in the market — 100/10",
-    content: "Best ai in the market guaranteed UI is amazing everything is simple and works like a charm 100/10",
-    product: "FUSION AI",
-  },
-  {
-    id: "53",
-    author: "owblock",
-    date: "07/08/2026",
-    rating: 5,
-    title: "Best ai by far — customer service is insane",
-    content: "Best ai by far, I've used like three ai cheats and this is the best one by far, thank you @TwoLag for helping me set it up too, customer service is insane.",
-    product: "FUSION AI",
-  },
-  {
-    id: "54",
-    author: "xivkyn",
-    date: "09/08/2026",
-    rating: 5,
-    title: "Parfait — service de qualité",
-    content: "Parfait mrc pour le service de qualité et la rapidité de la commande et top 👌",
-    product: "FUSION AI",
-  },
-];
+  for (const url of sources) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const data = (await res.json()) as ReviewsManifest;
+      if (Array.isArray(data.reviews)) return data.reviews;
+    } catch {
+      /* try next source */
+    }
+  }
+
+  return [];
+}
 
 export default function Reviews() {
   const { t } = useLanguage();
+  const [reviews, setReviews] = useState<DiscordReview[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadReviews().then((items) => {
+      if (!cancelled) {
+        setReviews(items);
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const discordInvite = import.meta.env.VITE_DISCORD_LINK || "https://discord.gg/5btq6znUvN";
+
   return (
     <div>
-      {/* Page header */}
       <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20">
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
@@ -446,7 +66,7 @@ export default function Reviews() {
             custom={0}
             initial="hidden"
             animate="visible"
-            className="max-w-2xl"
+            className="max-w-3xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
               {t("reviews.eyebrow")}
@@ -456,74 +76,54 @@ export default function Reviews() {
               <span className="text-violet-tech neon-text">{t("reviews.titleAccent")}</span>
               {t("reviews.titleEnd") ? ` ${t("reviews.titleEnd")}` : ""}
             </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed">
+            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
               {t("reviews.subtitle")}
+            </p>
+            <p className="text-sm text-muted-foreground/90 leading-relaxed border-l-2 border-violet-tech/40 pl-4">
+              {t("reviews.discordNote")}
             </p>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
       </section>
 
-      {/* Reviews Grid */}
-      <section className="relative py-20 lg:py-28">
+      <section className="relative py-16 lg:py-24">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {[...reviews].reverse().map((review, i) => (
-              <motion.div
-                key={review.id}
-                custom={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                className="glass-card rounded-lg overflow-hidden border border-border/30 hover:border-violet-tech/50 transition-all hover:shadow-lg hover:shadow-violet-tech/20"
-              >
-                {/* Content */}
-                <div className="p-6">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-tech to-violet-accent flex items-center justify-center flex-shrink-0">
-                        <User className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-foreground text-sm">{review.author}</p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          {review.date}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Rating */}
-                  <div className="flex gap-1 mb-3">
-                    {Array.from({ length: review.rating }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-4 h-4 fill-violet-tech text-violet-tech"
-                      />
-                    ))}
-                  </div>
-
-                  {/* Product Badge */}
-                  <div className="inline-block px-2.5 py-1 rounded-md bg-violet-tech/10 border border-violet-tech/20 text-xs font-semibold text-violet-tech mb-3">
-                    {review.product}
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-display font-bold text-base mb-2 text-foreground">
-                    {review.title}
-                  </h3>
-
-                  {/* Content */}
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {review.content}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center gap-2 text-muted-foreground py-20">
+              <RefreshCw className="w-5 h-5 animate-spin" />
+              {t("reviews.loading")}
+            </div>
+          ) : reviews.length === 0 ? (
+            <div className="glass-card rounded-lg p-10 text-center max-w-xl mx-auto">
+              <MessageCircle className="w-10 h-10 text-violet-tech mx-auto mb-4" />
+              <p className="text-muted-foreground mb-6">{t("reviews.empty")}</p>
+              <Button asChild variant="outline" className="border-violet-tech/40">
+                <a href={discordInvite} target="_blank" rel="noopener noreferrer">
+                  {t("reviews.joinDiscord")}
+                </a>
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+              {reviews.map((review, i) => (
+                <motion.div
+                  key={review.id}
+                  custom={i}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-40px" }}
+                >
+                  <DiscordReviewCard
+                    review={review}
+                    verifiedLabel={t("reviews.verifiedDiscord")}
+                    viewOnDiscordLabel={t("reviews.viewOnDiscord")}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

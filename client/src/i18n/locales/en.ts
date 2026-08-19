@@ -70,7 +70,14 @@ export const en = {
     title: "What our",
     titleAccent: "users",
     titleEnd: "say",
-    subtitle: "Discover testimonials and feedback from our satisfied customers.",
+    subtitle: "Authentic feedback synced from our Discord channel — profile photo, username, and original message.",
+    discordNote:
+      "Each review is published only after team validation (✅ reaction on Discord), then synced to the site.",
+    verifiedDiscord: "Verified Discord review",
+    viewOnDiscord: "View on Discord",
+    loading: "Loading reviews…",
+    empty: "No published reviews yet. Validated Discord reviews will appear here.",
+    joinDiscord: "Join Discord",
   },
   showcase: {
     eyebrow: "Showcase",
