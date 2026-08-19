@@ -59,8 +59,7 @@ const products: Product[] = [
       { labelKey: "plans.monthLicense", price: 40, descKey: "plans.monthLicenseDesc", durationKey: "plans.durSelf" },
       { labelKey: "plans.monthSetup", price: 60, descKey: "plans.monthSetupDesc", durationKey: "plans.dur1h" },
       { labelKey: "plans.helpInstall", price: 30, descKey: "plans.helpInstallDesc", durationKey: "plans.dur1h" },
-      { labelKey: "plans.annual", price: 150, descKey: "plans.annualDesc", durationKey: "plans.dur1h" },
-      { labelKey: "plans.lifetime", price: 250, descKey: "plans.lifetimeDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.lifetime", price: 100, descKey: "plans.lifetimeDesc", durationKey: "plans.dur1h" },
       { labelKey: "plans.monthlyRenewal", price: 30, noteKey: "plans.perMonth", descKey: "plans.monthlyRenewalDesc", durationKey: "plans.dur30m" },
       { labelKey: "plans.addonApex", price: 10, descKey: "plans.addonApexDesc", durationKey: "plans.durInstant" },
       { labelKey: "plans.addonFortnite", price: 10, descKey: "plans.addonFortniteDesc", durationKey: "plans.durInstant" },
@@ -156,7 +155,7 @@ export default function Purchase() {
   const [stripeLoading, setStripeLoading] = useState(false);
 
   // ── New simplified AI Engine state ──
-  const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, year, lifetime, renewal, addon
+  const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, lifetime, renewal, addon
   const [aiSupport, setAiSupport] = useState<boolean>(true); // true = with support, false = license only
   const [aiRenewalType, setAiRenewalType] = useState<string>("week"); // week, month
   const [aiAddonType, setAiAddonType] = useState<string>(
@@ -171,14 +170,12 @@ export default function Purchase() {
         index = aiSupport ? 0 : 1;
       } else if (aiDuration === "month") {
         index = aiSupport ? 4 : 3;
-      } else if (aiDuration === "year") {
-        index = 6;
       } else if (aiDuration === "lifetime") {
-        index = 7;
+        index = 6;
       } else if (aiDuration === "renewal") {
-        index = aiRenewalType === "week" ? 2 : 8;
+        index = aiRenewalType === "week" ? 2 : 7;
       } else if (aiDuration === "addon") {
-        index = aiAddonType === "apex" ? 9 : 10;
+        index = aiAddonType === "apex" ? 8 : 9;
       } else if (aiDuration === "help") {
         index = 5;
       }
@@ -443,7 +440,6 @@ export default function Purchase() {
                         {[
                           { id: "week", label: t("purchase.weekly"), icon: Clock },
                           { id: "month", label: t("purchase.monthly"), icon: Zap },
-                          { id: "year", label: t("purchase.annual"), icon: Layers },
                           { id: "lifetime", label: t("purchase.lifetime"), icon: Shield },
                           { id: "renewal", label: t("purchase.renewal"), icon: RefreshCw },
                           { id: "addon", label: "Advanced Weight", icon: Cpu },

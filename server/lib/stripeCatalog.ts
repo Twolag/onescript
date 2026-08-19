@@ -50,14 +50,9 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
         description: "Remote installation help for PDF license holders.",
       },
       {
-        label: "Annual Subscription",
-        priceCents: 15000,
-        description: "12 months FUSION AI V8.1 access.",
-      },
-      {
         label: "Lifetime License",
-        priceCents: 25000,
-        description: "Permanent FUSION AI V8.1 access.",
+        priceCents: 10000,
+        description: "Permanent FUSION AI V8 access.",
       },
       {
         label: "Monthly Renewal",

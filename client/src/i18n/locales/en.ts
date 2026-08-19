@@ -353,7 +353,7 @@ export const en = {
     undetected: "Undetected",
     updatePolicy: "Update Policy",
     updatePolicyDesc:
-      "Annual & Lifetime plans are locked to V8. Future major updates require an additional payment of €30 per update. Monthly plans include all updates automatically.",
+      "Lifetime plans are locked to V8. Future major updates require an additional payment of €30 per update. Monthly plans include all updates automatically.",
     quickLinks: "Quick Links",
     joinDiscord: "Join Discord Support",
     viewPlans: "View All Plans",
