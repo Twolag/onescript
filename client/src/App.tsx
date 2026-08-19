@@ -4,12 +4,14 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./i18n/LanguageContext";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import Products from "./pages/Products";
 import Compatibility from "./pages/Compatibility";
 import Support from "./pages/Support";
 import Purchase from "./pages/Purchase";
+import Success from "./pages/Success";
 import Trial from "./pages/Trial";
 import Documentation from "./pages/Documentation";
 import Reviews from "./pages/Reviews";
@@ -29,6 +31,7 @@ function Router() {
         <Route path="/compatibility" component={Compatibility} />
         <Route path="/support" component={Support} />
         <Route path="/purchase" component={Purchase} />
+        <Route path="/success" component={Success} />
         <Route path="/booking" component={Booking} />
         <Route path="/trial" component={Trial} />
         <Route path="/documentation" component={Documentation} />
@@ -47,10 +50,12 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

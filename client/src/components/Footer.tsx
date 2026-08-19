@@ -3,37 +3,40 @@
  * Style: Minimaliste sombre avec accents violet, lignes de circuit
  */
 import { Link } from "wouter";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/LanguageContext";
+
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/onescript-logo-full_647bb391.png";
 
-const footerLinks = {
-  products: [
-    { label: "FUSION AI", href: "/products" },
-    { label: "Windows Optimization", href: "/products" },
-    { label: "Jitter Script", href: "/products" },
-  ],
-  resources: [
-    { label: "Compatibility", href: "/compatibility" },
-    { label: "Support", href: "/support" },
-    { label: "Documentation", href: "/documentation" },
-  ],
-  legal: [
-    { label: "Documentation", href: "/documentation" },
-    { label: "Legal Notice", href: "/legal" },
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
-  ],
-};
-
 export default function Footer() {
+  const { t } = useLanguage();
+
+  const footerLinks = {
+    products: [
+      { label: "FUSION AI", href: "/products" },
+      { labelKey: "nav.windowsOpt" as TranslationKey, href: "/products" },
+      { labelKey: "nav.jitterScript" as TranslationKey, href: "/products" },
+    ],
+    resources: [
+      { labelKey: "footer.compatibility" as TranslationKey, href: "/compatibility" },
+      { labelKey: "footer.support" as TranslationKey, href: "/support" },
+      { labelKey: "footer.documentation" as TranslationKey, href: "/documentation" },
+    ],
+    legal: [
+      { labelKey: "footer.documentation" as TranslationKey, href: "/documentation" },
+      { labelKey: "footer.legalNotice" as TranslationKey, href: "/legal" },
+      { labelKey: "footer.privacy" as TranslationKey, href: "/privacy" },
+      { labelKey: "footer.terms" as TranslationKey, href: "/terms" },
+    ],
+  };
+
   return (
     <footer className="relative mt-auto">
-      {/* Top circuit line */}
       <div className="h-px bg-gradient-to-r from-transparent via-violet-tech/40 to-transparent" />
 
       <div className="bg-dark-base/60 backdrop-blur-sm">
         <div className="container py-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-            {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
               <Link href="/" className="inline-flex items-center gap-2 mb-4">
                 <img
@@ -47,62 +50,58 @@ export default function Footer() {
                 </span>
               </Link>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-                PC optimization and gaming performance solutions.
-                Unleash the true potential of your machine.
+                {t("footer.tagline")}
               </p>
             </div>
 
-            {/* Products */}
             <div>
               <h4 className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-accent mb-4">
-                Products
+                {t("footer.products")}
               </h4>
               <ul className="space-y-2.5">
                 {footerLinks.products.map((link) => (
-                  <li key={link.label}>
+                  <li key={"label" in link ? link.label : link.labelKey}>
                     <Link
                       href={link.href}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                     >
-                      {link.label}
+                      {"label" in link ? link.label : t(link.labelKey)}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Resources */}
             <div>
               <h4 className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-accent mb-4">
-                Resources
+                {t("footer.resources")}
               </h4>
               <ul className="space-y-2.5">
                 {footerLinks.resources.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.labelKey}>
                     <Link
                       href={link.href}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                     >
-                      {link.label}
+                      {t(link.labelKey)}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Legal */}
             <div>
               <h4 className="font-display text-xs font-semibold tracking-[0.2em] uppercase text-violet-accent mb-4">
-                Legal
+                {t("footer.legal")}
               </h4>
               <ul className="space-y-2.5">
                 {footerLinks.legal.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.labelKey}>
                     <Link
                       href={link.href}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                     >
-                      {link.label}
+                      {t(link.labelKey)}
                     </Link>
                   </li>
                 ))}
@@ -110,14 +109,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Bottom bar */}
           <div className="mt-12 pt-6 border-t border-border/50">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-xs text-muted-foreground">
-                &copy; {new Date().getFullYear()} OneScript. All rights reserved.
+                &copy; {new Date().getFullYear()} OneScript. {t("footer.rights")}
               </p>
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span>PC only</span>
+                <span>{t("footer.pcOnly")}</span>
                 <span className="text-violet-tech">•</span>
                 <span>Windows 10 / 11</span>
               </div>

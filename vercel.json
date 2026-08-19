@@ -5,6 +5,12 @@
   "env": {
     "NODE_ENV": "production"
   },
+  "crons": [
+    {
+      "path": "/api/reviews",
+      "schedule": "0 5 * * *"
+    }
+  ],
   "rewrites": [
     {
       "source": "/sitemap.xml",

@@ -7,10 +7,10 @@ import { useState } from "react";
 import {
   Headphones,
   MessageSquare,
-  BookOpen,
   ChevronDown,
   Mail,
 } from "lucide-react";
+import { useLanguage, type TranslationKey } from "@/i18n/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,45 +21,17 @@ const fadeUp = {
   }),
 };
 
-const faqItems = [
-  {
-    q: "How do I install FUSION AI?",
-    a: "Once your order is placed, you will receive a unique order number by email. You will then need to join our Discord server (https://discord.gg/5btq6znUvN) and open a ticket with this number. Our team will then organize the installation with you within a maximum of 24 hours. The installation process takes about 15-30 minutes. V8 features a 10x more powerful AI Aimbot with exceptional performance on both NVIDIA and AMD platforms.",
-  },
-  {
-    q: "Which GPUs are compatible?",
-    a: "We recommend NVIDIA RTX 3060+ and AMD RX 6600 XT+ for optimal performance. RTX 4070 and RTX 5060+ offer the best NVIDIA results. AMD RX 6700 XT and RX 7000 series offer exceptional V8 performance. Check our Compatibility page for more details.",
-  },
-  {
-    q: "Is a subscription required for FUSION AI?",
-    a: "The monthly subscription of €30/month includes regular updates and technical support. The initial €80 license is a one-time payment for installation and configuration. V8 includes all the latest features with 10x more powerful AI Aimbot.",
-  },
-  {
-    q: "What FPS gain can I expect?",
-    a: "The minimum observed gain is 40 to 60 FPS, depending on your hardware configuration.",
-  },
-  {
-    q: "Is Windows Optimization safe for my PC?",
-    a: "Yes, all our optimizations are reversible and tested on hundreds of configurations. We only modify non-essential settings and create a restore point before each intervention.",
-  },
-  {
-    q: "Can I get a refund?",
-    a: "For FUSION AI, refunds are only possible if your GPU is strictly below RTX 3060 for NVIDIA (e.g., RTX 3050) or below RX 6600 XT for AMD AND the software does not function correctly after full optimization (including a Windows 10 reinstallation if necessary). No refund will be granted if recommended optimizations are refused. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final. ***IMPORTANT:*** No refund will be processed or accepted if the malfunction is due to the customer's PC (hardware, drivers, third-party software, OS, antivirus, etc.) or its components. Refunds are ONLY applicable if the malfunction is proven to be directly and solely caused by the OneScript software itself. For other products, a 14-day refund policy applies if the product has not been used.", },
-  {
-    q: "Which Windows version is recommended for FUSION AI?",
-    a: "Windows 10 is strongly recommended for GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, and AMD RX 6600 XT / 6700 XT to ensure optimal FUSION AI V8 performance and stability. This recommendation is distinct from refund conditions."  },
-  {
-    q: "How does technical support work?",
-    a: "Our support is available via the chat widget at the bottom right of your screen. We generally respond within 24 hours. For FUSION AI subscribers, support is prioritized.",
-  },
-  {
-    q: "Are Jitter Script and AI Aimbot compatible with keyboard and mouse?",
-    a: "No, OneScript solutions are strictly controller-only (PS5, Xbox, Gamesir, etc.). Keyboard and mouse are not supported on any game.",
-  },
-  {
-    q: "Which controllers are supported?",
-    a: "We support Xbox controllers, PlayStation 5 controllers, PlayStation 5 Edge controllers, and Gamesir controllers. During checkout, you will be asked to specify which controller you are using. If you have a different controller model, please select 'Other' and contact our support team via Discord for compatibility verification.",
-  },
+const faqKeys: { q: TranslationKey; a: TranslationKey }[] = [
+  { q: "support.faq1q", a: "support.faq1a" },
+  { q: "support.faq2q", a: "support.faq2a" },
+  { q: "support.faq3q", a: "support.faq3a" },
+  { q: "support.faq4q", a: "support.faq4a" },
+  { q: "support.faq5q", a: "support.faq5a" },
+  { q: "support.faq6q", a: "support.faq6a" },
+  { q: "support.faq7q", a: "support.faq7a" },
+  { q: "support.faq8q", a: "support.faq8a" },
+  { q: "support.faq9q", a: "support.faq9a" },
+  { q: "support.faq10q", a: "support.faq10a" },
 ];
 
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
@@ -95,9 +67,9 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 }
 
 export default function Support() {
+  const { t } = useLanguage();
   return (
     <div>
-      {/* Header */}
       <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20">
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
@@ -109,22 +81,20 @@ export default function Support() {
             className="max-w-2xl"
           >
             <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              Support
+              {t("support.eyebrow")}
             </span>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              How can we{" "}
-              <span className="text-violet-tech neon-text">help you</span>?
+              {t("support.title")}{" "}
+              <span className="text-violet-tech neon-text">{t("support.titleAccent")}</span>
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              FAQ, live chat, and full documentation. Our team
-              is available to assist you via the help bubble.
+              {t("support.subtitle")}
             </p>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
       </section>
 
-      {/* FAQ */}
       <section className="py-16 lg:py-24">
         <div className="container">
           <motion.div
@@ -140,23 +110,22 @@ export default function Support() {
             </div>
             <div>
               <h2 className="font-display font-bold text-2xl tracking-tight">
-                Frequently Asked Questions
+                {t("support.faqTitle")}
               </h2>
               <p className="text-sm text-muted-foreground">
-                Answers to the most common questions
+                {t("support.ticketDesc")}
               </p>
             </div>
           </motion.div>
 
           <div className="max-w-3xl space-y-3">
-            {faqItems.map((item, i) => (
-              <FAQItem key={i} q={item.q} a={item.a} index={i} />
+            {faqKeys.map((item, i) => (
+              <FAQItem key={item.q} q={t(item.q)} a={t(item.a)} index={i} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* New Support Section */}
       <section className="py-16 lg:py-24 relative">
         <div className="absolute inset-0 bg-dark-surface/20" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/15 to-transparent" />
@@ -173,31 +142,30 @@ export default function Support() {
                 <Headphones className="w-8 h-8 text-violet-tech" />
               </div>
               <h2 className="font-display font-bold text-3xl tracking-tight mb-4">
-                Need direct assistance?
+                {t("support.directTitle")}
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Our support team is now available directly via the help bubble at the bottom right of your screen. 
-                You can chat with us in real-time or leave a message if we are offline.
+                {t("support.directDesc")}
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                 <div className="glass-card rounded-xl p-6 border border-white/5">
                   <div className="flex items-center gap-3 mb-3">
                     <MessageSquare className="w-5 h-5 text-violet-tech" />
-                    <h3 className="font-bold">Live Chat</h3>
+                    <h3 className="font-bold">{t("support.liveChat")}</h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Get instant answers for your technical questions or installation help.
+                    {t("support.liveChatDesc")}
                   </p>
                 </div>
-                
+
                 <div className="glass-card rounded-xl p-6 border border-white/5">
                   <div className="flex items-center gap-3 mb-3">
                     <Mail className="w-5 h-5 text-violet-tech" />
-                    <h3 className="font-bold">Email Support</h3>
+                    <h3 className="font-bold">{t("support.emailSupport")}</h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    You can also reach us at <span className="text-violet-tech">onescript.fr@proton.me</span> for any inquiries.
+                    {t("support.emailSupportDesc")}
                   </p>
                 </div>
               </div>

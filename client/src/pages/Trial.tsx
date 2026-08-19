@@ -30,6 +30,13 @@ export default function Trial() {
     "Apex Legends",
     "Fortnite",
     "Call of Duty",
+    "Rainbow Six Siege",
+    "Rust",
+    "Arc Raiders",
+    "Destiny",
+    "Delta Force",
+    "PUBG",
+    "Battlefield",
     "Steam (Autres jeux)",
     "Tous les jeux supportés",
   ];
