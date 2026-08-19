@@ -94,6 +94,9 @@ export const en = {
     fullInput: "Full Input Compatibility",
     fullInputDesc:
       "Fusion AI is now fully compatible with Keyboard & Mouse and Controller (Xbox, PS5, Gamesir, etc.) thanks to the Waveshare RP2350A.",
+    controllerOnly: "Controller Only",
+    controllerOnlyDesc:
+      "Jitter Script works with controllers only (Xbox, PS5, Gamesir, etc.). Keyboard and mouse are not supported.",
     selectPlan: "Select Plan",
     selectDuration: "1. Select Duration",
     selectSupport: "2. Select Support Level",

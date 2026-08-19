@@ -98,6 +98,9 @@ export const ru: Dictionary = {
     fullInput: "Полная совместимость ввода",
     fullInputDesc:
       "Fusion AI полностью совместим с клавиатурой и мышью, а также с геймпадом (Xbox, PS5, Gamesir и др.) благодаря Waveshare RP2350A.",
+    controllerOnly: "Только геймпад",
+    controllerOnlyDesc:
+      "Jitter Script работает только с геймпадом (Xbox, PS5, Gamesir и др.). Клавиатура и мышь не поддерживаются.",
     selectPlan: "Выбор тарифа",
     selectDuration: "1. Выберите срок",
     selectSupport: "2. Уровень поддержки",

@@ -45,13 +45,13 @@ interface ProductCard {
 const products: ProductCard[] = [
   {
     id: "fusion-ai",
-    title: "FUSION IA - V8.1",
+    title: "FUSION IA - V8",
     subtitle: "AI Visual Processing",
-    description: "Revolutionary V8.1 update! AI Aimbot 10x more powerful with exceptional AMD support. Available on Apex Legends, Fortnite, Warzone, Overwatch 2, and The Finals. Requires Waveshare RP2350A USB Mini Development Board for safe operation. Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
+    description: "Revolutionary V8 update! AI Aimbot 10x more powerful with exceptional AMD support. Available on Apex Legends, Fortnite, Warzone, Overwatch 2, and The Finals. Requires Waveshare RP2350A USB Mini Development Board for safe operation. Native NVIDIA & AMD compatibility. Zero FPS drops, ultra-low controller latency.",
     icon: Cpu,
     badge: { label: "STABLE / READY", color: "bg-green-500/20 border-green-500/50 text-green-400" },
     features: [
-      "V8.1 Redesigned Architecture",
+      "V8 Redesigned Architecture",
       "Native NVIDIA & AMD Support",
       "Keyboard/Mouse & Controller (RP2350A)",
       "Zero FPS Drops Guarantee",
@@ -107,12 +107,12 @@ const products: ProductCard[] = [
     subtitle: "Anti-Recoil for FPS Games",
     description: "The best anti-recoil jitter script for Apex Legends, Fortnite and Warzone. Undetectable by anti-cheat, does not cut aim assist. Precise shots up to 150m+ with minimal shaking.",
     icon: Gamepad2,
-    badge: { label: "KM + CONTROLLER", color: "bg-violet-500/20 border-violet-500/50 text-violet-300" },
+    badge: { label: "CONTROLLER", color: "bg-violet-500/20 border-violet-500/50 text-violet-300" },
     features: [
       "Undetectable by Anti-Cheat",
       "Does Not Cut Aim Assist",
       "Integrated Humanizer",
-      "Keyboard/Mouse & Controller",
+      "Controller only",
       "Works with All FPS Games",
     ],
     price: "2.50 €",

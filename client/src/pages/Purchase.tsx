@@ -447,7 +447,7 @@ export default function Purchase() {
 
               {/* Product Selection */}
               <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
-                {(productId === "ai-engine" || productId === "jitter-script") && (
+                {productId === "ai-engine" && (
                   <div className="mb-8 space-y-4">
                     <div className="p-5 rounded-lg bg-emerald-900/20 border border-emerald-500/35">
                       <div className="flex items-center gap-3 mb-2">
@@ -474,6 +474,21 @@ export default function Purchase() {
                         {(!selectedGame || selectedGame === "Apex Legends") && (
                           <>{" "}{t("purchase.steamOnly")}</>
                         )}
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {productId === "jitter-script" && (
+                  <div className="mb-8">
+                    <div className="p-5 rounded-lg bg-emerald-900/20 border border-emerald-500/35">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Gamepad2 className="w-5 h-5 text-emerald-400" />
+                        <h3 className="text-sm font-bold text-emerald-400 tracking-wider uppercase">
+                          {t("purchase.controllerOnly")}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-emerald-100/90 leading-relaxed">
+                        {t("purchase.controllerOnlyDesc")}
                       </p>
                     </div>
                   </div>
@@ -794,7 +809,7 @@ export default function Purchase() {
             {/* Right: RP2350A + Summary */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
-                {(productId === "ai-engine" || productId === "jitter-script") && (
+                {productId === "ai-engine" && (
                   <motion.div
                     variants={fadeUp}
                     custom={2.5}
