@@ -75,12 +75,13 @@ export const es: Dictionary = {
     titleEnd: "",
     subtitle: "Opiniones auténticas sincronizadas desde Discord — foto de perfil, usuario y mensaje original.",
     discordNote:
-      "Cada reseña se publica solo tras validación (reacción ✅ del equipo) en Discord y luego se sincroniza aquí.",
+      "Cada reseña se publica tras validación (✅) en Discord. El sitio se sincroniza automáticamente al abrir esta página.",
     verifiedDiscord: "Reseña verificada en Discord",
     viewOnDiscord: "Ver en Discord",
     loading: "Cargando reseñas…",
     empty: "Aún no hay reseñas publicadas. Las validadas en Discord aparecerán aquí.",
     joinDiscord: "Unirse a Discord",
+    refresh: "Actualizar reseñas",
   },
   showcase: {
     eyebrow: "Demos",

@@ -91,11 +91,15 @@ export async function fetchChannelMessages(
   return res.json() as Promise<DiscordMessage[]>;
 }
 
-export async function fetchAllChannelMessages(channelId: string): Promise<DiscordMessage[]> {
+export async function fetchAllChannelMessages(
+  channelId: string,
+  options?: { maxPages?: number },
+): Promise<DiscordMessage[]> {
   const all: DiscordMessage[] = [];
   let before: string | undefined;
+  const maxPages = options?.maxPages ?? 20;
 
-  for (let page = 0; page < 20; page++) {
+  for (let page = 0; page < maxPages; page++) {
     const batch = await fetchChannelMessages(channelId, before);
     if (batch.length === 0) break;
     all.push(...batch);

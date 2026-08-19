@@ -3,7 +3,7 @@
  */
 import { motion } from "framer-motion";
 import { MessageCircle, RefreshCw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DiscordReviewCard from "@/components/DiscordReviewCard";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -19,12 +19,17 @@ const fadeUp = {
   }),
 };
 
-async function loadReviews(): Promise<DiscordReview[]> {
-  const sources = ["/api/reviews", `/${REVIEWS_MANIFEST_PATH}`];
+/** Poll while the page is open so new Discord ✅ show up without a full reload. */
+const POLL_MS = 45_000;
+
+async function loadReviews(forceRefresh: boolean): Promise<DiscordReview[]> {
+  const bust = `t=${Date.now()}`;
+  const apiUrl = forceRefresh ? `/api/reviews?refresh=1&${bust}` : `/api/reviews?${bust}`;
+  const sources = [apiUrl, `/${REVIEWS_MANIFEST_PATH}?${bust}`];
 
   for (const url of sources) {
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) continue;
       const data = (await res.json()) as ReviewsManifest;
       if (Array.isArray(data.reviews)) return data.reviews;
@@ -40,19 +45,46 @@ export default function Reviews() {
   const { t } = useLanguage();
   const [reviews, setReviews] = useState<DiscordReview[]>([]);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
+
+  const refresh = useCallback(async (force: boolean, showSpinner: boolean) => {
+    if (showSpinner) setSyncing(true);
+    try {
+      const items = await loadReviews(force);
+      setReviews(items);
+    } finally {
+      setLoading(false);
+      setSyncing(false);
+    }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
-    loadReviews().then((items) => {
+    // First load forces a Discord sync so freshly ✅-approved reviews appear ASAP
+    loadReviews(true).then((items) => {
       if (!cancelled) {
         setReviews(items);
         setLoading(false);
       }
     });
+
+    const interval = window.setInterval(() => {
+      if (document.visibilityState === "visible") {
+        void refresh(true, false);
+      }
+    }, POLL_MS);
+
+    const onVisible = () => {
+      if (document.visibilityState === "visible") void refresh(true, false);
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
     return () => {
       cancelled = true;
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisible);
     };
-  }, []);
+  }, [refresh]);
 
   const discordInvite = import.meta.env.VITE_DISCORD_LINK || "https://discord.gg/5btq6znUvN";
 
@@ -79,9 +111,20 @@ export default function Reviews() {
             <p className="text-muted-foreground text-lg leading-relaxed mb-6">
               {t("reviews.subtitle")}
             </p>
-            <p className="text-sm text-muted-foreground/90 leading-relaxed border-l-2 border-violet-tech/40 pl-4">
+            <p className="text-sm text-muted-foreground/90 leading-relaxed border-l-2 border-violet-tech/40 pl-4 mb-4">
               {t("reviews.discordNote")}
             </p>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={syncing}
+              onClick={() => void refresh(true, true)}
+              className="border-violet-tech/40 gap-2"
+            >
+              <RefreshCw className={`w-4 h-4 ${syncing ? "animate-spin" : ""}`} />
+              {t("reviews.refresh")}
+            </Button>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />

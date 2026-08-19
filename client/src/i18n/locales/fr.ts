@@ -75,12 +75,13 @@ export const fr: Dictionary = {
     titleEnd: "",
     subtitle: "Retours authentiques publiés depuis notre salon Discord — photo de profil, pseudo et message d’origine.",
     discordNote:
-      "Chaque avis est publié uniquement après validation (réaction ✅ par l’équipe) sur Discord, puis synchronisé sur le site.",
+      "Chaque avis est publié après validation (✅) sur Discord. Le site se synchronise automatiquement quand tu ouvres cette page.",
     verifiedDiscord: "Avis Discord vérifié",
     viewOnDiscord: "Voir sur Discord",
     loading: "Chargement des avis…",
     empty: "Aucun avis publié pour le moment. Les avis validés sur Discord apparaîtront ici.",
     joinDiscord: "Rejoindre le Discord",
+    refresh: "Actualiser les avis",
   },
   showcase: {
     eyebrow: "Démos",
