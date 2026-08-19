@@ -1,5 +1,27 @@
 const DISCORD_API = "https://discord.com/api/v10";
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function discordFetch(url: string, init?: RequestInit): Promise<Response> {
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const res = await fetch(url, init);
+    if (res.status !== 429) return res;
+
+    let retryAfterMs = 1000;
+    try {
+      const body = (await res.json()) as { retry_after?: number };
+      if (body.retry_after) retryAfterMs = Math.ceil(body.retry_after * 1000) + 200;
+    } catch {
+      /* use default */
+    }
+    await sleep(retryAfterMs);
+  }
+
+  return fetch(url, init);
+}
+
 export interface DiscordMessage {
   id: string;
   content: string;
@@ -61,7 +83,7 @@ export async function fetchChannelMessages(
   url.searchParams.set("limit", "100");
   if (before) url.searchParams.set("before", before);
 
-  const res = await fetch(url, { headers: botHeaders() });
+  const res = await discordFetch(url.toString(), { headers: botHeaders() });
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`Discord messages fetch failed (${res.status}): ${body}`);
@@ -79,6 +101,7 @@ export async function fetchAllChannelMessages(channelId: string): Promise<Discor
     all.push(...batch);
     before = batch[batch.length - 1]?.id;
     if (batch.length < 100) break;
+    await sleep(300);
   }
 
   return all;
@@ -97,7 +120,7 @@ export async function fetchCheckmarkReactors(
   const emoji = encodeURIComponent("✅");
   const url = `${DISCORD_API}/channels/${channelId}/messages/${messageId}/reactions/${emoji}`;
 
-  const res = await fetch(url, { headers: botHeaders() });
+  const res = await discordFetch(url, { headers: botHeaders() });
   if (res.status === 404) return [];
   if (!res.ok) {
     const body = await res.text();
@@ -113,18 +136,22 @@ export function getApproverIds(): string[] {
     .filter(Boolean);
 }
 
-export async function isMessageApproved(channelId: string, message: DiscordMessage): Promise<boolean> {
-  const hasCheckmark = message.reactions?.some(
-    (r) => r.emoji.name === "✅" && r.count > 0,
+export function messageHasCheckmark(message: DiscordMessage): boolean {
+  return (
+    message.reactions?.some(
+      (r) =>
+        (r.emoji.name === "✅" || r.emoji.name === "white_check_mark") && r.count > 0,
+    ) ?? false
   );
-  if (!hasCheckmark) return false;
+}
+
+export async function isMessageApproved(channelId: string, message: DiscordMessage): Promise<boolean> {
+  if (!messageHasCheckmark(message)) return false;
 
   const approvers = getApproverIds();
-  if (approvers.length === 0) {
-    // No allowlist configured: any ✅ reaction approves (still requires manual mod action)
-    return true;
-  }
+  if (approvers.length === 0) return true;
 
+  await sleep(350);
   const reactors = await fetchCheckmarkReactors(channelId, message.id);
   return reactors.some((user) => approvers.includes(user.id));
 }
