@@ -46,11 +46,11 @@ Pour publier **tous** les avis déjà présents : ajoute **✅** sur chaque mess
 
 1. Ajouter les variables d’env sur Vercel (mêmes clés Discord + `REVIEWS_SYNC_SECRET` + `CRON_SECRET`).
 2. Activer **Vercel Blob** et `BLOB_READ_WRITE_TOKEN` pour stocker images + JSON sans commit Git.
-3. Un cron appelle `/api/reviews-sync` toutes les 10 minutes.
+3. Un cron appelle `/api/reviews` **une fois par jour** (Hobby Vercel n’autorise pas plus fréquent ; le cron envoie `Authorization: Bearer CRON_SECRET` pour lancer la sync).
 
 Sync manuelle :
 
 ```bash
-curl -X POST https://onescript.fr/api/reviews-sync \
+curl -X POST https://onescript.fr/api/reviews \
   -H "Authorization: Bearer VOTRE_REVIEWS_SYNC_SECRET"
 ```
