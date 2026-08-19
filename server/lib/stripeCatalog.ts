@@ -50,14 +50,9 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
         description: "Remote installation help for PDF license holders.",
       },
       {
-        label: "Annual Subscription",
-        priceCents: 15000,
-        description: "12 months FUSION AI V8.1 access.",
-      },
-      {
         label: "Lifetime License",
-        priceCents: 25000,
-        description: "Permanent FUSION AI V8.1 access.",
+        priceCents: 10000,
+        description: "Permanent FUSION AI V8 access.",
       },
       {
         label: "Monthly Renewal",
@@ -65,14 +60,14 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
         description: "Monthly renewal for eligible users.",
       },
       {
-        label: "Advanced AI Weight — Apex Legends",
+        label: "Advanced Weight — Apex Legends",
         priceCents: 1000,
-        description: "AI Weight add-on for Apex. High-end GPU required.",
+        description: "Advanced Weight add-on for Apex. High-end GPU required.",
       },
       {
-        label: "Advanced AI Weight — Fortnite",
+        label: "Advanced Weight — Fortnite",
         priceCents: 1000,
-        description: "AI Weight add-on for Fortnite. High-end GPU required.",
+        description: "Advanced Weight add-on for Fortnite. High-end GPU required.",
       },
     ],
   },
