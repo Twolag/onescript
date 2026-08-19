@@ -98,6 +98,9 @@ export const es: Dictionary = {
     fullInput: "Compatibilidad total de entrada",
     fullInputDesc:
       "Fusion AI ahora es totalmente compatible con Teclado y Ratón y Mando (Xbox, PS5, Gamesir, etc.) gracias a la Waveshare RP2350A.",
+    controllerOnly: "Solo mando",
+    controllerOnlyDesc:
+      "Jitter Script funciona solo con mando (Xbox, PS5, Gamesir, etc.). Teclado y ratón no son compatibles.",
     selectPlan: "Elegir plan",
     selectDuration: "1. Elegir duración",
     selectSupport: "2. Nivel de soporte",

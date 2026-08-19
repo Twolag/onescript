@@ -98,6 +98,9 @@ export const fr: Dictionary = {
     fullInput: "Compatibilité entrée complète",
     fullInputDesc:
       "Fusion AI est maintenant pleinement compatible Clavier & Souris et Manette (Xbox, PS5, Gamesir, etc.) grâce à la Waveshare RP2350A.",
+    controllerOnly: "Manette uniquement",
+    controllerOnlyDesc:
+      "Le Jitter Script fonctionne uniquement avec une manette (Xbox, PS5, Gamesir, etc.). Clavier et souris non supportés.",
     selectPlan: "Choisir une offre",
     selectDuration: "1. Choisir la durée",
     selectSupport: "2. Niveau de support",
