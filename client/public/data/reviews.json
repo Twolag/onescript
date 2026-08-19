@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T23:22:22.890Z",
+  "updatedAt": "2026-08-19T23:23:51.296Z",
   "reviews": [
     {
       "id": "1535982514156347413",
@@ -251,18 +251,6 @@
       "approvedAt": "2026-08-19T23:22:02.885Z",
       "discordUrl": "https://discord.com/channels/1450067696967352496/1451907410275864678/1495137029472911481",
       "imageUrl": "/reviews/discord-1495137029472911481.jpg",
-      "display": "attachment"
-    },
-    {
-      "id": "demo-husla",
-      "messageId": "demo-husla",
-      "authorName": "AaE HuslA",
-      "authorAvatar": null,
-      "content": "Best services and ai aimbot 100% recommend very professional",
-      "createdAt": "2026-04-18T12:00:00.000Z",
-      "approvedAt": "2026-04-18T12:00:00.000Z",
-      "discordUrl": "https://discord.gg/5btq6znUvN",
-      "imageUrl": "/reviews/husla_review.png",
       "display": "attachment"
     },
     {
