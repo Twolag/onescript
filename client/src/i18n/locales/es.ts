@@ -291,7 +291,7 @@ export const es: Dictionary = {
     undetected: "Indetectable",
     updatePolicy: "Política de actualizaciones",
     updatePolicyDesc:
-      "Los planes Anual y De por vida están bloqueados en V8. Las próximas actualizaciones mayores cuestan +30 € cada una. Los planes mensuales incluyen todas las actualizaciones automáticamente.",
+      "Los planes De por vida están bloqueados en V8. Las próximas actualizaciones mayores cuestan +30 € cada una. Los planes mensuales incluyen todas las actualizaciones automáticamente.",
     quickLinks: "Enlaces rápidos",
     joinDiscord: "Unirse al soporte Discord",
     viewPlans: "Ver todos los planes",

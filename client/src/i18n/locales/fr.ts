@@ -291,7 +291,7 @@ export const fr: Dictionary = {
     undetected: "Indétectable",
     updatePolicy: "Politique de mises à jour",
     updatePolicyDesc:
-      "Les offres Annuelle et À vie sont verrouillées sur V8. Les prochaines mises à jour majeures coûtent +30 € chacune. Les offres mensuelles incluent toutes les mises à jour automatiquement.",
+      "Les offres À vie sont verrouillées sur V8. Les prochaines mises à jour majeures coûtent +30 € chacune. Les offres mensuelles incluent toutes les mises à jour automatiquement.",
     quickLinks: "Liens rapides",
     joinDiscord: "Rejoindre le support Discord",
     viewPlans: "Voir toutes les offres",
