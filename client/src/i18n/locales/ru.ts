@@ -73,7 +73,14 @@ export const ru: Dictionary = {
     title: "Что говорят",
     titleAccent: "наши пользователи",
     titleEnd: "",
-    subtitle: "Отзывы и впечатления наших довольных клиентов.",
+    subtitle: "Настоящие отзывы из Discord — аватар, ник и оригинальное сообщение.",
+    discordNote:
+      "Каждый отзыв публикуется только после проверки (реакция ✅ от команды) в Discord, затем синхронизируется на сайт.",
+    verifiedDiscord: "Проверенный отзыв Discord",
+    viewOnDiscord: "Открыть в Discord",
+    loading: "Загрузка отзывов…",
+    empty: "Пока нет опубликованных отзывов. Проверенные отзывы из Discord появятся здесь.",
+    joinDiscord: "Discord",
   },
   showcase: {
     eyebrow: "Демо",
