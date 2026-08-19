@@ -7,6 +7,7 @@ import {
   extensionFromContentType,
   fetchAllChannelMessages,
   isMessageApproved,
+  messageHasCheckmark,
   pickImageAttachment,
   type DiscordMessage,
 } from "./_discordReviews.js";
@@ -79,6 +80,7 @@ export async function syncApprovedDiscordReviews(): Promise<SyncReviewsResult> {
   for (const message of messages) {
     if (message.author.bot) continue;
     if (!message.content.trim() && message.attachments.length === 0) continue;
+    if (!messageHasCheckmark(message)) continue;
 
     const approved = await isMessageApproved(channelId, message);
     if (!approved) continue;
