@@ -56,6 +56,7 @@ export const en = {
   },
   tags: {
     from15: "From 15 €",
+    from10: "10 €",
     keyboardMouse: "Keyboard / Mouse",
     controller: "Controller",
     controllerNoRp: "Controller — no RP needed",
@@ -64,6 +65,9 @@ export const en = {
     allGames: "All Games",
     addon: "Advanced Weight",
     highEndGpu: "High-end GPU",
+    iosAndroid: "iOS & Android",
+    noRp: "No RP2350A",
+    donation: "OneScript donation",
   },
   reviews: {
     eyebrow: "Customer Reviews",
@@ -128,6 +132,7 @@ export const en = {
     lastName: "Last Name",
     email: "Email",
     discordPseudo: "Discord Username",
+    onestatePseudo: "Onestate Username",
     cpu: "CPU",
     gpu: "GPU",
     os: "Operating System",

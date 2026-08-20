@@ -59,6 +59,7 @@ export const es: Dictionary = {
   },
   tags: {
     from15: "Desde 15 €",
+    from10: "10 €",
     keyboardMouse: "Teclado / Ratón",
     controller: "Mando",
     controllerNoRp: "Mando — sin RP",
@@ -67,6 +68,9 @@ export const es: Dictionary = {
     allGames: "Todos los juegos",
     addon: "Advanced Weight",
     highEndGpu: "GPU de gama alta",
+    iosAndroid: "iOS y Android",
+    noRp: "Sin RP2350A",
+    donation: "Donativo OneScript",
   },
   reviews: {
     eyebrow: "Reseñas de clientes",
@@ -132,6 +136,7 @@ export const es: Dictionary = {
     lastName: "Apellido",
     email: "Correo",
     discordPseudo: "Usuario de Discord",
+    onestatePseudo: "Usuario Onestate",
     cpu: "CPU",
     gpu: "GPU",
     os: "Sistema operativo",

@@ -59,6 +59,7 @@ export const ru: Dictionary = {
   },
   tags: {
     from15: "От 15 €",
+    from10: "10 €",
     keyboardMouse: "Клавиатура / Мышь",
     controller: "Геймпад",
     controllerNoRp: "Геймпад — без RP",
@@ -67,6 +68,9 @@ export const ru: Dictionary = {
     allGames: "Все игры",
     addon: "Advanced Weight",
     highEndGpu: "Мощный GPU",
+    iosAndroid: "iOS и Android",
+    noRp: "Без RP2350A",
+    donation: "Донат OneScript",
   },
   reviews: {
     eyebrow: "Отзывы клиентов",
@@ -132,6 +136,7 @@ export const ru: Dictionary = {
     lastName: "Фамилия",
     email: "Email",
     discordPseudo: "Ник Discord",
+    onestatePseudo: "Ник Onestate",
     cpu: "CPU",
     gpu: "GPU",
     os: "Операционная система",

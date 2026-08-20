@@ -159,7 +159,7 @@ export default function Purchase() {
   // ── Form state ──
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
-    firstName: "", lastName: "", email: "", discordPseudo: "",
+    firstName: "", lastName: "", email: "", discordPseudo: "", onestatePseudo: "",
     cpu: "", gpu: "", os: "Windows 10", controller: "",
   });
   const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
@@ -214,8 +214,9 @@ export default function Purchase() {
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     const baseOk = formData.firstName && formData.lastName && formData.email && formData.discordPseudo;
+    const onestateOk = !isOnestate || !!formData.onestatePseudo.trim();
     const hardwareOk = isOnestate || (formData.cpu && formData.gpu);
-    if (!baseOk || !hardwareOk) {
+    if (!baseOk || !onestateOk || !hardwareOk) {
       toast.error(t("purchase.fillAll"));
       return;
     }
@@ -262,6 +263,7 @@ export default function Purchase() {
           customerEmail: formData.email,
           customerName: `${formData.firstName} ${formData.lastName}`,
           discordPseudo: formData.discordPseudo,
+          onestatePseudo: isOnestate ? formData.onestatePseudo.trim() : "",
           orderNumber: orderCreated.orderNumber,
           game: selectedGame || "",
           cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
@@ -299,6 +301,7 @@ export default function Purchase() {
           productName: displayProductName,
           productOption: selectedItem.label,
           discordPseudo: formData.discordPseudo,
+          onestatePseudo: isOnestate ? formData.onestatePseudo.trim() : "",
           price: orderCreated.price,
           cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
           gpu: isOnestate ? "N/A" : formData.gpu,
@@ -316,6 +319,7 @@ export default function Purchase() {
         customerName,
         email: formData.email,
         discordPseudo: formData.discordPseudo,
+        onestatePseudo: isOnestate ? formData.onestatePseudo.trim() : "",
         productName: displayProductName,
         optionLabel: selectedItem.label,
         price: orderCreated.price,
@@ -720,6 +724,21 @@ export default function Purchase() {
                       <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john_doe#1234" />
                     </div>
                   </div>
+
+                  {isOnestate && (
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.onestatePseudo")}</label>
+                      <input
+                        type="text"
+                        name="onestatePseudo"
+                        value={formData.onestatePseudo}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-yellow-400/40 text-foreground text-sm placeholder:text-muted-foreground focus:border-yellow-400/70 focus:ring-1 focus:ring-yellow-400/30 transition-colors outline-none"
+                        placeholder="Pseudo Onestate"
+                      />
+                    </div>
+                  )}
 
                   {/* Hardware Configuration — skipped for mobile Onestate RP */}
                   {!isOnestate && (

@@ -225,6 +225,19 @@ const games: GameCard[] = [
     logoText: "BATTLEFIELD",
     tags: [...FULL_INPUT_TAGS],
   },
+  {
+    id: "onestate-rp",
+    name: "AI Aimbot Onestate RP",
+    href: "/purchase?product=onestate-rp",
+    accent: "from-yellow-400/30 via-amber-500/15 to-violet-tech/25",
+    logoText: "ONESTATE RP",
+    tags: [
+      "tags.from10",
+      "tags.iosAndroid",
+      "tags.noRp",
+      "tags.donation",
+    ],
+  },
 ];
 
 export default function Home() {
@@ -404,7 +417,11 @@ export default function Home() {
                     <div className="flex items-center justify-between gap-3 mb-3">
                       <div>
                         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-violet-accent mb-1">
-                          {game.featured ? t("home.worksAlmostAll") : t("home.aiAimbot")}
+                          {game.featured
+                            ? t("home.worksAlmostAll")
+                            : game.id === "onestate-rp"
+                              ? t("products.onestateSubtitle")
+                              : t("home.aiAimbot")}
                         </p>
                         <h2 className="font-display font-extrabold text-lg text-foreground group-hover:text-violet-accent transition-colors">
                           {game.name}

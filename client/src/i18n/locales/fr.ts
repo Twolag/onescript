@@ -59,6 +59,7 @@ export const fr: Dictionary = {
   },
   tags: {
     from15: "Dès 15 €",
+    from10: "10 €",
     keyboardMouse: "Clavier / Souris",
     controller: "Manette",
     controllerNoRp: "Manette — sans RP",
@@ -67,6 +68,9 @@ export const fr: Dictionary = {
     allGames: "Tous les jeux",
     addon: "Advanced Weight",
     highEndGpu: "GPU haut de gamme",
+    iosAndroid: "iOS & Android",
+    noRp: "Sans RP2350A",
+    donation: "Don OneScript",
   },
   reviews: {
     eyebrow: "Avis clients",
@@ -132,6 +136,7 @@ export const fr: Dictionary = {
     lastName: "Nom",
     email: "E-mail",
     discordPseudo: "Pseudo Discord",
+    onestatePseudo: "Pseudo Onestate",
     cpu: "CPU",
     gpu: "GPU",
     os: "Système d’exploitation",

@@ -121,6 +121,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       gpu,
       os,
       inputMethod,
+      onestatePseudo,
     } = body;
 
     const product = STRIPE_CATALOG[productId];
@@ -165,6 +166,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         customerName: String(customerName),
         customerEmail: String(customerEmail),
         discordPseudo: String(discordPseudo || ""),
+        onestatePseudo: String(onestatePseudo || ""),
         game: String(game || ""),
         cpu: String(cpu || ""),
         gpu: String(gpu || ""),

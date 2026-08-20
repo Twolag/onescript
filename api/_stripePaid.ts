@@ -72,6 +72,9 @@ export async function fulfillStripeSession(sessionId: string) {
               { name: "👤 Customer", value: customerName, inline: true },
               { name: "📧 Email", value: email || "—", inline: true },
               { name: "💬 Discord", value: meta.discordPseudo || "—", inline: true },
+              ...(meta.onestatePseudo
+                ? [{ name: "📱 Onestate", value: meta.onestatePseudo, inline: true }]
+                : []),
               { name: "🎮 Product", value: productName, inline: true },
               { name: "📦 Option", value: optionLabel || "—", inline: true },
               { name: "💳 Payment", value: payment.label, inline: true },
