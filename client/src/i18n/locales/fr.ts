@@ -150,6 +150,7 @@ export const fr: Dictionary = {
     selectOption: "Veuillez sélectionner une option",
     confirmSelfSetup: "Vous devez confirmer que vous gérerez l’installation vous-même",
     confirmHardware: "Vous devez confirmer que votre PC répond aux exigences matérielles",
+    confirmDonation: "Cochez la case pour confirmer que ce paiement est un don au serveur OneScript",
     validated: "Informations validées ! Choisissez votre mode de paiement.",
     errorGeneric: "Une erreur est survenue, réessayez.",
     selfSetupConfirm:

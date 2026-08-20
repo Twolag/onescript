@@ -146,6 +146,7 @@ export const en = {
     selectOption: "Please select an option",
     confirmSelfSetup: "You must confirm that you will handle the installation yourself",
     confirmHardware: "You must confirm that your PC meets the hardware requirements",
+    confirmDonation: "Check the box to confirm this payment is a donation to the OneScript server",
     validated: "Information validated! Choose your payment method.",
     errorGeneric: "An error occurred, please try again.",
 

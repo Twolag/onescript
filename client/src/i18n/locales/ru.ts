@@ -150,6 +150,7 @@ export const ru: Dictionary = {
     selectOption: "Выберите вариант",
     confirmSelfSetup: "Подтвердите, что установите всё самостоятельно",
     confirmHardware: "Подтвердите, что ваш ПК соответствует требованиям",
+    confirmDonation: "Отметьте, что этот платёж — донат серверу OneScript",
     validated: "Данные подтверждены! Выберите способ оплаты.",
     errorGeneric: "Произошла ошибка, попробуйте снова.",
     selfSetupConfirm:
