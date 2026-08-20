@@ -152,7 +152,7 @@ export default function Reviews() {
               </Button>
             </div>
           ) : (
-            <div className="columns-1 sm:columns-2 xl:columns-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 items-start">
               {reviews.map((review, i) => (
                 <motion.div
                   key={review.id}
@@ -161,7 +161,6 @@ export default function Reviews() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-20px" }}
-                  className="break-inside-avoid"
                 >
                   <DiscordReviewCard
                     review={review}

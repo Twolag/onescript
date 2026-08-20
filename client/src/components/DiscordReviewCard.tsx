@@ -45,7 +45,7 @@ export default function DiscordReviewCard({
   const hasImage = review.display === "attachment" && Boolean(review.imageUrl);
 
   return (
-    <article className="break-inside-avoid mb-5 rounded-lg border border-border/45 bg-[#2b2d31] hover:border-violet-tech/35 transition-colors overflow-hidden">
+    <article className="rounded-lg border border-border/45 bg-[#2b2d31] hover:border-violet-tech/35 transition-colors overflow-hidden">
       <div className="p-4">
         <div className="flex items-center gap-3 mb-2.5">
           <Avatar name={review.authorName} src={review.authorAvatar} />
