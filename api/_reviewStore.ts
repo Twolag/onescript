@@ -45,6 +45,13 @@ export async function writeReviewsManifest(manifest: ReviewsManifest): Promise<v
       contentType: "application/json",
       addRandomSuffix: false,
     });
+    return;
+  }
+
+  // Skip disk writes on Vercel (read-only) — caller still returns in-memory reviews
+  if (process.env.VERCEL) {
+    console.warn("[reviews] no BLOB_READ_WRITE_TOKEN — manifest not persisted on Vercel FS");
+    return;
   }
 
   await fs.mkdir(path.dirname(LOCAL_MANIFEST), { recursive: true });
@@ -77,6 +84,11 @@ export async function saveReviewImage(
       addRandomSuffix: false,
     });
     return blob.url;
+  }
+
+  // Local/dev only — Vercel production FS is read-only
+  if (process.env.VERCEL) {
+    throw new Error("BLOB_READ_WRITE_TOKEN required to store review images on Vercel");
   }
 
   await fs.mkdir(LOCAL_REVIEWS_DIR, { recursive: true });

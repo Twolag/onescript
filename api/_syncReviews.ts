@@ -45,8 +45,14 @@ async function messageToReview(
     display = "attachment";
     if (!imageUrl || !imageUrl.includes(message.id)) {
       const sourceUrl = attachment.proxy_url || attachment.url;
-      const { buffer, contentType } = await downloadBinary(sourceUrl);
-      imageUrl = await saveReviewImage(message.id, buffer, contentType);
+      try {
+        const { buffer, contentType } = await downloadBinary(sourceUrl);
+        imageUrl = await saveReviewImage(message.id, buffer, contentType);
+      } catch (error) {
+        // Vercel serverless FS is read-only without Blob — keep Discord CDN URL
+        console.error(`[reviews] image persist failed for ${message.id}:`, error);
+        imageUrl = sourceUrl;
+      }
     }
   }
 
@@ -109,10 +115,15 @@ export async function syncApprovedDiscordReviews(
     const approved = await isMessageApproved(channelId, message);
     if (!approved) continue;
 
-    approvedFound++;
-    incoming.push(
-      await messageToReview(message, guildId, channelId, new Date().toISOString(), existing),
-    );
+    try {
+      approvedFound++;
+      incoming.push(
+        await messageToReview(message, guildId, channelId, new Date().toISOString(), existing),
+      );
+    } catch (error) {
+      console.error(`[reviews] skip message ${message.id}:`, error);
+      approvedFound--;
+    }
   }
 
   const merged = mergeReviews(manifest.reviews, incoming);
