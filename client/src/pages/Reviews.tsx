@@ -3,7 +3,7 @@
  */
 import { motion } from "framer-motion";
 import { MessageCircle, RefreshCw } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import DiscordReviewCard from "@/components/DiscordReviewCard";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -47,11 +47,52 @@ async function syncReviewsFromDiscord(): Promise<DiscordReview[] | null> {
   return fetchReviews(`/api/reviews?refresh=1&t=${Date.now()}`);
 }
 
+/**
+ * CSS columns fill top→bottom per column. Reorder so the visual top row
+ * still reads left→right in chronological order (no big grid gaps).
+ */
+function toColumnMajorOrder<T>(items: T[], cols: number): T[] {
+  if (cols <= 1 || items.length <= 1) return items;
+  const rows = Math.ceil(items.length / cols);
+  const ordered: T[] = [];
+  for (let c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r++) {
+      const index = r * cols + c;
+      if (index < items.length) ordered.push(items[index]);
+    }
+  }
+  return ordered;
+}
+
+function useReviewColumnCount() {
+  const [cols, setCols] = useState(1);
+
+  useEffect(() => {
+    const compute = () => {
+      const w = window.innerWidth;
+      if (w >= 1280) setCols(3);
+      else if (w >= 640) setCols(2);
+      else setCols(1);
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
+
+  return cols;
+}
+
 export default function Reviews() {
   const { t } = useLanguage();
   const [reviews, setReviews] = useState<DiscordReview[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const cols = useReviewColumnCount();
+
+  const displayReviews = useMemo(
+    () => toColumnMajorOrder(reviews, cols),
+    [reviews, cols],
+  );
 
   const applySync = useCallback(async (showSpinner: boolean) => {
     if (showSpinner) setSyncing(true);
@@ -66,12 +107,10 @@ export default function Reviews() {
   useEffect(() => {
     let cancelled = false;
 
-    // 1) Show cached reviews immediately (no Discord wait → no infinite spinner)
     loadCachedReviews().then((items) => {
       if (cancelled) return;
       setReviews(items);
       setLoading(false);
-      // 2) Sync in background; update list when Discord answers
       void syncReviewsFromDiscord().then((fresh) => {
         if (!cancelled && fresh) setReviews(fresh);
       });
@@ -152,8 +191,8 @@ export default function Reviews() {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 items-start">
-              {reviews.map((review, i) => (
+            <div className="columns-1 sm:columns-2 xl:columns-3 gap-5">
+              {displayReviews.map((review, i) => (
                 <motion.div
                   key={review.id}
                   custom={i}
@@ -161,6 +200,7 @@ export default function Reviews() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-20px" }}
+                  className="break-inside-avoid mb-5"
                 >
                   <DiscordReviewCard
                     review={review}
