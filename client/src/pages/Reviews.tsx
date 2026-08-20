@@ -11,11 +11,11 @@ import type { DiscordReview, ReviewsManifest } from "@shared/reviews";
 import { REVIEWS_MANIFEST_PATH } from "@shared/reviews";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: Math.min(i * 0.05, 0.4), duration: 0.5 },
+    transition: { delay: Math.min(i * 0.02, 0.25), duration: 0.35 },
   }),
 };
 
@@ -60,7 +60,6 @@ export default function Reviews() {
 
   useEffect(() => {
     let cancelled = false;
-    // First load forces a Discord sync so freshly ✅-approved reviews appear ASAP
     loadReviews(true).then((items) => {
       if (!cancelled) {
         setReviews(items);
@@ -90,7 +89,7 @@ export default function Reviews() {
 
   return (
     <div>
-      <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20">
+      <section className="relative pt-10 pb-8 lg:pt-12 lg:pb-10">
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
           <motion.div
@@ -100,55 +99,58 @@ export default function Reviews() {
             animate="visible"
             className="max-w-3xl"
           >
-            <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-3 block">
-              {t("reviews.eyebrow")}
-            </span>
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight mb-4">
-              {t("reviews.title")}{" "}
-              <span className="text-violet-tech neon-text">{t("reviews.titleAccent")}</span>
-              {t("reviews.titleEnd") ? ` ${t("reviews.titleEnd")}` : ""}
-            </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              {t("reviews.subtitle")}
-            </p>
-            <p className="text-sm text-muted-foreground/90 leading-relaxed border-l-2 border-violet-tech/40 pl-4 mb-4">
+            <div className="flex flex-wrap items-end justify-between gap-3 gap-y-4">
+              <div className="min-w-0">
+                <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-2 block">
+                  {t("reviews.eyebrow")}
+                </span>
+                <h1 className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight mb-2">
+                  {t("reviews.title")}{" "}
+                  <span className="text-violet-tech neon-text">{t("reviews.titleAccent")}</span>
+                  {t("reviews.titleEnd") ? ` ${t("reviews.titleEnd")}` : ""}
+                </h1>
+                <p className="text-muted-foreground text-sm sm:text-base leading-snug max-w-xl">
+                  {t("reviews.subtitle")}
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={syncing}
+                onClick={() => void refresh(true, true)}
+                className="border-violet-tech/40 gap-2 shrink-0"
+              >
+                <RefreshCw className={`w-4 h-4 ${syncing ? "animate-spin" : ""}`} />
+                {t("reviews.refresh")}
+              </Button>
+            </div>
+            <p className="mt-3 text-xs text-muted-foreground/80 leading-snug">
               {t("reviews.discordNote")}
             </p>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              disabled={syncing}
-              onClick={() => void refresh(true, true)}
-              className="border-violet-tech/40 gap-2"
-            >
-              <RefreshCw className={`w-4 h-4 ${syncing ? "animate-spin" : ""}`} />
-              {t("reviews.refresh")}
-            </Button>
           </motion.div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />
       </section>
 
-      <section className="relative py-16 lg:py-24">
+      <section className="relative pb-12 lg:pb-16">
         <div className="container">
           {loading ? (
-            <div className="flex items-center justify-center gap-2 text-muted-foreground py-20">
+            <div className="flex items-center justify-center gap-2 text-muted-foreground py-16">
               <RefreshCw className="w-5 h-5 animate-spin" />
               {t("reviews.loading")}
             </div>
           ) : reviews.length === 0 ? (
-            <div className="glass-card rounded-lg p-10 text-center max-w-xl mx-auto">
-              <MessageCircle className="w-10 h-10 text-violet-tech mx-auto mb-4" />
-              <p className="text-muted-foreground mb-6">{t("reviews.empty")}</p>
-              <Button asChild variant="outline" className="border-violet-tech/40">
+            <div className="rounded-lg border border-border/40 p-8 text-center max-w-lg mx-auto">
+              <MessageCircle className="w-8 h-8 text-violet-tech mx-auto mb-3" />
+              <p className="text-muted-foreground text-sm mb-4">{t("reviews.empty")}</p>
+              <Button asChild variant="outline" size="sm" className="border-violet-tech/40">
                 <a href={discordInvite} target="_blank" rel="noopener noreferrer">
                   {t("reviews.joinDiscord")}
                 </a>
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+            <div className="columns-1 sm:columns-2 xl:columns-3 gap-3 [column-fill:_balance]">
               {reviews.map((review, i) => (
                 <motion.div
                   key={review.id}
@@ -156,7 +158,8 @@ export default function Reviews() {
                   variants={fadeUp}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, margin: "-40px" }}
+                  viewport={{ once: true, margin: "-20px" }}
+                  className="break-inside-avoid"
                 >
                   <DiscordReviewCard
                     review={review}
