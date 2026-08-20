@@ -45,13 +45,13 @@ export default function DiscordReviewCard({
   const hasImage = review.display === "attachment" && Boolean(review.imageUrl);
 
   return (
-    <article className="break-inside-avoid mb-3 rounded-lg border border-border/40 bg-[#2b2d31] hover:border-violet-tech/35 transition-colors overflow-hidden">
-      <div className="p-3.5">
-        <div className="flex items-center gap-2.5 mb-2">
+    <article className="break-inside-avoid mb-5 rounded-lg border border-border/45 bg-[#2b2d31] hover:border-violet-tech/35 transition-colors overflow-hidden">
+      <div className="p-4">
+        <div className="flex items-center gap-3 mb-2.5">
           <Avatar name={review.authorName} src={review.authorAvatar} />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="font-semibold text-sm text-white truncate">
+              <span className="font-semibold text-[14px] text-white truncate">
                 {review.authorName}
               </span>
               <span
@@ -82,7 +82,7 @@ export default function DiscordReviewCard({
         </div>
 
         {review.content ? (
-          <p className="text-[13.5px] leading-snug text-[#dbdee1] whitespace-pre-wrap break-words">
+          <p className="text-[14px] leading-relaxed text-[#dbdee1] whitespace-pre-wrap break-words">
             {review.content}
           </p>
         ) : null}
@@ -92,12 +92,12 @@ export default function DiscordReviewCard({
             href={review.discordUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`block rounded-md overflow-hidden border border-[#1e1f22]/80 bg-[#1e1f22]/40 ${review.content ? "mt-2" : ""}`}
+            className={`block rounded-md overflow-hidden border border-[#1e1f22]/80 bg-[#1e1f22]/40 ${review.content ? "mt-3" : ""}`}
           >
             <img
               src={review.imageUrl!}
               alt=""
-              className="w-full h-auto object-cover max-h-56"
+              className="w-full h-auto object-cover max-h-64"
               loading="lazy"
               decoding="async"
             />

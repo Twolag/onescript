@@ -157,7 +157,31 @@ export function messageHasCheckmark(message: DiscordMessage): boolean {
   );
 }
 
+/** ❌ / cross reactions hide a review from the site (even if it was previously ✅). */
+export function messageHasReject(message: DiscordMessage): boolean {
+  return (
+    message.reactions?.some((r) => {
+      const name = (r.emoji.name || "").toLowerCase();
+      return (
+        (name === "❌" ||
+          name === "✖" ||
+          name === "✖️" ||
+          name === "✗" ||
+          name === "❎" ||
+          name === "x" ||
+          name === "cross_mark" ||
+          name === "x_mark" ||
+          name === "negative_squared_cross_mark" ||
+          name === "no_entry_sign" ||
+          name === "no_entry") &&
+        r.count > 0
+      );
+    }) ?? false
+  );
+}
+
 export async function isMessageApproved(channelId: string, message: DiscordMessage): Promise<boolean> {
+  if (messageHasReject(message)) return false;
   if (!messageHasCheckmark(message)) return false;
 
   const approvers = getApproverIds();

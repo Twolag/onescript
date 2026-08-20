@@ -7,6 +7,7 @@ import {
   fetchAllChannelMessages,
   isMessageApproved,
   messageHasCheckmark,
+  messageHasReject,
   pickImageAttachment,
   type DiscordMessage,
 } from "./_discordReviews.js";
@@ -49,7 +50,6 @@ async function messageToReview(
         const { buffer, contentType } = await downloadBinary(sourceUrl);
         imageUrl = await saveReviewImage(message.id, buffer, contentType);
       } catch (error) {
-        // Vercel serverless FS is read-only without Blob — keep Discord CDN URL
         console.error(`[reviews] image persist failed for ${message.id}:`, error);
         imageUrl = sourceUrl;
       }
@@ -73,14 +73,15 @@ async function messageToReview(
 export interface SyncReviewsResult {
   scanned: number;
   approvedFound: number;
+  rejected: number;
   added: number;
+  removed: number;
   total: number;
   updatedAt: string;
   reviews: DiscordReview[];
 }
 
 export interface SyncReviewsOptions {
-  /** Limit Discord history pages (100 msgs each). Default 20; use 3–5 for live auto-sync. */
   maxPages?: number;
 }
 
@@ -96,16 +97,23 @@ export async function syncApprovedDiscordReviews(
   ]);
 
   const existingById = new Map(manifest.reviews.map((r) => [r.id, r]));
+  const rejectedIds = new Set<string>();
   const incoming: DiscordReview[] = [];
   let approvedFound = 0;
 
   for (const message of messages) {
     if (message.author.bot) continue;
     if (!message.content.trim() && message.attachments.length === 0) continue;
+
+    // ❌ hides the review (including ones previously published with ✅)
+    if (messageHasReject(message)) {
+      rejectedIds.add(message.id);
+      continue;
+    }
+
     if (!messageHasCheckmark(message)) continue;
 
     const existing = existingById.get(message.id);
-    // Already published → keep without re-checking every reactor (much faster live sync)
     if (existing) {
       approvedFound++;
       incoming.push(existing);
@@ -126,10 +134,14 @@ export async function syncApprovedDiscordReviews(
     }
   }
 
-  const merged = mergeReviews(manifest.reviews, incoming);
-  const added = merged.length - manifest.reviews.length;
+  const beforeCount = manifest.reviews.length;
+  const keptExisting = manifest.reviews.filter((r) => !rejectedIds.has(r.id));
+  const merged = mergeReviews(keptExisting, incoming).filter((r) => !rejectedIds.has(r.id));
+  const removed = manifest.reviews.filter((r) => !merged.some((m) => m.id === r.id)).length;
+  const added = merged.filter((r) => !manifest.reviews.some((e) => e.id === r.id)).length;
+
   const updatedAt = new Date().toISOString();
-  const next: { updatedAt: string; reviews: DiscordReview[] } = { updatedAt, reviews: merged };
+  const next = { updatedAt, reviews: merged };
 
   try {
     await writeReviewsManifest(next);
@@ -140,7 +152,9 @@ export async function syncApprovedDiscordReviews(
   return {
     scanned: messages.length,
     approvedFound,
-    added: Math.max(0, added),
+    rejected: rejectedIds.size,
+    added,
+    removed,
     total: merged.length,
     updatedAt,
     reviews: merged,

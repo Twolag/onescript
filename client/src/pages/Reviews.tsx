@@ -19,26 +19,32 @@ const fadeUp = {
   }),
 };
 
-/** Poll while the page is open so new Discord ✅ show up without a full reload. */
-const POLL_MS = 45_000;
+/** Soft background re-sync while the page stays open. */
+const POLL_MS = 120_000;
 
-async function loadReviews(forceRefresh: boolean): Promise<DiscordReview[]> {
-  const bust = `t=${Date.now()}`;
-  const apiUrl = forceRefresh ? `/api/reviews?refresh=1&${bust}` : `/api/reviews?${bust}`;
-  const sources = [apiUrl, `/${REVIEWS_MANIFEST_PATH}?${bust}`];
-
-  for (const url of sources) {
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) continue;
-      const data = (await res.json()) as ReviewsManifest;
-      if (Array.isArray(data.reviews)) return data.reviews;
-    } catch {
-      /* try next source */
-    }
+async function fetchReviews(url: string): Promise<DiscordReview[] | null> {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) return null;
+    const data = (await res.json()) as ReviewsManifest;
+    return Array.isArray(data.reviews) ? data.reviews : null;
+  } catch {
+    return null;
   }
+}
 
+async function loadCachedReviews(): Promise<DiscordReview[]> {
+  const bust = `t=${Date.now()}`;
+  const sources = [`/api/reviews?${bust}`, `/${REVIEWS_MANIFEST_PATH}?${bust}`];
+  for (const url of sources) {
+    const items = await fetchReviews(url);
+    if (items) return items;
+  }
   return [];
+}
+
+async function syncReviewsFromDiscord(): Promise<DiscordReview[] | null> {
+  return fetchReviews(`/api/reviews?refresh=1&t=${Date.now()}`);
 }
 
 export default function Reviews() {
@@ -47,49 +53,45 @@ export default function Reviews() {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
 
-  const refresh = useCallback(async (force: boolean, showSpinner: boolean) => {
+  const applySync = useCallback(async (showSpinner: boolean) => {
     if (showSpinner) setSyncing(true);
     try {
-      const items = await loadReviews(force);
-      setReviews(items);
+      const items = await syncReviewsFromDiscord();
+      if (items) setReviews(items);
     } finally {
-      setLoading(false);
       setSyncing(false);
     }
   }, []);
 
   useEffect(() => {
     let cancelled = false;
-    loadReviews(true).then((items) => {
-      if (!cancelled) {
-        setReviews(items);
-        setLoading(false);
-      }
+
+    // 1) Show cached reviews immediately (no Discord wait → no infinite spinner)
+    loadCachedReviews().then((items) => {
+      if (cancelled) return;
+      setReviews(items);
+      setLoading(false);
+      // 2) Sync in background; update list when Discord answers
+      void syncReviewsFromDiscord().then((fresh) => {
+        if (!cancelled && fresh) setReviews(fresh);
+      });
     });
 
     const interval = window.setInterval(() => {
-      if (document.visibilityState === "visible") {
-        void refresh(true, false);
-      }
+      if (document.visibilityState === "visible") void applySync(false);
     }, POLL_MS);
-
-    const onVisible = () => {
-      if (document.visibilityState === "visible") void refresh(true, false);
-    };
-    document.addEventListener("visibilitychange", onVisible);
 
     return () => {
       cancelled = true;
       window.clearInterval(interval);
-      document.removeEventListener("visibilitychange", onVisible);
     };
-  }, [refresh]);
+  }, [applySync]);
 
   const discordInvite = import.meta.env.VITE_DISCORD_LINK || "https://discord.gg/5btq6znUvN";
 
   return (
     <div>
-      <section className="relative pt-10 pb-8 lg:pt-12 lg:pb-10">
+      <section className="relative pt-10 pb-10 lg:pt-14 lg:pb-12">
         <div className="absolute inset-0 bg-dark-surface/30" />
         <div className="relative container">
           <motion.div
@@ -99,7 +101,7 @@ export default function Reviews() {
             animate="visible"
             className="max-w-3xl"
           >
-            <div className="flex flex-wrap items-end justify-between gap-3 gap-y-4">
+            <div className="flex flex-wrap items-end justify-between gap-4">
               <div className="min-w-0">
                 <span className="font-display text-xs font-semibold tracking-[0.25em] uppercase text-violet-tech mb-2 block">
                   {t("reviews.eyebrow")}
@@ -109,7 +111,7 @@ export default function Reviews() {
                   <span className="text-violet-tech neon-text">{t("reviews.titleAccent")}</span>
                   {t("reviews.titleEnd") ? ` ${t("reviews.titleEnd")}` : ""}
                 </h1>
-                <p className="text-muted-foreground text-sm sm:text-base leading-snug max-w-xl">
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-xl">
                   {t("reviews.subtitle")}
                 </p>
               </div>
@@ -118,21 +120,21 @@ export default function Reviews() {
                 variant="outline"
                 size="sm"
                 disabled={syncing}
-                onClick={() => void refresh(true, true)}
+                onClick={() => void applySync(true)}
                 className="border-violet-tech/40 gap-2 shrink-0"
               >
                 <RefreshCw className={`w-4 h-4 ${syncing ? "animate-spin" : ""}`} />
                 {t("reviews.refresh")}
               </Button>
             </div>
-            <p className="mt-3 text-xs text-muted-foreground/80 leading-snug">
+            <p className="mt-4 text-xs sm:text-sm text-muted-foreground/85 leading-relaxed border-l-2 border-violet-tech/35 pl-3">
               {t("reviews.discordNote")}
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="relative pb-12 lg:pb-16">
+      <section className="relative pb-14 lg:pb-20">
         <div className="container">
           {loading ? (
             <div className="flex items-center justify-center gap-2 text-muted-foreground py-16">
@@ -150,7 +152,7 @@ export default function Reviews() {
               </Button>
             </div>
           ) : (
-            <div className="columns-1 sm:columns-2 xl:columns-3 gap-3 [column-fill:_balance]">
+            <div className="columns-1 sm:columns-2 xl:columns-3 gap-5">
               {reviews.map((review, i) => (
                 <motion.div
                   key={review.id}

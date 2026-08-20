@@ -5,8 +5,7 @@ import {
   syncApprovedDiscordReviews,
 } from "./_syncReviews.js";
 
-/** Warm-instance debounce so page polls don't hammer Discord. */
-let lastAutoSyncAt = 0;
+/** In-memory cache between warm invocations (no Blob required). */
 let lastSyncPayload: {
   updatedAt: string;
   reviews: Awaited<ReturnType<typeof syncApprovedDiscordReviews>>["reviews"];
@@ -17,12 +16,12 @@ let lastSyncMeta: {
   error?: string;
   scanned?: number;
   approvedFound?: number;
+  rejected?: number;
   added?: number;
+  removed?: number;
   total?: number;
 } | null = null;
 let inflightSync: Promise<Awaited<ReturnType<typeof syncApprovedDiscordReviews>>> | null = null;
-
-const AUTO_SYNC_COOLDOWN_MS = 15_000;
 
 function envStatus() {
   const approvers = (process.env.DISCORD_REVIEW_APPROVER_IDS ?? "")
@@ -66,8 +65,7 @@ function wantsDebug(req: VercelRequest): boolean {
 async function runSync(fullHistory: boolean) {
   if (inflightSync) return inflightSync;
   inflightSync = syncApprovedDiscordReviews({
-    // Force refresh / cron: full history. Auto: still scan a lot (many reviews).
-    maxPages: fullHistory ? 25 : 15,
+    maxPages: fullHistory ? 25 : 12,
   }).finally(() => {
     inflightSync = null;
   });
@@ -86,9 +84,9 @@ function withDebug<T extends Record<string, unknown>>(payload: T, debug: boolean
 }
 
 /**
- * - GET public → auto-sync from Discord (debounced) then return reviews
- * - GET/POST + Bearer secret → full sync (cron / manual)
- * - GET ?debug=1 → includes env readiness (no secrets)
+ * - GET → fast cached/static reviews (no Discord wait)
+ * - GET ?refresh=1 → sync Discord then return (button / background)
+ * - POST / GET + Bearer → full sync (cron)
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -104,60 +102,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const force = wantsForcedSync(req);
   const debug = wantsDebug(req);
 
-  if (req.method === "POST" || (req.method === "GET" && authorized)) {
-    if (!authorized) {
+  const shouldSyncNow =
+    req.method === "POST" || (req.method === "GET" && (authorized || force));
+
+  if (shouldSyncNow) {
+    if (req.method === "POST" && !authorized && !force) {
       res.status(401).json(withDebug({ error: "Unauthorized" }, debug));
       return;
     }
-    try {
-      const result = await runSync(true);
-      lastAutoSyncAt = Date.now();
-      lastSyncPayload = { updatedAt: result.updatedAt, reviews: result.reviews };
-      lastSyncMeta = {
-        at: result.updatedAt,
-        ok: true,
-        scanned: result.scanned,
-        approvedFound: result.approvedFound,
-        added: result.added,
-        total: result.total,
-      };
-      res.setHeader("Cache-Control", "no-store");
-      res.status(200).json(
-        withDebug(
-          {
-            success: true,
-            scanned: result.scanned,
-            approvedFound: result.approvedFound,
-            added: result.added,
-            total: result.total,
-            updatedAt: result.updatedAt,
-            reviews: result.reviews,
-          },
-          debug,
-        ),
-      );
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      lastSyncMeta = { at: new Date().toISOString(), ok: false, error: message };
-      res.status(500).json(withDebug({ error: message }, debug));
+    // Public may use ?refresh=1; cron uses Bearer
+    if (req.method === "POST" && !authorized) {
+      res.status(401).json(withDebug({ error: "Unauthorized" }, debug));
+      return;
     }
-    return;
-  }
 
-  if (req.method !== "GET") {
-    res.status(405).json({ error: "Method not allowed" });
-    return;
-  }
-
-  try {
-    const now = Date.now();
-    const shouldAutoSync =
-      canSyncDiscordReviews() &&
-      (force || now - lastAutoSyncAt >= AUTO_SYNC_COOLDOWN_MS);
-
-    if (!canSyncDiscordReviews() && (force || debug)) {
-      res.setHeader("Cache-Control", "no-store");
+    if (!canSyncDiscordReviews()) {
       const manifest = await readReviewsManifest();
+      res.setHeader("Cache-Control", "no-store");
       res.status(200).json(
         withDebug(
           {
@@ -170,62 +131,64 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    if (shouldAutoSync) {
-      try {
-        const result = await runSync(force);
-        lastAutoSyncAt = Date.now();
-        lastSyncPayload = { updatedAt: result.updatedAt, reviews: result.reviews };
-        lastSyncMeta = {
-          at: result.updatedAt,
-          ok: true,
-          scanned: result.scanned,
-          approvedFound: result.approvedFound,
-          added: result.added,
-          total: result.total,
-        };
+    try {
+      const result = await runSync(Boolean(authorized) || force);
+      lastSyncPayload = { updatedAt: result.updatedAt, reviews: result.reviews };
+      lastSyncMeta = {
+        at: result.updatedAt,
+        ok: true,
+        scanned: result.scanned,
+        approvedFound: result.approvedFound,
+        rejected: result.rejected,
+        added: result.added,
+        removed: result.removed,
+        total: result.total,
+      };
+      res.setHeader("Cache-Control", "no-store");
+      res.status(200).json(
+        withDebug(
+          {
+            success: true,
+            scanned: result.scanned,
+            approvedFound: result.approvedFound,
+            rejected: result.rejected,
+            added: result.added,
+            removed: result.removed,
+            total: result.total,
+            updatedAt: result.updatedAt,
+            reviews: result.reviews,
+          },
+          debug,
+        ),
+      );
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      lastSyncMeta = { at: new Date().toISOString(), ok: false, error: message };
+      if (force || debug) {
+        const manifest = lastSyncPayload ?? (await readReviewsManifest());
         res.setHeader("Cache-Control", "no-store");
-        res.status(200).json(
-          withDebug(
-            {
-              updatedAt: result.updatedAt,
-              reviews: result.reviews,
-            },
-            debug,
-          ),
-        );
+        res.status(200).json(withDebug({ ...manifest, _syncError: message }, true));
         return;
-      } catch (syncError) {
-        const message = syncError instanceof Error ? syncError.message : String(syncError);
-        console.error("[reviews] auto-sync failed:", syncError);
-        lastSyncMeta = { at: new Date().toISOString(), ok: false, error: message };
-        if (force || debug) {
-          const manifest = await readReviewsManifest();
-          res.setHeader("Cache-Control", "no-store");
-          res.status(200).json(
-            withDebug(
-              {
-                ...manifest,
-                _syncError: message,
-              },
-              true,
-            ),
-          );
-          return;
-        }
       }
+      res.status(500).json(withDebug({ error: message }, debug));
     }
+    return;
+  }
 
+  if (req.method !== "GET") {
+    res.status(405).json({ error: "Method not allowed" });
+    return;
+  }
+
+  // Fast path: never wait on Discord for a normal page load
+  try {
     if (lastSyncPayload) {
-      res.setHeader("Cache-Control", "public, s-maxage=15, stale-while-revalidate=60");
+      res.setHeader("Cache-Control", "public, s-maxage=30, stale-while-revalidate=120");
       res.status(200).json(withDebug(lastSyncPayload, debug));
       return;
     }
-
     const manifest = await readReviewsManifest();
-    res.setHeader(
-      "Cache-Control",
-      force ? "no-store" : "public, s-maxage=15, stale-while-revalidate=60",
-    );
+    res.setHeader("Cache-Control", "public, s-maxage=30, stale-while-revalidate=120");
     res.status(200).json(withDebug(manifest, debug));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

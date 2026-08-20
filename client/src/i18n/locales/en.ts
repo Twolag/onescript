@@ -72,7 +72,7 @@ export const en = {
     titleEnd: "say",
     subtitle: "Authentic feedback synced from our Discord channel — profile photo, username, and original message.",
     discordNote:
-      "Each review is published only after team validation (✅ reaction on Discord). The site syncs automatically when you open this page.",
+      "Each review is published only after team validation (✅). Put ❌ on a message to hide it from the site. Open or refresh this page to sync.",
     verifiedDiscord: "Verified Discord review",
     viewOnDiscord: "View on Discord",
     loading: "Loading reviews…",
