@@ -40,6 +40,17 @@ const STRIPE_CATALOG: Record<
       { label: "Lifetime", priceCents: 4000, description: "Lifetime" },
     ],
   },
+  "onestate-rp": {
+    name: "AI Aimbot Onestate RP",
+    options: [
+      {
+        label: "Onestate RP (iOS & Android)",
+        priceCents: 1000,
+        description:
+          "Mobile AI Aimbot for iOS & Android. Donation to the OneScript server — thank you!",
+      },
+    ],
+  },
 };
 
 /**

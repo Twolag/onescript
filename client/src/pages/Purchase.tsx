@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock, Zap, RefreshCw, Keyboard
+  MessageCircle, CreditCard, Clock, Zap, RefreshCw, Keyboard, Smartphone
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -90,6 +90,20 @@ const products: Product[] = [
       { labelKey: "plans.jitterLife", price: 40 },
     ],
   },
+  {
+    id: "onestate-rp",
+    name: "AI Aimbot Onestate RP",
+    nameKey: "plans.onestate",
+    icon: Smartphone,
+    options: [
+      {
+        labelKey: "plans.onestate",
+        price: 10,
+        descKey: "plans.onestateDesc",
+        durationKey: "plans.durInstant",
+      },
+    ],
+  },
 ];
 
 const GAME_LABELS: Record<string, string> = {
@@ -123,7 +137,9 @@ export default function Purchase() {
   const productId = rawProductId === "fusion-ai" || rawProductId === "ai" ? "ai-engine"
     : rawProductId === "windows" || rawProductId === "windows-optimization" ? "windows-opt"
     : rawProductId === "jitter" ? "jitter-script"
+    : rawProductId === "onestate" || rawProductId === "onestate-rp" ? "onestate-rp"
     : rawProductId;
+  const isOnestate = productId === "onestate-rp";
   const product = products.find((p) => p.id === productId) || products[0];
   const rawGame = (searchParams.get("game") || "").toLowerCase();
   const selectedGame = GAME_LABELS[rawGame] || null;
@@ -180,8 +196,10 @@ export default function Purchase() {
         index = 5;
       }
       setSelectedOptionIndex(index);
+    } else if (isOnestate) {
+      setSelectedOptionIndex(0);
     }
-  }, [productId, aiDuration, aiSupport, aiRenewalType, aiAddonType]);
+  }, [productId, isOnestate, aiDuration, aiSupport, aiRenewalType, aiAddonType]);
 
   const selectedOption = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   const selectedItem = selectedOption ? resolveOption(selectedOption) : null;
@@ -195,7 +213,9 @@ export default function Purchase() {
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.discordPseudo || !formData.cpu || !formData.gpu) {
+    const baseOk = formData.firstName && formData.lastName && formData.email && formData.discordPseudo;
+    const hardwareOk = isOnestate || (formData.cpu && formData.gpu);
+    if (!baseOk || !hardwareOk) {
       toast.error(t("purchase.fillAll"));
       return;
     }
@@ -207,7 +227,7 @@ export default function Purchase() {
       toast.error(t("purchase.confirmSelfSetup"));
       return;
     }
-    if (!hardwareConfirmed) {
+    if (!isOnestate && !hardwareConfirmed) {
       toast.error(t("purchase.confirmHardware"));
       return;
     }
@@ -244,10 +264,10 @@ export default function Purchase() {
           discordPseudo: formData.discordPseudo,
           orderNumber: orderCreated.orderNumber,
           game: selectedGame || "",
-          cpu: formData.cpu,
-          gpu: formData.gpu,
-          os: formData.os,
-          inputMethod: formData.controller || "N/A",
+          cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
+          gpu: isOnestate ? "N/A" : formData.gpu,
+          os: isOnestate ? "iOS / Android" : formData.os,
+          inputMethod: isOnestate ? "Touch (mobile)" : (formData.controller || "N/A"),
         }),
       });
       const data = await res.json();
@@ -280,10 +300,10 @@ export default function Purchase() {
           productOption: selectedItem.label,
           discordPseudo: formData.discordPseudo,
           price: orderCreated.price,
-          cpu: formData.cpu,
-          gpu: formData.gpu,
-          os: formData.os,
-          inputMethod: formData.controller || "N/A",
+          cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
+          gpu: isOnestate ? "N/A" : formData.gpu,
+          os: isOnestate ? "iOS / Android" : formData.os,
+          inputMethod: isOnestate ? "Touch (mobile)" : (formData.controller || "N/A"),
         },
       }),
     }).catch(console.error);
@@ -300,10 +320,10 @@ export default function Purchase() {
         optionLabel: selectedItem.label,
         price: orderCreated.price,
         paymentMethod,
-        cpu: formData.cpu,
-        gpu: formData.gpu,
-        os: formData.os,
-        inputMethod: formData.controller || "N/A",
+        cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
+        gpu: isOnestate ? "N/A" : formData.gpu,
+        os: isOnestate ? "iOS / Android" : formData.os,
+        inputMethod: isOnestate ? "Touch (mobile)" : (formData.controller || "N/A"),
         selfSetupConfirmed: isSelfSetupOption ? "YES (Confirmed)" : "N/A",
       }),
     }).catch(console.error);
@@ -435,6 +455,32 @@ export default function Purchase() {
                       </div>
                       <p className="text-sm text-emerald-100/90 leading-relaxed">
                         {t("purchase.controllerOnlyDesc")}
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {isOnestate && (
+                  <div className="mb-8 space-y-4">
+                    <div className="p-5 rounded-lg bg-yellow-500/15 border border-yellow-400/50">
+                      <div className="flex items-center gap-3 mb-2">
+                        <AlertCircle className="w-5 h-5 text-yellow-300" />
+                        <h3 className="text-sm font-bold text-yellow-300 tracking-wider uppercase">
+                          OneScript
+                        </h3>
+                      </div>
+                      <p className="text-sm text-yellow-100/95 leading-relaxed">
+                        {t("products.onestateDonation")}
+                      </p>
+                    </div>
+                    <div className="p-5 rounded-lg bg-emerald-900/20 border border-emerald-500/35">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Smartphone className="w-5 h-5 text-emerald-400" />
+                        <h3 className="text-sm font-bold text-emerald-400 tracking-wider uppercase">
+                          iOS & Android
+                        </h3>
+                      </div>
+                      <p className="text-sm text-emerald-100/90 leading-relaxed">
+                        {t("products.onestateDesc")}
                       </p>
                     </div>
                   </div>
@@ -675,7 +721,8 @@ export default function Purchase() {
                     </div>
                   </div>
 
-                  {/* Hardware Configuration */}
+                  {/* Hardware Configuration — skipped for mobile Onestate RP */}
+                  {!isOnestate && (
                   <div className="pt-4 border-t border-border/30">
                     <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">{t("purchase.hardwareConfig")}</h3>
                     <div className="grid sm:grid-cols-3 gap-4">
@@ -696,6 +743,7 @@ export default function Purchase() {
                       </div>
                     </div>
                   </div>
+                  )}
 
                   {/* Self-Setup Confirmation Checkbox */}
                   {isSelfSetupOption && (
@@ -719,7 +767,8 @@ export default function Purchase() {
                     </div>
                   )}
 
-                  {/* Configuration Requirements Reminder */}
+                  {/* Configuration Requirements Reminder — skipped for Onestate RP */}
+                  {!isOnestate ? (
                   <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 mb-6">
                     <div className="flex gap-3 mb-4">
                       <span className="text-xl flex-shrink-0">⚠️</span>
@@ -744,6 +793,16 @@ export default function Purchase() {
                       </label>
                     </div>
                   </div>
+                  ) : (
+                  <div className="p-4 rounded-lg bg-yellow-500/15 border border-yellow-400/50 mb-6">
+                    <div className="flex gap-3">
+                      <AlertCircle className="w-5 h-5 text-yellow-300 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-yellow-100/95 leading-relaxed">
+                        {t("products.onestateDonation")}
+                      </p>
+                    </div>
+                  </div>
+                  )}
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? t("purchase.processing") : t("purchase.proceed")}

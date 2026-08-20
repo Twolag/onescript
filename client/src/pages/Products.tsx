@@ -14,6 +14,7 @@ import {
   ArrowRight,
   ChevronRight,
   AlertCircle,
+  Smartphone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage, type TranslationKey } from "@/i18n/LanguageContext";
@@ -40,6 +41,7 @@ interface ProductDef {
   priceNoteKey: TranslationKey;
   ctaHref: string;
   warningKey?: TranslationKey;
+  warningTone?: "amber" | "yellow";
 }
 
 const productDefs: ProductDef[] = [
@@ -120,6 +122,27 @@ const productDefs: ProductDef[] = [
     priceNoteKey: "products.startingFrom",
     ctaHref: "/purchase?product=jitter-script",
   },
+  {
+    id: "onestate-rp",
+    icon: Smartphone,
+    badgeKey: "products.onestateBadge",
+    badgeColor: "bg-yellow-500/20 border-yellow-500/50 text-yellow-300",
+    subtitleKey: "products.onestateSubtitle",
+    titleKey: "products.onestateTitle",
+    descKey: "products.onestateDesc",
+    featureKeys: [
+      "products.onestateF1",
+      "products.onestateF2",
+      "products.onestateF3",
+      "products.onestateF4",
+      "products.onestateF5",
+    ],
+    price: "10 €",
+    priceNoteKey: "products.oneTime",
+    ctaHref: "/purchase?product=onestate-rp",
+    warningKey: "products.onestateDonation",
+    warningTone: "yellow",
+  },
 ];
 
 function ProductCardComponent({
@@ -170,9 +193,25 @@ function ProductCardComponent({
         </p>
 
         {def.warningKey && (
-          <div className="mb-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 flex gap-2">
-            <AlertCircle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-amber-200/90">{t(def.warningKey)}</p>
+          <div
+            className={`mb-4 p-3 rounded-lg flex gap-2 ${
+              def.warningTone === "yellow"
+                ? "bg-yellow-500/15 border border-yellow-400/50"
+                : "bg-amber-500/10 border border-amber-500/30"
+            }`}
+          >
+            <AlertCircle
+              className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+                def.warningTone === "yellow" ? "text-yellow-300" : "text-amber-400"
+              }`}
+            />
+            <p
+              className={`text-xs ${
+                def.warningTone === "yellow" ? "text-yellow-100/95" : "text-amber-200/90"
+              }`}
+            >
+              {t(def.warningKey)}
+            </p>
           </div>
         )}
 
@@ -251,7 +290,7 @@ export default function Products() {
 
       <section className="relative py-16 lg:py-24">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {productDefs.map((def, idx) => (
               <ProductCardComponent key={def.id} def={def} index={idx} />
             ))}
