@@ -159,9 +159,6 @@ export default function Reviews() {
                 {t("reviews.refresh")}
               </Button>
             </div>
-            <p className="mt-4 text-xs sm:text-sm text-muted-foreground/85 leading-relaxed border-l-2 border-violet-tech/35 pl-3">
-              {t("reviews.discordNote")}
-            </p>
           </motion.div>
         </div>
       </section>
