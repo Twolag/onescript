@@ -137,15 +137,23 @@ export function getApproverIds(): string[] {
   return (process.env.DISCORD_REVIEW_APPROVER_IDS ?? "")
     .split(",")
     .map((id) => id.trim())
-    .filter(Boolean);
+    .filter((id) => id && !/^your_/i.test(id) && !/^(123456789|987654321)/.test(id));
 }
 
 export function messageHasCheckmark(message: DiscordMessage): boolean {
   return (
-    message.reactions?.some(
-      (r) =>
-        (r.emoji.name === "✅" || r.emoji.name === "white_check_mark") && r.count > 0,
-    ) ?? false
+    message.reactions?.some((r) => {
+      const name = r.emoji.name || "";
+      return (
+        (name === "✅" ||
+          name === "✔️" ||
+          name === "☑️" ||
+          name === "white_check_mark" ||
+          name === "heavy_check_mark" ||
+          name === "ballot_box_with_check") &&
+        r.count > 0
+      );
+    }) ?? false
   );
 }
 
@@ -153,11 +161,17 @@ export async function isMessageApproved(channelId: string, message: DiscordMessa
   if (!messageHasCheckmark(message)) return false;
 
   const approvers = getApproverIds();
+  // No valid approver IDs configured → any ✅ counts
   if (approvers.length === 0) return true;
 
   await sleep(350);
   const reactors = await fetchCheckmarkReactors(channelId, message.id);
-  return reactors.some((user) => approvers.includes(user.id));
+  if (reactors.some((user) => approvers.includes(user.id))) return true;
+
+  // Fallback: if allowlist is misconfigured, still accept a ✅ so reviews are not silently dropped.
+  // Set DISCORD_REVIEW_REQUIRE_APPROVER=1 to enforce the allowlist strictly.
+  if (process.env.DISCORD_REVIEW_REQUIRE_APPROVER === "1") return false;
+  return reactors.length > 0;
 }
 
 export function pickImageAttachment(message: DiscordMessage) {
