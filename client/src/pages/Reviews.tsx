@@ -48,20 +48,16 @@ async function syncReviewsFromDiscord(): Promise<DiscordReview[] | null> {
 }
 
 /**
- * CSS columns fill top→bottom per column. Reorder so the visual top row
- * still reads left→right in chronological order (no big grid gaps).
+ * Split reviews into N stacks round-robin so:
+ * - visual top row is chronological left→right (0,1,2…)
+ * - each column packs tightly (no empty holes under short cards)
  */
-function toColumnMajorOrder<T>(items: T[], cols: number): T[] {
-  if (cols <= 1 || items.length <= 1) return items;
-  const rows = Math.ceil(items.length / cols);
-  const ordered: T[] = [];
-  for (let c = 0; c < cols; c++) {
-    for (let r = 0; r < rows; r++) {
-      const index = r * cols + c;
-      if (index < items.length) ordered.push(items[index]);
-    }
-  }
-  return ordered;
+function splitIntoColumns<T>(items: T[], cols: number): T[][] {
+  const columns: T[][] = Array.from({ length: cols }, () => []);
+  items.forEach((item, index) => {
+    columns[index % cols].push(item);
+  });
+  return columns;
 }
 
 function useReviewColumnCount() {
@@ -89,10 +85,7 @@ export default function Reviews() {
   const [syncing, setSyncing] = useState(false);
   const cols = useReviewColumnCount();
 
-  const displayReviews = useMemo(
-    () => toColumnMajorOrder(reviews, cols),
-    [reviews, cols],
-  );
+  const columns = useMemo(() => splitIntoColumns(reviews, cols), [reviews, cols]);
 
   const applySync = useCallback(async (showSpinner: boolean) => {
     if (showSpinner) setSyncing(true);
@@ -191,23 +184,26 @@ export default function Reviews() {
               </Button>
             </div>
           ) : (
-            <div className="columns-1 sm:columns-2 xl:columns-3 gap-5">
-              {displayReviews.map((review, i) => (
-                <motion.div
-                  key={review.id}
-                  custom={i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-20px" }}
-                  className="break-inside-avoid mb-5"
-                >
-                  <DiscordReviewCard
-                    review={review}
-                    verifiedLabel={t("reviews.verifiedDiscord")}
-                    viewOnDiscordLabel={t("reviews.viewOnDiscord")}
-                  />
-                </motion.div>
+            <div className="flex gap-5 items-start">
+              {columns.map((column, colIndex) => (
+                <div key={colIndex} className="flex-1 min-w-0 flex flex-col gap-5">
+                  {column.map((review, rowIndex) => (
+                    <motion.div
+                      key={review.id}
+                      custom={colIndex + rowIndex * cols}
+                      variants={fadeUp}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, margin: "-20px" }}
+                    >
+                      <DiscordReviewCard
+                        review={review}
+                        verifiedLabel={t("reviews.verifiedDiscord")}
+                        viewOnDiscordLabel={t("reviews.viewOnDiscord")}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
               ))}
             </div>
           )}
