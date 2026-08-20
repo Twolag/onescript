@@ -164,6 +164,7 @@ export default function Purchase() {
   });
   const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
   const [hardwareConfirmed, setHardwareConfirmed] = useState(false);
+  const [donationConfirmed, setDonationConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
@@ -230,6 +231,10 @@ export default function Purchase() {
     }
     if (!isOnestate && !hardwareConfirmed) {
       toast.error(t("purchase.confirmHardware"));
+      return;
+    }
+    if (isOnestate && !donationConfirmed) {
+      toast.error(t("purchase.confirmDonation"));
       return;
     }
 
@@ -464,18 +469,7 @@ export default function Purchase() {
                   </div>
                 )}
                 {isOnestate && (
-                  <div className="mb-8 space-y-4">
-                    <div className="p-5 rounded-lg bg-yellow-500/15 border border-yellow-400/50">
-                      <div className="flex items-center gap-3 mb-2">
-                        <AlertCircle className="w-5 h-5 text-yellow-300" />
-                        <h3 className="text-sm font-bold text-yellow-300 tracking-wider uppercase">
-                          OneScript
-                        </h3>
-                      </div>
-                      <p className="text-sm text-yellow-100/95 leading-relaxed">
-                        {t("products.onestateDonation")}
-                      </p>
-                    </div>
+                  <div className="mb-8">
                     <div className="p-5 rounded-lg bg-emerald-900/20 border border-emerald-500/35">
                       <div className="flex items-center gap-3 mb-2">
                         <Smartphone className="w-5 h-5 text-emerald-400" />
@@ -786,7 +780,7 @@ export default function Purchase() {
                     </div>
                   )}
 
-                  {/* Configuration Requirements Reminder — skipped for Onestate RP */}
+                  {/* Configuration Requirements Reminder — Onestate: small donation checkbox only */}
                   {!isOnestate ? (
                   <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 mb-6">
                     <div className="flex gap-3 mb-4">
@@ -813,12 +807,20 @@ export default function Purchase() {
                     </div>
                   </div>
                   ) : (
-                  <div className="p-4 rounded-lg bg-yellow-500/15 border border-yellow-400/50 mb-6">
-                    <div className="flex gap-3">
-                      <AlertCircle className="w-5 h-5 text-yellow-300 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-yellow-100/95 leading-relaxed">
+                  <div className="mb-6 p-3 rounded-md bg-yellow-500/10 border border-yellow-400/35">
+                    <div className="flex items-start gap-3">
+                      <div className="flex items-center h-5 mt-0.5">
+                        <input
+                          id="donation-check"
+                          type="checkbox"
+                          checked={donationConfirmed}
+                          onChange={(e) => setDonationConfirmed(e.target.checked)}
+                          className="w-4 h-4 rounded border-yellow-400/50 bg-dark-elevated text-yellow-400 focus:ring-yellow-400/30 transition-all cursor-pointer"
+                        />
+                      </div>
+                      <label htmlFor="donation-check" className="text-xs text-yellow-100/90 leading-relaxed cursor-pointer select-none">
                         {t("products.onestateDonation")}
-                      </p>
+                      </label>
                     </div>
                   </div>
                   )}
