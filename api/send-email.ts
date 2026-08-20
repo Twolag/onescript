@@ -38,7 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Customer Email with props
     if (props && !html) {
-      const { orderNumber, customerName, productName, productOption, discordPseudo, price, cpu, gpu, os } = props;
+      const { orderNumber, customerName, productName, productOption, discordPseudo, onestatePseudo, price, cpu, gpu, os } = props;
       const firstName = customerName ? customerName.split(' ')[0] : 'there';
 
       finalSubject = `⏳ Order Pending Payment – ${productName} | OneScript`;
@@ -84,6 +84,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 <td style="padding:14px 20px;color:#888;font-size:14px;">Discord</td>
                 <td style="padding:14px 20px;color:#fff;font-size:14px;text-align:right;">${discordPseudo}</td>
               </tr>
+              ${onestatePseudo ? `<tr style="border-top:1px solid #222;">
+                <td style="padding:14px 20px;color:#888;font-size:14px;">Onestate</td>
+                <td style="padding:14px 20px;color:#fff;font-size:14px;text-align:right;">${onestatePseudo}</td>
+              </tr>` : ""}
               <tr style="border-top:1px solid #222;">
                 <td style="padding:14px 20px;color:#888;font-size:14px;">Hardware</td>
                 <td style="padding:14px 20px;color:#fff;font-size:14px;text-align:right;">${cpu} / ${gpu} / ${os}</td>

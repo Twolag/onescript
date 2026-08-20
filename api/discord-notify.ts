@@ -9,7 +9,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   try {
-    const { orderNumber, customerName, email, discordPseudo, productName, optionLabel, price, paymentMethod, cpu, gpu, os, requestedDate, requestedTime } = req.body;
+    const { orderNumber, customerName, email, discordPseudo, onestatePseudo, productName, optionLabel, price, paymentMethod, cpu, gpu, os, requestedDate, requestedTime } = req.body;
     if (!process.env.DISCORD_WEBHOOK_URL) {
       return res.status(500).json({ error: 'DISCORD_WEBHOOK_URL not configured' });
     }
@@ -30,6 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             { name: '👤 Customer', value: customerName, inline: true },
             { name: '📧 Email', value: email, inline: true },
             { name: '💬 Discord', value: discordPseudo, inline: true },
+            ...(onestatePseudo ? [{ name: '📱 Onestate', value: onestatePseudo, inline: true }] : []),
             { name: '🎮 Product', value: productName, inline: true },
             { name: '📦 Option', value: optionLabel, inline: true },
             { name: '💳 Payment', value: paymentMethod === 'sumup' ? '💳 Credit Card (SumUp)' : paymentMethod === 'bank_transfer' ? '🏦 Bank Transfer (Virement SEPA)' : paymentMethod === 'bunq' ? '🟦 Card via bunq.me (no fees)' : paymentMethod === 'stripe' ? '💳 Stripe (Card)' : '🅿️ PayPal', inline: true },
