@@ -19,6 +19,12 @@ const STRIPE_CATALOG: Record<
       { label: "Monthly Renewal", priceCents: 3000, description: "Monthly renewal." },
       { label: "Advanced Weight — Apex Legends", priceCents: 1000, description: "Advanced Weight Apex." },
       { label: "Advanced Weight — Fortnite", priceCents: 1000, description: "Advanced Weight Fortnite." },
+      {
+        label: "Ultimate License",
+        priceCents: 17500,
+        description:
+          "Lifetime AI Aimbot + all future updates + all Advanced Weights for all games + custom personal hash.",
+      },
     ],
   },
   "windows-opt": {

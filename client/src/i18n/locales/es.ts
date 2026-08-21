@@ -122,6 +122,7 @@ export const es: Dictionary = {
     monthly: "Mensual",
     annual: "Anual",
     lifetime: "De por vida",
+    ultimate: "Ultimate",
     renewal: "Renovación",
     addon: "Advanced Weight",
     withSupport: "Con soporte + instalación",
@@ -410,6 +411,9 @@ export const es: Dictionary = {
     annualDesc: "Acceso completo FUSION AI V8 durante 12 meses. Placa Waveshare RP2350A requerida. ⚠️ Bloqueado en V8 — actualizaciones mayores futuras: +30 €. Soporte prioritario incluido.",
     lifetime: "Licencia de por vida",
     lifetimeDesc: "Acceso permanente FUSION AI V8. Placa Waveshare RP2350A requerida. ⚠️ Bloqueado en V8 — actualizaciones mayores futuras: +30 €. Pago único.",
+    ultimate: "Plan Ultimate",
+    ultimateDesc:
+      "AI Aimbot Lifetime + todas las futuras actualizaciones incluidas + todas las Advanced Weights de todos los juegos + hash personalizado (si otros builds se banean, el tuyo sigue safe). Placa Waveshare RP2350A requerida. Pago único 175 €.",
     onestate: "AI Aimbot Onestate RP",
     onestateDesc: "AI Aimbot móvil para iOS y Android vía Onestate RP. Sin RP2350A, mando ni teclado/ratón. Este pago es un donativo al servidor OneScript — ¡gracias!",
     monthlyRenewal: "Renovación mensual",

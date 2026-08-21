@@ -122,6 +122,7 @@ export const fr: Dictionary = {
     monthly: "Mensuel",
     annual: "Annuel",
     lifetime: "À vie",
+    ultimate: "Ultimate",
     renewal: "Renouvellement",
     addon: "Advanced Weight",
     withSupport: "Avec support + installation",
@@ -410,6 +411,9 @@ export const fr: Dictionary = {
     annualDesc: "Accès complet FUSION AI V8 pendant 12 mois. Carte Waveshare RP2350A requise. ⚠️ Verrouillé sur V8 — mises à jour majeures futures : +30 €. Support prioritaire inclus.",
     lifetime: "Licence à vie",
     lifetimeDesc: "Accès permanent FUSION AI V8. Carte Waveshare RP2350A requise. ⚠️ Verrouillé sur V8 — mises à jour majeures futures : +30 €. Paiement unique.",
+    ultimate: "Forfait Ultimate",
+    ultimateDesc:
+      "AI Aimbot Lifetime + toutes les futures mises à jour incluses + toutes les Advanced Weights de tous les jeux + hash custom personnel (si les autres builds sont ban, le tien reste safe). Carte Waveshare RP2350A requise. Paiement unique 175 €.",
     monthlyRenewal: "Renouvellement mensuel",
     monthlyRenewalDesc: "Réservé aux utilisateurs ayant fait 4 semaines consécutives ou un mois complet. Renouvellement uniquement.",
     addonApex: "Advanced Weight — Apex Legends",

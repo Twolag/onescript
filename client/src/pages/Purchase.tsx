@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock, Zap, RefreshCw, Keyboard, Smartphone
+  MessageCircle, CreditCard, Clock, Zap, RefreshCw, Keyboard, Smartphone, Crown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -63,6 +63,7 @@ const products: Product[] = [
       { labelKey: "plans.monthlyRenewal", price: 30, noteKey: "plans.perMonth", descKey: "plans.monthlyRenewalDesc", durationKey: "plans.dur30m" },
       { labelKey: "plans.addonApex", price: 10, descKey: "plans.addonApexDesc", durationKey: "plans.durInstant" },
       { labelKey: "plans.addonFortnite", price: 10, descKey: "plans.addonFortniteDesc", durationKey: "plans.durInstant" },
+      { labelKey: "plans.ultimate", price: 175, descKey: "plans.ultimateDesc", durationKey: "plans.dur1h" },
     ],
   },
   {
@@ -172,7 +173,7 @@ export default function Purchase() {
   const [stripeLoading, setStripeLoading] = useState(false);
 
   // ── New simplified AI Engine state ──
-  const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, lifetime, renewal, addon
+  const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, lifetime, ultimate, renewal, addon
   const [aiSupport, setAiSupport] = useState<boolean>(true); // true = with support, false = license only
   const [aiRenewalType, setAiRenewalType] = useState<string>("week"); // week, month
   const [aiAddonType, setAiAddonType] = useState<string>(
@@ -189,6 +190,8 @@ export default function Purchase() {
         index = aiSupport ? 4 : 3;
       } else if (aiDuration === "lifetime") {
         index = 6;
+      } else if (aiDuration === "ultimate") {
+        index = 10;
       } else if (aiDuration === "renewal") {
         index = aiRenewalType === "week" ? 2 : 7;
       } else if (aiDuration === "addon") {
@@ -500,6 +503,7 @@ export default function Purchase() {
                           { id: "week", label: t("purchase.weekly"), icon: Clock },
                           { id: "month", label: t("purchase.monthly"), icon: Zap },
                           { id: "lifetime", label: t("purchase.lifetime"), icon: Shield },
+                          { id: "ultimate", label: t("purchase.ultimate"), icon: Crown },
                           { id: "renewal", label: t("purchase.renewal"), icon: RefreshCw },
                           { id: "addon", label: "Advanced Weight", icon: Cpu },
                         ].map((d) => (

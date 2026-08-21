@@ -122,6 +122,7 @@ export const ru: Dictionary = {
     monthly: "Месяц",
     annual: "Год",
     lifetime: "Навсегда",
+    ultimate: "Ultimate",
     renewal: "Продление",
     addon: "Advanced Weight",
     withSupport: "С поддержкой + установкой",
@@ -410,6 +411,9 @@ export const ru: Dictionary = {
     annualDesc: "Полный доступ FUSION AI V8 на 12 месяцев. Требуется Waveshare RP2350A. ⚠️ Зафиксировано на V8 — крупные обновления +30 €. Приоритетная поддержка.",
     lifetime: "Лицензия навсегда",
     lifetimeDesc: "Постоянный доступ FUSION AI V8. Требуется Waveshare RP2350A. ⚠️ Зафиксировано на V8 — крупные обновления +30 €. Разовый платёж.",
+    ultimate: "План Ultimate",
+    ultimateDesc:
+      "AI Aimbot Lifetime + все будущие обновления + все Advanced Weights для всех игр + персональный hash (если другие билды банят — ваш остаётся safe). Требуется Waveshare RP2350A. Разовый платёж 175 €.",
     onestate: "AI Aimbot Onestate RP",
     onestateDesc: "Мобильный AI Aimbot для iOS и Android через Onestate RP. Без RP2350A, геймпада и клавиатуры/мыши. Этот платёж — донат серверу OneScript — спасибо!",
     monthlyRenewal: "Месячное продление",

@@ -118,6 +118,7 @@ export const en = {
     monthly: "Monthly",
     annual: "Annual",
     lifetime: "Lifetime",
+    ultimate: "Ultimate",
     renewal: "Renewal",
     addon: "Advanced Weight",
     withSupport: "With Support + Setup",
@@ -406,6 +407,9 @@ export const en = {
     annualDesc: "Full access to FUSION AI V8 for 12 months. Requires Waveshare RP2350A USB Mini Development Board. ⚠️ Locked to V8 - future major updates require +€30 per update. Priority support included.",
     lifetime: "Lifetime License",
     lifetimeDesc: "Permanent access to FUSION AI V8. Requires Waveshare RP2350A USB Mini Development Board. ⚠️ Locked to V8 - future major updates require +€30 per update. One-time payment.",
+    ultimate: "Ultimate Plan",
+    ultimateDesc:
+      "AI Aimbot Lifetime + all future updates included + all Advanced Weights for all games + custom personal hash (if other builds get banned, yours stays safe). Requires Waveshare RP2350A. One-time payment €175.",
     monthlyRenewal: "Monthly Renewal",
     monthlyRenewalDesc: "Exclusive to users who have completed 4 consecutive weeks or previously purchased a full month. Renewal only.",
     addonApex: "Advanced Weight — Apex Legends",

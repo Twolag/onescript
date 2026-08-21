@@ -69,6 +69,12 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
         priceCents: 1000,
         description: "AI Weight add-on for Fortnite. High-end GPU required.",
       },
+      {
+        label: "Ultimate License",
+        priceCents: 17500,
+        description:
+          "Lifetime AI Aimbot + all future updates + all Advanced Weights for all games + custom personal hash.",
+      },
     ],
   },
   "windows-opt": {
