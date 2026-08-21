@@ -131,6 +131,7 @@ export const ru: Dictionary = {
     licenseOnlyDesc: "Только PDF-гайд. Установку выполняете самостоятельно.",
     weeklyRenewal: "Недельное продление",
     monthlyRenewal: "Месячное продление",
+    renewalExistingOnly: "Только если у вас уже есть AI Aimbot — только продление.",
     delivery: "Доставка",
     yourInfo: "Ваши данные",
     firstName: "Имя",
