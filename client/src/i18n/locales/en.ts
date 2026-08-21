@@ -127,6 +127,7 @@ export const en = {
     licenseOnlyDesc: "PDF guide only. You handle the installation yourself.",
     weeklyRenewal: "Weekly Renewal",
     monthlyRenewal: "Monthly Renewal",
+    renewalExistingOnly: "Only if you already have AI Aimbot — renewal only.",
     delivery: "Delivery",
     yourInfo: "Your Information",
     firstName: "First Name",

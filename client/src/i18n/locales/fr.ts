@@ -131,6 +131,7 @@ export const fr: Dictionary = {
     licenseOnlyDesc: "Guide PDF uniquement. Vous gérez l’installation vous-même.",
     weeklyRenewal: "Renouvellement hebdo",
     monthlyRenewal: "Renouvellement mensuel",
+    renewalExistingOnly: "Uniquement si tu as déjà l’AI Aimbot — renouvellement seulement.",
     delivery: "Livraison",
     yourInfo: "Vos informations",
     firstName: "Prénom",

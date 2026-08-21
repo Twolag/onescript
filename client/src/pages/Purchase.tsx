@@ -173,9 +173,9 @@ export default function Purchase() {
   const [stripeLoading, setStripeLoading] = useState(false);
 
   // ── New simplified AI Engine state ──
-  const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, lifetime, ultimate, renewal, addon
-  const [aiSupport, setAiSupport] = useState<boolean>(true); // true = with support, false = license only
-  const [aiRenewalType, setAiRenewalType] = useState<string>("week"); // week, month
+  const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, lifetime, ultimate, addon
+  /** Week/month plan: setup+support, license-only, or renewal (existing customers only) */
+  const [aiPlanType, setAiPlanType] = useState<"support" | "license" | "renewal">("support");
   const [aiAddonType, setAiAddonType] = useState<string>(
     rawGame === "fortnite" ? "fortnite" : "apex"
   ); // apex, fortnite
@@ -185,15 +185,13 @@ export default function Purchase() {
     if (productId === "ai-engine") {
       let index = 0;
       if (aiDuration === "week") {
-        index = aiSupport ? 0 : 1;
+        index = aiPlanType === "support" ? 0 : aiPlanType === "license" ? 1 : 2;
       } else if (aiDuration === "month") {
-        index = aiSupport ? 4 : 3;
+        index = aiPlanType === "support" ? 4 : aiPlanType === "license" ? 3 : 7;
       } else if (aiDuration === "lifetime") {
         index = 6;
       } else if (aiDuration === "ultimate") {
         index = 10;
-      } else if (aiDuration === "renewal") {
-        index = aiRenewalType === "week" ? 2 : 7;
       } else if (aiDuration === "addon") {
         index = aiAddonType === "apex" ? 8 : 9;
       } else if (aiDuration === "help") {
@@ -203,7 +201,7 @@ export default function Purchase() {
     } else if (isOnestate) {
       setSelectedOptionIndex(0);
     }
-  }, [productId, isOnestate, aiDuration, aiSupport, aiRenewalType, aiAddonType]);
+  }, [productId, isOnestate, aiDuration, aiPlanType, aiAddonType]);
 
   const selectedOption = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   const selectedItem = selectedOption ? resolveOption(selectedOption) : null;
@@ -504,7 +502,6 @@ export default function Purchase() {
                           { id: "month", label: t("purchase.monthly"), icon: Zap },
                           { id: "lifetime", label: t("purchase.lifetime"), icon: Shield },
                           { id: "ultimate", label: t("purchase.ultimate"), icon: Crown },
-                          { id: "renewal", label: t("purchase.renewal"), icon: RefreshCw },
                           { id: "addon", label: "Advanced Weight", icon: Cpu },
                         ].map((d) => (
                           <button
@@ -525,20 +522,21 @@ export default function Purchase() {
                     <AnimatePresence mode="wait">
                       {(aiDuration === "week" || aiDuration === "month") && (
                         <motion.div
+                          key={aiDuration}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
                         >
                           <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">{t("purchase.selectSupport")}</label>
-                          <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="grid sm:grid-cols-3 gap-4">
                             <button
-                              onClick={() => setAiSupport(true)}
+                              onClick={() => setAiPlanType("support")}
                               className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiSupport ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                                aiPlanType === "support" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
                               }`}
                             >
-                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiSupport ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                                {aiSupport && <Check className="w-4 h-4 text-white" />}
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiPlanType === "support" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiPlanType === "support" && <Check className="w-4 h-4 text-white" />}
                               </div>
                               <div>
                                 <p className="font-bold text-foreground">{t("purchase.withSupport")}</p>
@@ -546,52 +544,35 @@ export default function Purchase() {
                               </div>
                             </button>
                             <button
-                              onClick={() => setAiSupport(false)}
+                              onClick={() => setAiPlanType("license")}
                               className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                !aiSupport ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                                aiPlanType === "license" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
                               }`}
                             >
-                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${!aiSupport ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                                {!aiSupport && <Check className="w-4 h-4 text-white" />}
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiPlanType === "license" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiPlanType === "license" && <Check className="w-4 h-4 text-white" />}
                               </div>
                               <div>
                                 <p className="font-bold text-foreground">{t("purchase.licenseOnly")}</p>
                                 <p className="text-xs text-muted-foreground mt-1">{t("purchase.licenseOnlyDesc")}</p>
                               </div>
                             </button>
-                          </div>
-                        </motion.div>
-                      )}
-
-                      {aiDuration === "renewal" && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                        >
-                          <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">{t("purchase.selectRenewal")}</label>
-                          <div className="grid sm:grid-cols-2 gap-4">
                             <button
-                              onClick={() => setAiRenewalType("week")}
-                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiRenewalType === "week" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              onClick={() => setAiPlanType("renewal")}
+                              className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                                aiPlanType === "renewal" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
                               }`}
                             >
-                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiRenewalType === "week" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                                {aiRenewalType === "week" && <Check className="w-4 h-4 text-white" />}
+                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiPlanType === "renewal" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
+                                {aiPlanType === "renewal" && <Check className="w-4 h-4 text-white" />}
                               </div>
-                              <span className="font-bold text-foreground">{t("purchase.weeklyRenewal")}</span>
-                            </button>
-                            <button
-                              onClick={() => setAiRenewalType("month")}
-                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiRenewalType === "month" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
-                              }`}
-                            >
-                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiRenewalType === "month" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                                {aiRenewalType === "month" && <Check className="w-4 h-4 text-white" />}
+                              <div>
+                                <p className="font-bold text-foreground flex items-center gap-2">
+                                  <RefreshCw className="w-3.5 h-3.5 text-violet-accent" />
+                                  {aiDuration === "week" ? t("purchase.weeklyRenewal") : t("purchase.monthlyRenewal")}
+                                </p>
+                                <p className="text-xs text-muted-foreground mt-1">{t("purchase.renewalExistingOnly")}</p>
                               </div>
-                              <span className="font-bold text-foreground">{t("purchase.monthlyRenewal")}</span>
                             </button>
                           </div>
                         </motion.div>
@@ -599,6 +580,7 @@ export default function Purchase() {
 
                       {aiDuration === "addon" && (
                         <motion.div
+                          key="addon"
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
