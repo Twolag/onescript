@@ -35,6 +35,7 @@ const fadeUp = {
 /** Game card demo clips (autoplay loops) — local files only (remote CDN links expire/403) */
 const GAME_VIDEOS = {
   fortnite: "/videos/fortnite-clip.mp4",
+  apex: "/videos/apex-clip.mp4",
   splitgate: "/videos/splitgate-clip.mp4",
   overwatch: "/videos/overwatch-clip.mp4",
 } as const;
@@ -100,7 +101,7 @@ const games: GameCard[] = [
     id: "apex",
     name: "Apex Legends",
     href: "/purchase?product=ai-engine&game=apex",
-    logo: "/images/games/apex.svg",
+    video: GAME_VIDEOS.apex,
     accent: "from-red-500/30 via-transparent to-violet-tech/30",
     logoText: "APEX",
     tags: [...FULL_INPUT_TAGS],
