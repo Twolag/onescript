@@ -24,7 +24,8 @@ interface VideoDemo {
   product: string;
   description: string;
   thumbnail: string;
-  videoUrl: string;
+  /** Local mp4 only — omit when clip is unavailable */
+  videoUrl?: string;
   icon: React.ElementType;
   badge: string;
   accent: string;
@@ -64,8 +65,7 @@ const videoDemos: VideoDemo[] = [
     game: "Apex Legends",
     product: "FUSION IA",
     description: "FUSION IA performance showcase on Apex Legends. Adaptive AI engine for high-speed combat.",
-    thumbnail: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/spMRlfTuNpsOynMw.png",
-    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/YDnWosDYeXbWstWQ.mp4",
+    thumbnail: "/images/games/apex.svg",
     icon: Cpu,
     badge: "APEX",
     accent: "from-red-500/30 via-transparent to-violet-tech/30",
@@ -103,8 +103,7 @@ const videoDemos: VideoDemo[] = [
     game: "Apex Legends",
     product: "Advanced AI Weight",
     description: "Surgical precision targeting with the Advanced AI Weight add-on. Requires high-end GPU (NVIDIA RTX 4070/5060+ or AMD RX 7900/9000+), minimum.",
-    thumbnail: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/spMRlfTuNpsOynMw.png",
-    videoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
+    thumbnail: "/images/games/apex.svg",
     icon: Zap,
     badge: "ADD-ON",
     accent: "from-amber-500/30 via-transparent to-violet-tech/25",
@@ -159,12 +158,22 @@ function VideoModal({ demo, isOpen, onClose }: { demo: VideoDemo | null; isOpen:
               </button>
 
               <div className="relative w-full bg-black aspect-video">
-                <video
-                  src={demo.videoUrl}
-                  controls
-                  autoPlay
-                  className="w-full h-full"
-                />
+                {demo.videoUrl ? (
+                  <video
+                    src={demo.videoUrl}
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-dark-elevated to-dark-base p-8">
+                    <img
+                      src={demo.thumbnail}
+                      alt={demo.title}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="p-6 lg:p-8 bg-gradient-to-b from-dark-elevated to-dark-base border-t border-white/5">
@@ -363,25 +372,38 @@ export default function Showcase() {
                   className="group relative w-full text-left rounded-xl overflow-hidden border border-violet-tech/25 hover:border-violet-tech/70 transition-all duration-300 hover:shadow-[0_0_40px_rgba(123,46,255,0.25)]"
                 >
                   <div className="relative aspect-[16/10] bg-dark-base">
-                    <video
-                      src={demo.videoUrl}
-                      poster={demo.thumbnail}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                    />
+                    {demo.videoUrl ? (
+                      <video
+                        src={demo.videoUrl}
+                        poster={demo.thumbnail}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-dark-elevated to-dark-base">
+                        <div className={`absolute inset-0 bg-gradient-to-br ${demo.accent}`} />
+                        <img
+                          src={demo.thumbnail}
+                          alt={demo.title}
+                          className="relative z-10 w-full max-w-[280px] h-auto opacity-95 px-6"
+                        />
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${demo.accent} opacity-40 group-hover:opacity-60 transition-opacity`}
                     />
 
+                    {demo.videoUrl && (
                     <div className="absolute inset-0 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
                       <div className="w-12 h-12 rounded-lg border border-violet-tech/50 bg-violet-tech/25 backdrop-blur-sm flex items-center justify-center group-hover:bg-violet-tech/50 transition-colors">
                         <Play className="w-5 h-5 text-white fill-white ml-0.5" />
                       </div>
                     </div>
+                    )}
 
                     <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />
                     <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-violet-tech/70 opacity-70 group-hover:opacity-100 transition-opacity" />

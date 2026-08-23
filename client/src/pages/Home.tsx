@@ -32,11 +32,9 @@ const fadeUp = {
   }),
 };
 
-/** Game card demo clips (autoplay loops) */
+/** Game card demo clips (autoplay loops) — local files only (remote CDN links expire/403) */
 const GAME_VIDEOS = {
   fortnite: "/videos/fortnite-clip.mp4",
-  apex:
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663779019150/WOeraDXfilotqblM.mp4",
   splitgate: "/videos/splitgate-clip.mp4",
   overwatch: "/videos/overwatch-clip.mp4",
 } as const;
@@ -102,7 +100,7 @@ const games: GameCard[] = [
     id: "apex",
     name: "Apex Legends",
     href: "/purchase?product=ai-engine&game=apex",
-    video: GAME_VIDEOS.apex,
+    logo: "/images/games/apex.svg",
     accent: "from-red-500/30 via-transparent to-violet-tech/30",
     logoText: "APEX",
     tags: [...FULL_INPUT_TAGS],
