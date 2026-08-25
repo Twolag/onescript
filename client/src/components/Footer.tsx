@@ -6,7 +6,7 @@ import { Link } from "wouter";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { TranslationKey } from "@/i18n/LanguageContext";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663407047030/hMNizDQJ4xGUw2X2eKPbCw/onescript-logo-full_647bb391.png";
+const LOGO_URL = "/images/onescript-logo.png";
 
 export default function Footer() {
   const { t } = useLanguage();
