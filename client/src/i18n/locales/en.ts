@@ -240,7 +240,7 @@ export const en = {
     onestateSubtitle: "Onestate RP",
     onestateTitle: "Onestate RP",
     onestateDesc:
-      "Onestate RP access. No Waveshare board, no controller, and no keyboard/mouse required.",
+      "Onestate RP access.",
     onestateDonation:
       "This payment is a donation to the OneScript server. Thank you for your support!",
     onestateF1: "iOS & Android",
@@ -429,7 +429,7 @@ export const en = {
     jitter1y: "1 year",
     jitterLife: "Lifetime",
     onestate: "Onestate RP",
-    onestateDesc: "Onestate RP. No RP2350A, controller, or keyboard/mouse required. This payment is a donation to the OneScript server — thank you!",
+    onestateDesc: "This payment is a donation to the OneScript server — thank you!",
     perWeek: "/ week",
     perMonth: "/ month",
     dur1h: "~1 hour",

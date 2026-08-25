@@ -243,7 +243,7 @@ export const fr: Dictionary = {
     onestateSubtitle: "Onestate RP",
     onestateTitle: "Onestate RP",
     onestateDesc:
-      "Accès Onestate RP. Pas de carte Waveshare, pas de manette, pas de clavier/souris.",
+      "Accès Onestate RP.",
     onestateDonation:
       "Ce paiement est un don au serveur OneScript. Merci pour votre soutien !",
     onestateF1: "iOS & Android",
@@ -433,7 +433,7 @@ export const fr: Dictionary = {
     jitter1y: "1 an",
     jitterLife: "À vie",
     onestate: "Onestate RP",
-    onestateDesc: "Onestate RP. Pas de RP2350A, manette ni clavier/souris. Ce paiement est un don au serveur OneScript — merci !",
+    onestateDesc: "Ce paiement est un don au serveur OneScript — merci !",
     perWeek: "/ semaine",
     perMonth: "/ mois",
     dur1h: "~1 heure",
