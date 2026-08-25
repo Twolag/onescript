@@ -226,6 +226,9 @@ function ProductCardComponent({
             <p className="font-display font-extrabold text-2xl text-violet-tech">
               {def.price}
             </p>
+            <p className="text-[10px] text-amber-300/90 mt-1.5 leading-snug">
+              {t("products.allSalesFinal")}
+            </p>
           </div>
 
           {isExternal ? (
@@ -279,6 +282,12 @@ export default function Products() {
             <p className="text-muted-foreground text-lg leading-relaxed">
               {t("products.subtitle")}
             </p>
+            <div className="mt-5 p-3 rounded-lg bg-amber-500/10 border border-amber-500/35 flex gap-2 max-w-xl">
+              <AlertCircle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-amber-100/90 leading-relaxed">
+                {t("products.allSalesFinal")}
+              </p>
+            </div>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-tech/20 to-transparent" />

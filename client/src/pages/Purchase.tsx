@@ -166,6 +166,7 @@ export default function Purchase() {
   const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
   const [hardwareConfirmed, setHardwareConfirmed] = useState(false);
   const [donationConfirmed, setDonationConfirmed] = useState(false);
+  const [finalSaleConfirmed, setFinalSaleConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
@@ -236,6 +237,10 @@ export default function Purchase() {
     }
     if (isOnestate && !donationConfirmed) {
       toast.error(t("purchase.confirmDonation"));
+      return;
+    }
+    if (!finalSaleConfirmed) {
+      toast.error(t("purchase.confirmFinalSale"));
       return;
     }
 
@@ -795,6 +800,26 @@ export default function Purchase() {
                     </div>
                   </div>
                   )}
+
+                  <div className="mb-6 p-3 rounded-md bg-amber-500/10 border border-amber-500/35">
+                    <p className="text-xs text-amber-200/95 leading-relaxed mb-3">
+                      {t("purchase.allSalesFinal")}
+                    </p>
+                    <div className="flex items-start gap-3">
+                      <div className="flex items-center h-5 mt-0.5">
+                        <input
+                          id="final-sale-check"
+                          type="checkbox"
+                          checked={finalSaleConfirmed}
+                          onChange={(e) => setFinalSaleConfirmed(e.target.checked)}
+                          className="w-4 h-4 rounded border-amber-500/50 bg-dark-elevated text-amber-400 focus:ring-amber-500/30 transition-all cursor-pointer"
+                        />
+                      </div>
+                      <label htmlFor="final-sale-check" className="text-xs text-amber-100/95 leading-relaxed cursor-pointer select-none">
+                        {t("purchase.finalSaleConfirm")}
+                      </label>
+                    </div>
+                  </div>
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? t("purchase.processing") : t("purchase.proceed")}

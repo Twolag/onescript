@@ -153,15 +153,20 @@ export const fr: Dictionary = {
     confirmSelfSetup: "Vous devez confirmer que vous gérerez l’installation vous-même",
     confirmHardware: "Vous devez confirmer que votre PC répond aux exigences matérielles",
     confirmDonation: "Cochez la case pour confirmer que ce paiement est un don au serveur OneScript",
+    confirmFinalSale: "Vous devez confirmer que tout achat est définitif",
     validated: "Informations validées ! Choisissez votre mode de paiement.",
     errorGeneric: "Une erreur est survenue, réessayez.",
     selfSetupConfirm:
       "Je comprends que je recevrai un guide PDF et que je dois effectuer l’installation moi-même. Je confirme que le staff OneScript n’interviendra pas pour cette offre.",
     importantReminder: "Rappel important",
     importantReminderBody:
-      "En continuant, vous confirmez avoir lu et compris la configuration PC minimale requise. Il est de votre seule responsabilité de vérifier que votre matériel est conforme. Les achats avec une config non conforme sont définitifs. Note : les dysfonctionnements dus au PC du client (matériel, drivers, OS, etc.) ne donnent pas droit à un remboursement.",
+      "En continuant, vous confirmez avoir lu et compris la configuration PC minimale requise. Il est de votre seule responsabilité de vérifier que votre matériel est conforme. Tous les achats sont définitifs. Note : les dysfonctionnements dus au PC du client (matériel, drivers, OS, etc.) ne donnent pas droit à un remboursement.",
     hardwareConfirm:
-      "Je confirme que mon PC répond à toutes les exigences matérielles (GPU NVIDIA / AMD, Waveshare RP2350A) et, pour Apex Legends, que j’utilise la version Steam. Je comprends qu’aucun remboursement ne sera accordé en cas d’incompatibilité matérielle.",
+      "Je confirme que mon PC répond à toutes les exigences matérielles (GPU NVIDIA / AMD, Waveshare RP2350A) et, pour Apex Legends, que j’utilise la version Steam. Je comprends que tout achat est définitif et qu’aucun remboursement ne sera accordé en cas d’incompatibilité matérielle.",
+    allSalesFinal:
+      "Tous les achats sont définitifs. Aucun remboursement après paiement.",
+    finalSaleConfirm:
+      "Je comprends et j’accepte que tout achat est définitif et qu’aucun remboursement ne sera accordé.",
     rpMandatory: "Obligatoire pour Clavier / Souris & Manette.",
     product: "Produit",
     game: "Jeu",
@@ -251,6 +256,8 @@ export const fr: Dictionary = {
     onestateF3: "Pas de manette requise",
     onestateF4: "Pas de clavier / souris requis",
     onestateF5: "Onestate RP",
+    allSalesFinal:
+      "Tous les achats sont définitifs. Aucun remboursement ne sera accordé après paiement.",
     startingFrom: "à partir de",
     priceLabel: "Prix",
     viewOptions: "VOIR LES OPTIONS",
@@ -281,7 +288,7 @@ export const fr: Dictionary = {
     faq5q: "L’optimisation Windows est-elle sûre pour mon PC ?",
     faq5a: "Oui, toutes nos optimisations sont réversibles et testées sur des centaines de configurations. Nous ne modifions que des paramètres non essentiels et créons un point de restauration avant chaque intervention.",
     faq6q: "Puis-je obtenir un remboursement ?",
-    faq6a: "Pour FUSION AI, un remboursement n’est possible que si votre GPU est strictement inférieur à RTX 3060 (NVIDIA, ex. RTX 3050) ou inférieur à RX 6600 XT (AMD) ET que le logiciel ne fonctionne pas correctement après une optimisation complète (y compris une réinstallation Windows 10 si nécessaire). Aucun remboursement si les optimisations recommandées sont refusées. Il est de la seule responsabilité du client de vérifier la compatibilité matérielle avant l’achat. Les achats avec une configuration non conforme sont considérés comme définitifs. IMPORTANT : aucun remboursement si le dysfonctionnement vient du PC du client (matériel, drivers, logiciels tiers, OS, antivirus, etc.). Les remboursements s’appliquent UNIQUEMENT si le dysfonctionnement est prouvé comme causé directement et uniquement par le logiciel OneScript. Pour les autres produits, une politique de 14 jours s’applique si le produit n’a pas été utilisé.",
+    faq6a: "Non. Tous les achats OneScript sont définitifs. Aucun remboursement ne sera accordé après paiement, quelles que soient les circonstances (y compris incompatibilité matérielle, refus d’optimisation, ou dysfonctionnement lié au PC du client).",
     faq7q: "Quelle version de Windows est recommandée pour FUSION AI ?",
     faq7a: "Windows 10 est fortement recommandé pour les GPU comme RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 et AMD RX 6600 XT / 6700 XT afin d’assurer performance et stabilité optimales de FUSION AI V8. Cette recommandation est distincte des conditions de remboursement.",
     faq8q: "Comment fonctionne le support technique ?",

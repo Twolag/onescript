@@ -149,6 +149,7 @@ export const en = {
     confirmSelfSetup: "You must confirm that you will handle the installation yourself",
     confirmHardware: "You must confirm that your PC meets the hardware requirements",
     confirmDonation: "Check the box to confirm this payment is a donation to the OneScript server",
+    confirmFinalSale: "You must confirm that all purchases are final",
     validated: "Information validated! Choose your payment method.",
     errorGeneric: "An error occurred, please try again.",
 
@@ -156,9 +157,13 @@ export const en = {
       "I understand that I will receive a PDF guide and that I must perform the installation myself. I confirm that OneScript staff will not intervene in the installation process for this specific plan.",
     importantReminder: "Important Reminder",
     importantReminderBody:
-      "By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. Purchases with non-compliant configurations are considered final. Note: Malfunctions caused by the customer's PC (hardware, drivers, OS, etc.) are not eligible for refunds.",
+      "By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. All purchases are final. Note: Malfunctions caused by the customer's PC (hardware, drivers, OS, etc.) are not eligible for refunds.",
     hardwareConfirm:
-      "I confirm that my PC meets all the hardware requirements (NVIDIA / AMD GPU, Waveshare RP2350A) and, if playing Apex Legends, that I use the Steam version. I understand that no refunds will be issued for hardware incompatibility.",
+      "I confirm that my PC meets all the hardware requirements (NVIDIA / AMD GPU, Waveshare RP2350A) and, if playing Apex Legends, that I use the Steam version. I understand that all purchases are final and that no refunds will be issued for hardware incompatibility.",
+    allSalesFinal:
+      "All purchases are final. No refunds after payment.",
+    finalSaleConfirm:
+      "I understand and agree that all purchases are final and that no refunds will be issued.",
     rpMandatory: "Mandatory for Keyboard / Mouse & Controller support.",
     product: "Product",
     game: "Game",
@@ -248,6 +253,8 @@ export const en = {
     onestateF3: "No controller required",
     onestateF4: "No keyboard / mouse required",
     onestateF5: "Onestate RP",
+    allSalesFinal:
+      "All purchases are final. No refunds will be issued after payment.",
     startingFrom: "starting from",
     priceLabel: "Price",
     viewOptions: "VIEW OPTIONS",
@@ -278,7 +285,7 @@ export const en = {
     faq5q: "Is Windows Optimization safe for my PC?",
     faq5a: "Yes, all our optimizations are reversible and tested on hundreds of configurations. We only modify non-essential settings and create a restore point before each intervention.",
     faq6q: "Can I get a refund?",
-    faq6a: "For FUSION AI, refunds are only possible if your GPU is strictly below RTX 3060 for NVIDIA (e.g., RTX 3050) or below RX 6600 XT for AMD AND the software does not function correctly after full optimization (including a Windows 10 reinstallation if necessary). No refund will be granted if recommended optimizations are refused. It is the customer's sole responsibility to ensure their hardware meets the necessary specifications before purchase. Purchases made with non-compliant configurations are considered final. IMPORTANT: No refund will be processed or accepted if the malfunction is due to the customer's PC (hardware, drivers, third-party software, OS, antivirus, etc.) or its components. Refunds are ONLY applicable if the malfunction is proven to be directly and solely caused by the OneScript software itself. For other products, a 14-day refund policy applies if the product has not been used.",
+    faq6a: "No. All OneScript purchases are final. No refunds will be issued after payment under any circumstances (including hardware incompatibility, refused optimizations, or issues related to the customer's PC).",
     faq7q: "Which Windows version is recommended for FUSION AI?",
     faq7a: "Windows 10 is strongly recommended for GPUs like RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070, and AMD RX 6600 XT / 6700 XT to ensure optimal FUSION AI V8 performance and stability. This recommendation is distinct from refund conditions.",
     faq8q: "How does technical support work?",

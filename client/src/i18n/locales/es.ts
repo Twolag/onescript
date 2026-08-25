@@ -153,15 +153,20 @@ export const es: Dictionary = {
     confirmSelfSetup: "Debes confirmar que gestionarás la instalación tú mismo",
     confirmHardware: "Debes confirmar que tu PC cumple los requisitos de hardware",
     confirmDonation: "Marca la casilla para confirmar que este pago es un donativo al servidor OneScript",
+    confirmFinalSale: "Debes confirmar que todas las compras son definitivas",
     validated: "¡Información validada! Elige tu método de pago.",
     errorGeneric: "Ha ocurrido un error, inténtalo de nuevo.",
     selfSetupConfirm:
       "Entiendo que recibiré una guía PDF y que debo realizar la instalación yo mismo. Confirmo que el staff de OneScript no intervendrá en este plan.",
     importantReminder: "Aviso importante",
     importantReminderBody:
-      "Al continuar, confirmas que has leído y entendido los requisitos mínimos de PC. Es tu responsabilidad asegurar que tu hardware cumple las especificaciones. Las compras con configuración no compatible son definitivas. Nota: los fallos causados por el PC del cliente (hardware, drivers, OS, etc.) no dan derecho a reembolso.",
+      "Al continuar, confirmas que has leído y entendido los requisitos mínimos de PC. Es tu responsabilidad asegurar que tu hardware cumple las especificaciones. Todas las compras son definitivas. Nota: los fallos causados por el PC del cliente (hardware, drivers, OS, etc.) no dan derecho a reembolso.",
     hardwareConfirm:
-      "Confirmo que mi PC cumple todos los requisitos de hardware (GPU NVIDIA / AMD, Waveshare RP2350A) y, si juego Apex Legends, que uso la versión de Steam. Entiendo que no habrá reembolsos por incompatibilidad de hardware.",
+      "Confirmo que mi PC cumple todos los requisitos de hardware (GPU NVIDIA / AMD, Waveshare RP2350A) y, si juego Apex Legends, que uso la versión de Steam. Entiendo que toda compra es definitiva y que no habrá reembolsos por incompatibilidad de hardware.",
+    allSalesFinal:
+      "Todas las compras son definitivas. Sin reembolsos después del pago.",
+    finalSaleConfirm:
+      "Entiendo y acepto que todas las compras son definitivas y que no se emitirá ningún reembolso.",
     rpMandatory: "Obligatorio para Teclado / Ratón y Mando.",
     product: "Producto",
     game: "Juego",
@@ -251,6 +256,8 @@ export const es: Dictionary = {
     onestateF3: "Sin mando",
     onestateF4: "Sin teclado / ratón",
     onestateF5: "Onestate RP",
+    allSalesFinal:
+      "Todas las compras son definitivas. No se emitirá ningún reembolso después del pago.",
     startingFrom: "desde",
     priceLabel: "Precio",
     viewOptions: "VER OPCIONES",
@@ -281,7 +288,7 @@ export const es: Dictionary = {
     faq5q: "¿La optimización de Windows es segura para mi PC?",
     faq5a: "Sí, todas nuestras optimizaciones son reversibles y están probadas en cientos de configuraciones. Solo modificamos ajustes no esenciales y creamos un punto de restauración antes de cada intervención.",
     faq6q: "¿Puedo obtener un reembolso?",
-    faq6a: "Para FUSION AI, el reembolso solo es posible si tu GPU está estrictamente por debajo de RTX 3060 (NVIDIA, p. ej. RTX 3050) o por debajo de RX 6600 XT (AMD) Y el software no funciona correctamente tras una optimización completa (incluida una reinstalación de Windows 10 si es necesario). No habrá reembolso si se rechazan las optimizaciones recomendadas. Es responsabilidad exclusiva del cliente verificar la compatibilidad del hardware antes de comprar. Las compras con configuración no conforme se consideran definitivas. IMPORTANTE: no se procesará ningún reembolso si el fallo se debe al PC del cliente (hardware, drivers, software de terceros, SO, antivirus, etc.). Los reembolsos SOLO aplican si se demuestra que el fallo lo causa directa y únicamente el software OneScript. Para otros productos, política de 14 días si el producto no se ha usado.",
+    faq6a: "No. Todas las compras de OneScript son definitivas. No se emitirá ningún reembolso después del pago bajo ninguna circunstancia (incluida incompatibilidad de hardware, rechazo de optimizaciones o fallos relacionados con el PC del cliente).",
     faq7q: "¿Qué versión de Windows se recomienda para FUSION AI?",
     faq7a: "Windows 10 se recomienda encarecidamente para GPUs como RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 y AMD RX 6600 XT / 6700 XT para un rendimiento y estabilidad óptimos de FUSION AI V8. Esta recomendación es distinta de las condiciones de reembolso.",
     faq8q: "¿Cómo funciona el soporte técnico?",
