@@ -243,7 +243,7 @@ export const ru: Dictionary = {
     onestateSubtitle: "Onestate RP",
     onestateTitle: "Onestate RP",
     onestateDesc:
-      "Доступ Onestate RP. Без платы Waveshare, без геймпада и без клавиатуры/мыши.",
+      "Доступ Onestate RP.",
     onestateDonation:
       "Этот платёж — донат серверу OneScript. Спасибо за поддержку!",
     onestateF1: "iOS и Android",
@@ -416,7 +416,7 @@ export const ru: Dictionary = {
     ultimateDesc:
       "AI Aimbot Lifetime + все будущие обновления + все Advanced Weights для всех игр + персональный hash (если другие билды банят — ваш остаётся safe). Требуется Waveshare RP2350A. Разовый платёж 175 €.",
     onestate: "Onestate RP",
-    onestateDesc: "Onestate RP. Без RP2350A, геймпада и клавиатуры/мыши. Этот платёж — донат серверу OneScript — спасибо!",
+    onestateDesc: "Этот платёж — донат серверу OneScript — спасибо!",
     monthlyRenewal: "Месячное продление",
     monthlyRenewalDesc: "Только для пользователей с 4 неделями подряд или полным месяцем. Только продление.",
     addonApex: "Advanced Weight — Apex Legends",

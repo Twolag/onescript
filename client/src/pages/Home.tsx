@@ -232,7 +232,6 @@ const games: GameCard[] = [
     logoText: "ONESTATE RP",
     tags: [
       "tags.from10",
-      "tags.noRp",
       "tags.donation",
     ],
   },
