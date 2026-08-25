@@ -148,8 +148,7 @@ export const en = {
     selectOption: "Please select an option",
     confirmSelfSetup: "You must confirm that you will handle the installation yourself",
     confirmHardware: "You must confirm that your PC meets the hardware requirements",
-    confirmDonation: "Check the box to confirm this payment is a donation to the OneScript server",
-    confirmFinalSale: "You must confirm that all purchases are final",
+    confirmDonation: "Check the box to confirm this donation and that the purchase is final",
     validated: "Information validated! Choose your payment method.",
     errorGeneric: "An error occurred, please try again.",
 
@@ -159,11 +158,7 @@ export const en = {
     importantReminderBody:
       "By proceeding, you confirm that you have read and understood the minimum PC configuration requirements. It is your sole responsibility to ensure your hardware meets the necessary specifications. All purchases are final. Note: Malfunctions caused by the customer's PC (hardware, drivers, OS, etc.) are not eligible for refunds.",
     hardwareConfirm:
-      "I confirm that my PC meets all the hardware requirements (NVIDIA / AMD GPU, Waveshare RP2350A) and, if playing Apex Legends, that I use the Steam version. I understand that all purchases are final and that no refunds will be issued for hardware incompatibility.",
-    allSalesFinal:
-      "All purchases are final. No refunds after payment.",
-    finalSaleConfirm:
-      "I understand and agree that all purchases are final and that no refunds will be issued.",
+      "I confirm that my PC meets all the hardware requirements (NVIDIA / AMD GPU, Waveshare RP2350A) and, if playing Apex Legends, that I use the Steam version. I understand that all purchases are final and that no refunds will be issued.",
     rpMandatory: "Mandatory for Keyboard / Mouse & Controller support.",
     product: "Product",
     game: "Game",
@@ -247,7 +242,7 @@ export const en = {
     onestateDesc:
       "Onestate RP — this payment is only a donation to the OneScript server.",
     onestateDonation:
-      "This payment is only a donation to the OneScript server. Thank you for your support!",
+      "I confirm that this payment is only a donation to the OneScript server, that all purchases are final, and that no refunds will be issued.",
     onestateF1: "iOS & Android",
     onestateF2: "No RP2350A required",
     onestateF3: "No controller required",

@@ -166,7 +166,6 @@ export default function Purchase() {
   const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
   const [hardwareConfirmed, setHardwareConfirmed] = useState(false);
   const [donationConfirmed, setDonationConfirmed] = useState(false);
-  const [finalSaleConfirmed, setFinalSaleConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
@@ -237,10 +236,6 @@ export default function Purchase() {
     }
     if (isOnestate && !donationConfirmed) {
       toast.error(t("purchase.confirmDonation"));
-      return;
-    }
-    if (!finalSaleConfirmed) {
-      toast.error(t("purchase.confirmFinalSale"));
       return;
     }
 
@@ -737,26 +732,25 @@ export default function Purchase() {
                   {/* Self-Setup Confirmation Checkbox */}
                   {isSelfSetupOption && (
                     <div className="pt-4 border-t border-border/30">
-                      <div className="p-4 rounded-lg bg-violet-900/20 border border-violet-500/30">
-                        <div className="flex items-start gap-3">
-                          <div className="flex items-center h-5 mt-1">
-                            <input
-                              id="self-setup-check"
-                              type="checkbox"
-                              checked={selfSetupConfirmed}
-                              onChange={(e) => setSelfSetupConfirmed(e.target.checked)}
-                              className="w-5 h-5 rounded border-border/50 bg-dark-elevated text-violet-tech focus:ring-violet-tech/30 transition-all cursor-pointer"
-                            />
-                          </div>
-                          <label htmlFor="self-setup-check" className="text-sm text-foreground font-medium leading-relaxed cursor-pointer select-none">
-                            {t("purchase.selfSetupConfirm")}
-                          </label>
-                        </div>
-                      </div>
+                      <label
+                        htmlFor="self-setup-check"
+                        className="flex items-start gap-4 p-4 rounded-lg bg-violet-900/20 border border-violet-500/30 cursor-pointer select-none"
+                      >
+                        <input
+                          id="self-setup-check"
+                          type="checkbox"
+                          checked={selfSetupConfirmed}
+                          onChange={(e) => setSelfSetupConfirmed(e.target.checked)}
+                          className="mt-0.5 w-7 h-7 shrink-0 rounded border-border/50 bg-dark-elevated text-violet-tech focus:ring-violet-tech/30 transition-all cursor-pointer"
+                        />
+                        <span className="text-sm text-foreground font-medium leading-relaxed">
+                          {t("purchase.selfSetupConfirm")}
+                        </span>
+                      </label>
                     </div>
                   )}
 
-                  {/* Configuration Requirements Reminder — Onestate: small donation checkbox only */}
+                  {/* One confirmation checkbox (includes final sale / no refund) */}
                   {!isOnestate ? (
                   <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 mb-6">
                     <div className="flex gap-3 mb-4">
@@ -766,60 +760,40 @@ export default function Purchase() {
                         <p>{t("purchase.importantReminderBody")}</p>
                       </div>
                     </div>
-                    
-                    <div className="flex items-start gap-3 pt-3 border-t border-amber-500/20">
-                      <div className="flex items-center h-5 mt-1">
-                        <input
-                          id="hardware-check"
-                          type="checkbox"
-                          checked={hardwareConfirmed}
-                          onChange={(e) => setHardwareConfirmed(e.target.checked)}
-                          className="w-5 h-5 rounded border-amber-500/50 bg-dark-elevated text-amber-500 focus:ring-amber-500/30 transition-all cursor-pointer"
-                        />
-                      </div>
-                      <label htmlFor="hardware-check" className="text-sm text-amber-100 font-medium leading-relaxed cursor-pointer select-none">
+
+                    <label
+                      htmlFor="hardware-check"
+                      className="flex items-start gap-4 pt-4 border-t border-amber-500/20 cursor-pointer select-none"
+                    >
+                      <input
+                        id="hardware-check"
+                        type="checkbox"
+                        checked={hardwareConfirmed}
+                        onChange={(e) => setHardwareConfirmed(e.target.checked)}
+                        className="mt-0.5 w-7 h-7 shrink-0 rounded border-amber-500/50 bg-dark-elevated text-amber-500 focus:ring-amber-500/30 transition-all cursor-pointer"
+                      />
+                      <span className="text-sm text-amber-100 font-medium leading-relaxed">
                         {t("purchase.hardwareConfirm")}
-                      </label>
-                    </div>
+                      </span>
+                    </label>
                   </div>
                   ) : (
-                  <div className="mb-6 p-3 rounded-md bg-yellow-500/10 border border-yellow-400/35">
-                    <div className="flex items-start gap-3">
-                      <div className="flex items-center h-5 mt-0.5">
-                        <input
-                          id="donation-check"
-                          type="checkbox"
-                          checked={donationConfirmed}
-                          onChange={(e) => setDonationConfirmed(e.target.checked)}
-                          className="w-4 h-4 rounded border-yellow-400/50 bg-dark-elevated text-yellow-400 focus:ring-yellow-400/30 transition-all cursor-pointer"
-                        />
-                      </div>
-                      <label htmlFor="donation-check" className="text-xs text-yellow-100/90 leading-relaxed cursor-pointer select-none">
-                        {t("products.onestateDonation")}
-                      </label>
-                    </div>
-                  </div>
+                  <label
+                    htmlFor="donation-check"
+                    className="mb-6 flex items-start gap-4 p-4 rounded-lg bg-yellow-500/10 border border-yellow-400/35 cursor-pointer select-none"
+                  >
+                    <input
+                      id="donation-check"
+                      type="checkbox"
+                      checked={donationConfirmed}
+                      onChange={(e) => setDonationConfirmed(e.target.checked)}
+                      className="mt-0.5 w-7 h-7 shrink-0 rounded border-yellow-400/50 bg-dark-elevated text-yellow-400 focus:ring-yellow-400/30 transition-all cursor-pointer"
+                    />
+                    <span className="text-sm text-yellow-100/95 leading-relaxed">
+                      {t("products.onestateDonation")}
+                    </span>
+                  </label>
                   )}
-
-                  <div className="mb-6 p-3 rounded-md bg-amber-500/10 border border-amber-500/35">
-                    <p className="text-xs text-amber-200/95 leading-relaxed mb-3">
-                      {t("purchase.allSalesFinal")}
-                    </p>
-                    <div className="flex items-start gap-3">
-                      <div className="flex items-center h-5 mt-0.5">
-                        <input
-                          id="final-sale-check"
-                          type="checkbox"
-                          checked={finalSaleConfirmed}
-                          onChange={(e) => setFinalSaleConfirmed(e.target.checked)}
-                          className="w-4 h-4 rounded border-amber-500/50 bg-dark-elevated text-amber-400 focus:ring-amber-500/30 transition-all cursor-pointer"
-                        />
-                      </div>
-                      <label htmlFor="final-sale-check" className="text-xs text-amber-100/95 leading-relaxed cursor-pointer select-none">
-                        {t("purchase.finalSaleConfirm")}
-                      </label>
-                    </div>
-                  </div>
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? t("purchase.processing") : t("purchase.proceed")}

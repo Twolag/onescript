@@ -152,8 +152,7 @@ export const fr: Dictionary = {
     selectOption: "Veuillez sélectionner une option",
     confirmSelfSetup: "Vous devez confirmer que vous gérerez l’installation vous-même",
     confirmHardware: "Vous devez confirmer que votre PC répond aux exigences matérielles",
-    confirmDonation: "Cochez la case pour confirmer que ce paiement est un don au serveur OneScript",
-    confirmFinalSale: "Vous devez confirmer que tout achat est définitif",
+    confirmDonation: "Cochez la case pour confirmer le don et que l’achat est définitif",
     validated: "Informations validées ! Choisissez votre mode de paiement.",
     errorGeneric: "Une erreur est survenue, réessayez.",
     selfSetupConfirm:
@@ -162,11 +161,7 @@ export const fr: Dictionary = {
     importantReminderBody:
       "En continuant, vous confirmez avoir lu et compris la configuration PC minimale requise. Il est de votre seule responsabilité de vérifier que votre matériel est conforme. Tous les achats sont définitifs. Note : les dysfonctionnements dus au PC du client (matériel, drivers, OS, etc.) ne donnent pas droit à un remboursement.",
     hardwareConfirm:
-      "Je confirme que mon PC répond à toutes les exigences matérielles (GPU NVIDIA / AMD, Waveshare RP2350A) et, pour Apex Legends, que j’utilise la version Steam. Je comprends que tout achat est définitif et qu’aucun remboursement ne sera accordé en cas d’incompatibilité matérielle.",
-    allSalesFinal:
-      "Tous les achats sont définitifs. Aucun remboursement après paiement.",
-    finalSaleConfirm:
-      "Je comprends et j’accepte que tout achat est définitif et qu’aucun remboursement ne sera accordé.",
+      "Je confirme que mon PC répond à toutes les exigences matérielles (GPU NVIDIA / AMD, Waveshare RP2350A) et, pour Apex Legends, que j’utilise la version Steam. Je comprends que tout achat est définitif et qu’aucun remboursement ne sera accordé.",
     rpMandatory: "Obligatoire pour Clavier / Souris & Manette.",
     product: "Produit",
     game: "Jeu",
@@ -250,7 +245,7 @@ export const fr: Dictionary = {
     onestateDesc:
       "Onestate RP — ce paiement est uniquement un don au serveur OneScript.",
     onestateDonation:
-      "Ce paiement est uniquement un don au serveur OneScript. Merci pour votre soutien !",
+      "Je confirme que ce paiement est uniquement un don au serveur OneScript, que tout achat est définitif et qu’aucun remboursement ne sera accordé.",
     onestateF1: "iOS & Android",
     onestateF2: "Pas de RP2350A requis",
     onestateF3: "Pas de manette requise",
