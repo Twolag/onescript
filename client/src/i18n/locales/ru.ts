@@ -239,11 +239,11 @@ export const ru: Dictionary = {
     jitterF3: "Встроенный humanizer",
     jitterF4: "Только геймпад",
     jitterF5: "Работает со всеми FPS",
-    onestateBadge: "iOS / ANDROID",
-    onestateSubtitle: "Мобильный AI Aimbot",
-    onestateTitle: "AI Aimbot Onestate RP",
+    onestateBadge: "ONESTATE",
+    onestateSubtitle: "Onestate RP",
+    onestateTitle: "Onestate RP",
     onestateDesc:
-      "AI Aimbot для iOS и Android через Onestate RP. Без платы Waveshare, без геймпада и без клавиатуры/мыши — только мобильные.",
+      "Доступ Onestate RP. Без платы Waveshare, без геймпада и без клавиатуры/мыши.",
     onestateDonation:
       "Этот платёж — донат серверу OneScript. Спасибо за поддержку!",
     onestateF1: "iOS и Android",
@@ -415,8 +415,8 @@ export const ru: Dictionary = {
     ultimate: "План Ultimate",
     ultimateDesc:
       "AI Aimbot Lifetime + все будущие обновления + все Advanced Weights для всех игр + персональный hash (если другие билды банят — ваш остаётся safe). Требуется Waveshare RP2350A. Разовый платёж 175 €.",
-    onestate: "AI Aimbot Onestate RP",
-    onestateDesc: "Мобильный AI Aimbot для iOS и Android через Onestate RP. Без RP2350A, геймпада и клавиатуры/мыши. Этот платёж — донат серверу OneScript — спасибо!",
+    onestate: "Onestate RP",
+    onestateDesc: "Onestate RP. Без RP2350A, геймпада и клавиатуры/мыши. Этот платёж — донат серверу OneScript — спасибо!",
     monthlyRenewal: "Месячное продление",
     monthlyRenewalDesc: "Только для пользователей с 4 неделями подряд или полным месяцем. Только продление.",
     addonApex: "Advanced Weight — Apex Legends",

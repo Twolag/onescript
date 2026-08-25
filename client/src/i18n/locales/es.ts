@@ -239,11 +239,11 @@ export const es: Dictionary = {
     jitterF3: "Humanizer integrado",
     jitterF4: "Solo mando",
     jitterF5: "Funciona con todos los FPS",
-    onestateBadge: "iOS / ANDROID",
-    onestateSubtitle: "AI Aimbot móvil",
-    onestateTitle: "AI Aimbot Onestate RP",
+    onestateBadge: "ONESTATE",
+    onestateSubtitle: "Onestate RP",
+    onestateTitle: "Onestate RP",
     onestateDesc:
-      "AI Aimbot para iOS y Android vía Onestate RP. Sin placa Waveshare, sin mando y sin teclado/ratón — solo móvil.",
+      "Acceso Onestate RP. Sin placa Waveshare, sin mando y sin teclado/ratón.",
     onestateDonation:
       "Este pago es una donación al servidor OneScript. ¡Gracias por vuestro apoyo!",
     onestateF1: "iOS y Android",
@@ -415,8 +415,8 @@ export const es: Dictionary = {
     ultimate: "Plan Ultimate",
     ultimateDesc:
       "AI Aimbot Lifetime + todas las futuras actualizaciones incluidas + todas las Advanced Weights de todos los juegos + hash personalizado (si otros builds se banean, el tuyo sigue safe). Placa Waveshare RP2350A requerida. Pago único 175 €.",
-    onestate: "AI Aimbot Onestate RP",
-    onestateDesc: "AI Aimbot móvil para iOS y Android vía Onestate RP. Sin RP2350A, mando ni teclado/ratón. Este pago es un donativo al servidor OneScript — ¡gracias!",
+    onestate: "Onestate RP",
+    onestateDesc: "Onestate RP. Sin RP2350A, mando ni teclado/ratón. Este pago es un donativo al servidor OneScript — ¡gracias!",
     monthlyRenewal: "Renovación mensual",
     monthlyRenewalDesc: "Exclusivo para usuarios con 4 semanas consecutivas o un mes completo. Solo renovación.",
     addonApex: "Advanced Weight — Apex Legends",

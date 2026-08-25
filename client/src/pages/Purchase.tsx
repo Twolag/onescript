@@ -93,7 +93,7 @@ const products: Product[] = [
   },
   {
     id: "onestate-rp",
-    name: "AI Aimbot Onestate RP",
+    name: "Onestate RP",
     nameKey: "plans.onestate",
     icon: Smartphone,
     options: [
@@ -465,21 +465,6 @@ export default function Purchase() {
                       </div>
                       <p className="text-sm text-emerald-100/90 leading-relaxed">
                         {t("purchase.controllerOnlyDesc")}
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {isOnestate && (
-                  <div className="mb-8">
-                    <div className="p-5 rounded-lg bg-emerald-900/20 border border-emerald-500/35">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Smartphone className="w-5 h-5 text-emerald-400" />
-                        <h3 className="text-sm font-bold text-emerald-400 tracking-wider uppercase">
-                          iOS & Android
-                        </h3>
-                      </div>
-                      <p className="text-sm text-emerald-100/90 leading-relaxed">
-                        {t("products.onestateDesc")}
                       </p>
                     </div>
                   </div>

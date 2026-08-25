@@ -226,13 +226,12 @@ const games: GameCard[] = [
   },
   {
     id: "onestate-rp",
-    name: "AI Aimbot Onestate RP",
+    name: "Onestate RP",
     href: "/purchase?product=onestate-rp",
     accent: "from-yellow-400/30 via-amber-500/15 to-violet-tech/25",
     logoText: "ONESTATE RP",
     tags: [
       "tags.from10",
-      "tags.iosAndroid",
       "tags.noRp",
       "tags.donation",
     ],

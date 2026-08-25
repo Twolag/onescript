@@ -131,7 +131,6 @@ const productDefs: ProductDef[] = [
     titleKey: "products.onestateTitle",
     descKey: "products.onestateDesc",
     featureKeys: [
-      "products.onestateF1",
       "products.onestateF2",
       "products.onestateF3",
       "products.onestateF4",
