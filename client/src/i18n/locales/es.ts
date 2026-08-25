@@ -243,9 +243,9 @@ export const es: Dictionary = {
     onestateSubtitle: "Onestate RP",
     onestateTitle: "Onestate RP",
     onestateDesc:
-      "Acceso Onestate RP.",
+      "Onestate RP — este pago es únicamente un donativo al servidor OneScript.",
     onestateDonation:
-      "Este pago es una donación al servidor OneScript. ¡Gracias por vuestro apoyo!",
+      "Este pago es únicamente un donativo al servidor OneScript. ¡Gracias por vuestro apoyo!",
     onestateF1: "iOS y Android",
     onestateF2: "Sin RP2350A",
     onestateF3: "Sin mando",
@@ -416,7 +416,7 @@ export const es: Dictionary = {
     ultimateDesc:
       "AI Aimbot Lifetime + todas las futuras actualizaciones incluidas + todas las Advanced Weights de todos los juegos + hash personalizado (si otros builds se banean, el tuyo sigue safe). Placa Waveshare RP2350A requerida. Pago único 175 €.",
     onestate: "Onestate RP",
-    onestateDesc: "Este pago es un donativo al servidor OneScript — ¡gracias!",
+    onestateDesc: "Este pago es únicamente un donativo al servidor OneScript — ¡gracias!",
     monthlyRenewal: "Renovación mensual",
     monthlyRenewalDesc: "Exclusivo para usuarios con 4 semanas consecutivas o un mes completo. Solo renovación.",
     addonApex: "Advanced Weight — Apex Legends",

@@ -53,7 +53,7 @@ const STRIPE_CATALOG: Record<
         label: "Onestate RP",
         priceCents: 1000,
         description:
-          "Onestate RP. Donation to the OneScript server — thank you!",
+          "This payment is only a donation to the OneScript server — thank you!",
       },
     ],
   },

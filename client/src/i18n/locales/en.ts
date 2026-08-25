@@ -240,9 +240,9 @@ export const en = {
     onestateSubtitle: "Onestate RP",
     onestateTitle: "Onestate RP",
     onestateDesc:
-      "Onestate RP access.",
+      "Onestate RP — this payment is only a donation to the OneScript server.",
     onestateDonation:
-      "This payment is a donation to the OneScript server. Thank you for your support!",
+      "This payment is only a donation to the OneScript server. Thank you for your support!",
     onestateF1: "iOS & Android",
     onestateF2: "No RP2350A required",
     onestateF3: "No controller required",
@@ -429,7 +429,7 @@ export const en = {
     jitter1y: "1 year",
     jitterLife: "Lifetime",
     onestate: "Onestate RP",
-    onestateDesc: "This payment is a donation to the OneScript server — thank you!",
+    onestateDesc: "This payment is only a donation to the OneScript server — thank you!",
     perWeek: "/ week",
     perMonth: "/ month",
     dur1h: "~1 hour",
