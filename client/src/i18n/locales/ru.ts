@@ -35,7 +35,7 @@ export const ru: Dictionary = {
   home: {
     badge: "FUSION AI — МНОГОИГРОВАЯ ПОДДЕРЖКА",
     dominate: "Доминируй с",
-    subtitle: "AI Aimbot для каждого тайтла — одна покупка, от 15 €.",
+    subtitle: "AI Aimbot для каждого тайтла — одна покупка, от 19.99 €.",
     exploreGames: "Смотреть игры",
     scrollDown: "Вниз",
     scrollUp: "Вверх",
@@ -58,7 +58,7 @@ export const ru: Dictionary = {
     updates: "Обновления",
   },
   tags: {
-    from15: "От 15 €",
+    from15: "От 19.99 €",
     from10: "10 €",
     keyboardMouse: "Клавиатура / Мышь",
     controller: "Геймпад",
@@ -93,23 +93,25 @@ export const ru: Dictionary = {
     titleAccent: "в деле",
     subtitle: "Эксклюзивные геймплей-демонстрации FUSION IA и премиум-аддонов.",
     supportedGames: "Поддерживаемые игры",
-    supportedSubtitle: "Те же тайтлы, что на главной — от 15 €.",
+    supportedSubtitle: "Те же игры, что на главной — от 19.99 €.",
     watch: "СМОТРЕТЬ",
   },
   purchase: {
     finalize: "Завершите",
     purchaseWord: "покупку",
     headerSubtitle:
-      "Оформите доступ к инструментам OneScript. Планы Fusion AI от 15 €. Полная совместимость с клавиатурой/мышью и геймпадом через RP2350A.",
+      "Оформите доступ к инструментам OneScript. Планы Fusion AI от 19.99 €. Только PC с Waveshare RP2350A.",
     hardwareNotes: "Железо и платформы",
     hardwareRequired:
       "Для работы Fusion AI требуется плата Waveshare RP2350A USB Mini Development Board.",
+    minGpu: "Минимальный GPU: RTX 3050 или выше, либо AMD RX 6600 или выше.",
+    pcOnly: "Только PC — несовместимо с консолью и мобильными.",
     screen1080: "Для хорошей производительности настоятельно рекомендуется монитор 1080p.",
     steamOnly:
       "Для Apex Legends используйте только версию Steam — версия EA App (Origin) не поддерживается.",
     fullInput: "Полная совместимость ввода",
     fullInputDesc:
-      "Fusion AI полностью совместим с клавиатурой и мышью, а также с геймпадом (Xbox, PS5, Gamesir и др.) благодаря Waveshare RP2350A.",
+      "Fusion AI полностью совместим с клавиатурой/мышью и геймпадом (Xbox, PS5, Gamesir и др.) через Waveshare RP2350A. Только PC.",
     controllerOnly: "Только геймпад",
     controllerOnlyDesc:
       "Jitter Script работает только с геймпадом (Xbox, PS5, Gamesir и др.). Клавиатура и мышь не поддерживаются.",
@@ -117,7 +119,9 @@ export const ru: Dictionary = {
     selectDuration: "1. Выберите срок",
     selectSupport: "2. Уровень поддержки",
     selectRenewal: "2. Тип продления",
-    selectAddonGame: "2. Игра для Advanced Weight",
+    selectAddonGame: "Игра Advanced Weight",
+    variant: "Вариант",
+    inStock: "В наличии",
     weekly: "Неделя",
     monthly: "Месяц",
     annual: "Год",
@@ -151,8 +155,8 @@ export const ru: Dictionary = {
     fillAll: "Заполните все поля",
     selectOption: "Выберите вариант",
     confirmSelfSetup: "Подтвердите, что установите всё самостоятельно",
-    confirmHardware: "Подтвердите, что ваш ПК соответствует требованиям",
-    confirmDonation: "Отметьте, что этот платёж — донат серверу OneScript",
+    confirmHardware: "Подтвердите требования к железу и что покупка окончательна",
+    confirmDonation: "Отметьте, что это донат и покупка окончательна",
     confirmFinalSale: "Подтвердите, что все покупки окончательны",
     validated: "Данные подтверждены! Выберите способ оплаты.",
     errorGeneric: "Произошла ошибка, попробуйте снова.",
@@ -160,9 +164,9 @@ export const ru: Dictionary = {
       "Я понимаю, что получу PDF-гайд и должен установить всё самостоятельно. Подтверждаю, что сотрудники OneScript не будут участвовать в установке по этому тарифу.",
     importantReminder: "Важное напоминание",
     importantReminderBody:
-      "Продолжая, вы подтверждаете, что ознакомились с минимальными требованиями к ПК. Вы сами отвечаете за соответствие железа. Все покупки окончательны. Примечание: сбои из‑за ПК клиента (железо, драйверы, ОС и т.д.) не подлежат возврату.",
+      "Продолжая, вы подтверждаете минимальные требования к ПК (RTX 3050+ или AMD RX 6600+, Waveshare RP2350A, только PC). Вы сами отвечаете за соответствие железа. Все покупки окончательны. Примечание: сбои из‑за ПК клиента (железо, драйверы, ОС и т.д.) не подлежат возврату.",
     hardwareConfirm:
-      "Подтверждаю, что мой ПК соответствует требованиям (GPU NVIDIA / AMD, Waveshare RP2350A) и, если я играю в Apex Legends, использую версию Steam. Понимаю, что все покупки окончательны и возврат при аппаратной несовместимости не выдаётся.",
+      "Подтверждаю, что мой ПК соответствует требованиям (минимум RTX 3050 или AMD RX 6600, Waveshare RP2350A, только PC) и, если я играю в Apex Legends, использую версию Steam. Понимаю, что все покупки окончательны и возврат не производится.",
     allSalesFinal:
       "Все покупки окончательны. Возврат после оплаты не производится.",
     finalSaleConfirm:
@@ -210,10 +214,11 @@ export const ru: Dictionary = {
     fusionBadge: "СТАБИЛЬНО / ГОТОВО",
     fusionSubtitle: "Визуальная обработка ИИ",
     fusionTitle: "FUSION IA - V8",
-    fusionDesc: "Революционное обновление V8! AI Aimbot в 10 раз мощнее с отличной поддержкой AMD. Доступно для Apex Legends, Fortnite, Warzone, Overwatch 2 и The Finals. Требуется плата Waveshare RP2350A. Нативная совместимость NVIDIA и AMD. Без потери FPS, ультранизкая задержка геймпада.",
+    fusionDesc:
+      "Революционное обновление V8! AI Aimbot в 10 раз мощнее с отличной поддержкой AMD. Доступно для Apex Legends, Fortnite, Warzone, Overwatch 2 и The Finals. Требуется Waveshare RP2350A. Только PC. Минимум GPU: RTX 3050+ или AMD RX 6600+. Нативная совместимость NVIDIA и AMD. Без потери FPS, ультранизкая задержка геймпада.",
     fusionF1: "Переработанная архитектура V8",
-    fusionF2: "Нативная поддержка NVIDIA и AMD",
-    fusionF3: "Клавиатура/мышь и геймпад (RP2350A)",
+    fusionF2: "Нативная поддержка NVIDIA и AMD (RTX 3050+ / RX 6600+)",
+    fusionF3: "Клавиатура/мышь и геймпад через RP2350A — только PC",
     fusionF4: "Гарантия без потери FPS",
     fusionF5: "Премиум UI обновлён",
     weightBadge: "ТОЛЬКО ADD-ON",
@@ -250,7 +255,7 @@ export const ru: Dictionary = {
     onestateDesc:
       "Onestate RP — этот платёж является только донатом серверу OneScript.",
     onestateDonation:
-      "Этот платёж является только донатом серверу OneScript. Спасибо за поддержку!",
+      "Подтверждаю, что этот платёж — только донат серверу OneScript, что покупка окончательна и возврат средств не производится.",
     onestateF1: "iOS и Android",
     onestateF2: "RP2350A не нужна",
     onestateF3: "Геймпад не нужен",
@@ -403,12 +408,16 @@ export const ru: Dictionary = {
   },
 
   plans: {
+    week: "1 неделя",
+    weekDesc: "Доступ к AI Aimbot на 7 дней. Требуется Waveshare RP2350A. Только PC. Минимум GPU: RTX 3050+ или AMD RX 6600+.",
     weekSetup: "1 неделя (Setup + Support + Лицензия)",
     weekSetupDesc: "Полная установка AI Aimbot V8 + 7 дней поддержки. Требуется Waveshare RP2350A. Всё делаем за вас.",
     weekLicense: "1 неделя (только лицензия)",
     weekLicenseDesc: "Лицензия на 7 дней V8. PDF-гайд включён. Требуется Waveshare RP2350A. БЕЗ удалённой установки. Устанавливаете сами.",
     weeklyRenewal: "Недельное продление",
     weeklyRenewalDesc: "Продление для пользователей, завершивших первую неделю.",
+    month: "1 месяц",
+    monthDesc: "Доступ к AI Aimbot на 30 дней. Требуется Waveshare RP2350A. Только PC. Минимум GPU: RTX 3050+ или AMD RX 6600+.",
     monthLicense: "Только лицензия (месяц)",
     monthLicenseDesc: "Лицензия на 1 месяц V8. PDF-гайд включён. Требуется Waveshare RP2350A. БЕЗ удалённой установки. Устанавливаете сами.",
     monthSetup: "1 месяц (Setup + Support + Лицензия)",
@@ -417,11 +426,11 @@ export const ru: Dictionary = {
     helpInstallDesc: "Для купивших только PDF-лицензию. Удалённая помощь включена.",
     annual: "Годовая подписка",
     annualDesc: "Полный доступ FUSION AI V8 на 12 месяцев. Требуется Waveshare RP2350A. ⚠️ Зафиксировано на V8 — крупные обновления +30 €. Приоритетная поддержка.",
-    lifetime: "Лицензия навсегда",
-    lifetimeDesc: "Постоянный доступ FUSION AI V8. Требуется Waveshare RP2350A. ⚠️ Зафиксировано на V8 — крупные обновления +30 €. Разовый платёж.",
-    ultimate: "План Ultimate",
+    lifetime: "Навсегда",
+    lifetimeDesc: "Постоянный доступ FUSION AI V8. Требуется Waveshare RP2350A. Только PC. ⚠️ Зафиксировано на V8 — крупные обновления +30 €. Разовый платёж.",
+    ultimate: "Ultimate",
     ultimateDesc:
-      "AI Aimbot Lifetime + все будущие обновления + все Advanced Weights для всех игр + персональный hash (если другие билды банят — ваш остаётся safe). Требуется Waveshare RP2350A. Разовый платёж 175 €.",
+      "AI Aimbot Lifetime + все будущие обновления + все Advanced Weights для всех игр + персональный hash (если другие билды банят — ваш остаётся safe). Требуется Waveshare RP2350A. Только PC. Разовый платёж 124.99 €.",
     onestate: "Onestate RP",
     onestateDesc: "Этот платёж является только донатом серверу OneScript — спасибо!",
     monthlyRenewal: "Месячное продление",
