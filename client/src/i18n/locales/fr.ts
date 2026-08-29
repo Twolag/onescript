@@ -203,6 +203,7 @@ export const fr: Dictionary = {
     updatesIncluded: "Mises à jour régulières incluses",
     hardwareConfig: "Configuration matérielle",
     visualEngine: "Moteur de traitement visuel",
+    jitterInterface: "Dashboard No Recoil",
   },
   products: {
     eyebrow: "Catalogue",
