@@ -15,7 +15,7 @@ export const fr: Dictionary = {
     language: "Langue",
     aiAimbot: "AI Aimbot (FUSION AI)",
     windowsOpt: "Optimisation Windows",
-    jitterScript: "Jitter Script",
+    jitterScript: "No Recoil",
   },
   footer: {
     tagline:
@@ -114,7 +114,7 @@ export const fr: Dictionary = {
       "Fusion AI est pleinement compatible Clavier & Souris et Manette (Xbox, PS5, Gamesir, etc.) via la Waveshare RP2350A. PC uniquement.",
     controllerOnly: "Manette uniquement",
     controllerOnlyDesc:
-      "Le Jitter Script fonctionne uniquement avec une manette (Xbox, PS5, Gamesir, etc.). Clavier et souris non supportés.",
+      "No Recoil fonctionne uniquement avec une manette (Xbox, PS5, Gamesir, etc.). Clavier et souris non supportés.",
     selectPlan: "Choisir une offre",
     selectDuration: "1. Choisir la durée",
     selectSupport: "2. Niveau de support",
@@ -243,8 +243,8 @@ export const fr: Dictionary = {
     winF5: "Gain minimum 40-60 FPS",
     jitterBadge: "MANETTE",
     jitterSubtitle: "Anti-recul pour FPS",
-    jitterTitle: "Jitter Script",
-    jitterDesc: "Le meilleur script jitter anti-recul pour Apex Legends, Fortnite et Warzone. Indétectable par les anti-cheats, ne coupe pas l’aim assist. Tirs précis jusqu’à 150 m+ avec un shake minimal.",
+    jitterTitle: "No Recoil",
+    jitterDesc: "Le meilleur outil No Recoil anti-recul pour Apex Legends, Fortnite et Warzone. Indétectable par les anti-cheats, ne coupe pas l’aim assist. Tirs précis jusqu’à 150 m+ avec un shake minimal.",
     jitterF1: "Indétectable par les anti-cheats",
     jitterF2: "Ne coupe pas l’aim assist",
     jitterF3: "Humanizer intégré",
@@ -299,7 +299,7 @@ export const fr: Dictionary = {
     faq7a: "Windows 10 est fortement recommandé pour les GPU comme RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 et AMD RX 6600 XT / 6700 XT afin d’assurer performance et stabilité optimales de FUSION AI V8. Cette recommandation est distincte des conditions de remboursement.",
     faq8q: "Comment fonctionne le support technique ?",
     faq8a: "Notre support est disponible via le widget de chat en bas à droite de l’écran. Nous répondons généralement sous 24 h. Pour les abonnés FUSION AI, le support est prioritaire.",
-    faq9q: "Jitter Script et AI Aimbot sont-ils compatibles clavier/souris ?",
+    faq9q: "No Recoil et AI Aimbot sont-ils compatibles clavier/souris ?",
     faq9a: "Non, les solutions OneScript sont strictement réservées à la manette (PS5, Xbox, Gamesir, etc.). Le clavier et la souris ne sont supportés sur aucun jeu.",
     faq10q: "Quelles manettes sont supportées ?",
     faq10a: "Nous supportons les manettes Xbox, PlayStation 5, PlayStation 5 Edge et Gamesir. Lors du paiement, il vous sera demandé de préciser votre manette. Pour un autre modèle, sélectionnez « Autre » et contactez le support via Discord pour vérifier la compatibilité.",

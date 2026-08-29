@@ -91,7 +91,7 @@ export default function LegalNotice() {
               L'utilisation, la reproduction, la modification ou la distribution de ces contenus sans autorisation écrite préalable est strictement interdite.
             </p>
             <p>
-              Les produits OneScript (FUSION AI, Windows Optimization, Jitter Script) sont des logiciels propriétaires protégés par copyright. Toute tentative de rétro-ingénierie, de craquage ou de partage est interdite et pourrait entraîner des poursuites légales.
+              Les produits OneScript (FUSION AI, Windows Optimization, No Recoil) sont des logiciels propriétaires protégés par copyright. Toute tentative de rétro-ingénierie, de craquage ou de partage est interdite et pourrait entraîner des poursuites légales.
             </p>
           </section>
 

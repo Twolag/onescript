@@ -30,7 +30,7 @@ const STRIPE_CATALOG: Record<
     ],
   },
   "jitter-script": {
-    name: "Jitter Script",
+    name: "No Recoil",
     options: [
       { label: "1 day", priceCents: 250, description: "1 day" },
       { label: "1 week", priceCents: 500, description: "1 week" },

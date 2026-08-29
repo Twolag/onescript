@@ -75,7 +75,7 @@ const products: Product[] = [
   },
   {
     id: "jitter-script",
-    name: "Jitter Script",
+    name: "No Recoil",
     nameKey: "nav.jitterScript",
     icon: Gamepad2,
     options: [
@@ -394,7 +394,7 @@ export default function Purchase() {
                 </motion.div>
               )}
 
-              {/* Jitter Script Interface Showcase */}
+              {/* No Recoil Interface Showcase */}
               {productId === "jitter-script" && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -406,14 +406,14 @@ export default function Purchase() {
                   <div className="relative glass-card rounded-xl overflow-hidden border border-violet-tech/20 shadow-2xl">
                     <motion.img
                       src="/images/jitter-interface.png"
-                      alt="Jitter Script Interface"
+                      alt="No Recoil Interface"
                       className="w-full h-auto"
                       animate={{ y: [0, -5, 0] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark-base/80 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-4 left-6">
-                      <h3 className="text-xl font-display font-bold text-white neon-text">JITTER SCRIPT</h3>
+                      <h3 className="text-xl font-display font-bold text-white neon-text">NO RECOIL</h3>
                       <p className="text-xs text-violet-accent font-semibold tracking-widest uppercase">{t("purchase.jitterInterface")}</p>
                     </div>
                   </div>

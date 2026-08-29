@@ -70,7 +70,7 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
   },
   "jitter-script": {
     id: "jitter-script",
-    name: "Jitter Script",
+    name: "No Recoil",
     options: [
       { label: "1 day", priceCents: 250, description: "1 day access" },
       { label: "1 week", priceCents: 500, description: "1 week access" },

@@ -41,7 +41,7 @@ export default function Terms() {
             <ul className="list-disc list-inside mt-2 space-y-1">
               <li>FUSION AI (software license + installation)</li>
               <li>Windows Optimization (system optimization software)</li>
-              <li>Jitter Script (controller configuration script)</li>
+              <li>No Recoil (controller configuration script)</li>
               <li>Free trials and associated services</li>
             </ul>
           </section>
@@ -150,7 +150,7 @@ export default function Terms() {
             </div>
 
             <p className="mt-4 text-sm text-gray-400">
-              <strong className="text-gray-200">Other Products:</strong> For Windows Optimization and Jitter Script, the standard right of withdrawal applies (14 days, without product use). For FUSION AI, the above conditions apply exclusively.
+              <strong className="text-gray-200">Other Products:</strong> For Windows Optimization and No Recoil, the standard right of withdrawal applies (14 days, without product use). For FUSION AI, the above conditions apply exclusively.
             </p>
           </section>
 

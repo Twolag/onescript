@@ -15,7 +15,7 @@ export const ru: Dictionary = {
     language: "Язык",
     aiAimbot: "AI Aimbot (FUSION AI)",
     windowsOpt: "Оптимизация Windows",
-    jitterScript: "Jitter Script",
+    jitterScript: "No Recoil",
   },
   footer: {
     tagline:
@@ -114,7 +114,7 @@ export const ru: Dictionary = {
       "Fusion AI полностью совместим с клавиатурой/мышью и геймпадом (Xbox, PS5, Gamesir и др.) через Waveshare RP2350A. Только PC.",
     controllerOnly: "Только геймпад",
     controllerOnlyDesc:
-      "Jitter Script работает только с геймпадом (Xbox, PS5, Gamesir и др.). Клавиатура и мышь не поддерживаются.",
+      "No Recoil работает только с геймпадом (Xbox, PS5, Gamesir и др.). Клавиатура и мышь не поддерживаются.",
     selectPlan: "Выбор тарифа",
     selectDuration: "1. Выберите срок",
     selectSupport: "2. Уровень поддержки",
@@ -243,8 +243,8 @@ export const ru: Dictionary = {
     winF5: "Минимум +40–60 FPS",
     jitterBadge: "ГЕЙМПАД",
     jitterSubtitle: "Антиотдача для FPS",
-    jitterTitle: "Jitter Script",
-    jitterDesc: "Лучший jitter-скрипт антиотдачи для Apex Legends, Fortnite и Warzone. Не обнаруживается античитами, не отключает aim assist. Точные выстрелы до 150 м+ с минимальной тряской.",
+    jitterTitle: "No Recoil",
+    jitterDesc: "Лучший No Recoil антиотдача для Apex Legends, Fortnite и Warzone. Не обнаруживается античитами, не отключает aim assist. Точные выстрелы до 150 м+ с минимальной тряской.",
     jitterF1: "Не обнаруживается античитами",
     jitterF2: "Не отключает aim assist",
     jitterF3: "Встроенный humanizer",
@@ -299,7 +299,7 @@ export const ru: Dictionary = {
     faq7a: "Windows 10 настоятельно рекомендуется для GPU вроде RTX 3050, RTX 3060, RTX 3070, RTX 4060, RTX 4070 и AMD RX 6600 XT / 6700 XT для оптимальной производительности и стабильности FUSION AI V8. Эта рекомендация отдельна от условий возврата.",
     faq8q: "Как работает техподдержка?",
     faq8a: "Поддержка доступна через чат-виджет в правом нижнем углу. Обычно отвечаем в течение 24 часов. Для подписчиков FUSION AI — приоритетная поддержка.",
-    faq9q: "Совместимы ли Jitter Script и AI Aimbot с клавиатурой и мышью?",
+    faq9q: "Совместимы ли No Recoil и AI Aimbot с клавиатурой и мышью?",
     faq9a: "Нет, решения OneScript строго только для геймпада (PS5, Xbox, Gamesir и т.д.). Клавиатура и мышь не поддерживаются ни в одной игре.",
     faq10q: "Какие геймпады поддерживаются?",
     faq10a: "Поддерживаем геймпады Xbox, PlayStation 5, PlayStation 5 Edge и Gamesir. При оформлении заказа нужно указать ваш геймпад. Если другая модель — выберите «Другое» и свяжитесь с поддержкой в Discord для проверки совместимости.",
