@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
   Cpu, Monitor, Gamepad2, Check, Shield, Lock, AlertCircle,
-  MessageCircle, CreditCard, Clock, Zap, RefreshCw, Keyboard, Smartphone, Crown
+  MessageCircle, CreditCard, Keyboard, Smartphone
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -36,6 +36,8 @@ interface ProductOption {
   noteKey?: TranslationKey;
   durationKey?: TranslationKey;
   price: number;
+  /** Crossed-out original price (promo display) */
+  compareAtPrice?: number;
 }
 
 interface Product {
@@ -53,17 +55,12 @@ const products: Product[] = [
     name: "FUSION AI",
     icon: Cpu,
     options: [
-      { labelKey: "plans.weekSetup", price: 25, descKey: "plans.weekSetupDesc", durationKey: "plans.dur1h" },
-      { labelKey: "plans.weekLicense", price: 15, descKey: "plans.weekLicenseDesc", durationKey: "plans.durSelf" },
-      { labelKey: "plans.weeklyRenewal", price: 10, noteKey: "plans.perWeek", descKey: "plans.weeklyRenewalDesc", durationKey: "plans.dur5m" },
-      { labelKey: "plans.monthLicense", price: 40, descKey: "plans.monthLicenseDesc", durationKey: "plans.durSelf" },
-      { labelKey: "plans.monthSetup", price: 60, descKey: "plans.monthSetupDesc", durationKey: "plans.dur1h" },
-      { labelKey: "plans.helpInstall", price: 30, descKey: "plans.helpInstallDesc", durationKey: "plans.dur1h" },
-      { labelKey: "plans.lifetime", price: 100, descKey: "plans.lifetimeDesc", durationKey: "plans.dur1h" },
-      { labelKey: "plans.monthlyRenewal", price: 30, noteKey: "plans.perMonth", descKey: "plans.monthlyRenewalDesc", durationKey: "plans.dur30m" },
+      { labelKey: "plans.week", price: 19.99, descKey: "plans.weekDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.month", price: 39.99, descKey: "plans.monthDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.lifetime", price: 79.99, compareAtPrice: 100, descKey: "plans.lifetimeDesc", durationKey: "plans.dur1h" },
+      { labelKey: "plans.ultimate", price: 124.99, compareAtPrice: 175.99, descKey: "plans.ultimateDesc", durationKey: "plans.dur1h" },
       { labelKey: "plans.addonApex", price: 10, descKey: "plans.addonApexDesc", durationKey: "plans.durInstant" },
       { labelKey: "plans.addonFortnite", price: 10, descKey: "plans.addonFortniteDesc", durationKey: "plans.durInstant" },
-      { labelKey: "plans.ultimate", price: 175, descKey: "plans.ultimateDesc", durationKey: "plans.dur1h" },
     ],
   },
   {
@@ -106,6 +103,10 @@ const products: Product[] = [
     ],
   },
 ];
+
+function formatEuro(amount: number) {
+  return `${amount.toFixed(2).replace(/\.00$/, "")}€`;
+}
 
 const GAME_LABELS: Record<string, string> = {
   fortnite: "Fortnite",
@@ -155,60 +156,45 @@ export default function Purchase() {
     note: option.noteKey ? t(option.noteKey) : undefined,
     duration: option.durationKey ? t(option.durationKey) : undefined,
     price: option.price,
+    compareAtPrice: option.compareAtPrice,
   });
 
   // ── Form state ──
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
-    firstName: "", lastName: "", email: "", discordPseudo: "", onestatePseudo: "",
-    cpu: "", gpu: "", os: "Windows 10", controller: "",
+    email: "", discordPseudo: "", onestatePseudo: "",
   });
-  const [selfSetupConfirmed, setSelfSetupConfirmed] = useState(false);
-  const [hardwareConfirmed, setHardwareConfirmed] = useState(false);
-  const [donationConfirmed, setDonationConfirmed] = useState(false);
-  const [finalSaleConfirmed, setFinalSaleConfirmed] = useState(false);
+  const [termsConfirmed, setTermsConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderCreated, setOrderCreated] = useState<{
     orderNumber: string; productName: string; price: number; optionIndex: number;
   } | null>(null);
   const [stripeLoading, setStripeLoading] = useState(false);
 
-  // ── New simplified AI Engine state ──
+  // ── AI Aimbot plan selection ──
   const [aiDuration, setAiDuration] = useState<string>("week"); // week, month, lifetime, ultimate, addon
-  /** Week/month plan: setup+support, license-only, or renewal (existing customers only) */
-  const [aiPlanType, setAiPlanType] = useState<"support" | "license" | "renewal">("support");
   const [aiAddonType, setAiAddonType] = useState<string>(
     rawGame === "fortnite" ? "fortnite" : "apex"
-  ); // apex, fortnite
+  );
 
-  // Effect to sync simplified AI selection with option index
   useEffect(() => {
     if (productId === "ai-engine") {
       let index = 0;
-      if (aiDuration === "week") {
-        index = aiPlanType === "support" ? 0 : aiPlanType === "license" ? 1 : 2;
-      } else if (aiDuration === "month") {
-        index = aiPlanType === "support" ? 4 : aiPlanType === "license" ? 3 : 7;
-      } else if (aiDuration === "lifetime") {
-        index = 6;
-      } else if (aiDuration === "ultimate") {
-        index = 10;
-      } else if (aiDuration === "addon") {
-        index = aiAddonType === "apex" ? 8 : 9;
-      } else if (aiDuration === "help") {
-        index = 5;
-      }
+      if (aiDuration === "week") index = 0;
+      else if (aiDuration === "month") index = 1;
+      else if (aiDuration === "lifetime") index = 2;
+      else if (aiDuration === "ultimate") index = 3;
+      else if (aiDuration === "addon") index = aiAddonType === "apex" ? 4 : 5;
       setSelectedOptionIndex(index);
     } else if (isOnestate) {
       setSelectedOptionIndex(0);
     }
-  }, [productId, isOnestate, aiDuration, aiPlanType, aiAddonType]);
+  }, [productId, isOnestate, aiDuration, aiAddonType]);
 
   const selectedOption = selectedOptionIndex !== null ? product.options[selectedOptionIndex] : null;
   const selectedItem = selectedOption ? resolveOption(selectedOption) : null;
   let total = selectedItem?.price ?? 0;
-  const isSelfSetupOption = productId === "ai-engine" && (selectedOptionIndex === 1 || selectedOptionIndex === 3);
-  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -216,10 +202,9 @@ export default function Purchase() {
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    const baseOk = formData.firstName && formData.lastName && formData.email && formData.discordPseudo;
+    const baseOk = !!formData.email.trim() && !!formData.discordPseudo.trim();
     const onestateOk = !isOnestate || !!formData.onestatePseudo.trim();
-    const hardwareOk = isOnestate || (formData.cpu && formData.gpu);
-    if (!baseOk || !onestateOk || !hardwareOk) {
+    if (!baseOk || !onestateOk) {
       toast.error(t("purchase.fillAll"));
       return;
     }
@@ -227,20 +212,8 @@ export default function Purchase() {
       toast.error(t("purchase.selectOption"));
       return;
     }
-    if (isSelfSetupOption && !selfSetupConfirmed) {
-      toast.error(t("purchase.confirmSelfSetup"));
-      return;
-    }
-    if (!isOnestate && !hardwareConfirmed) {
-      toast.error(t("purchase.confirmHardware"));
-      return;
-    }
-    if (isOnestate && !donationConfirmed) {
-      toast.error(t("purchase.confirmDonation"));
-      return;
-    }
-    if (!finalSaleConfirmed) {
-      toast.error(t("purchase.confirmFinalSale"));
+    if (!termsConfirmed) {
+      toast.error(isOnestate ? t("purchase.confirmDonation") : t("purchase.confirmHardware"));
       return;
     }
 
@@ -265,6 +238,7 @@ export default function Purchase() {
     if (!orderCreated || selectedOptionIndex === null) return;
     setStripeLoading(true);
     try {
+      const customerName = formData.discordPseudo.trim();
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -272,15 +246,15 @@ export default function Purchase() {
           productId,
           optionIndex: selectedOptionIndex,
           customerEmail: formData.email,
-          customerName: `${formData.firstName} ${formData.lastName}`,
+          customerName,
           discordPseudo: formData.discordPseudo,
           onestatePseudo: isOnestate ? formData.onestatePseudo.trim() : "",
           orderNumber: orderCreated.orderNumber,
           game: selectedGame || "",
-          cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
-          gpu: isOnestate ? "N/A" : formData.gpu,
-          os: isOnestate ? "iOS / Android" : formData.os,
-          inputMethod: isOnestate ? "Touch (mobile)" : (formData.controller || "N/A"),
+          cpu: "",
+          gpu: "",
+          os: "",
+          inputMethod: "",
         }),
       });
       const data = await res.json();
@@ -298,7 +272,7 @@ export default function Purchase() {
 
   const notifyPendingOrder = (paymentMethod: string) => {
     if (!orderCreated || !selectedItem) return;
-    const customerName = `${formData.firstName} ${formData.lastName}`;
+    const customerName = formData.discordPseudo.trim();
 
     fetch("/api/send-email", {
       method: "POST",
@@ -314,10 +288,10 @@ export default function Purchase() {
           discordPseudo: formData.discordPseudo,
           onestatePseudo: isOnestate ? formData.onestatePseudo.trim() : "",
           price: orderCreated.price,
-          cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
-          gpu: isOnestate ? "N/A" : formData.gpu,
-          os: isOnestate ? "iOS / Android" : formData.os,
-          inputMethod: isOnestate ? "Touch (mobile)" : (formData.controller || "N/A"),
+          cpu: "",
+          gpu: "",
+          os: "",
+          inputMethod: "",
         },
       }),
     }).catch(console.error);
@@ -334,6 +308,14 @@ export default function Purchase() {
         optionLabel: selectedItem.label,
         price: orderCreated.price,
         paymentMethod,
+<<<<<<< HEAD
+=======
+        cpu: "",
+        gpu: "",
+        os: "",
+        inputMethod: "",
+        selfSetupConfirmed: "N/A",
+>>>>>>> origin/cursor/ai-aimbot-pricing-ui-db5f
       }),
     }).catch(console.error);
   };
@@ -341,7 +323,7 @@ export default function Purchase() {
   const handlePayPalPayment = () => {
     if (!orderCreated) return;
     notifyPendingOrder("paypal");
-    const paypalLink = `${PAYPAL_BASE}/${total}`;
+    const paypalLink = `${PAYPAL_BASE}/${Number(total).toFixed(2)}`;
     setTimeout(() => {
       window.open(paypalLink, "_blank");
     }, 100);
@@ -445,6 +427,8 @@ export default function Purchase() {
                       </div>
                       <p className="text-sm text-amber-100/85 leading-relaxed">
                         {t("purchase.hardwareRequired")}
+                        {" "}{t("purchase.minGpu")}
+                        {" "}{t("purchase.pcOnly")}
                         {" "}{t("purchase.screen1080")}
                         {(!selectedGame || selectedGame === "Apex Legends") && (
                           <>{" "}{t("purchase.steamOnly")}</>
@@ -475,93 +459,95 @@ export default function Purchase() {
                 </h2>
 
                 {productId === "ai-engine" ? (
-                  /* SIMPLIFIED AI ENGINE SELECTOR */
-                  <div className="space-y-8">
-                    {/* 1. Duration Selection */}
+                  /* ASTRAL-STYLE VARIANT SELECTOR */
+                  <div className="space-y-6">
+                    {selectedItem && aiDuration !== "addon" && (
+                      <div className="flex items-end justify-between gap-4 p-4 rounded-xl bg-dark-elevated/80 border border-border/40">
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                            {selectedItem.label}
+                          </p>
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-3xl font-display font-bold text-foreground">
+                              {formatEuro(selectedItem.price)}
+                            </span>
+                            {selectedItem.compareAtPrice != null && (
+                              <span className="text-lg text-muted-foreground line-through decoration-2">
+                                {formatEuro(selectedItem.compareAtPrice)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold text-emerald-400 border border-emerald-500/40 bg-emerald-500/10">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          {t("purchase.inStock")}
+                        </span>
+                      </div>
+                    )}
+
                     <div>
-                      <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">{t("purchase.selectDuration")}</label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {[
-                          { id: "week", label: t("purchase.weekly"), icon: Clock },
-                          { id: "month", label: t("purchase.monthly"), icon: Zap },
-                          { id: "lifetime", label: t("purchase.lifetime"), icon: Shield },
-                          { id: "ultimate", label: t("purchase.ultimate"), icon: Crown },
-                          { id: "addon", label: "Advanced Weight", icon: Cpu },
-                        ].map((d) => (
-                          <button
-                            key={d.id}
-                            onClick={() => setAiDuration(d.id)}
-                            className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all ${
-                              aiDuration === d.id ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
-                            }`}
-                          >
-                            <d.icon className={`w-5 h-5 mb-2 ${aiDuration === d.id ? "text-violet-tech" : "text-muted-foreground"}`} />
-                            <span className={`text-sm font-bold ${aiDuration === d.id ? "text-foreground" : "text-muted-foreground"}`}>{d.label}</span>
-                          </button>
-                        ))}
+                      <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-3 block">
+                        {t("purchase.variant")}
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {(
+                          [
+                            { id: "week", index: 0 },
+                            { id: "month", index: 1 },
+                            { id: "lifetime", index: 2 },
+                            { id: "ultimate", index: 3 },
+                          ] as const
+                        ).map((d) => {
+                          const opt = product.options[d.index];
+                          const active = aiDuration === d.id;
+                          return (
+                            <button
+                              key={d.id}
+                              type="button"
+                              onClick={() => setAiDuration(d.id)}
+                              className={`flex items-center justify-between gap-3 p-4 rounded-xl border-2 text-left transition-all ${
+                                active
+                                  ? "border-violet-tech bg-violet-tech/10 shadow-[0_0_20px_rgba(123,46,255,0.15)]"
+                                  : "border-border/50 hover:border-violet-tech/40 bg-dark-elevated/50"
+                              }`}
+                            >
+                              <span className={`text-sm font-bold ${active ? "text-foreground" : "text-muted-foreground"}`}>
+                                {t(opt.labelKey)}
+                              </span>
+                              <span className="flex items-center gap-2 shrink-0">
+                                {opt.compareAtPrice != null && (
+                                  <span className="text-xs text-muted-foreground line-through">
+                                    {formatEuro(opt.compareAtPrice)}
+                                  </span>
+                                )}
+                                <span className={`text-base font-display font-bold ${active ? "text-violet-tech" : "text-foreground"}`}>
+                                  {formatEuro(opt.price)}
+                                </span>
+                              </span>
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
 
-                    {/* 2. Support / Options Selection */}
-                    <AnimatePresence mode="wait">
-                      {(aiDuration === "week" || aiDuration === "month") && (
-                        <motion.div
-                          key={aiDuration}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                        >
-                          <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">{t("purchase.selectSupport")}</label>
-                          <div className="grid sm:grid-cols-3 gap-4">
-                            <button
-                              onClick={() => setAiPlanType("support")}
-                              className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiPlanType === "support" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
-                              }`}
-                            >
-                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiPlanType === "support" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                                {aiPlanType === "support" && <Check className="w-4 h-4 text-white" />}
-                              </div>
-                              <div>
-                                <p className="font-bold text-foreground">{t("purchase.withSupport")}</p>
-                                <p className="text-xs text-muted-foreground mt-1">{t("purchase.withSupportDesc")}</p>
-                              </div>
-                            </button>
-                            <button
-                              onClick={() => setAiPlanType("license")}
-                              className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiPlanType === "license" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
-                              }`}
-                            >
-                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiPlanType === "license" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                                {aiPlanType === "license" && <Check className="w-4 h-4 text-white" />}
-                              </div>
-                              <div>
-                                <p className="font-bold text-foreground">{t("purchase.licenseOnly")}</p>
-                                <p className="text-xs text-muted-foreground mt-1">{t("purchase.licenseOnlyDesc")}</p>
-                              </div>
-                            </button>
-                            <button
-                              onClick={() => setAiPlanType("renewal")}
-                              className={`flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiPlanType === "renewal" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
-                              }`}
-                            >
-                              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${aiPlanType === "renewal" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
-                                {aiPlanType === "renewal" && <Check className="w-4 h-4 text-white" />}
-                              </div>
-                              <div>
-                                <p className="font-bold text-foreground flex items-center gap-2">
-                                  <RefreshCw className="w-3.5 h-3.5 text-violet-accent" />
-                                  {aiDuration === "week" ? t("purchase.weeklyRenewal") : t("purchase.monthlyRenewal")}
-                                </p>
-                                <p className="text-xs text-muted-foreground mt-1">{t("purchase.renewalExistingOnly")}</p>
-                              </div>
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => setAiDuration("addon")}
+                        className={`w-full flex items-center justify-between gap-3 p-3 rounded-lg border text-left transition-all ${
+                          aiDuration === "addon"
+                            ? "border-amber-500/60 bg-amber-500/10"
+                            : "border-border/40 hover:border-amber-500/40 bg-dark-elevated/30"
+                        }`}
+                      >
+                        <span className="text-xs font-semibold text-muted-foreground">
+                          {t("purchase.addon")}
+                        </span>
+                        <span className="text-sm font-bold text-amber-400">10€</span>
+                      </button>
+                    </div>
 
+                    <AnimatePresence mode="wait">
                       {aiDuration === "addon" && (
                         <motion.div
                           key="addon"
@@ -569,12 +555,15 @@ export default function Purchase() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
                         >
-                          <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-4 block">{t("purchase.selectAddonGame")}</label>
-                          <div className="grid sm:grid-cols-2 gap-4">
+                          <label className="text-xs font-bold text-violet-accent tracking-widest uppercase mb-3 block">
+                            {t("purchase.selectAddonGame")}
+                          </label>
+                          <div className="grid sm:grid-cols-2 gap-3">
                             <button
+                              type="button"
                               onClick={() => setAiAddonType("apex")}
-                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiAddonType === "apex" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              className={`flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${
+                                aiAddonType === "apex" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 bg-dark-elevated/50"
                               }`}
                             >
                               <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiAddonType === "apex" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
@@ -583,9 +572,10 @@ export default function Purchase() {
                               <span className="font-bold text-foreground">Apex Legends</span>
                             </button>
                             <button
+                              type="button"
                               onClick={() => setAiAddonType("fortnite")}
-                              className={`flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
-                                aiAddonType === "fortnite" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 hover:border-violet-tech/30 bg-dark-elevated/50"
+                              className={`flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${
+                                aiAddonType === "fortnite" ? "border-violet-tech bg-violet-tech/10" : "border-border/50 bg-dark-elevated/50"
                               }`}
                             >
                               <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${aiAddonType === "fortnite" ? "border-violet-tech bg-violet-tech" : "border-border/50"}`}>
@@ -598,27 +588,23 @@ export default function Purchase() {
                       )}
                     </AnimatePresence>
 
-                    {/* Display Selected Option Details */}
                     {selectedItem && (
-                      <motion.div 
+                      <motion.div
                         key={selectedOptionIndex}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="p-5 rounded-lg bg-violet-tech/5 border border-violet-tech/20"
+                        className="p-4 rounded-xl bg-dark-elevated/60 border border-border/40 space-y-2 text-sm"
                       >
-                        <div className="flex justify-between items-start gap-4 mb-2">
-                          <h4 className="font-bold text-lg text-foreground">{selectedItem.label}</h4>
-                          <div className="text-right">
-                            <p className="text-2xl font-display font-bold text-violet-tech">{selectedItem.price}€</p>
-                            {selectedItem.note && <p className="text-xs text-muted-foreground">{selectedItem.note}</p>}
-                          </div>
+                        <div className="flex justify-between gap-3">
+                          <span className="text-muted-foreground">{selectedItem.label}</span>
+                          <span className="font-semibold text-foreground">{formatEuro(selectedItem.price)}</span>
                         </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{selectedItem.description}</p>
-                        {selectedItem.duration && (
-                          <div className="mt-3 flex items-center gap-2 text-xs text-violet-accent font-semibold">
-                            <Clock className="w-3.5 h-3.5" />
-                            {t("purchase.delivery")}: {selectedItem.duration}
-                          </div>
+                        <div className="flex justify-between gap-3 pt-2 border-t border-border/30">
+                          <span className="font-bold text-foreground">{t("purchase.total")}</span>
+                          <span className="font-display font-bold text-lg text-violet-tech">{formatEuro(selectedItem.price)}</span>
+                        </div>
+                        {selectedItem.description && (
+                          <p className="text-xs text-muted-foreground leading-relaxed pt-2">{selectedItem.description}</p>
                         )}
                       </motion.div>
                     )}
@@ -650,7 +636,7 @@ export default function Purchase() {
                             </div>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            <p className="font-display font-bold text-lg text-violet-tech">{resolved.price}€</p>
+                            <p className="font-display font-bold text-lg text-violet-tech">{formatEuro(resolved.price)}</p>
                             {resolved.note && <p className="text-xs text-muted-foreground">{resolved.note}</p>}
                           </div>
                         </div>
@@ -670,22 +656,12 @@ export default function Purchase() {
                 <form onSubmit={handleCheckout} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.firstName")}</label>
-                      <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="John" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.lastName")}</label>
-                      <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="Doe" />
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.email")}</label>
                       <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john@example.com" />
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.discordPseudo")}</label>
-                      <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john_doe#1234" />
+                      <input type="text" name="discordPseudo" value={formData.discordPseudo} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="john_doe" />
                     </div>
                   </div>
 
@@ -704,55 +680,9 @@ export default function Purchase() {
                     </div>
                   )}
 
-                  {/* Hardware Configuration — skipped for mobile Onestate RP */}
-                  {!isOnestate && (
-                  <div className="pt-4 border-t border-border/30">
-                    <h3 className="text-lg font-display font-bold mb-4 text-violet-tech">{t("purchase.hardwareConfig")}</h3>
-                    <div className="grid sm:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.cpu")}</label>
-                        <input type="text" name="cpu" value={formData.cpu} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="e.g. i7-12700K" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.gpu")}</label>
-                        <input type="text" name="gpu" value={formData.gpu} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm placeholder:text-muted-foreground focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none" placeholder="e.g. RTX 3060" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-2">{t("purchase.os")}</label>
-                        <select name="os" value={formData.os} onChange={handleInputChange} required className="w-full px-4 py-2.5 rounded-md bg-dark-elevated border border-border/50 text-foreground text-sm focus:border-violet-tech/50 focus:ring-1 focus:ring-violet-tech/30 transition-colors outline-none appearance-none">
-                          <option value="Windows 10">Windows 10</option>
-                          <option value="Windows 11">Windows 11</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  )}
-
-                  {/* Self-Setup Confirmation Checkbox */}
-                  {isSelfSetupOption && (
-                    <div className="pt-4 border-t border-border/30">
-                      <div className="p-4 rounded-lg bg-violet-900/20 border border-violet-500/30">
-                        <div className="flex items-start gap-3">
-                          <div className="flex items-center h-5 mt-1">
-                            <input
-                              id="self-setup-check"
-                              type="checkbox"
-                              checked={selfSetupConfirmed}
-                              onChange={(e) => setSelfSetupConfirmed(e.target.checked)}
-                              className="w-5 h-5 rounded border-border/50 bg-dark-elevated text-violet-tech focus:ring-violet-tech/30 transition-all cursor-pointer"
-                            />
-                          </div>
-                          <label htmlFor="self-setup-check" className="text-sm text-foreground font-medium leading-relaxed cursor-pointer select-none">
-                            {t("purchase.selfSetupConfirm")}
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Configuration Requirements Reminder — Onestate: small donation checkbox only */}
+                  {/* One confirmation checkbox (hardware / donation + final sale) */}
                   {!isOnestate ? (
-                  <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30 mb-6">
+                  <div className="p-4 rounded-lg bg-amber-900/20 border border-amber-500/30">
                     <div className="flex gap-3 mb-4">
                       <span className="text-xl flex-shrink-0">⚠️</span>
                       <div className="text-sm text-amber-200/90 leading-relaxed">
@@ -760,60 +690,40 @@ export default function Purchase() {
                         <p>{t("purchase.importantReminderBody")}</p>
                       </div>
                     </div>
-                    
-                    <div className="flex items-start gap-3 pt-3 border-t border-amber-500/20">
-                      <div className="flex items-center h-5 mt-1">
-                        <input
-                          id="hardware-check"
-                          type="checkbox"
-                          checked={hardwareConfirmed}
-                          onChange={(e) => setHardwareConfirmed(e.target.checked)}
-                          className="w-5 h-5 rounded border-amber-500/50 bg-dark-elevated text-amber-500 focus:ring-amber-500/30 transition-all cursor-pointer"
-                        />
-                      </div>
-                      <label htmlFor="hardware-check" className="text-sm text-amber-100 font-medium leading-relaxed cursor-pointer select-none">
+
+                    <label
+                      htmlFor="terms-check"
+                      className="flex items-start gap-4 pt-4 border-t border-amber-500/20 cursor-pointer select-none"
+                    >
+                      <input
+                        id="terms-check"
+                        type="checkbox"
+                        checked={termsConfirmed}
+                        onChange={(e) => setTermsConfirmed(e.target.checked)}
+                        className="mt-0.5 w-7 h-7 shrink-0 rounded border-amber-500/50 bg-dark-elevated text-amber-500 focus:ring-amber-500/30 transition-all cursor-pointer"
+                      />
+                      <span className="text-sm text-amber-100 font-medium leading-relaxed">
                         {t("purchase.hardwareConfirm")}
-                      </label>
-                    </div>
+                      </span>
+                    </label>
                   </div>
                   ) : (
-                  <div className="mb-6 p-3 rounded-md bg-yellow-500/10 border border-yellow-400/35">
-                    <div className="flex items-start gap-3">
-                      <div className="flex items-center h-5 mt-0.5">
-                        <input
-                          id="donation-check"
-                          type="checkbox"
-                          checked={donationConfirmed}
-                          onChange={(e) => setDonationConfirmed(e.target.checked)}
-                          className="w-4 h-4 rounded border-yellow-400/50 bg-dark-elevated text-yellow-400 focus:ring-yellow-400/30 transition-all cursor-pointer"
-                        />
-                      </div>
-                      <label htmlFor="donation-check" className="text-xs text-yellow-100/90 leading-relaxed cursor-pointer select-none">
-                        {t("products.onestateDonation")}
-                      </label>
-                    </div>
-                  </div>
+                  <label
+                    htmlFor="donation-check"
+                    className="flex items-start gap-4 p-4 rounded-lg bg-yellow-500/10 border border-yellow-400/35 cursor-pointer select-none"
+                  >
+                    <input
+                      id="donation-check"
+                      type="checkbox"
+                      checked={termsConfirmed}
+                      onChange={(e) => setTermsConfirmed(e.target.checked)}
+                      className="mt-0.5 w-7 h-7 shrink-0 rounded border-yellow-400/50 bg-dark-elevated text-yellow-400 focus:ring-yellow-400/30 transition-all cursor-pointer"
+                    />
+                    <span className="text-sm text-yellow-100/95 leading-relaxed">
+                      {t("products.onestateDonation")}
+                    </span>
+                  </label>
                   )}
-
-                  <div className="mb-6 p-3 rounded-md bg-amber-500/10 border border-amber-500/35">
-                    <p className="text-xs text-amber-200/95 leading-relaxed mb-3">
-                      {t("purchase.allSalesFinal")}
-                    </p>
-                    <div className="flex items-start gap-3">
-                      <div className="flex items-center h-5 mt-0.5">
-                        <input
-                          id="final-sale-check"
-                          type="checkbox"
-                          checked={finalSaleConfirmed}
-                          onChange={(e) => setFinalSaleConfirmed(e.target.checked)}
-                          className="w-4 h-4 rounded border-amber-500/50 bg-dark-elevated text-amber-400 focus:ring-amber-500/30 transition-all cursor-pointer"
-                        />
-                      </div>
-                      <label htmlFor="final-sale-check" className="text-xs text-amber-100/95 leading-relaxed cursor-pointer select-none">
-                        {t("purchase.finalSaleConfirm")}
-                      </label>
-                    </div>
-                  </div>
 
                   <Button type="submit" disabled={isLoading} className="w-full bg-violet-tech hover:bg-violet-accent text-white font-bold py-6 rounded-md transition-all shadow-lg shadow-violet-tech/20">
                     {isLoading ? t("purchase.processing") : t("purchase.proceed")}
@@ -882,7 +792,7 @@ export default function Purchase() {
                     <div className="h-px bg-border/30" />
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold">{t("purchase.total")}</span>
-                      <span className="text-2xl font-display font-bold text-violet-tech">{total}€</span>
+                      <span className="text-2xl font-display font-bold text-violet-tech">{formatEuro(total)}</span>
                     </div>
                   </div>
 

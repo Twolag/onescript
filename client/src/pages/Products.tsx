@@ -60,7 +60,7 @@ const productDefs: ProductDef[] = [
       "products.fusionF4",
       "products.fusionF5",
     ],
-    price: "15 €",
+    price: "19.99 €",
     priceNoteKey: "products.from",
     ctaHref: "/purchase?product=ai-engine",
   },

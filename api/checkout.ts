@@ -9,22 +9,17 @@ const STRIPE_CATALOG: Record<
   "ai-engine": {
     name: "FUSION AI",
     options: [
-      { label: "1 Week (Setup + Support + License)", priceCents: 2500, description: "Complete setup + 7 days support." },
-      { label: "1 Week (License Only)", priceCents: 1500, description: "7 days license + PDF guide." },
-      { label: "Weekly Renewal", priceCents: 1000, description: "Renewal for existing users." },
-      { label: "License Only (Monthly)", priceCents: 4000, description: "1 month license + PDF guide." },
-      { label: "1 Month (Setup + Support + License)", priceCents: 6000, description: "Complete setup + 30 days support." },
-      { label: "Help Installation (PDF users)", priceCents: 3000, description: "Remote installation help." },
-      { label: "Lifetime License", priceCents: 10000, description: "Permanent access." },
-      { label: "Monthly Renewal", priceCents: 3000, description: "Monthly renewal." },
-      { label: "Advanced Weight — Apex Legends", priceCents: 1000, description: "Advanced Weight Apex." },
-      { label: "Advanced Weight — Fortnite", priceCents: 1000, description: "Advanced Weight Fortnite." },
+      { label: "1 Week", priceCents: 1999, description: "7 days AI Aimbot access. RP2350A required. PC only." },
+      { label: "1 Month", priceCents: 3999, description: "30 days AI Aimbot access. RP2350A required. PC only." },
+      { label: "Lifetime License", priceCents: 7999, description: "Permanent FUSION AI V8 access. RP2350A required. PC only." },
       {
         label: "Ultimate License",
-        priceCents: 17500,
+        priceCents: 12499,
         description:
-          "Lifetime AI Aimbot + all future updates + all Advanced Weights for all games + custom personal hash.",
+          "Lifetime AI Aimbot + all future updates + all Advanced Weights for all games + custom personal hash. RP2350A required. PC only.",
       },
+      { label: "Advanced Weight — Apex Legends", priceCents: 1000, description: "Advanced Weight Apex." },
+      { label: "Advanced Weight — Fortnite", priceCents: 1000, description: "Advanced Weight Fortnite." },
     ],
   },
   "windows-opt": {
@@ -135,11 +130,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!product || !option) {
       return res.status(400).json({ error: "Produit / option invalide" });
     }
-    if (!customerEmail || !customerName || !orderNumber) {
+    if (!customerEmail || !(customerName || discordPseudo) || !orderNumber) {
       return res.status(400).json({ error: "Données client manquantes" });
     }
 
     const stripe = new Stripe(secret);
+    const resolvedCustomerName = String(customerName || discordPseudo);
     const displayName = game ? `${game} — ${product.name}` : product.name;
     const baseUrl = (process.env.BASE_URL || "https://onescript.fr").replace(/\/$/, "");
 
@@ -169,7 +165,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         optionIndex: String(optionIndex),
         optionLabel: option.label,
         productName: displayName,
-        customerName: String(customerName),
+        customerName: resolvedCustomerName,
         customerEmail: String(customerEmail),
         discordPseudo: String(discordPseudo || ""),
         onestatePseudo: String(onestatePseudo || ""),

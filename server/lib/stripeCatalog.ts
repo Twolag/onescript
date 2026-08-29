@@ -20,44 +20,25 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
     name: "FUSION AI",
     options: [
       {
-        label: "1 Week (Setup + Support + License)",
-        priceCents: 2500,
-        description: "Complete setup + 7 days support. RP2350A required.",
+        label: "1 Week",
+        priceCents: 1999,
+        description: "7 days AI Aimbot access. RP2350A required. PC only.",
       },
       {
-        label: "1 Week (License Only)",
-        priceCents: 1500,
-        description: "7 days license + PDF guide. Self-setup.",
-      },
-      {
-        label: "Weekly Renewal",
-        priceCents: 1000,
-        description: "Renewal for existing users.",
-      },
-      {
-        label: "License Only (Monthly)",
-        priceCents: 4000,
-        description: "1 month license + PDF guide. Self-setup.",
-      },
-      {
-        label: "1 Month (Setup + Support + License)",
-        priceCents: 6000,
-        description: "Complete setup + 30 days support. RP2350A required.",
-      },
-      {
-        label: "Help Installation (PDF users)",
-        priceCents: 3000,
-        description: "Remote installation help for PDF license holders.",
+        label: "1 Month",
+        priceCents: 3999,
+        description: "30 days AI Aimbot access. RP2350A required. PC only.",
       },
       {
         label: "Lifetime License",
-        priceCents: 10000,
-        description: "Permanent FUSION AI V8 access.",
+        priceCents: 7999,
+        description: "Permanent FUSION AI V8 access. RP2350A required. PC only.",
       },
       {
-        label: "Monthly Renewal",
-        priceCents: 3000,
-        description: "Monthly renewal for eligible users.",
+        label: "Ultimate License",
+        priceCents: 12499,
+        description:
+          "Lifetime AI Aimbot + all future updates + all Advanced Weights for all games + custom personal hash. RP2350A required. PC only.",
       },
       {
         label: "Advanced AI Weight — Apex Legends",
@@ -68,12 +49,6 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
         label: "Advanced AI Weight — Fortnite",
         priceCents: 1000,
         description: "AI Weight add-on for Fortnite. High-end GPU required.",
-      },
-      {
-        label: "Ultimate License",
-        priceCents: 17500,
-        description:
-          "Lifetime AI Aimbot + all future updates + all Advanced Weights for all games + custom personal hash.",
       },
     ],
   },

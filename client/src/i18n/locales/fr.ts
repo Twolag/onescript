@@ -35,7 +35,7 @@ export const fr: Dictionary = {
   home: {
     badge: "FUSION AI — MULTI-JEUX",
     dominate: "Dominez avec",
-    subtitle: "AI Aimbot pour chaque titre — un seul paiement, à partir de 15 €.",
+    subtitle: "AI Aimbot pour chaque titre — un seul paiement, à partir de 19,99 €.",
     exploreGames: "Voir les jeux",
     scrollDown: "Descendre",
     scrollUp: "Remonter",
@@ -58,7 +58,7 @@ export const fr: Dictionary = {
     updates: "Mises à jour",
   },
   tags: {
-    from15: "Dès 15 €",
+    from15: "Dès 19,99 €",
     from10: "10 €",
     keyboardMouse: "Clavier / Souris",
     controller: "Manette",
@@ -93,23 +93,25 @@ export const fr: Dictionary = {
     titleAccent: "en action",
     subtitle: "Démonstrations exclusives de FUSION IA et des add-ons premium.",
     supportedGames: "Jeux supportés",
-    supportedSubtitle: "Mêmes titres que sur l’accueil — à partir de 15 €.",
+    supportedSubtitle: "Mêmes titres que sur l’accueil — à partir de 19,99 €.",
     watch: "VOIR",
   },
   purchase: {
     finalize: "Finalisez votre",
     purchaseWord: "achat",
     headerSubtitle:
-      "Sécurisez votre accès aux outils OneScript. Plans Fusion AI dès 15 €. Compatibilité Clavier/Souris & Manette via RP2350A.",
+      "Sécurisez votre accès aux outils OneScript. Plans Fusion AI dès 19,99 €. PC uniquement avec Waveshare RP2350A.",
     hardwareNotes: "Notes matériel & plateforme",
     hardwareRequired:
       "La carte Waveshare RP2350A USB Mini Development Board est obligatoire pour utiliser Fusion AI.",
+    minGpu: "GPU minimum : RTX 3050 ou plus, ou AMD RX 6600 ou plus.",
+    pcOnly: "PC uniquement — incompatible console et mobile.",
     screen1080: "Un écran 1080p est fortement recommandé pour de bonnes performances.",
     steamOnly:
       "Pour Apex Legends, utilisez uniquement la version Steam — la version EA App (Origin) n’est pas supportée.",
     fullInput: "Compatibilité entrée complète",
     fullInputDesc:
-      "Fusion AI est maintenant pleinement compatible Clavier & Souris et Manette (Xbox, PS5, Gamesir, etc.) grâce à la Waveshare RP2350A.",
+      "Fusion AI est pleinement compatible Clavier & Souris et Manette (Xbox, PS5, Gamesir, etc.) via la Waveshare RP2350A. PC uniquement.",
     controllerOnly: "Manette uniquement",
     controllerOnlyDesc:
       "Le Jitter Script fonctionne uniquement avec une manette (Xbox, PS5, Gamesir, etc.). Clavier et souris non supportés.",
@@ -117,7 +119,9 @@ export const fr: Dictionary = {
     selectDuration: "1. Choisir la durée",
     selectSupport: "2. Niveau de support",
     selectRenewal: "2. Type de renouvellement",
-    selectAddonGame: "2. Jeu pour Advanced Weight",
+    selectAddonGame: "Jeu Advanced Weight",
+    variant: "Variante",
+    inStock: "En stock",
     weekly: "Hebdo",
     monthly: "Mensuel",
     annual: "Annuel",
@@ -151,8 +155,8 @@ export const fr: Dictionary = {
     fillAll: "Veuillez remplir tous les champs",
     selectOption: "Veuillez sélectionner une option",
     confirmSelfSetup: "Vous devez confirmer que vous gérerez l’installation vous-même",
-    confirmHardware: "Vous devez confirmer que votre PC répond aux exigences matérielles",
-    confirmDonation: "Cochez la case pour confirmer que ce paiement est un don au serveur OneScript",
+    confirmHardware: "Vous devez confirmer le matériel et que l’achat est définitif",
+    confirmDonation: "Cochez la case pour confirmer le don et que l’achat est définitif",
     confirmFinalSale: "Vous devez confirmer que tout achat est définitif",
     validated: "Informations validées ! Choisissez votre mode de paiement.",
     errorGeneric: "Une erreur est survenue, réessayez.",
@@ -160,9 +164,9 @@ export const fr: Dictionary = {
       "Je comprends que je recevrai un guide PDF et que je dois effectuer l’installation moi-même. Je confirme que le staff OneScript n’interviendra pas pour cette offre.",
     importantReminder: "Rappel important",
     importantReminderBody:
-      "En continuant, vous confirmez avoir lu et compris la configuration PC minimale requise. Il est de votre seule responsabilité de vérifier que votre matériel est conforme. Tous les achats sont définitifs. Note : les dysfonctionnements dus au PC du client (matériel, drivers, OS, etc.) ne donnent pas droit à un remboursement.",
+      "En continuant, vous confirmez avoir lu et compris la config PC minimale (RTX 3050+ ou AMD RX 6600+, Waveshare RP2350A, PC uniquement). Il est de votre seule responsabilité de vérifier que votre matériel est conforme. Tous les achats sont définitifs. Note : les dysfonctionnements dus au PC du client (matériel, drivers, OS, etc.) ne donnent pas droit à un remboursement.",
     hardwareConfirm:
-      "Je confirme que mon PC répond à toutes les exigences matérielles (GPU NVIDIA / AMD, Waveshare RP2350A) et, pour Apex Legends, que j’utilise la version Steam. Je comprends que tout achat est définitif et qu’aucun remboursement ne sera accordé en cas d’incompatibilité matérielle.",
+      "Je confirme que mon PC répond aux exigences (minimum RTX 3050 ou AMD RX 6600, Waveshare RP2350A, PC uniquement) et, pour Apex Legends, que j’utilise la version Steam. Je comprends que tout achat est définitif et qu’aucun remboursement ne sera accordé.",
     allSalesFinal:
       "Tous les achats sont définitifs. Aucun remboursement après paiement.",
     finalSaleConfirm:
@@ -210,10 +214,11 @@ export const fr: Dictionary = {
     fusionBadge: "STABLE / PRÊT",
     fusionSubtitle: "Traitement visuel IA",
     fusionTitle: "FUSION IA - V8",
-    fusionDesc: "Mise à jour V8 révolutionnaire ! AI Aimbot 10x plus puissant avec un excellent support AMD. Disponible sur Apex Legends, Fortnite, Warzone, Overwatch 2 et The Finals. Carte Waveshare RP2350A requise pour un fonctionnement sûr. Compatibilité native NVIDIA & AMD. Zéro perte de FPS, latence manette ultra-faible.",
+    fusionDesc:
+      "Mise à jour V8 révolutionnaire ! AI Aimbot 10x plus puissant avec un excellent support AMD. Disponible sur Apex Legends, Fortnite, Warzone, Overwatch 2 et The Finals. Waveshare RP2350A requise. PC uniquement. GPU minimum : RTX 3050+ ou AMD RX 6600+. Compatibilité native NVIDIA & AMD. Zéro perte de FPS, latence manette ultra-faible.",
     fusionF1: "Architecture V8 repensée",
-    fusionF2: "Support natif NVIDIA & AMD",
-    fusionF3: "Clavier/souris & manette (RP2350A)",
+    fusionF2: "Support natif NVIDIA & AMD (RTX 3050+ / RX 6600+)",
+    fusionF3: "Clavier/souris & manette via RP2350A — PC uniquement",
     fusionF4: "Zéro perte de FPS garantie",
     fusionF5: "UI premium redesignée",
     weightBadge: "ADD-ON UNIQUEMENT",
@@ -250,7 +255,7 @@ export const fr: Dictionary = {
     onestateDesc:
       "Onestate RP — ce paiement est uniquement un don au serveur OneScript.",
     onestateDonation:
-      "Ce paiement est uniquement un don au serveur OneScript. Merci pour votre soutien !",
+      "Je confirme que ce paiement est uniquement un don au serveur OneScript, que tout achat est définitif et qu’aucun remboursement ne sera accordé.",
     onestateF1: "iOS & Android",
     onestateF2: "Pas de RP2350A requis",
     onestateF3: "Pas de manette requise",
@@ -403,12 +408,16 @@ export const fr: Dictionary = {
   },
 
   plans: {
+    week: "1 semaine",
+    weekDesc: "Accès AI Aimbot 7 jours. Waveshare RP2350A requise. PC uniquement. GPU minimum : RTX 3050+ ou AMD RX 6600+.",
     weekSetup: "1 semaine (Setup + Support + Licence)",
     weekSetupDesc: "Installation complète AI Aimbot V8 incluse + 7 jours de support. Carte Waveshare RP2350A requise. Tout est fait pour vous.",
     weekLicense: "1 semaine (Licence seule)",
     weekLicenseDesc: "Licence 7 jours V8. Guide PDF inclus. Carte Waveshare RP2350A requise. PAS de support d’installation à distance. Vous installez vous-même.",
     weeklyRenewal: "Renouvellement hebdomadaire",
     weeklyRenewalDesc: "Renouvellement pour les utilisateurs ayant terminé leur première semaine.",
+    month: "1 mois",
+    monthDesc: "Accès AI Aimbot 30 jours. Waveshare RP2350A requise. PC uniquement. GPU minimum : RTX 3050+ ou AMD RX 6600+.",
     monthLicense: "Licence seule (Mensuel)",
     monthLicenseDesc: "Licence 1 mois V8. Guide PDF inclus. Carte Waveshare RP2350A requise. PAS de support d’installation à distance. Vous installez vous-même.",
     monthSetup: "1 mois (Setup + Support + Licence)",
@@ -417,11 +426,11 @@ export const fr: Dictionary = {
     helpInstallDesc: "Pour ceux qui ont acheté la licence PDF seule et ont besoin d’aide. Assistance à distance incluse.",
     annual: "Abonnement annuel",
     annualDesc: "Accès complet FUSION AI V8 pendant 12 mois. Carte Waveshare RP2350A requise. ⚠️ Verrouillé sur V8 — mises à jour majeures futures : +30 €. Support prioritaire inclus.",
-    lifetime: "Licence à vie",
-    lifetimeDesc: "Accès permanent FUSION AI V8. Carte Waveshare RP2350A requise. ⚠️ Verrouillé sur V8 — mises à jour majeures futures : +30 €. Paiement unique.",
-    ultimate: "Forfait Ultimate",
+    lifetime: "À vie",
+    lifetimeDesc: "Accès permanent FUSION AI V8. Waveshare RP2350A requise. PC uniquement. ⚠️ Verrouillé sur V8 — mises à jour majeures futures : +30 €. Paiement unique.",
+    ultimate: "Ultimate",
     ultimateDesc:
-      "AI Aimbot Lifetime + toutes les futures mises à jour incluses + toutes les Advanced Weights de tous les jeux + hash custom personnel (si les autres builds sont ban, le tien reste safe). Carte Waveshare RP2350A requise. Paiement unique 175 €.",
+      "AI Aimbot Lifetime + toutes les futures mises à jour incluses + toutes les Advanced Weights de tous les jeux + hash custom personnel (si les autres builds sont ban, le tien reste safe). Waveshare RP2350A requise. PC uniquement. Paiement unique 124,99 €.",
     monthlyRenewal: "Renouvellement mensuel",
     monthlyRenewalDesc: "Réservé aux utilisateurs ayant fait 4 semaines consécutives ou un mois complet. Renouvellement uniquement.",
     addonApex: "Advanced Weight — Apex Legends",
