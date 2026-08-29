@@ -152,8 +152,7 @@ export const es: Dictionary = {
     selectOption: "Selecciona una opción",
     confirmSelfSetup: "Debes confirmar que gestionarás la instalación tú mismo",
     confirmHardware: "Debes confirmar que tu PC cumple los requisitos de hardware",
-    confirmDonation: "Marca la casilla para confirmar que este pago es un donativo al servidor OneScript",
-    confirmFinalSale: "Debes confirmar que todas las compras son definitivas",
+    confirmDonation: "Marca la casilla para confirmar el donativo y que la compra es definitiva",
     validated: "¡Información validada! Elige tu método de pago.",
     errorGeneric: "Ha ocurrido un error, inténtalo de nuevo.",
     selfSetupConfirm:
@@ -162,11 +161,7 @@ export const es: Dictionary = {
     importantReminderBody:
       "Al continuar, confirmas que has leído y entendido los requisitos mínimos de PC. Es tu responsabilidad asegurar que tu hardware cumple las especificaciones. Todas las compras son definitivas. Nota: los fallos causados por el PC del cliente (hardware, drivers, OS, etc.) no dan derecho a reembolso.",
     hardwareConfirm:
-      "Confirmo que mi PC cumple todos los requisitos de hardware (GPU NVIDIA / AMD, Waveshare RP2350A) y, si juego Apex Legends, que uso la versión de Steam. Entiendo que toda compra es definitiva y que no habrá reembolsos por incompatibilidad de hardware.",
-    allSalesFinal:
-      "Todas las compras son definitivas. Sin reembolsos después del pago.",
-    finalSaleConfirm:
-      "Entiendo y acepto que todas las compras son definitivas y que no se emitirá ningún reembolso.",
+      "Confirmo que mi PC cumple todos los requisitos de hardware (GPU NVIDIA / AMD, Waveshare RP2350A) y, si juego Apex Legends, que uso la versión de Steam. Entiendo que toda compra es definitiva y que no se emitirá ningún reembolso.",
     rpMandatory: "Obligatorio para Teclado / Ratón y Mando.",
     product: "Producto",
     game: "Juego",
@@ -250,7 +245,7 @@ export const es: Dictionary = {
     onestateDesc:
       "Onestate RP — este pago es únicamente un donativo al servidor OneScript.",
     onestateDonation:
-      "Este pago es únicamente un donativo al servidor OneScript. ¡Gracias por vuestro apoyo!",
+      "Confirmo que este pago es únicamente un donativo al servidor OneScript, que toda compra es definitiva y que no se emitirá ningún reembolso.",
     onestateF1: "iOS y Android",
     onestateF2: "Sin RP2350A",
     onestateF3: "Sin mando",
