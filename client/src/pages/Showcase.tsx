@@ -105,11 +105,10 @@ const videoDemos: VideoDemo[] = [
     product: "Advanced AI Weight",
     description: "Surgical precision targeting with the Advanced AI Weight add-on. Additional paid weight — FUSION IA license required.",
     thumbnail: "/images/apex-thumb.jpg",
-    videoUrl: "/videos/apex-clip.mp4",
     icon: Zap,
     badge: "ADD-ON",
     accent: "from-amber-500/30 via-transparent to-violet-tech/25",
-    tags: ["Add-on", "High-end GPU", "Undetectable", "Optimized"],
+    tags: ["Add-on", "Paid weight", "Undetectable", "Optimized"],
   },
   {
     id: "advanced-weight-fortnite",
