@@ -43,12 +43,12 @@ export const STRIPE_CATALOG: Record<string, CatalogProduct> = {
       {
         label: "Advanced AI Weight — Apex Legends",
         priceCents: 1000,
-        description: "AI Weight add-on for Apex. High-end GPU required.",
+        description: "Additional paid AI Weight for Apex. License holders only.",
       },
       {
         label: "Advanced AI Weight — Fortnite",
         priceCents: 1000,
-        description: "AI Weight add-on for Fortnite. High-end GPU required.",
+        description: "Additional paid AI Weight for Fortnite. License holders only.",
       },
     ],
   },
