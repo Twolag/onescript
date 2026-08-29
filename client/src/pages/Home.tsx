@@ -35,7 +35,7 @@ const fadeUp = {
 /** Game card demo clips (autoplay loops) — local files only (remote CDN links expire/403) */
 const GAME_VIDEOS = {
   fortnite: "/videos/fortnite-clip.mp4",
-  apex: "/videos/apex-clip.mp4",
+  apex: "/videos/apex-adw-clip.mp4",
   splitgate: "/videos/splitgate-clip.mp4",
   overwatch: "/videos/overwatch-clip.mp4",
 } as const;

@@ -151,9 +151,30 @@ export default function Compatibility() {
               animate="visible"
               className="hidden lg:block"
             >
-              <div className="relative rounded-lg overflow-hidden neon-glow">
-                <img src={COMPAT_IMG} alt="Hardware Compatibility" className="w-full h-auto rounded-lg" />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-base/50 to-transparent" />
+              <div className="relative rounded-xl overflow-hidden neon-glow border border-violet-tech/35 bg-dark-elevated/60 aspect-[16/10]">
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-tech/25 via-transparent to-cyan-500/15" />
+                <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, rgba(123,46,255,0.35), transparent 45%), radial-gradient(circle at 80% 70%, rgba(34,211,238,0.2), transparent 40%)" }} />
+                <div className="relative h-full flex flex-col items-center justify-center gap-5 p-8 text-center">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-xl border border-violet-tech/40 bg-violet-tech/15 flex items-center justify-center">
+                      <Monitor className="w-7 h-7 text-violet-tech" />
+                    </div>
+                    <div className="w-14 h-14 rounded-xl border border-violet-tech/40 bg-violet-tech/15 flex items-center justify-center">
+                      <Cpu className="w-7 h-7 text-violet-accent" />
+                    </div>
+                    <div className="w-14 h-14 rounded-xl border border-violet-tech/40 bg-violet-tech/15 flex items-center justify-center">
+                      <HardDrive className="w-7 h-7 text-violet-tech" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-display font-bold text-xl text-foreground tracking-wide">
+                      {t("compatibility.title")} {t("compatibility.titleAccent")}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-2 max-w-sm mx-auto">
+                      {t("compatibility.subtitle")}
+                    </p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
