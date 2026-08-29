@@ -330,16 +330,10 @@ export default function Purchase() {
         customerName,
         email: formData.email,
         discordPseudo: formData.discordPseudo,
-        onestatePseudo: isOnestate ? formData.onestatePseudo.trim() : "",
         productName: displayProductName,
         optionLabel: selectedItem.label,
         price: orderCreated.price,
         paymentMethod,
-        cpu: isOnestate ? "Mobile (iOS/Android)" : formData.cpu,
-        gpu: isOnestate ? "N/A" : formData.gpu,
-        os: isOnestate ? "iOS / Android" : formData.os,
-        inputMethod: isOnestate ? "Touch (mobile)" : (formData.controller || "N/A"),
-        selfSetupConfirmed: isSelfSetupOption ? "YES (Confirmed)" : "N/A",
       }),
     }).catch(console.error);
   };
