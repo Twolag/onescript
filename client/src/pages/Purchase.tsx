@@ -394,6 +394,32 @@ export default function Purchase() {
                 </motion.div>
               )}
 
+              {/* Jitter Script Interface Showcase */}
+              {productId === "jitter-script" && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8 }}
+                  className="relative group"
+                >
+                  <div className="absolute -inset-1 bg-gradient-to-r from-violet-tech to-violet-accent rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+                  <div className="relative glass-card rounded-xl overflow-hidden border border-violet-tech/20 shadow-2xl">
+                    <motion.img
+                      src="/images/jitter-interface.png"
+                      alt="Jitter Script Interface"
+                      className="w-full h-auto"
+                      animate={{ y: [0, -5, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-base/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-6">
+                      <h3 className="text-xl font-display font-bold text-white neon-text">JITTER SCRIPT</h3>
+                      <p className="text-xs text-violet-accent font-semibold tracking-widest uppercase">{t("purchase.jitterInterface")}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               {/* Product Selection */}
               <motion.div variants={fadeUp} custom={1} initial="hidden" animate="visible" className="glass-card rounded-lg p-6">
                 {productId === "ai-engine" && (

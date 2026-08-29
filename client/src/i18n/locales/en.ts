@@ -200,6 +200,7 @@ export const en = {
     updatesIncluded: "Regular updates included",
     hardwareConfig: "Hardware Configuration",
     visualEngine: "Visual Processing Engine",
+    jitterInterface: "No Recoil Dashboard",
   },
   products: {
     eyebrow: "Catalog",

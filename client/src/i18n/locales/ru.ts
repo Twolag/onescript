@@ -203,6 +203,7 @@ export const ru: Dictionary = {
     updatesIncluded: "Регулярные обновления включены",
     hardwareConfig: "Конфигурация железа",
     visualEngine: "Движок визуальной обработки",
+    jitterInterface: "No Recoil Dashboard",
   },
   products: {
     eyebrow: "Каталог",
