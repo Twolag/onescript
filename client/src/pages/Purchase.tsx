@@ -308,14 +308,6 @@ export default function Purchase() {
         optionLabel: selectedItem.label,
         price: orderCreated.price,
         paymentMethod,
-<<<<<<< HEAD
-=======
-        cpu: "",
-        gpu: "",
-        os: "",
-        inputMethod: "",
-        selfSetupConfirmed: "N/A",
->>>>>>> origin/cursor/ai-aimbot-pricing-ui-db5f
       }),
     }).catch(console.error);
   };
