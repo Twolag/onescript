@@ -38,6 +38,7 @@ const GAME_VIDEOS = {
   apex: "/videos/apex-adw-clip.mp4",
   splitgate: "/videos/splitgate-clip.mp4",
   overwatch: "/videos/overwatch-clip.mp4",
+  warzone: "/videos/warzone-clip.mp4",
 } as const;
 
 interface GameCard {
@@ -129,6 +130,7 @@ const games: GameCard[] = [
     id: "warzone",
     name: "Warzone",
     href: "/purchase?product=ai-engine&game=warzone",
+    video: GAME_VIDEOS.warzone,
     logo: "/images/games/warzone.svg",
     accent: "from-amber-500/25 via-transparent to-violet-tech/25",
     logoText: "WARZONE",
