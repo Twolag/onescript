@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { waitUntil } from "@vercel/functions";
 import { readReviewsManifest } from "./_reviewStore.js";
 import {
   canSyncDiscordReviews,
@@ -22,6 +23,9 @@ let lastSyncMeta: {
   total?: number;
 } | null = null;
 let inflightSync: Promise<Awaited<ReturnType<typeof syncApprovedDiscordReviews>>> | null = null;
+
+/** Soft TTL: after this, GET kicks a background Discord sync (non-blocking). */
+const STALE_MS = 2 * 60 * 1000;
 
 function envStatus() {
   const approvers = (process.env.DISCORD_REVIEW_APPROVER_IDS ?? "")
@@ -62,14 +66,57 @@ function wantsDebug(req: VercelRequest): boolean {
   return q === "1" || q === "true";
 }
 
-async function runSync(fullHistory: boolean) {
+function isStale(updatedAt: string | undefined): boolean {
+  if (!updatedAt) return true;
+  const ts = Date.parse(updatedAt);
+  if (Number.isNaN(ts)) return true;
+  return Date.now() - ts > STALE_MS;
+}
+
+async function runSync(mode: "incremental" | "full") {
   if (inflightSync) return inflightSync;
+  // Public page refresh: recent channel pages only (fast).
+  // Cron / authorized: deeper history for late ✅ / ❌.
   inflightSync = syncApprovedDiscordReviews({
-    maxPages: fullHistory ? 25 : 12,
+    maxPages: mode === "full" ? 25 : 4,
   }).finally(() => {
     inflightSync = null;
   });
   return inflightSync;
+}
+
+async function applySyncResult(result: Awaited<ReturnType<typeof syncApprovedDiscordReviews>>) {
+  lastSyncPayload = { updatedAt: result.updatedAt, reviews: result.reviews };
+  lastSyncMeta = {
+    at: result.updatedAt,
+    ok: true,
+    scanned: result.scanned,
+    approvedFound: result.approvedFound,
+    rejected: result.rejected,
+    added: result.added,
+    removed: result.removed,
+    total: result.total,
+  };
+  return result;
+}
+
+function scheduleBackgroundSync(mode: "incremental" | "full") {
+  if (!canSyncDiscordReviews()) return;
+  if (inflightSync) return;
+
+  const work = runSync(mode)
+    .then(applySyncResult)
+    .catch((error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      lastSyncMeta = { at: new Date().toISOString(), ok: false, error: message };
+    });
+
+  try {
+    waitUntil(work);
+  } catch {
+    // Local / non-Vercel: best-effort fire-and-forget
+    void work;
+  }
 }
 
 function withDebug<T extends Record<string, unknown>>(payload: T, debug: boolean): T {
@@ -84,7 +131,7 @@ function withDebug<T extends Record<string, unknown>>(payload: T, debug: boolean
 }
 
 /**
- * - GET → fast cached/static reviews (no Discord wait)
+ * - GET → fast cached/static reviews (no Discord wait); may refresh in background
  * - GET ?refresh=1 → sync Discord then return (button / background)
  * - POST / GET + Bearer → full sync (cron)
  */
@@ -132,18 +179,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
-      const result = await runSync(Boolean(authorized) || force);
-      lastSyncPayload = { updatedAt: result.updatedAt, reviews: result.reviews };
-      lastSyncMeta = {
-        at: result.updatedAt,
-        ok: true,
-        scanned: result.scanned,
-        approvedFound: result.approvedFound,
-        rejected: result.rejected,
-        added: result.added,
-        removed: result.removed,
-        total: result.total,
-      };
+      const result = await applySyncResult(await runSync(authorized ? "full" : "incremental"));
       res.setHeader("Cache-Control", "no-store");
       res.status(200).json(
         withDebug(
@@ -183,11 +219,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Fast path: never wait on Discord for a normal page load
   try {
     if (lastSyncPayload) {
+      if (isStale(lastSyncPayload.updatedAt)) {
+        scheduleBackgroundSync("incremental");
+      }
       res.setHeader("Cache-Control", "public, s-maxage=30, stale-while-revalidate=120");
       res.status(200).json(withDebug(lastSyncPayload, debug));
       return;
     }
     const manifest = await readReviewsManifest();
+    // Cold start: serve snapshot immediately, warm Discord sync in background
+    scheduleBackgroundSync("incremental");
     res.setHeader("Cache-Control", "public, s-maxage=30, stale-while-revalidate=120");
     res.status(200).json(withDebug(manifest, debug));
   } catch (error) {

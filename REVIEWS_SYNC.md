@@ -16,7 +16,17 @@ Les avis sur `/reviews` viennent du **salon Discord**. Chaque avis affiche :
 
 Sans ✅, l’avis **n’apparaît pas** sur le site.
 
-La page se re-synchronise aussi toutes les ~45 secondes tant qu’elle reste ouverte, et via le bouton **Actualiser**.
+La page se re-synchronise aussi en arrière-plan tant qu’elle reste ouverte, et via le bouton **Actualiser**.
+
+## Pourquoi ça pouvait “rester bloqué au 9 août”
+
+Ce n’est **pas** le bot Discord qui retarde l’affichage. C’est le **site** :
+
+1. Au chargement, `/reviews` sert d’abord un snapshot rapide (`data/reviews.json` / cache mémoire).
+2. Ensuite une sync Discord tourne en arrière-plan (quelques secondes).
+3. Sans `BLOB_READ_WRITE_TOKEN` sur Vercel, la sync **n’est pas persistée** entre cold starts → on retombe sur le snapshot git jusqu’à la prochaine sync réussie.
+
+Le snapshot git a été mis à jour (avis récents inclus). Pour que les **nouveaux** avis restent visibles immédiatement après un cold start, active Blob (voir ci-dessous).
 
 ## Configuration Discord (Vercel — obligatoire pour la sync live)
 
@@ -27,9 +37,17 @@ Sur le projet Vercel → Settings → Environment Variables :
 - `DISCORD_REVIEWS_CHANNEL_ID`
 - `DISCORD_REVIEW_APPROVER_IDS` (IDs Discord des modos, séparés par des virgules)
 - `REVIEWS_SYNC_SECRET` (optionnel, pour sync manuelle / cron)
-- `BLOB_READ_WRITE_TOKEN` (**recommandé**) pour persister images + JSON entre les requêtes
+- `BLOB_READ_WRITE_TOKEN` (**fortement recommandé**) pour persister images + JSON entre les requêtes
 
 Sans ces variables Discord sur Vercel, le site ne peut pas lire les nouvelles réactions ✅.
+
+### Activer Vercel Blob (recommandé)
+
+1. Vercel → Storage → Create → Blob
+2. Connecte le store au projet (injecte `BLOB_READ_WRITE_TOKEN`)
+3. Redeploy
+
+Après ça, chaque sync live / cron écrit le manifeste : le prochain visiteur voit les derniers avis **sans attendre** ~30s.
 
 ## Sync manuelle (optionnel)
 
@@ -47,4 +65,5 @@ curl -X POST https://onescript.fr/api/reviews \
 
 ## Cron (Hobby)
 
-Un cron appelle `/api/reviews` **une fois par jour** (`0 5 * * *`). Ce n’est qu’un filet de sécurité : la sync live à l’ouverture de la page est le chemin principal.
+Un cron appelle `/api/reviews?refresh=1` **une fois par jour** (`0 5 * * *`).
+Filet de sécurité : la sync live à l’ouverture de la page reste le chemin principal.

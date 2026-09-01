@@ -7,7 +7,7 @@
   },
   "crons": [
     {
-      "path": "/api/reviews",
+      "path": "/api/reviews?refresh=1",
       "schedule": "0 5 * * *"
     }
   ],

@@ -20,31 +20,49 @@ const fadeUp = {
 };
 
 /** Soft background re-sync while the page stays open. */
-const POLL_MS = 120_000;
+const POLL_MS = 90_000;
 
-async function fetchReviews(url: string): Promise<DiscordReview[] | null> {
+type ReviewsPayload = {
+  reviews: DiscordReview[];
+  updatedAt?: string;
+};
+
+async function fetchReviewsPayload(url: string): Promise<ReviewsPayload | null> {
   try {
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return null;
-    const data = (await res.json()) as ReviewsManifest;
-    return Array.isArray(data.reviews) ? data.reviews : null;
+    const data = (await res.json()) as ReviewsManifest & { updatedAt?: string };
+    if (!Array.isArray(data.reviews)) return null;
+    return { reviews: data.reviews, updatedAt: data.updatedAt };
   } catch {
     return null;
   }
 }
 
-async function loadCachedReviews(): Promise<DiscordReview[]> {
+async function loadCachedReviews(): Promise<ReviewsPayload> {
   const bust = `t=${Date.now()}`;
   const sources = [`/api/reviews?${bust}`, `/${REVIEWS_MANIFEST_PATH}?${bust}`];
   for (const url of sources) {
-    const items = await fetchReviews(url);
-    if (items) return items;
+    const payload = await fetchReviewsPayload(url);
+    if (payload) return payload;
   }
-  return [];
+  return { reviews: [] };
 }
 
-async function syncReviewsFromDiscord(): Promise<DiscordReview[] | null> {
-  return fetchReviews(`/api/reviews?refresh=1&t=${Date.now()}`);
+async function syncReviewsFromDiscord(): Promise<ReviewsPayload | null> {
+  return fetchReviewsPayload(`/api/reviews?refresh=1&t=${Date.now()}`);
+}
+
+/** Prefer the fresher list when a background sync returns. */
+function preferFresher(current: ReviewsPayload, incoming: ReviewsPayload): ReviewsPayload {
+  if (incoming.reviews.length > current.reviews.length) return incoming;
+  const curTs = Date.parse(current.updatedAt ?? "") || 0;
+  const nextTs = Date.parse(incoming.updatedAt ?? "") || 0;
+  if (nextTs > curTs) return incoming;
+  if (incoming.reviews[0]?.id && incoming.reviews[0]?.id !== current.reviews[0]?.id) {
+    return incoming;
+  }
+  return current;
 }
 
 /**
@@ -90,23 +108,37 @@ export default function Reviews() {
   const applySync = useCallback(async (showSpinner: boolean) => {
     if (showSpinner) setSyncing(true);
     try {
-      const items = await syncReviewsFromDiscord();
-      if (items) setReviews(items);
+      const fresh = await syncReviewsFromDiscord();
+      if (fresh) {
+        setReviews((prev) =>
+          preferFresher({ reviews: prev, updatedAt: undefined }, fresh).reviews,
+        );
+      }
     } finally {
-      setSyncing(false);
+      if (showSpinner) setSyncing(false);
     }
   }, []);
 
   useEffect(() => {
     let cancelled = false;
+    let current: ReviewsPayload = { reviews: [] };
 
-    loadCachedReviews().then((items) => {
+    loadCachedReviews().then((cached) => {
       if (cancelled) return;
-      setReviews(items);
+      current = cached;
+      setReviews(cached.reviews);
       setLoading(false);
-      void syncReviewsFromDiscord().then((fresh) => {
-        if (!cancelled && fresh) setReviews(fresh);
-      });
+      // Soft Discord pull in background — UI already shows the fast snapshot
+      setSyncing(true);
+      void syncReviewsFromDiscord()
+        .then((fresh) => {
+          if (cancelled || !fresh) return;
+          current = preferFresher(current, fresh);
+          setReviews(current.reviews);
+        })
+        .finally(() => {
+          if (!cancelled) setSyncing(false);
+        });
     });
 
     const interval = window.setInterval(() => {
